@@ -124,7 +124,7 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 #### Option 2:
 <ul>
-  <li>You can download the latest version .apk <a href="https://drive.google.com/file/d/1AEqt_hSIK_aScnwetbHdyyotKN8RdtME/view" target="_blank" rel="noreferrer">here</a>*;</li>
+  <li>You can download the latest version .apk <a href="https://drive.google.com/file/d/1Ex4gYBfK-oUfcAxzxkIJ6gRATiT6GcxB/view" target="_blank" rel="noreferrer">here</a>*;</li>
   <li>You can check all previous versions .apk links for download <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">here</a>*.</li>
 </ul>
 * All .apks listed here were built by me, are not minimified and are hosted on Google Drive.
