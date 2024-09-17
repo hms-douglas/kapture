@@ -13,8 +13,8 @@ Os que eu encontrei tinham quer ser instalados por fora, o que me deixou um pouc
 Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. Você pode baixar o .apk e instalar, ou voce pode baixar o código fonte, lê-lo e gerar o app (built).
 </br>
 </br>
-<img src="readme/pt_br/screenshots/0.png" width="19%"/> <img src="readme/pt_br/screenshots/1.png" width="19%"/> <img src="readme/pt_br/screenshots/2.png" width="19%"/> <img src="readme/pt_br/screenshots/3.png" width="19%"/> <img src="readme/pt_br/screenshots/4.png" width="19%"/>
-<img src="readme/pt_br/screenshots/5.png" width="19%"/> <img src="readme/pt_br/screenshots/6.png" width="19%"/> <img src="readme/pt_br/screenshots/7.png" width="19%"/> <img src="readme/pt_br/screenshots/8.png" width="19%"/> <img src="readme/pt_br/screenshots/9.png" width="19%"/>
+<img src="./screenshots/0.png" width="19%"/> <img src="./screenshots/1.png" width="19%"/> <img src="./screenshots/2.png" width="19%"/> <img src="./screenshots/3.png" width="19%"/> <img src="./screenshots/4.png" width="19%"/>
+<img src="./screenshots/5.png" width="19%"/> <img src="./screenshots/6.png" width="19%"/> <img src="./screenshots/7.png" width="19%"/> <img src="./screenshots/8.png" width="19%"/> <img src="./screenshots/9.png" width="19%"/>
 ##
 ### Recursos
 <ul>
@@ -140,7 +140,7 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 ### Doações
 - Caso você queira me apoiar, você pode fazer uma doação utilizando o botão abaixo... Valeu! ❤️
 <a href="https://www.paypal.com/donate/?hosted_button_id=7XGH7WXU5C7K6">
-  <img src="readme/pt_br/paypal.png" width="160" height="50"/>
+  <img src="./paypal.png" width="160" height="50"/>
 </a>
 
 ##
