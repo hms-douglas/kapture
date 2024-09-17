@@ -12,7 +12,7 @@ public class Constants {
         GITHUB_PROJECT_LATEST_VERSION_URL = GITHUB_REPOSITORY_URL + "/raw/main/dist/latest.json",
         GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_CODE = "versionCode",
         GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_NAME = "versionName",
-        GITHUB_PROJECT_DOWNLOAD_URL = GITHUB_REPOSITORY_URL + "/raw/main/dist/",
+        GITHUB_PROJECT_LATEST_VERSION_TAG_LINK = "link",
         LICENSE_URL_APACHE_V2 = "https://www.apache.org/licenses/LICENSE-2.0.txt",
         LICENSE_URL_LGPL_V3 = "https://www.gnu.org/licenses/lgpl-3.0.html#license-text",
         LICENSE_URL_LOTTIES = "https://lottiefiles.com/page/license",

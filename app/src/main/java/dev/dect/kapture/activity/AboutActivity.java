@@ -36,11 +36,11 @@ public class AboutActivity extends AppCompatActivity {
 
     private AppCompatButton BUTTON_UPDATE;
 
-    private String LATEST_VERSION;
-
     private TextView LATEST_VERSION_EL;
 
     private LottieAnimationView LOADER_EL;
+
+    private String LATEST_URL_DOWNLOAD;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class AboutActivity extends AppCompatActivity {
                         startActivity(
                         new Intent(
                                 Intent.ACTION_VIEW,
-                            Uri.parse(Constants.GITHUB_PROJECT_DOWNLOAD_URL + LATEST_VERSION + ".apk")
+                            Uri.parse(LATEST_URL_DOWNLOAD)
                             )
                         );
                     } catch (Exception ignore) {
@@ -136,9 +136,9 @@ public class AboutActivity extends AppCompatActivity {
 
             try {
                 if(getPackageManager().getPackageInfo(getPackageName(), 0).versionCode < data.getInt(Constants.GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_CODE)) {
-                    LATEST_VERSION = data.getString(Constants.GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_NAME);
+                    LATEST_VERSION_EL.setText(getString(R.string.about_version_available) + " " + data.getString(Constants.GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_NAME));
 
-                    LATEST_VERSION_EL.setText(getString(R.string.about_version_available) + " " + LATEST_VERSION);
+                    LATEST_URL_DOWNLOAD = data.getString(Constants.GITHUB_PROJECT_LATEST_VERSION_TAG_LINK);
 
                     BUTTON_UPDATE.setVisibility(View.VISIBLE);
                 }
