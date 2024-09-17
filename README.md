@@ -1,7 +1,7 @@
 # Kapture - Screen recorder ![Static Badge](https://img.shields.io/badge/version-v1.0.0-green) [![Static Badge](https://img.shields.io/badge/license-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/apk_size-113_MB-7C39E0)
 Change README language: 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/hms-douglas/kapture)
-[![pt-br](https://img.shields.io/badge/lang-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/main/readme/pt_br/README.md)
+[![pt-br](https://img.shields.io/badge/lang-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
 </br>
 </br>
 Kapture is a screen recorder for android that allows to capture microphone audio while sharing it with other apps.
