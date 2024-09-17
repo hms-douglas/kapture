@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_font">17sp</dimen>
+    <dimen name="default_font_secondary">15sp</dimen>
+    <dimen name="default_font_tertiary">13sp</dimen>
+    <dimen name="default_font_secondary_list">@dimen/default_font_tertiary</dimen>
+    <dimen name="default_font_extended_title">40sp</dimen>
+    <dimen name="default_font_extended_subtitle">@dimen/default_font_secondary</dimen>
+    <dimen name="default_font_collapsed_title">21sp</dimen>
+    <dimen name="default_font_title">19sp</dimen>
+    <dimen name="default_font_sub_title">@dimen/default_font_secondary</dimen>
+    <dimen name="default_font_button">@dimen/default_font</dimen>
+    <dimen name="default_font_button_small">@dimen/default_font_secondary</dimen>
+    <dimen name="default_font_list_title">@dimen/default_font</dimen>
+    <dimen name="default_font_list_sub_title">@dimen/default_font_secondary_list</dimen>
+    <dimen name="default_font_body_description">16sp</dimen>
+    <dimen name="default_font_group_title">14sp</dimen>
+
+    <dimen name="default_btn_height">40dp</dimen>
+    <dimen name="default_btn_radius">100dp</dimen>
+    <dimen name="default_btn_width_percentage">0.7</dimen>
+    <dimen name="default_btn_margin_bottom_screen">26dp</dimen>
+    <dimen name="default_btn_margin_bottom">10dp</dimen>
+
+    <dimen name="default_space_sides">24dp</dimen>
+
+    <dimen name="permission_space_sides">36dp</dimen>
+    <dimen name="permission_font_title_height">200dp</dimen>
+    <dimen name="permission_font_title">24sp</dimen>
+    <dimen name="permission_font_subtitle">@dimen/default_font_sub_title</dimen>
+    <dimen name="permission_font_title_margin">40dp</dimen>
+    <dimen name="permission_icon">40dp</dimen>
+    <dimen name="permission_icon_margin">15dp</dimen>
+    <dimen name="permission_font_title_2">@dimen/default_font</dimen>
+    <dimen name="permission_font_subtitle_2">@dimen/default_font_secondary_list</dimen>
+    <dimen name="permission_margin_1">15dp</dimen>
+
+    <dimen name="overlay_padding">10dp</dimen>
+    <dimen name="overlay_btn_size">35dp</dimen>
+
+    <dimen name="bottom_bar_height">57dp</dimen>
+    <dimen name="bottom_bar_padding_sides">30dp</dimen>
+
+    <dimen name="bottom_bar_btn_margin_top">4dp</dimen>
+    <dimen name="bottom_bar_btn_margin_bottom">8dp</dimen>
+    <dimen name="bottom_bar_btn_text_size">@dimen/default_font_button</dimen>
+    <dimen name="bottom_bar_btn_text_underline">2dp</dimen>
+    <dimen name="bottom_bar_btn_icon_text">@dimen/default_font_tertiary</dimen>
+
+    <dimen name="floating_btn_size">75dp</dimen>
+    <dimen name="floating_btn_radius">500dp</dimen>
+    <dimen name="floating_btn_margin">25dp</dimen>
+    <dimen name="floating_btn_elevation">2dp</dimen>
+    <dimen name="floating_btn_icon_size_start">35dp</dimen>
+    <dimen name="floating_btn_icon_size_stop">75dp</dimen>
+
+    <dimen name="app_bar_height">300dp</dimen>
+    <dimen name="app_bar_font_title_expanded">@dimen/default_font_extended_title</dimen>
+    <dimen name="app_bar_font_sub_title_expanded">@dimen/default_font_extended_subtitle</dimen>
+    <dimen name="app_bar_font_sub_title_expanded_marign_top">5dp</dimen>
+
+    <dimen name="app_bar_font_title_collapsed">@dimen/default_font_collapsed_title</dimen>
+    <dimen name="app_bar_font_sub_title">@dimen/default_font_sub_title</dimen>
+    <dimen name="app_bar_font_sub_title_margin_top">10dp</dimen>
+    <dimen name="app_bar_font_sub_title_2_margin_top">8dp</dimen>
+    <dimen name="app_bar_space_sides">@dimen/default_space_sides</dimen>
+
+    <dimen name="tool_bar_height">70dp</dimen>
+    <dimen name="tool_bar_padding_top">15dp</dimen>
+    <dimen name="tool_bar_padding_left">24dp</dimen>
+    <dimen name="tool_bar_padding_right">12dp</dimen>
+    <dimen name="tool_bar_btn_radius">500dp</dimen>
+    <dimen name="tool_bar_btn_padding">9dp</dimen>
+
+    <dimen name="fragment_padding_sides">1px</dimen>
+
+    <dimen name="group_container_radius">26dp</dimen>
+    <dimen name="group_padding_sides">24dp</dimen>
+    <dimen name="group_margin_bottom">15dp</dimen>
+
+    <dimen name="group_title_margin_bottom">3dp</dimen>
+
+    <dimen name="list_item_min_height">65dp</dimen>
+    <dimen name="list_item_divisor_horizontal">1dp</dimen>
+    <dimen name="list_item_divisor_vertical">1px</dimen>
+    <dimen name="list_item_divisor_space_sides">10dp</dimen>
+    <dimen name="list_item_padding_top_bottom">14dp</dimen>
+
+    <dimen name="switch_radius">100dp</dimen>
+    <dimen name="switch_size">21dp</dimen>
+    <dimen name="switch_thumb_border">2dp</dimen>
+    <dimen name="switch_padding_top_bottom">2dp</dimen>
+
+    <dimen name="popup_margin">10dp</dimen>
+    <dimen name="popup_padding">22dp</dimen>
+    <dimen name="popup_radius">26dp</dimen>
+    <dimen name="popup_button_text">@dimen/default_font_button</dimen>
+    <dimen name="popup_button_height">33dp</dimen>
+    <dimen name="popup_button_divisor_width">1dp</dimen>
+    <dimen name="popup_title">@dimen/default_font</dimen>
+    <dimen name="popup_list_margin_top_bottom">10dp</dimen>
+
+    <dimen name="picker_item_padding_top_bottom">10dp</dimen>
+    <dimen name="picker_item_padding_sides">3dp</dimen>
+
+    <dimen name="radio_size">29dp</dimen>
+    <dimen name="radio_text">@dimen/default_font_list_title</dimen>
+    <dimen name="radio_text_margin_left">15dp</dimen>
+
+    <dimen name="menu_radius">26dp</dimen>
+    <dimen name="menu_horizontal_offset">4dp</dimen>
+
+    <dimen name="about_loader_size">40dp</dimen>
+
+    <dimen name="credits_padding">12dp</dimen>
+    <dimen name="credits_text">@dimen/default_font</dimen>
+
+    <dimen name="kapture_list_height">135dp</dimen>
+    <dimen name="kapture_list_padding_sides">12dp</dimen>
+    <dimen name="kapture_list_padding_top_bottom">12dp</dimen>
+    <dimen name="kapture_list_thumbnail_width_percentage">0.25</dimen>
+    <dimen name="kapture_list_space_from_thumbail">10dp</dimen>
+    <dimen name="kapture_list_title">@dimen/default_font</dimen>
+    <dimen name="kapture_list_sub_title">@dimen/default_font_secondary_list</dimen>
+    <dimen name="kapture_list_select_icon">30dp</dimen>
+    <dimen name="kapture_list_extra_btn">40dp</dimen>
+    <dimen name="kapture_list_extra_btn_icon">25dp</dimen>
+
+    <dimen name="kapture_grid_small_height">200dp</dimen>
+    <dimen name="kapture_grid_big_height">280dp</dimen>
+    <dimen name="kapture_grid_padding">5dp</dimen>
+    <dimen name="kapture_grid_title">@dimen/default_font_secondary</dimen>
+    <dimen name="kapture_grid_sub_title">@dimen/default_font_secondary_list</dimen>
+    <dimen name="kapture_grid_select_icon">25dp</dimen>
+    <dimen name="kapture_grid_time_padding_sides">5dp</dimen>
+    <dimen name="kapture_grid_time_radius">@dimen/default_btn_radius</dimen>
+
+    <dimen name="select_text">@dimen/default_font_list_title</dimen>
+
+    <dimen name="default_seekbar_height">4dp</dimen>
+
+    <dimen name="video_option_margin">@dimen/default_space_sides</dimen>
+    <dimen name="video_option_button_margin_sides">15dp</dimen>
+    <dimen name="video_option_button_main_size">65dp</dimen>
+    <dimen name="video_option_button_secondary_size">30dp</dimen>
+    <dimen name="video_option_time">@dimen/default_font</dimen>
+    <dimen name="video_option_seekbar_height">@dimen/default_seekbar_height</dimen>
+
+    <dimen name="audio_option_button_main_size">32dp</dimen>
+    <dimen name="audio_option_button_close_size">23dp</dimen>
+    <dimen name="audio_option_title">@dimen/default_font</dimen>
+    <dimen name="audio_option_sub_title">@dimen/default_font_secondary</dimen>
+    <dimen name="audio_option_sub_title_margin_top">15dp</dimen>
+    <dimen name="audio_option_margin_sides">10dp</dimen>
+    <dimen name="audio_option_seekbar_height">@dimen/default_seekbar_height</dimen>
+
+    <dimen name="mtrl_slider_track_side_padding">10dp</dimen>
+
+    <dimen name="extra_size">29dp</dimen>
+    <dimen name="extra_space_icon_sides">15dp</dimen>
+    <dimen name="extra_text">@dimen/default_font_list_title</dimen>
+    <dimen name="extra_text_margin_left">15dp</dimen>
+
+    <dimen name="input_border_width">2dp</dimen>
+
+    <dimen name="no_captures">@dimen/default_font_secondary</dimen>
+</resources>

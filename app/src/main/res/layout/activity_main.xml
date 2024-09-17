@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity"
+    android:background="@color/activity_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:orientation="vertical"
+        android:background="@color/activity_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/activity_background"/>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@color/bottom_bar_background"
+        android:paddingStart="@dimen/bottom_bar_padding_sides"
+        android:paddingEnd="@dimen/bottom_bar_padding_sides"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/bottomBarActions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="3"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/icon_bottom_bar_share"
+                android:text="@string/bottom_bar_share"
+                android:textSize="@dimen/bottom_bar_btn_icon_text"
+                android:textColor="@color/bottom_bar_icon_text"
+                android:textAllCaps="false"
+                android:background="@android:color/transparent"
+                android:foreground="@drawable/btn_effect"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/icon_bottom_bar_delete"
+                android:text="@string/bottom_bar_delete"
+                android:textSize="@dimen/bottom_bar_btn_icon_text"
+                android:textColor="@color/bottom_bar_icon_text"
+                android:textAllCaps="false"
+                android:background="@android:color/transparent"
+                android:foreground="@drawable/btn_effect"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/icon_bottom_bar_more"
+                android:text="@string/bottom_bar_more"
+                android:textSize="@dimen/bottom_bar_btn_icon_text"
+                android:textColor="@color/bottom_bar_icon_text"
+                android:textAllCaps="false"
+                android:background="@android:color/transparent"
+                android:foreground="@drawable/btn_effect"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomBarNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bottomBarBtnCaptures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_bar_btn_margin_top"
+                android:layout_marginBottom="@dimen/bottom_bar_btn_margin_bottom"
+                android:layout_weight="1"
+                android:background="@color/bottom_bar_background"
+                android:foreground="@drawable/btn_effect"
+                android:text="@string/title_captures"
+                android:textAllCaps="false"
+                android:textColor="@color/bottom_bar_btn_text_color_on"
+                android:textSize="@dimen/bottom_bar_btn_text_size"
+                tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bottomBarBtnSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/bottom_bar_btn_margin_top"
+                android:layout_marginBottom="@dimen/bottom_bar_btn_margin_bottom"
+                android:layout_weight="1"
+                android:background="@color/bottom_bar_background"
+                android:foreground="@drawable/btn_effect"
+                android:text="@string/title_settings"
+                android:textAllCaps="false"
+                android:textColor="@color/bottom_bar_btn_text_color_off"
+                android:textSize="@dimen/bottom_bar_btn_text_size"
+                tools:ignore="TouchTargetSizeCheck,VisualLintButtonSize" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,5 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/icon_notification_on" android:duration="500" />
+    <item android:drawable="@drawable/icon_notification_off" android:duration="500" />
+</animation-list>

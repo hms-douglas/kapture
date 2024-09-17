@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity"
+    android:background="@color/activity_background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tool_bar_height"
+        android:paddingTop="@dimen/tool_bar_padding_top"
+        android:paddingEnd="@dimen/tool_bar_padding_right"
+        android:paddingStart="@dimen/tool_bar_padding_right"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/activity_background"
+            android:src="@drawable/icon_tool_bar_back"
+            android:padding="@dimen/tool_bar_btn_padding"
+            android:foreground="@drawable/btn_floating_effect"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/btnInfo"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/activity_background"
+            android:src="@drawable/icon_tool_bar_info"
+            android:padding="@dimen/tool_bar_btn_padding"
+            android:foreground="@drawable/btn_floating_effect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:textSize="@dimen/app_bar_font_title_expanded"
+            android:textColor="@color/app_bar_font_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/madeBy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_made_by"
+            android:gravity="center"
+            android:textSize="@dimen/app_bar_font_sub_title"
+            android:textColor="@color/app_bar_font_sub_title"
+            android:layout_marginTop="@dimen/app_bar_font_sub_title_margin_top"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_version"
+            android:gravity="center"
+            android:textSize="@dimen/app_bar_font_sub_title"
+            android:textColor="@color/app_bar_font_sub_title"
+            android:layout_marginTop="@dimen/app_bar_font_sub_title_2_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/madeBy"/>
+
+        <TextView
+            android:id="@+id/latest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_version_latest"
+            android:gravity="center"
+            android:textSize="@dimen/app_bar_font_sub_title"
+            android:textColor="@color/app_bar_font_sub_title"
+            android:layout_marginTop="@dimen/app_bar_font_sub_title_2_margin_top"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/version"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_fileName="loader.json"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/version"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_btn_margin_bottom_screen"
+        android:orientation="vertical"
+        app:layout_constraintWidth_percent="@dimen/default_btn_width_percentage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_btn_height"
+            android:text="@string/about_btn_update"
+            android:textSize="@dimen/default_font_button"
+            android:background="@drawable/btn_design"
+            android:foreground="@drawable/btn_effect"
+            android:textColor="@color/popup_btn_text"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/btn_main_background"
+            android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+            android:visibility="gone"
+            android:ellipsize="end"
+            android:lines="1"
+            tools:ignore="HardcodedText"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGithub"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_btn_height"
+            android:text="@string/about_btn_github"
+            android:textSize="@dimen/default_font_button"
+            android:background="@drawable/btn_design"
+            android:foreground="@drawable/btn_effect"
+            android:textColor="@color/popup_btn_text"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/btn_secondary_background"
+            android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+            android:ellipsize="end"
+            android:lines="1"
+            tools:ignore="HardcodedText"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCredits"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_btn_height"
+            android:text="@string/about_btn_credits"
+            android:textSize="@dimen/default_font_button"
+            android:background="@drawable/btn_design"
+            android:foreground="@drawable/btn_effect"
+            android:textColor="@color/popup_btn_text"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/btn_secondary_background"
+            android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+            android:ellipsize="end"
+            android:lines="1"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

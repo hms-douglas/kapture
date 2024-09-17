@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/kapture_list_height"
+    android:paddingTop="@dimen/kapture_list_padding_top_bottom"
+    android:foreground="@drawable/list_item_effect"
+    android:background="@color/activity_background"
+    android:clickable="true"
+    android:id="@+id/kapture">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/infoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/kapture_list_padding_sides"
+        android:layout_marginEnd="@dimen/kapture_list_padding_sides"
+        android:layout_marginBottom="@dimen/kapture_list_padding_top_bottom"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/select"
+            android:layout_width="@dimen/kapture_list_select_icon"
+            android:layout_height="@dimen/kapture_list_select_icon"
+            android:src="@drawable/checkbox_off"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_kapture_image_helper"
+            android:scaleType="fitCenter"
+            app:layout_constraintWidth_percent="@dimen/kapture_list_thumbnail_width_percentage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/select"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/kapture_list_space_from_thumbail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/thumbnail"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/kapture_list_title"
+                android:textColor="@color/kapture_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00/00/00 00:00"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/kapture_list_sub_title"
+                android:textColor="@color/kapture_sub_title"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name"/>
+
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/kapture_list_sub_title"
+                android:textColor="@color/kapture_sub_title"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date"/>
+
+            <TextView
+                android:id="@+id/resolution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0000x0000"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/kapture_list_sub_title"
+                android:textColor="@color/kapture_sub_title"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/duration"/>
+
+            <TextView
+                android:id="@+id/frames"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00fps"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/kapture_list_sub_title"
+                android:textColor="@color/kapture_sub_title"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/resolution"/>
+
+            <TextView
+                android:id="@+id/size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 KB"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/kapture_list_sub_title"
+                android:textColor="@color/kapture_sub_title"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frames"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnExtra"
+                android:layout_width="@dimen/kapture_list_extra_btn"
+                android:layout_height="@dimen/kapture_list_extra_btn"
+                android:background="@drawable/btn_extra"
+                android:foreground="@drawable/btn_effect"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/list_item_divisor_horizontal"
+        android:background="@drawable/list_item_divisor_horizontal_bottom"
+        app:layout_constraintStart_toStartOf="@id/infoContainer"
+        app:layout_constraintEnd_toEndOf="@id/infoContainer"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

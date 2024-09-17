@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/popup_background_transparent"
+    android:id="@+id/popupContainer">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/popup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/popup_padding"
+        android:layout_margin="@dimen/popup_margin"
+        android:background="@drawable/popup_background"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/popup_list_margin_top_bottom"
+            android:layout_marginBottom="@dimen/popup_list_margin_top_bottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/popupBtnContainer"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/popup_title_sort_by"
+                android:textSize="@dimen/popup_title"
+                android:textStyle="bold"
+                android:textColor="@color/popup_title"
+                android:paddingStart="@dimen/picker_item_padding_sides"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/picker_item_padding_top_bottom"
+                android:paddingBottom="@dimen/picker_item_padding_top_bottom"
+                android:paddingStart="@dimen/picker_item_padding_sides"
+                android:paddingRight="@dimen/picker_item_padding_sides"
+                android:foreground="@drawable/btn_effect"
+                android:clickable="true"
+                android:id="@+id/name">
+
+                <ImageView
+                    android:id="@+id/radioIconName"
+                    android:layout_width="@dimen/radio_size"
+                    android:layout_height="@dimen/radio_size"
+                    android:src="@drawable/radio_on"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/popup_sort_by_name"
+                    android:textSize="@dimen/radio_text"
+                    android:textColor="@color/radio_text"
+                    android:layout_marginStart="@dimen/radio_text_margin_left"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/radioIconName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:ignore="HardcodedText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/picker_item_padding_top_bottom"
+                android:paddingBottom="@dimen/picker_item_padding_top_bottom"
+                android:paddingStart="@dimen/picker_item_padding_sides"
+                android:paddingRight="@dimen/picker_item_padding_sides"
+                android:foreground="@drawable/btn_effect"
+                android:clickable="true"
+                android:id="@+id/time">
+
+                <ImageView
+                    android:id="@+id/radioIconTime"
+                    android:layout_width="@dimen/radio_size"
+                    android:layout_height="@dimen/radio_size"
+                    android:src="@drawable/radio_off"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/popup_sort_by_time"
+                    android:textSize="@dimen/radio_text"
+                    android:textColor="@color/radio_text"
+                    android:layout_marginStart="@dimen/radio_text_margin_left"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/radioIconTime"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:ignore="HardcodedText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/picker_item_padding_top_bottom"
+                android:paddingBottom="@dimen/picker_item_padding_top_bottom"
+                android:paddingStart="@dimen/picker_item_padding_sides"
+                android:paddingRight="@dimen/picker_item_padding_sides"
+                android:foreground="@drawable/btn_effect"
+                android:clickable="true"
+                android:id="@+id/duration">
+
+                <ImageView
+                    android:id="@+id/radioIconDuration"
+                    android:layout_width="@dimen/radio_size"
+                    android:layout_height="@dimen/radio_size"
+                    android:src="@drawable/radio_off"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/popup_sort_by_duration"
+                    android:textSize="@dimen/radio_text"
+                    android:textColor="@color/radio_text"
+                    android:layout_marginStart="@dimen/radio_text_margin_left"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/radioIconDuration"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:ignore="HardcodedText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/picker_item_padding_top_bottom"
+                android:paddingBottom="@dimen/picker_item_padding_top_bottom"
+                android:paddingStart="@dimen/picker_item_padding_sides"
+                android:paddingRight="@dimen/picker_item_padding_sides"
+                android:foreground="@drawable/btn_effect"
+                android:clickable="true"
+                android:id="@+id/size">
+
+                <ImageView
+                    android:id="@+id/radioIconSize"
+                    android:layout_width="@dimen/radio_size"
+                    android:layout_height="@dimen/radio_size"
+                    android:src="@drawable/radio_off"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/popup_sort_by_size"
+                    android:textSize="@dimen/radio_text"
+                    android:textColor="@color/radio_text"
+                    android:layout_marginStart="@dimen/radio_text_margin_left"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/radioIconSize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:ignore="HardcodedText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/popup_title_order"
+                android:textSize="@dimen/popup_title"
+                android:textStyle="bold"
+                android:textColor="@color/popup_title"
+                android:paddingStart="@dimen/picker_item_padding_sides"
+                android:paddingTop="@dimen/picker_item_padding_top_bottom"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/picker_item_padding_top_bottom"
+                android:paddingBottom="@dimen/picker_item_padding_top_bottom"
+                android:paddingStart="@dimen/picker_item_padding_sides"
+                android:paddingRight="@dimen/picker_item_padding_sides"
+                android:foreground="@drawable/btn_effect"
+                android:clickable="true"
+                android:id="@+id/ascending">
+
+                <ImageView
+                    android:id="@+id/radioIconAscending"
+                    android:layout_width="@dimen/radio_size"
+                    android:layout_height="@dimen/radio_size"
+                    android:src="@drawable/radio_on"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/popup_order_asc"
+                    android:textSize="@dimen/radio_text"
+                    android:textColor="@color/radio_text"
+                    android:layout_marginStart="@dimen/radio_text_margin_left"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/radioIconAscending"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:ignore="HardcodedText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/picker_item_padding_top_bottom"
+                android:paddingBottom="@dimen/picker_item_padding_top_bottom"
+                android:paddingStart="@dimen/picker_item_padding_sides"
+                android:paddingRight="@dimen/picker_item_padding_sides"
+                android:foreground="@drawable/btn_effect"
+                android:clickable="true"
+                android:id="@+id/descending">
+
+                <ImageView
+                    android:id="@+id/radioIconDescending"
+                    android:layout_width="@dimen/radio_size"
+                    android:layout_height="@dimen/radio_size"
+                    android:src="@drawable/radio_off"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/popup_order_desc"
+                    android:textSize="@dimen/radio_text"
+                    android:textColor="@color/radio_text"
+                    android:layout_marginStart="@dimen/radio_text_margin_left"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/radioIconDescending"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:ignore="HardcodedText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/popupBtnContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/popupBtnNo"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/popup_button_height"
+                android:text="@string/popup_btn_cancel"
+                android:textSize="@dimen/popup_button_text"
+                android:background="@drawable/btn_popup_design"
+                android:foreground="@drawable/btn_effect"
+                android:textColor="@color/popup_btn_text"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                app:elevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/popupBtnDivisor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="HardcodedText"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/popupBtnDivisor"
+                android:layout_width="@dimen/popup_button_divisor_width"
+                android:layout_height="0dp"
+                android:background="@color/popup_btn_divisor"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/popupBtnNo"
+                app:layout_constraintStart_toEndOf="@id/popupBtnNo"
+                app:layout_constraintEnd_toStartOf="@id/popupBtnYes"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/popupBtnYes"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/popup_button_height"
+                android:text="@string/popup_btn_done"
+                android:textSize="@dimen/popup_button_text"
+                android:background="@drawable/btn_popup_design"
+                android:foreground="@drawable/btn_effect"
+                android:textColor="@color/popup_btn_text"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                app:elevation="0dp"
+                app:layout_constraintStart_toEndOf="@id/popupBtnDivisor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="HardcodedText"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

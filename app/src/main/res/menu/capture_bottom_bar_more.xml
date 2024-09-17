@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group0">
+        <item
+            android:id="@+id/menuRemove"
+            android:title="@string/bottom_bar_more_remove" />
+
+        <item
+            android:id="@+id/menuRename"
+            android:title="@string/bottom_bar_more_rename" />
+
+        <item
+            android:id="@+id/menuOpenWith"
+            android:title="@string/bottom_bar_more_open_with" />
+    </group>
+
+    <group android:id="@+id/groupExtras">
+        <item
+            android:id="@+id/menuShowExtra"
+            android:title="@string/bottom_bar_more_show_extra" />
+
+        <item
+            android:id="@+id/menuDeleteExtra"
+            android:title="@string/bottom_bar_more_delete_extra" />
+    </group>
+</menu>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="popup_max_height_percentage">80</integer>
+    <integer name="popup_animation_duration_in">150</integer>
+    <integer name="popup_animation_duration_out">150</integer>
+
+
+</resources>

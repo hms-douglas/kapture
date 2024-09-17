@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/popup_background_transparent"
+    android:id="@+id/popupContainer">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/popup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/popup_padding"
+        android:layout_margin="@dimen/popup_margin"
+        android:background="@drawable/popup_background"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/popupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textSize="@dimen/popup_title"
+            android:textStyle="bold"
+            android:textColor="@color/popup_title"
+            android:background="@drawable/popup_background"
+            app:layout_constraintBottom_toTopOf="@id/popupText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/popupText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/popup_list_margin_top_bottom"
+            android:layout_marginBottom="@dimen/popup_list_margin_top_bottom"
+            android:paddingBottom="@dimen/popup_list_margin_top_bottom"
+            android:text="Text"
+            android:textColor="@color/popup_title"
+            app:layout_constraintTop_toBottomOf="@+id/popupTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/popupBtnContainer"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/popupBtnContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/popupBtnNo"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/popup_button_height"
+                android:text="No"
+                android:textSize="@dimen/popup_button_text"
+                android:background="@drawable/btn_popup_design"
+                android:foreground="@drawable/btn_effect"
+                android:textColor="@color/popup_btn_text"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                app:elevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/popupBtnDivisor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="HardcodedText"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/popupBtnDivisor"
+                android:layout_width="@dimen/popup_button_divisor_width"
+                android:layout_height="0dp"
+                android:background="@color/popup_btn_divisor"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/popupBtnNo"
+                app:layout_constraintStart_toEndOf="@id/popupBtnNo"
+                app:layout_constraintEnd_toStartOf="@id/popupBtnYes"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/popupBtnYes"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/popup_button_height"
+                android:text="Yes"
+                android:textSize="@dimen/popup_button_text"
+                android:background="@drawable/btn_popup_design"
+                android:foreground="@drawable/btn_effect"
+                android:textColor="@color/popup_btn_text"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                app:elevation="0dp"
+                app:layout_constraintStart_toEndOf="@id/popupBtnDivisor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="HardcodedText"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

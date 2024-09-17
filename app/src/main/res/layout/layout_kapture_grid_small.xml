@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/kapture_grid_small_height"
+    android:padding="@dimen/kapture_grid_padding"
+    android:foreground="@drawable/list_item_effect"
+    android:background="@color/activity_background"
+    android:clickable="true"
+    android:id="@+id/kapture">
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/icon_kapture_image_helper"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/name"/>
+
+    <ImageView
+        android:id="@+id/select"
+        android:layout_width="@dimen/kapture_grid_select_icon"
+        android:layout_height="@dimen/kapture_grid_select_icon"
+        android:src="@drawable/checkbox_off"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textSize="@dimen/kapture_grid_title"
+        android:textColor="@color/kapture_title"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/thumbnail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textSize="@dimen/kapture_grid_sub_title"
+        android:textColor="@color/kapture_grid_time"
+        android:background="@drawable/grid_time_background"
+        android:paddingStart="@dimen/kapture_grid_time_padding_sides"
+        android:paddingEnd="@dimen/kapture_grid_time_padding_sides"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/thumbnail"
+        app:layout_constraintBottom_toBottomOf="@id/thumbnail"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

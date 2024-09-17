@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        app:expanded="false"
+        android:background="@color/activity_background">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/activity_background"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tool_bar_height"
+                android:layout_gravity="bottom"
+                android:contentInsetLeft="0dp"
+                android:contentInsetStart="0dp"
+                android:contentInsetRight="0dp"
+                android:contentInsetEnd="0dp"
+                android:paddingTop="@dimen/tool_bar_padding_top"
+                android:paddingEnd="@dimen/tool_bar_padding_right"
+                android:paddingStart="@dimen/tool_bar_padding_right"
+                android:background="@color/activity_background"
+                app:layout_collapseMode="pin"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp">
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_gravity="start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/activity_background"
+                    android:src="@drawable/icon_tool_bar_back"
+                    android:padding="@dimen/tool_bar_btn_padding"
+                    android:foreground="@drawable/btn_floating_effect"/>
+
+                <TextView
+                    android:id="@+id/titleCollapsed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_credits"
+                    android:textColor="@color/app_bar_font_title"
+                    android:textSize="@dimen/app_bar_font_title_collapsed"
+                    android:textStyle="bold" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titleAndSubtitleContainer"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:id="@+id/titleExpanded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_credits"
+                    android:gravity="center"
+                    android:textSize="@dimen/app_bar_font_title_expanded"
+                    android:textColor="@color/app_bar_font_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/credits_padding"
+        android:paddingEnd="@dimen/credits_padding"
+        android:paddingTop="@dimen/credits_padding"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/credits"
+                android:textColor="@color/credits_text"
+                android:textSize="@dimen/credits_text"
+                android:autoLink="web"
+                android:textIsSelectable="true"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_btn_margin_bottom_screen"
+                android:paddingBottom="@dimen/default_btn_margin_bottom_screen">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintWidth_percent="@dimen/default_btn_width_percentage"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseMit"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_mit"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_effect"
+                        android:textColor="@color/popup_btn_text"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseApacheV2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_apache_v2"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_effect"
+                        android:textColor="@color/popup_btn_text"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseLGPLv3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_lgpl_v3"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_effect"
+                        android:textColor="@color/popup_btn_text"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseLotties"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_lottie"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_effect"
+                        android:textColor="@color/popup_btn_text"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"/>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

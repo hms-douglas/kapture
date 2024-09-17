@@ -1,0 +1,38 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.ScreenRecorder" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">@color/activity_background</item>
+
+        <item name="android:colorPrimary">@color/main</item>
+        <item name="android:colorAccent">@color/main</item>
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+        <item name="android:textColorHighlight">@color/textColorHighlight</item>
+        <item name="colorAccent">@color/main</item>
+    </style>
+
+    <style name="Theme.Translucent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+        <item name="android:textColorHighlight">@color/main_darker</item>
+        <item name="colorAccent">@color/main</item>
+    </style>
+
+    <style name="Theme.FullScreen" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">always</item>
+    </style>
+
+    <style name="Theme.DialogPermission" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+
+    <style name="KPopupMenu" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/menu_background</item>
+        <item name="android:dropDownHorizontalOffset">@dimen/menu_horizontal_offset</item>
+    </style>
+
+    <style name="SeekBar" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+</resources>

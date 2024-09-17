@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true">
+
+    <translate
+        android:duration="@integer/popup_animation_duration_out"
+        android:fromYDelta="0"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:toYDelta="@dimen/popup_margin"/>
+
+    <alpha
+        android:duration="@integer/popup_animation_duration_out"
+        android:fromAlpha="1.0"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:toAlpha="0.0"/>
+</set>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background_transparent"
+    android:id="@+id/window">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/popup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/popup_padding"
+        android:paddingStart="@dimen/popup_padding"
+        android:paddingEnd="@dimen/popup_padding"
+        android:paddingBottom="@dimen/popup_margin"
+        android:layout_margin="@dimen/popup_margin"
+        android:background="@drawable/popup_background"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/info2">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToggle"
+                android:layout_width="@dimen/audio_option_button_main_size"
+                android:layout_height="@dimen/audio_option_button_main_size"
+                android:background="@drawable/icon_viewer_audio_play"
+                android:foreground="@drawable/btn_viewer_effect"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/fileName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="name.mp3"
+                android:textSize="@dimen/audio_option_title"
+                android:textColor="@color/audio_option_title"
+                android:layout_marginStart="@dimen/audio_option_margin_sides"
+                android:layout_marginEnd="@dimen/audio_option_margin_sides"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnToggle"
+                app:layout_constraintEnd_toStartOf="@id/btnClose"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnClose"
+                android:layout_width="@dimen/audio_option_button_close_size"
+                android:layout_height="@dimen/audio_option_button_close_size"
+                android:background="@drawable/icon_viewer_audio_close"
+                android:foreground="@drawable/btn_viewer_effect"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/info1"
+            app:layout_constraintBottom_toTopOf="@id/timeBar">
+
+            <TextView
+                android:id="@+id/currentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="00:00"
+                android:textSize="@dimen/audio_option_sub_title"
+                android:textColor="@color/audio_option_sub_title"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="@dimen/audio_option_sub_title_margin_top"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/maxTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="00:00"
+                android:textSize="@dimen/audio_option_sub_title"
+                android:textColor="@color/audio_option_sub_title"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="@dimen/audio_option_sub_title_margin_top"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/timeBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/SeekBar"
+            app:labelBehavior="gone"
+            app:tickVisible="false"
+            app:haloColor="#00000000"
+            app:thumbColor="@color/audio_option_seekbar_thumb"
+            app:trackColorActive="@color/audio_option_seekbar_progress"
+            app:trackColorInactive="@color/audio_option_seekbar_progress_background"
+            app:trackHeight="@dimen/audio_option_seekbar_height"
+            app:layout_constraintTop_toBottomOf="@id/info2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

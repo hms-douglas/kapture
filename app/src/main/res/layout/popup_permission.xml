@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/permission_space_sides"
+        android:layout_marginEnd="@dimen/permission_space_sides"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/permission_font_title_height"
+            android:layout_marginBottom="@dimen/permission_font_title_margin"
+            android:gravity="center"
+            android:text="@string/permission_title"
+            android:textColor="@color/permission_main_text"
+            android:textSize="@dimen/permission_font_title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/permission_required"
+            android:textColor="@color/permission_main_text"
+            android:textSize="@dimen/permission_font_subtitle"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/permission_margin_1">
+
+            <ImageView
+                android:id="@+id/icon_mic"
+                android:layout_width="@dimen/permission_icon"
+                android:layout_height="@dimen/permission_icon"
+                android:src="@drawable/icon_permission_microphone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_mic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_mic_title"
+                android:textColor="@color/permission_main_text"
+                android:textSize="@dimen/permission_font_title_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_mic"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/desc_mic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_mic_description"
+                android:textColor="@color/permission_secondary_text"
+                android:textSize="@dimen/permission_font_subtitle_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_mic"
+                app:layout_constraintTop_toBottomOf="@id/title_mic" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/permission_margin_1">
+
+            <ImageView
+                android:id="@+id/icon_notif"
+                android:layout_width="@dimen/permission_icon"
+                android:layout_height="@dimen/permission_icon"
+                android:padding="4dp"
+                android:src="@drawable/icon_permission_notification"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_notif"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_notification_title"
+                android:textColor="@color/permission_main_text"
+                android:textSize="@dimen/permission_font_title_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_notif"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/notif_mic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_notification_description"
+                android:textColor="@color/permission_secondary_text"
+                android:textSize="@dimen/permission_font_subtitle_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_notif"
+                app:layout_constraintTop_toBottomOf="@id/title_notif" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/permission_margin_1">
+
+            <ImageView
+                android:id="@+id/icon_storage"
+                android:layout_width="@dimen/permission_icon"
+                android:layout_height="@dimen/permission_icon"
+                android:padding="4dp"
+                android:src="@drawable/icon_permission_storage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_storage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_storage_title"
+                android:textColor="@color/permission_main_text"
+                android:textSize="@dimen/permission_font_title_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_storage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/notif_storage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_storage_description"
+                android:textColor="@color/permission_secondary_text"
+                android:textSize="@dimen/permission_font_subtitle_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_storage"
+                app:layout_constraintTop_toBottomOf="@id/title_storage" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/permission_margin_1">
+
+            <ImageView
+                android:id="@+id/icon_security"
+                android:layout_width="@dimen/permission_icon"
+                android:layout_height="@dimen/permission_icon"
+                android:padding="4dp"
+                android:src="@drawable/icon_permission_security"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_security"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_security_title"
+                android:textColor="@color/permission_main_text"
+                android:textSize="@dimen/permission_font_title_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_security"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/notif_security"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_security_description"
+                android:textColor="@color/permission_secondary_text"
+                android:textSize="@dimen/permission_font_subtitle_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_security"
+                app:layout_constraintTop_toBottomOf="@id/title_security" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_btn_margin_bottom_screen"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="@dimen/default_btn_width_percentage">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_btn_height"
+            android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+            android:background="@drawable/btn_design"
+            android:backgroundTint="@color/btn_main_background"
+            android:ellipsize="end"
+            android:foreground="@drawable/btn_effect"
+            android:lines="1"
+            android:text="@string/permission_button_continue"
+            android:textAllCaps="false"
+            android:textColor="@color/btn_main_color"
+            android:textSize="@dimen/default_font_button"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

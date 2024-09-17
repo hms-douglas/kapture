@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lang_auto">Automático</string>
+
+    <string name="quick_settings_tile_start_recording">Iniciar captura de tela</string>
+    <string name="quick_settings_tile_stop_recording">Parar captura de tela</string>
+    <string name="quick_settings_tile_processing">Processando a captura</string>
+
+    <string name="notification_channel_name_capturing">Captura</string>
+    <string name="notification_recording">Capturando</string>
+    <string name="notification_tap_stop">Clique aqui para parar a captura.</string>
+
+    <string name="notification_saved">Captura salva</string>
+    <string name="notification_tap_show">Clique aqui para ver a captura.</string>
+
+    <string name="notification_processing">Processando captura</string>
+    <string name="notification_notification_processing_message">Aguarde enquanto a captura é processada!</string>
+
+    <string name="notification_btn_play">Reproduzir</string>
+    <string name="notification_btn_share">Compartilhar</string>
+    <string name="notification_btn_delete">Apagar</string>
+    <string name="notification_btn_extra">Extra</string>
+
+    <string name="notification_channel_name_captured">Capturado</string>
+
+    <string name="permission_title">Kapture utiliza as seguintes permissões</string>
+    <string name="permission_required">Permissões obrigatórias</string>
+
+    <string name="permission_mic_title">Microfone</string>
+    <string name="permission_mic_description">Utilizada na captura do microfone e do som interno.</string>
+
+    <string name="permission_notification_title">Notificações</string>
+    <string name="permission_notification_description">Utilizada para iniciar o serviço de captura, controlar a captura enquanto o app estiver em segundo plano e para exibir uma notificação quando a captura terminar.</string>
+
+    <string name="permission_storage_title">Armazenamento</string>
+    <string name="permission_storage_description">Utilizada para criar e gerenciar os arquivos de captura.</string>
+    <string name="permission_storage_popup">Vá para as configurações do seu celular e conceda a permissão de TODOS OS ARQUIVOS.</string>
+
+    <string name="permission_security_title">Escrever configurações de segurança</string>
+    <string name="permission_security_description">Utilizada para compartilhar o microfone com outros apps e para iniciar automaticamente o serviço de acessibilidade.</string>
+    <string name="permission_security_popup">Você tem três opcões:\n\n1 - Iniciar o serviço manualmente e mantê-lo rodando (consome mais bateria, mas permite iniciar uma captura sem ser redirecionado para o menu de acessibilidade);\n\n2 - Iniciar e parar o serviço manualmente toda vez (você será redirecionado para o menu de acessibilidade de o serviço estiver desativado);\n\n3 - Permitir que o app inicie e pare o serviço automaticamente, executando o comando: \n\n\"adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS\".</string>
+
+    <string name="permission_button_continue">Continar</string>
+    <string name="permission_button_close">Fechar app</string>
+    <string name="permission_button_settings">Configurações</string>
+
+    <string name="permission_button_continue_to_app">Voltar para o app</string>
+    <string name="permission_button_open_accessibility">Abrir acessibilidade</string>
+
+    <string name="permission_missing_popup">Alguma permissão está faltando!</string>
+
+    <string name="permission_required_popup">Conceda acesso a todas as permissões para usar o app. Uma vez concedidas reinicie o app.</string>
+    <string name="toast_error_viewer_external">Nenhum visualizador externo encontrado!</string>
+    <string name="toast_error_file_not_found">Arquivo não encontrado!</string>
+    <string name="toast_error_no_extras_found">Nenhum extra encontrado!</string>
+    <string name="toast_error_generic">Algo deu errado!</string>
+    <string name="toast_error_access_required">O acesso é necessário!</string>
+    <string name="toast_error_check_update">Não foi possivel procurar por novas versões. Tente manualmente!</string>
+    <string name="toast_error_download">Não foi possivel baixar o arquivo. Tente manualmente!</string>
+    <string name="toast_info_enable_accessibility_manually">Não foi possivel abrir o menu de acessibilidate. Tente manualmente!</string>
+    <string name="toast_info_accessibility_manually">Inicie o serviço de acessibilidate primeiro!</string>
+    <string name="toast_info_while_recording">Não é possível alterar as configurações enquanto está capturando!</string>
+    <string name="toast_info_success_generic">Feito!</string>
+
+    <string name="file_name">captura</string>
+    <string name="file_name_extra_mp3_audio">áudio</string>
+    <string name="file_name_extra_mp3_internal">áudio interno</string>
+    <string name="file_name_extra_mp3_mic">áudio do microfone</string>
+    <string name="file_name_extra_mp4_no_audio">sem áudio</string>
+    <string name="file_name_extra_mp4_only_mic">apenas áudio do microfone</string>
+    <string name="file_name_extra_mp4_only_internal">apenas áudio interno</string>
+
+    <string name="popup_title_extra">Extra</string>
+
+    <string name="popup_extra_mp3_audio">Áudio</string>
+    <string name="popup_extra_mp3_internal">Áudio: internal</string>
+    <string name="popup_extra_mp3_mic">Áudio: microphone</string>
+    <string name="popup_extra_mp4_no_audio">Vídeo: sem áudio</string>
+    <string name="popup_extra_mp4_only_mic">Vídeo: apenas microfone</string>
+    <string name="popup_extra_mp4_only_internal">Vídeo: apenas interno</string>
+
+    <string name="popup_delete_text_1">Você deseja apagar o seguinte arquivo:</string>
+    <string name="popup_delete_text_2">Você deseja apagar o(s) arquivo(s) selecionado(s)?</string>
+    <string name="popup_delete_text_3">Você deseja apagar os extras do(s) arquivo(s) selecionado(s)?</string>
+
+    <string name="popup_remove">Você deseja remover o(s) arquivo(s) selecionado(s) do app? Nenhum arquivo será apagado do seu celular.</string>
+
+    <string name="popup_title_sort_by">Filtar por</string>
+    <string name="popup_sort_by_time">Data da captura</string>
+    <string name="popup_sort_by_duration">Duração</string>
+    <string name="popup_sort_by_size">Tamanho</string>
+    <string name="popup_sort_by_name">Nome</string>
+
+    <string name="popup_title_order">Ordem</string>
+    <string name="popup_order_asc">Crescente</string>
+    <string name="popup_order_desc">Decrescente</string>
+
+    <string name="title_captures">Kapturas</string>
+    <string name="title_settings">Configurações</string>
+
+    <string name="setting_group_folder">Pasta</string>
+
+    <string name="setting_folder_location">Local</string>
+
+    <string name="setting_group_video">Vídeo</string>
+
+    <string name="setting_video_resolution">Resolução</string>
+    <string name="setting_video_resolution_auto">Automática</string>
+
+    <string name="setting_video_quality">Qualidade</string>
+
+    <string name="setting_video_fps">FPS</string>
+
+    <string name="setting_video_file_format">Formato de saída</string>
+    <string name="setting_video_file_format_description">O formato do arquivo de vídeo de saída.</string>
+    <string name="setting_video_file_format_mp4">MP4</string>
+
+    <string name="setting_group_mic">Microfone</string>
+
+    <string name="setting_is_mic_capture">Capturar</string>
+    <string name="setting_is_mic_volume">Volume</string>
+    <string name="setting_is_mic_volume_description">Em alguns casos, enquanto compartilhando o microfone, o volume do áudio pode ser reduzido ou aumentado. Essa opção tenta compensar o volume capturado.</string>
+    <string name="setting_mic_volume_factor">Volume (valor)</string>
+
+    <string name="setting_group_internal">Áudio interno</string>
+
+    <string name="setting_is_capture_internal">Capturar</string>
+    <string name="setting_is_capture_internal_description">Alguns apps não permitem a captura do áudio, nesses casos nenhum som será capturado.</string>
+
+    <string name="setting_is_capture_internal_stereo">Estéreo</string>
+
+    <string name="setting_group_floating_ui">Interface flutuante</string>
+    <string name="setting_is_show_floating_buttons">Mostrar</string>
+    <string name="setting_is_show_floating_buttons_description">Botão de parar.</string>
+
+    <string name="setting_group_extra_video">Gerar arquivos extras de vídeo</string>
+
+    <string name="setting_extra_vid_no_audio">Sem áudio</string>
+
+    <string name="setting_extra_vid_no_audio_description">Apenas o video. Somente é gerado se estiver capturando algum áudio.</string>
+    <string name="setting_extra_vid_internal">Apenas interno</string>
+
+    <string name="setting_extra_vid_internal_description">Vídeo com o áudio interno apenas. Somente gerado se estiver capturando o microfone.</string>
+    <string name="setting_extra_vid_mic">Apenas microfone</string>
+    <string name="setting_extra_vid_mic_description">Vídeo com o áudio do microfone apenas. Somente gerado se estiver capturando o interno.</string>
+
+    <string name="setting_group_extra_audio">Gerar arquivos extras de áudio</string>
+
+    <string name="setting_extra_audio">Áudio</string>
+    <string name="setting_extra_audio_description">Inclui ambos os audios internos e de microfone. Somenge gerado se estiver capturando um dos dois.</string>
+
+    <string name="setting_extra_internal">Interno apenas</string>
+    <string name="setting_extra_internal_description">Inclui o audio interno apenas. Somenge gerado se estiver capturando áudio interno.</string>
+
+    <string name="setting_extra_mic">Microfone apenas</string>
+    <string name="setting_extra_mic_description">Inclui o audio do microfone apenas. Somenge gerado se estiver capturando o microfone.</string>
+
+    <string name="setting_audio_file_format">Formato de saída</string>
+    <string name="setting_audio_file_format_description">O formato de saída dos arquivo de áudio.</string>
+    <string name="setting_audio_file_format_mp3">MP3</string>
+
+    <string name="setting_group_app">App</string>
+    <string name="setting_app_language">Idioma</string>
+    <string name="setting_app_theme">Tema</string>
+
+    <string name="setting_app_theme_auto">Automático</string>
+    <string name="setting_app_theme_dark">Escuro</string>
+    <string name="setting_app_theme_light">Claro</string>
+
+    <string name="popup_btn_cancel">Cancelar</string>
+    <string name="popup_btn_ok">Ok</string>
+    <string name="popup_btn_close">Fechar</string>
+    <string name="popup_btn_download">Baixar</string>
+    <string name="popup_btn_confirm">Confirmar</string>
+    <string name="popup_btn_reset">Restaurar</string>
+    <string name="popup_btn_delete">Apagar</string>
+    <string name="popup_btn_done">Feito</string>
+    <string name="popup_btn_remove">Remover</string>
+    <string name="popup_btn_rename">Renomear</string>
+
+    <string name="internal_storage">Armazenamento interno</string>
+
+    <string name="menu_capture_refresh">Atualizar</string>
+    <string name="menu_capture_select_all">Selecionar todos</string>
+    <string name="menu_capture_sort">Ordenar</string>
+
+    <string name="menu_settings_clear_token">Limpar token de captura</string>
+    <string name="menu_settings_open_accessibility">Abrir acessibilidade</string>
+    <string name="menu_settings_show_command">Mostrar comando</string>
+    <string name="menu_about">Sobre</string>
+
+    <string name="menu_settings_reset_settings">Restaurar configurações</string>
+    <string name="menu_settings_reset_settings_confirm">@string/popup_btn_confirm</string>
+    <string name="menu_settings_reset_settings_confirm_description">Restaurar todas as configurações para os valores iniciais?</string>
+
+    <string name="command">adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS</string>
+
+    <string name="about_made_by">Kapture foi feito por DS.</string>
+
+    <string name="about_version">Versão</string>
+    <string name="about_version_available">Nova versão disponível:</string>
+    <string name="about_version_unknown">Versão desconhecida.</string>
+    <string name="about_version_latest">A versão mais recente está instalada.</string>
+
+    <string name="about_btn_credits">Créditos</string>
+    <string name="about_btn_github">Projeto no Github</string>
+    <string name="about_btn_update">Atualizar</string>
+    <string name="about_btn_update_description">Baixe o \".apk\" mais recente e instale-o para atualizar o app.</string>
+
+    <string name="title_credits">Créditos</string>
+
+    <string name="credits">Este app foi feito por <b>Douglas Silva</b> apenas.
+    \n\nOs recursos utilizados estão listados abaixo. <i>As licenças podem ser acessada no final da página.</i>
+    \n\n\u2022 Interface (UI) inpirada na OneUI da Samsung, documentação disponível em <a href="https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf">https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf</a>.
+    \n\n\u2022 Alguns icones são do <b>Google Fonts</b>, disponível em <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a>, sob a Licença Apache versão 2.0.
+    \n\n\u2022 Alguns icones são do <b>OneUIProject</b>, disponível em <a href="https://github.com/OneUIProject/oneui-icons">https://github.com/OneUIProject/oneui-icons</a>, sob a Licença MIT.
+    \n\n\u2022 \"FFmpegKit\" de <b>arthenica</b>, disponível, junto com os guias de instalação e documentações, em <a href="https://arthenica.github.io/ffmpeg-kit/">https://arthenica.github.io/ffmpeg-kit/</a>, sob a licença LGPL v3.0.
+    \n\n\u2022 \"lottie-android\" de <b>LottieFiles</b>, disponível em <a href="https://github.com/LottieFiles/lottie-android">https://github.com/LottieFiles/lottie-android</a>, sob a Licença Apache versão 2.0.
+    \n\n\u2022 \"Free Loader Animation\", animação, de <b>Turlo</b>, disponível em <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, sob a Licença Lottie Simples.
+    </string>
+
+    <string name="license_mit">" Licença MIT"</string>
+    <string name="license_apache_v2">Licença Apache Versão 2.0</string>
+    <string name="license_lgpl_v3">LGPL v3.0</string>
+    <string name="license_lottie">Licença Lottie Simples</string>
+
+    <string name="no_captures">Não há capturas</string>
+
+    <string name="selected">Selecionado</string>
+    <string name="selected_plural">Selecionados</string>
+
+    <string name="bottom_bar_share">Compartilhar</string>
+    <string name="bottom_bar_delete">Apagar</string>
+    <string name="bottom_bar_more">Mais</string>
+
+    <string name="bottom_bar_more_rename">Renomear</string>
+    <string name="bottom_bar_more_remove">Remover</string>
+    <string name="bottom_bar_more_show_extra">Mostrar extras</string>
+    <string name="bottom_bar_more_delete_extra">Apagar extras</string>
+    <string name="bottom_bar_more_open_with">Abrir com</string>
+
+    <string name="search_hint">Pesquisar</string>
+</resources>

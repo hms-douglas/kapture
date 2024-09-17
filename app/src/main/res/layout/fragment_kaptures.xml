@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    android:paddingLeft="@dimen/fragment_padding_sides"
+    android:paddingRight="@dimen/fragment_padding_sides">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        app:expanded="false"
+        android:background="@color/activity_background">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/activity_background"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tool_bar_height"
+                android:layout_gravity="bottom"
+                android:contentInsetLeft="0dp"
+                android:contentInsetStart="0dp"
+                android:contentInsetRight="0dp"
+                android:contentInsetEnd="0dp"
+                android:paddingTop="@dimen/tool_bar_padding_top"
+                android:paddingEnd="@dimen/tool_bar_padding_right"
+                android:paddingStart="@dimen/tool_bar_padding_right"
+                android:background="@color/activity_background"
+                app:layout_collapseMode="pin"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/selectedContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/activity_background"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/checkbox_off"
+                        android:padding="0dp"
+                        android:drawablePadding="10dp"
+                        android:text="Select"
+                        android:textSize="@dimen/select_text"
+                        android:textStyle="bold"
+                        android:textColor="@color/select_text"
+                        android:textAllCaps="false"
+                        android:paddingEnd="5dp"
+                        android:background="@android:color/transparent"
+                        android:foreground="@drawable/btn_effect"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/searchContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/activity_background"
+                    android:visibility="gone">
+
+                    <ImageButton
+                        android:id="@+id/btnBack"
+                        android:layout_gravity="start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/activity_background"
+                        android:src="@drawable/icon_tool_bar_back"
+                        android:padding="@dimen/tool_bar_btn_padding"
+                        android:foreground="@drawable/btn_floating_effect"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <EditText
+                        android:id="@+id/searchInput"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:textColor="@color/input_text"
+                        android:inputType="text"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/search_hint"
+                        android:textColorHint="@color/hint_color"
+                        app:layout_constraintTop_toTopOf="@id/btnBack"
+                        app:layout_constraintStart_toEndOf="@id/btnBack"
+                        app:layout_constraintEnd_toStartOf="@id/btnMicClear"
+                        app:layout_constraintBottom_toBottomOf="@id/btnBack"/>
+
+                    <ImageButton
+                        android:id="@+id/btnMicClear"
+                        android:layout_gravity="start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/activity_background"
+                        android:src="@drawable/icon_tool_bar_microphone"
+                        android:padding="@dimen/tool_bar_btn_padding"
+                        android:foreground="@drawable/btn_floating_effect"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/toolbarBtns"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end">
+
+                    <ImageButton
+                        android:id="@+id/btnGrid"
+                        android:layout_gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/activity_background"
+                        android:src="@drawable/icon_tool_bar_grid_big"
+                        android:padding="@dimen/tool_bar_btn_padding"
+                        android:foreground="@drawable/btn_floating_effect"/>
+
+                    <ImageButton
+                        android:id="@+id/btnSearch"
+                        android:layout_gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/activity_background"
+                        android:src="@drawable/icon_tool_bar_search"
+                        android:padding="@dimen/tool_bar_btn_padding"
+                        android:foreground="@drawable/btn_floating_effect"/>
+
+                    <ImageButton
+                        android:id="@+id/btnMore"
+                        android:layout_gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/activity_background"
+                        android:src="@drawable/icon_tool_bar_more"
+                        android:padding="@dimen/tool_bar_btn_padding"
+                        android:foreground="@drawable/btn_floating_effect"/>
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titleAndSubtitleContainer"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/titleAndSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/titleExpanded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_captures"
+                        android:gravity="center"
+                        android:textSize="@dimen/app_bar_font_title_expanded"
+                        android:textColor="@color/app_bar_font_title"
+                        app:layout_constraintBottom_toTopOf="@id/subtitleExpanded"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/subtitleExpanded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="@dimen/app_bar_font_sub_title_expanded"
+                        android:textColor="@color/app_bar_font_sub_title_expanded"
+                        android:layout_marginTop="@dimen/app_bar_font_sub_title_expanded_marign_top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleExpanded"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"/>
+            </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startCapturing"
+        android:layout_width="@dimen/floating_btn_size"
+        android:layout_height="@dimen/floating_btn_size"
+        android:background="@drawable/btn_floating_background_start"
+        android:layout_margin="@dimen/floating_btn_margin"
+        android:foreground="@drawable/btn_floating_effect"
+        android:layout_gravity="bottom|end"
+        app:elevation="@dimen/floating_btn_elevation"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
