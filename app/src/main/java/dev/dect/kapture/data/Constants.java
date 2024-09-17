@@ -9,7 +9,7 @@ import dev.dect.kapture.R;
 public class Constants {
     public static final String
         GITHUB_REPOSITORY_URL = "https://github.com/hms-douglas/kapture",
-        GITHUB_PROJECT_LATEST_VERSION_URL = GITHUB_REPOSITORY_URL + "/raw/main/dist/latest.json",
+        GITHUB_PROJECT_LATEST_VERSION_URL = GITHUB_REPOSITORY_URL + "/raw/master/dist/latest.json",
         GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_CODE = "versionCode",
         GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_NAME = "versionName",
         GITHUB_PROJECT_LATEST_VERSION_TAG_LINK = "link",
