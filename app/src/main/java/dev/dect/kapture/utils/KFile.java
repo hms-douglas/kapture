@@ -42,11 +42,11 @@ public class KFile {
         sp.edit().putInt(Constants.SP_KEY_LAST_FILE_ID, fileId).apply();
 
         final String fileName =
-                String.format(Locale.getDefault(), "%03d", fileId)
-                + FILE_SEPARATOR
-                + getDefaultKaptureFileName(ctx)
-                + FILE_SEPARATOR
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
+            String.format(Locale.getDefault(), "%03d", fileId)
+            + FILE_SEPARATOR
+            + getDefaultKaptureFileName(ctx)
+            + FILE_SEPARATOR
+            + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
 
         return new File(ks.getSavingLocationFile(), fileName + VIDEO_EXTENSION);
     }

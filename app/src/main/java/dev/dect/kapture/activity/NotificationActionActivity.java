@@ -45,6 +45,7 @@ public class NotificationActionActivity extends AppCompatActivity {
 
                 case Constants.NOTIFICATION_CAPTURED_ACTION_SHARE:
                     KFile.shareFile(this, kapture.getLocation());
+                    finish();
                     break;
 
                 case Constants.NOTIFICATION_CAPTURED_ACTION_DELETE:
@@ -69,7 +70,7 @@ public class NotificationActionActivity extends AppCompatActivity {
                             finish();
                         },
                         R.string.popup_btn_cancel,
-                        null,
+                        this::finish,
                         false,
                         false,
                         true

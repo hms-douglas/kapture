@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/popup_background_transparent"
+    android:id="@+id/popupContainer">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/popup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/popup_padding"
+        android:layout_margin="@dimen/popup_margin"
+        android:background="@drawable/popup_background"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/popup_list_margin_top_bottom"
+            android:layout_marginBottom="@dimen/popup_list_margin_top_bottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/popupBtnStop"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/icon_wifi_share_popup"
+                android:src="@drawable/icon_wifi_share"/>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/popup_wifi_share_title"
+                android:textSize="@dimen/popup_title"
+                android:textStyle="bold"
+                android:textColor="@color/popup_title"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/ip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/popup_wifi_share_ip"
+                android:textStyle="bold"
+                android:textColor="@color/main"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/popup_wifi_share_space"
+                android:layout_marginBottom="@dimen/popup_wifi_share_space"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/popupBtnStop"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/popup_button_height"
+            android:text="@string/popup_btn_stop"
+            android:textSize="@dimen/popup_button_text"
+            android:background="@drawable/btn_popup_design"
+            android:foreground="@drawable/btn_effect"
+            android:textColor="@color/popup_btn_text"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            app:elevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="HardcodedText"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

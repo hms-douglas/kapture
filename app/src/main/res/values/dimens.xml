@@ -164,4 +164,10 @@
     <dimen name="input_border_width">2dp</dimen>
 
     <dimen name="no_captures">@dimen/default_font_secondary</dimen>
+
+    <dimen name="icon_wifi_share_popup">90dp</dimen>
+    <dimen name="popup_wifi_share_ip">@dimen/default_font_title</dimen>
+    <dimen name="popup_wifi_share_name">@dimen/default_font</dimen>
+    <dimen name="popup_wifi_share_space">28dp</dimen>
+
 </resources>

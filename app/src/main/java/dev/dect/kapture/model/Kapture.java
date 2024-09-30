@@ -188,6 +188,38 @@ public class Kapture {
             this.TYPE = type;
         }
 
+        public String getTypeName(Context ctx) {
+            String name = "";
+
+            switch(TYPE) {
+                case Kapture.Extra.EXTRA_MP3_AUDIO:
+                    name = ctx.getString(R.string.popup_extra_mp3_audio);
+                    break;
+
+                case Kapture.Extra.EXTRA_MP3_INTERNAL_ONLY:
+                    name = ctx.getString(R.string.popup_extra_mp3_internal);
+                    break;
+
+                case Kapture.Extra.EXTRA_MP3_MIC_ONLY:
+                    name = ctx.getString(R.string.popup_extra_mp3_mic);
+                    break;
+
+                case Kapture.Extra.EXTRA_MP4_NO_AUDIO:
+                    name = ctx.getString(R.string.popup_extra_mp4_no_audio);
+                    break;
+
+                case Kapture.Extra.EXTRA_MP4_INTERNAL_ONLY:
+                    name = ctx.getString(R.string.popup_extra_mp4_only_internal);
+                    break;
+
+                case Kapture.Extra.EXTRA_MP4_MIC_ONLY:
+                    name = ctx.getString(R.string.popup_extra_mp4_only_mic);
+                    break;
+            }
+
+            return name;
+        }
+
         public String getFileNameComplement(Context ctx) {
             return getFileNameComplementByType(ctx, TYPE);
         }

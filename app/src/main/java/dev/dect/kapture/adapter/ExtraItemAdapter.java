@@ -104,35 +104,7 @@ public class ExtraItemAdapter extends RecyclerView.Adapter<ExtraItemAdapter.MyVi
             ).show();
         });
 
-        String name = "";
-
-        switch(extra.getType()) {
-            case Kapture.Extra.EXTRA_MP3_AUDIO:
-                name = ctx.getString(R.string.popup_extra_mp3_audio);
-                break;
-
-            case Kapture.Extra.EXTRA_MP3_INTERNAL_ONLY:
-                name = ctx.getString(R.string.popup_extra_mp3_internal);
-                break;
-
-            case Kapture.Extra.EXTRA_MP3_MIC_ONLY:
-                name = ctx.getString(R.string.popup_extra_mp3_mic);
-                break;
-
-            case Kapture.Extra.EXTRA_MP4_NO_AUDIO:
-                name = ctx.getString(R.string.popup_extra_mp4_no_audio);
-                break;
-
-            case Kapture.Extra.EXTRA_MP4_INTERNAL_ONLY:
-                name = ctx.getString(R.string.popup_extra_mp4_only_internal);
-                break;
-
-            case Kapture.Extra.EXTRA_MP4_MIC_ONLY:
-                name = ctx.getString(R.string.popup_extra_mp4_only_mic);
-                break;
-        }
-
-        holder.EL_NAME.setText(Character.toUpperCase(name.charAt(0)) + name.substring(1));
+        holder.EL_NAME.setText(extra.getTypeName(ctx));
     }
 
     @Override

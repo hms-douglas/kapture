@@ -63,6 +63,7 @@ import dev.dect.kapture.popup.DialogPopup;
 import dev.dect.kapture.popup.ExtraPopup;
 import dev.dect.kapture.popup.InputPopup;
 import dev.dect.kapture.popup.SortPopup;
+import dev.dect.kapture.server.WifiShare;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.utils.Utils;
@@ -207,6 +208,7 @@ public class KapturesFragment extends Fragment {
 
                 if(KAPTURES.isEmpty()) {
                     menu.findItem(R.id.menuSelectAll).setEnabled(false);
+                    menu.findItem(R.id.wifiShare).setEnabled(false);
                 }
             }
 
@@ -223,6 +225,8 @@ public class KapturesFragment extends Fragment {
                     selectAll();
                 } else if(id == R.id.menuSort) {
                     new SortPopup(CONTEXT, SORT_BY, SORT_ASC, this::sortBy).show();
+                } else if(id == R.id.wifiShare) {
+                    new WifiShare(CONTEXT, KAPTURES).start();
                 } else if(id == R.id.resetToken) {
                     TokenActivity.clearToken(CONTEXT);
                 } else if(id == R.id.menuOpenAccessibility) {
@@ -679,6 +683,10 @@ public class KapturesFragment extends Fragment {
         }
 
         KFile.shareFiles(CONTEXT, uris);
+    }
+
+    public void wifiShareSelected() {
+        new WifiShare(CONTEXT, getSelected()).start();
     }
 
     public void renameSelected() {

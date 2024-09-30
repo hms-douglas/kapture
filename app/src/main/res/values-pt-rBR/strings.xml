@@ -57,6 +57,7 @@
     <string name="toast_error_access_required">O acesso é necessário!</string>
     <string name="toast_error_check_update">Não foi possivel procurar por novas versões. Tente manualmente!</string>
     <string name="toast_error_download">Não foi possivel baixar o arquivo. Tente manualmente!</string>
+    <string name="toast_error_no_wifi">Conecte-se a um WiFi primeiro!</string>
     <string name="toast_info_enable_accessibility_manually">Não foi possivel abrir o menu de acessibilidate. Tente manualmente!</string>
     <string name="toast_info_accessibility_manually">Inicie o serviço de acessibilidate primeiro!</string>
     <string name="toast_info_while_recording">Não é possível alterar as configurações enquanto está capturando!</string>
@@ -74,7 +75,7 @@
 
     <string name="popup_extra_mp3_audio">Áudio</string>
     <string name="popup_extra_mp3_internal">Áudio: internal</string>
-    <string name="popup_extra_mp3_mic">Áudio: microphone</string>
+    <string name="popup_extra_mp3_mic">Áudio: microfone</string>
     <string name="popup_extra_mp4_no_audio">Vídeo: sem áudio</string>
     <string name="popup_extra_mp4_only_mic">Vídeo: apenas microfone</string>
     <string name="popup_extra_mp4_only_internal">Vídeo: apenas interno</string>
@@ -177,12 +178,14 @@
     <string name="popup_btn_done">Feito</string>
     <string name="popup_btn_remove">Remover</string>
     <string name="popup_btn_rename">Renomear</string>
+    <string name="popup_btn_stop">Parar</string>
 
     <string name="internal_storage">Armazenamento interno</string>
 
     <string name="menu_capture_refresh">Atualizar</string>
     <string name="menu_capture_select_all">Selecionar todos</string>
     <string name="menu_capture_sort">Ordenar</string>
+    <string name="menu_capture_wifi_share">Compartilhar no WiFi</string>
 
     <string name="menu_settings_clear_token">Limpar token de captura</string>
     <string name="menu_settings_open_accessibility">Abrir acessibilidade</string>
@@ -229,6 +232,7 @@
     <string name="selected">Selecionado</string>
     <string name="selected_plural">Selecionados</string>
 
+    <string name="bottom_bar_wifi_share">Compartilhar\nno WiFi</string>
     <string name="bottom_bar_share">Compartilhar</string>
     <string name="bottom_bar_delete">Apagar</string>
     <string name="bottom_bar_more">Mais</string>
@@ -240,4 +244,16 @@
     <string name="bottom_bar_more_open_with">Abrir com</string>
 
     <string name="search_hint">Pesquisar</string>
+
+    <string name="html_403">Proibido: Você não tem permissão para acessar esses arquivos!</string>
+    <string name="html_500">Erro interno do servidor!</string>
+
+    <string name="html_name">Nome</string>
+    <string name="html_date">Data</string>
+    <string name="html_duration">Duração</string>
+    <string name="html_resolution">Resolução</string>
+    <string name="html_size">Tamanho</string>
+
+    <string name="popup_wifi_share_title">Compartilhando</string>
+    <string name="popup_wifi_unknown">Unknown</string>
 </resources>

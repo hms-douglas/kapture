@@ -287,6 +287,8 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btnShare).setOnClickListener((v) -> KAPTURE_FRAGMENT.shareSelected());
 
+        findViewById(R.id.btnWifiShare).setOnClickListener((v) -> KAPTURE_FRAGMENT.wifiShareSelected());
+
         KAPTURE_FRAGMENT.setListener((hasSelection, amountSelected) -> {
             AMOUNT_SELECTED = amountSelected;
 

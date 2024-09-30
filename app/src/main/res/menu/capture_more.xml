@@ -12,6 +12,10 @@
         <item
             android:id="@+id/menuSort"
             android:title="@string/menu_capture_sort" />
+
+        <item
+            android:id="@+id/wifiShare"
+            android:title="@string/menu_capture_wifi_share" />
     </group>
 
     <group android:id="@+id/group1">

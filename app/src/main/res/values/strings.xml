@@ -66,6 +66,7 @@
     <string name="toast_error_access_required">Access is required!</string>
     <string name="toast_error_check_update">Could not check if new versions are available. Do it manually!</string>
     <string name="toast_error_download">Could not download the file. Do it manually!</string>
+    <string name="toast_error_no_wifi">Connect to a WiFi first!</string>
     <string name="toast_info_enable_accessibility_manually">Could not open the accessibility screen. Do it manually!</string>
     <string name="toast_info_accessibility_manually">Start the accessibility service first!</string>
     <string name="toast_info_while_recording">Cannot change settings while recording!</string>
@@ -189,12 +190,14 @@
     <string name="popup_btn_done">Done</string>
     <string name="popup_btn_remove">Remove</string>
     <string name="popup_btn_rename">Rename</string>
+    <string name="popup_btn_stop">Stop</string>
 
     <string name="internal_storage">Internal storage</string>
 
     <string name="menu_capture_refresh">Refresh</string>
     <string name="menu_capture_select_all">Select all</string>
     <string name="menu_capture_sort">Sort</string>
+    <string name="menu_capture_wifi_share">WiFi share</string>
 
     <string name="menu_settings_clear_token">Clear permission token</string>
     <string name="menu_settings_open_accessibility">Open accessibility</string>
@@ -231,6 +234,8 @@
     \n\n\u2022 \"Free Loader Animation\" lottie animation by <b>Turlo</b>, available at <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, under the Lottie Simple License.
     </string>
 
+    <!-- TODO ADICIONAR CREDITS nanohttpd -->
+
     <string name="license_mit">MIT License</string>
     <string name="license_apache_v2">Apache License Version 2.0</string>
     <string name="license_lgpl_v3">LGPL v3.0</string>
@@ -241,6 +246,7 @@
     <string name="selected">Selected</string>
     <string name="selected_plural">Selected</string>
 
+    <string name="bottom_bar_wifi_share">@string/menu_capture_wifi_share</string>
     <string name="bottom_bar_share">Share</string>
     <string name="bottom_bar_delete">Delete</string>
     <string name="bottom_bar_more">More</string>
@@ -252,4 +258,16 @@
     <string name="bottom_bar_more_open_with">Open with</string>
 
     <string name="search_hint">Search</string>
+
+    <string name="html_403">Forbidden: You do not have permission to access this file!</string>
+    <string name="html_500">Internal Server Error!</string>
+
+    <string name="html_name">Name</string>
+    <string name="html_date">Date</string>
+    <string name="html_duration">Duration</string>
+    <string name="html_resolution">Resolution</string>
+    <string name="html_size">Size</string>
+
+    <string name="popup_wifi_share_title">Sharing</string>
+    <string name="popup_wifi_unknown">Desconhecido</string>
 </resources>

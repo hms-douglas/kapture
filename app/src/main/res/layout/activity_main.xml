@@ -43,12 +43,25 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center"
-            android:weightSum="3"
+            android:weightSum="4"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnWifiShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/icon_bottom_bar_wifi_share"
+                android:text="@string/bottom_bar_wifi_share"
+                android:textSize="@dimen/bottom_bar_btn_icon_text"
+                android:textColor="@color/bottom_bar_icon_text"
+                android:textAllCaps="false"
+                android:background="@android:color/transparent"
+                android:foreground="@drawable/btn_effect"
+                android:layout_weight="1"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnShare"

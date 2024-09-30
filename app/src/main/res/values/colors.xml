@@ -88,7 +88,7 @@
     <color name="popup_btn_text_dangerous">#DB332A</color>
     <color name="popup_btn_divisor">@color/c4</color>
     <color name="popup_title">@color/c0</color>
-    <color name="popup_text">@color/c4</color>
+    <color name="popup_text">#646464</color>
 
     <color name="input_background">@color/popup_container_background</color>
     <color name="input_border">@color/c0</color>

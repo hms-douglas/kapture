@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -30,6 +31,10 @@ public class Utils {
 
     public static int generateTimeId() {
         return (int) new Date().getTime();
+    }
+
+    public static String intColorToHex(Context ctx, int id) {
+        return String.format("#%06X", (0xFFFFFF & ctx.getColor(id)));
     }
 
     public static class ExternalActivity {
@@ -86,7 +91,6 @@ public class Utils {
     }
 
     public static class Keyboard {
-
         public static void requestShowForInput(EditText editText) {
             editText.requestFocus();
 
