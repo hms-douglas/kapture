@@ -1,4 +1,4 @@
-# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.0.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-113_MB-7C39E0)
+# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.1.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-114_MB-7C39E0)
 Altere o idioma do README: 
 [![en](https://img.shields.io/badge/idioma-en-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/README.md)
 [![pt-br](https://img.shields.io/badge/idioma-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
@@ -22,6 +22,7 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
     <ul>
       <li>Definir resolução;</li>
       <li>Definir qualidate (bit rate / taxa de transferência de bits);</li>
+      <li>Definir orientação;</li>
       <li>Definir FPS.</li>
     </ul>
   </li>
@@ -35,7 +36,14 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
       <li>Aumentar/Diminuir o volume.</li>
     </ul>
   </li>
-  <li>Interface flutuante;</li>
+  <li>Interface flutuante;
+    <ul>
+      <li>Menu (Parar, screenshot, desenhar, minimizar, fechar, tempo, tempo limite, câmera);</li>
+         <li>Câmera (frontal, traseira / estilização);</li>
+         <li>Texto (estilização);</li>
+         <li>Desenho (estilização).</li>
+    </ul>
+  </li>
   <li>Gerar arquivos de vídeo extras:
    <ul>
       <li>Sem áudio;</li>
@@ -62,6 +70,9 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
       <li>Compartilhar</li>
     </ul>
   </li>
+  <li>Compartilhar por WiFi;</li>
+  <li>Contagem regressiva para começar a capturar;</li>
+  <li>Opções de paragem automática;</li>
   <li>Visualizadores internos (reprodutores)
      <ul>
        <li>Reprodutor de áudio;</li>
@@ -110,9 +121,20 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
       <li>android.permission.FOREGROUND_SERVICE</li>
     </ul>
   </li>
-  <li>Internet: Usado para procurar por atualizações (o app não se auto atualiza!) e para abrir links externos:
+  <li>Internet: Usado para procurar por atualizações (o app não se auto atualiza!), para abrir links externos e para compartilhar arquivos por WiFi:
     <ul>
       <li>android.permission.INTERNET</li>
+      <li>android.permission.ACCESS_NETWORK_STATE</li>
+    </ul>
+  </li>
+  <li>Câmera: Usado para mostrar a câmera flutuante:
+    <ul>
+      <li>android.permission.CAMERA</li>
+    </ul>
+  </li>
+  <li>Otimização: Usado como atalho para desativar a otimização da bateria para o app:
+    <ul>
+      <li>android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS</li>
     </ul>
   </li>
 </ul>
@@ -124,24 +146,44 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 #### Opção 2:
 <ul>
-  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1Ex4gYBfK-oUfcAxzxkIJ6gRATiT6GcxB/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
+  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1KZf_e2Z_QKyG7IqygXOb6qPh5va9PUf1/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
   <li>Você pode verificar o link para baixar o .apk de versões anteriores <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">aqui</a>*.</li>
 </ul>
 * Todos os .apks listados aqui foram contruidos por mim, eles não estão minificados e estão hospedados no Google Drive.
-
-##
-### Log
-<b>v1.0.0</b>
-<ul>
-  <li>Lançamento.</li>
-</ul>
+* O Google Play Protect pode impedir de instalar o .apk. Neste caso, desative o Google Play Protect, instale o arquivo e então ative-o novamente.
 
 ##
 ### Doações
 - Caso você queira me apoiar, você pode fazer uma doação utilizando o botão abaixo... Valeu! ❤️
-<a href="https://www.paypal.com/donate/?hosted_button_id=7XGH7WXU5C7K6">
+  <a href="https://www.paypal.com/donate/?hosted_button_id=7XGH7WXU5C7K6">
   <img src="./paypal.png" width="160" height="50"/>
-</a>
+  </a>
+
+##
+### Log
+<b>v1.1.0</b>
+<ul>
+  <li>Correção da ações das notificações não fechando a atividade quando concluidas;</li>
+  <li>Correção do nome do canal de notificação;</li>
+  <li>Correção de tradução;</li>
+  <li>Nova interface do menu flutuante;</li>
+  <li>Câmera flutuante adicionda;</li>
+  <li>Texto flutuante adicionado;</li>
+  <li>Desenho flutuante adicionado;</li>
+  <li>Compartilhar por WiFi adicionado;</li>
+  <li>Contagem regressiva para iniciar a captura adicionado;</li>
+  <li>Opções de parada automática adicionadas;</li>
+  <li>Opção de tirar print (screenshot) enquanto captura adicionado;</li>
+  <li>Opção de ativar/desativar algumas notificações adicionada;</li>
+  <li>Orientação da captura adicionado;</li>
+  <li>Opção de ignorar a otimização de bateria do celular para o app adicionado;</li>
+  <li>Interface atualizada;</li>
+  <li>Créditos atualizado.</li>
+</ul>
+<b>v1.0.0</b>
+<ul>
+  <li>Lançamento.</li>
+</ul>
 
 ##
 ### Licença

@@ -1,4 +1,4 @@
-# Kapture - Screen recorder ![Static Badge](https://img.shields.io/badge/version-v1.0.0-green) [![Static Badge](https://img.shields.io/badge/license-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/apk_size-113_MB-7C39E0)
+# Kapture - Screen recorder ![Static Badge](https://img.shields.io/badge/version-v1.1.0-green) [![Static Badge](https://img.shields.io/badge/license-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/apk_size-114_MB-7C39E0)
 Change README language: 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/hms-douglas/kapture)
 [![pt-br](https://img.shields.io/badge/lang-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
@@ -22,6 +22,7 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
     <ul>
       <li>Set resolution;</li>
       <li>Set quality (bit rate);</li>
+      <li>Set orientation;</li>
       <li>Set recording FPS.</li>
     </ul>
   </li>
@@ -35,7 +36,14 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
       <li>Increase/decrease volume.</li>
     </ul>
   </li>
-  <li>Floating UI;</li>
+  <li>Floating UI;
+      <ul>
+         <li>Menu (Stop, screenshot, draw, minimize, close, time, time limit, camera);</li>
+         <li>Camera (front, back / extra styles);</li>
+         <li>Text (extra styles);</li>
+         <li>Draw (extra styles).</li>
+      </ul>
+   </li>
   <li>Generate extra video files:
    <ul>
       <li>Without audio;</li>
@@ -62,6 +70,9 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
       <li>Share.</li>
     </ul>
   </li>
+  <li>WiFi share;</li>
+  <li>Countdown to start capturing;</li>
+  <li>Auto stop options;</li>
   <li>Internal viewer (player):
      <ul>
        <li>Audio player;</li>
@@ -110,9 +121,20 @@ Kapture is built over an accessibility service, turning it into a specific case,
       <li>android.permission.FOREGROUND_SERVICE</li>
     </ul>
   </li>
-  <li>Internet: Used to search for updates (does not auto update) and to open external links:
+  <li>Internet: Used to search for updates (does not auto update), to open external links and to share files over WiFi:
     <ul>
       <li>android.permission.INTERNET</li>
+      <li>android.permission.ACCESS_NETWORK_STATE</li>
+    </ul>
+  </li>
+  <li>Camera: Used to show the camera overlay:
+    <ul>
+      <li>android.permission.CAMERA</li>
+    </ul>
+  </li>
+  <li>Optimization: Used as shortcut to disable the phone's battery optimization for the app:
+    <ul>
+      <li>android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS</li>
     </ul>
   </li>
 </ul>
@@ -124,24 +146,44 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 #### Option 2:
 <ul>
-  <li>You can download the latest version .apk <a href="https://drive.google.com/file/d/1Ex4gYBfK-oUfcAxzxkIJ6gRATiT6GcxB/view" target="_blank" rel="noreferrer">here</a>*;</li>
+  <li>You can download the latest version .apk <a href="https://drive.google.com/file/d/1KZf_e2Z_QKyG7IqygXOb6qPh5va9PUf1/view" target="_blank" rel="noreferrer">here</a>*;</li>
   <li>You can check all previous versions .apk links for download <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">here</a>*.</li>
 </ul>
 * All .apks listed here were built by me, are not minimified and are hosted on Google Drive.
-
-##
-### Log
-<b>v1.0.0</b>
-<ul>
-  <li>Release.</li>
-</ul>
+* Google Play Protect may prevent the app from being installed using the .apk file. In this case, disable the Google Play Protect, install the file and then enable it again.
 
 ##
 ### Donations
 - If you would like to support me, you can make a donation clicking on the button bellow... Thank you! ❤️
-<a href="https://www.paypal.com/donate/?hosted_button_id=7XGH7WXU5C7K6">
+  <a href="https://www.paypal.com/donate/?hosted_button_id=7XGH7WXU5C7K6">
   <img src="readme/en/paypal.png" width="160" height="50"/>
-</a>
+  </a>
+
+##
+### Log
+<b>v1.1.0</b>
+<ul>
+   <li>Fixed notification actions not closing activity when action is completed;</li>
+   <li>Fixed notification channel name;</li>
+   <li>Fixed some translation errors;</li>
+   <li>New menu overlay UI;</li>
+   <li>Camera overlay added;</li>
+   <li>Text overlay added;</li>
+   <li>Draw overlay added;</li>
+   <li>WiFi share added;</li>
+   <li>Countdown to start added;</li>
+   <li>Auto stop options added;</li>
+   <li>Screenshot (print screen) while capturing added;</li>
+   <li>Option to enable/disable some notifications added;</li>
+   <li>Capturing orientation added;</li>
+   <li>Option to ignore phone's battery optimization added;</li>
+   <li>UI updated;</li>
+   <li>Credits updated.</li>
+</ul>
+<b>v1.0.0</b>
+<ul>
+  <li>Release.</li>
+</ul>
 
 ##
 ### License
