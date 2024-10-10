@@ -16,7 +16,8 @@ import dev.dect.kapture.R;
         import dev.dect.kapture.activity.NotificationActionActivity;
         import dev.dect.kapture.activity.viewer.VideoActivity;
         import dev.dect.kapture.data.Constants;
-        import dev.dect.kapture.model.Kapture;
+import dev.dect.kapture.data.DefaultSettings;
+import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.utils.Utils;
 
 @SuppressLint("LaunchActivityFromNotification")
@@ -34,6 +35,10 @@ public class SavedNotification {
 
     public void createAndShow(Kapture kapture) {
         NOTIFICATION_MANAGER.cancelAll();
+
+        if(!CTX.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getBoolean(Constants.SP_KEY_IS_TO_SHOW_NOTIFICATION_CAPTURED, DefaultSettings.IS_TO_SHOW_NOTIFICATION_CAPTURED)) {
+            return;
+        }
 
         final NotificationCompat.Builder notificationCompact = new NotificationCompat.Builder(CTX, Constants.NOTIFICATION_CHANNEL_ID_CAPTURED);
 

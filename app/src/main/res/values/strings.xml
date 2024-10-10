@@ -31,6 +31,7 @@
     <string name="notification_btn_extra">Extra</string>
 
     <string name="notification_channel_name_captured">Captured</string>
+    <string name="notification_channel_name_processing">Processing</string>
 
     <string name="permission_title">Kapture uses these permissions</string>
     <string name="permission_required">Required permissions</string>
@@ -40,6 +41,9 @@
 
     <string name="permission_notification_title">Notification</string>
     <string name="permission_notification_description">Used to start the capture service, control capture when app is in background and to notify when captures are done.</string>
+
+    <string name="permission_camera_title">Camera</string>
+    <string name="permission_camera_description">Used to display the front camera while recording.</string>
 
     <string name="permission_storage_title">Storage</string>
     <string name="permission_storage_description">Used to create and manage the captures files.</string>
@@ -73,6 +77,7 @@
     <string name="toast_info_success_generic">Done!</string>
 
     <string name="folder_name" translatable="false">Kapture</string>
+    <string name="folder_screenshot_name" translatable="false">Screenshots</string>
 
     <string name="file_name">capture</string>
     <string name="file_name_extra_mp3_audio">audio</string>
@@ -81,6 +86,7 @@
     <string name="file_name_extra_mp4_no_audio">no audio</string>
     <string name="file_name_extra_mp4_only_mic">only microphone audio</string>
     <string name="file_name_extra_mp4_only_internal">only internal audio</string>
+    <string name="file_name_screenshot">screenshot</string>
 
     <string name="popup_title_extra">Extra</string>
 
@@ -112,12 +118,13 @@
 
     <string name="setting_group_folder">Folder</string>
 
-    <string name="setting_folder_location">Saving location</string>
+    <string name="setting_folder_location">Kaptures and extras location</string>
+    <string name="setting_folder_location_screenshots">Screenshots location</string>
 
     <string name="setting_group_video">Video</string>
 
     <string name="setting_video_resolution">Resolution</string>
-    <string name="setting_video_resolution_auto">Auto</string>
+    <string name="setting_video_resolution_auto">Device resolution</string>
 
     <string name="setting_video_quality">Quality</string>
 
@@ -127,24 +134,106 @@
     <string name="setting_video_file_format_description">The format of the video output file.</string>
     <string name="setting_video_file_format_mp4">MP4</string>
 
+    <string name="setting_video_orientation">Orientation</string>
+    <string name="setting_video_orientation_auto">Auto</string>
+    <string name="setting_video_orientation_portrait">Portrait</string>
+    <string name="setting_video_orientation_landscape">Landscape</string>
+
     <string name="setting_group_mic">Microphone</string>
 
-    <string name="setting_is_mic_capture">Capture</string>
-    <string name="setting_is_mic_volume">Volume</string>
-    <string name="setting_is_mic_volume_description">In some cases, while sharing the microphone, the audio may be reduced or increased. Volume option allows you to adjust the microphone volume.</string>
-    <string name="setting_mic_volume_factor">Volume value</string>
+    <string name="setting_mic_capture">Capture microphone</string>
+    <string name="setting_mic_volume">Custom volume</string>
 
     <string name="setting_group_internal">Internal audio</string>
 
-    <string name="setting_is_capture_internal">Capture</string>
-    <string name="setting_is_capture_internal_description">Some applications does not allow audio capture, in this case silence will be captured.</string>
+    <string name="setting_internal_capture">Capture internal audio</string>
+    <string name="setting_internal_capture_description">Some applications do not allow audio capture, in this case silence will be captured.</string>
 
-    <string name="setting_is_capture_internal_stereo">Stereo</string>
+    <string name="setting_internal_stereo">Stereo</string>
+
+    <string name="setting_group_capturing">Capturing</string>
+
+    <string name="setting_subgroup_capturing_countdown">Countdown</string>
+    <string name="setting_countdown_countdown">Countdown to start</string>
+
+    <string name="setting_subgroup_capturing_stop">Stop option</string>
+
+    <string name="setting_stop_time_limit">On time limit</string>
+    <string name="setting_stop_screen_off">On screen off</string>
+    <string name="setting_stop_shake">On shake</string>
 
     <string name="setting_group_floating_ui">Floating UI</string>
 
-    <string name="setting_is_show_floating_buttons">Show</string>
-    <string name="setting_is_show_floating_buttons_description">Pause button.</string>
+    <string name="setting_subgroup_floating_ui_menu">Menu</string>
+    <string name="setting_menu_show">Show menu</string>
+    <string name="setting_menu_style">Menu style</string>
+
+    <string name="setting_menu_show_style_horizontal">Horizontal</string>
+    <string name="setting_menu_show_style_vertical">Vertical</string>
+
+    <string name="setting_menu_show_time">Show time</string>
+
+    <string name="setting_menu_show_time_limit">Show time limit</string>
+    <string name="setting_menu_show_time_limit_description">Only shows if the \"On time limit\" is enabled.</string>
+
+    <string name="setting_menu_show_close">Show close button</string>
+    <string name="setting_menu_show_close_description">The menu will be closed when used this button. It cannot be reopened.</string>
+
+    <string name="setting_menu_show_minimize">Show minimize button</string>
+    <string name="setting_menu_show_minimize_description">The menu will be hidden when used this button. It can be unhidden.</string>
+
+    <string name="setting_menu_show_camera">Show camera button</string>
+    <string name="setting_menu_show_camera_description">Allows to toggle the camera visibility on/off.</string>
+
+    <string name="setting_menu_show_screenshot">Show screenshot button</string>
+
+    <string name="setting_menu_show_draw">Show draw button</string>
+    <string name="setting_menu_show_draw_description">Allows to draw on the screen.</string>
+
+    <string name="setting_subgroup_floating_ui_menu_minimize">Menu \u2022 Minimize</string>
+
+    <string name="setting_minimize_start_minimized">Start menu minimized</string>
+
+    <string name="setting_minimize_side">Minimize direction</string>
+    <string name="setting_minimize_side_left">Left</string>
+    <string name="setting_minimize_side_right">Right</string>
+
+    <string name="setting_subgroup_floating_ui_camera">Camera</string>
+    <string name="setting_camera_show">Show camera on start</string>
+    <string name="setting_camera_show_description">Shows the camera when it starts capturing regardless of the button in the menu.</string>
+
+    <string name="setting_camera_size">Default size</string>
+
+    <string name="setting_camera_scalable">Pinch to scale</string>
+    <string name="setting_camera_scalable_description">Pinch the image to scale it (to change its size). Image may lose some resolution when scaled.</string>
+
+    <string name="setting_camera_orientation">Default orientation</string>
+    <string name="setting_camera_orientation_front">Front</string>
+    <string name="setting_camera_orientation_back">Back</string>
+
+    <string name="setting_camera_orientation_toggle">Toggle orientation</string>
+    <string name="setting_camera_orientation_toggle_description">Click on the image, while capturing, to switch between the orientations available.</string>
+
+    <string name="setting_camera_shape">Shape</string>
+    <string name="setting_camera_shape_circle">Circle</string>
+    <string name="setting_camera_shape_square">Square</string>
+    <string name="setting_camera_shape_square_corner">Square (rounded corners)</string>
+
+    <string name="setting_subgroup_floating_ui_draw">Draw</string>
+    <string name="setting_draw_show_undo_redo">Show undo/redo buttons</string>
+    <string name="setting_draw_show_clear">Show clear button</string>
+
+    <string name="setting_subgroup_floating_ui_text">Text</string>
+    <string name="setting_text_show">Show text</string>
+    <string name="setting_text_text">Text</string>
+    <string name="setting_text_color">Color</string>
+    <string name="setting_text_background_color">Background color</string>
+    <string name="setting_text_size">Size</string>
+    <string name="setting_text_font">Font</string>
+    <string name="setting_text_alignment">Alignment</string>
+    <string name="setting_text_alignment_start">Start</string>
+    <string name="setting_text_alignment_center">Center</string>
+    <string name="setting_text_alignment_end">End</string>
 
     <string name="setting_group_extra_video">Generate extra video files</string>
 
@@ -173,12 +262,22 @@
     <string name="setting_audio_file_format_mp3">MP3</string>
 
     <string name="setting_group_app">App</string>
-    <string name="setting_app_language">Language</string>
-    <string name="setting_app_theme">Theme</string>
 
-    <string name="setting_app_theme_auto">Auto</string>
-    <string name="setting_app_theme_dark">Dark</string>
-    <string name="setting_app_theme_light">Light</string>
+    <string name="setting_subgroup_app_ui">UI</string>
+
+    <string name="setting_ui_language">Language</string>
+    <string name="setting_ui_theme">Theme</string>
+
+    <string name="setting_ui_theme_auto">Auto</string>
+    <string name="setting_ui_theme_dark">Dark</string>
+    <string name="setting_ui_theme_light">Light</string>
+
+    <string name="setting_subgroup_app_notification">Notification</string>
+
+    <string name="setting_subgroup_app_performance">Performance</string>
+
+    <string name="setting_performance_battery_optimization">Battery optiomization</string>
+    <string name="setting_performance_battery_optimization_description">It is recommended to turn off the system battery optimization to avoid unexpected stops. Click here to change this setting.</string>
 
     <string name="popup_btn_cancel">Cancel</string>
     <string name="popup_btn_ok">Ok</string>
@@ -191,6 +290,7 @@
     <string name="popup_btn_remove">Remove</string>
     <string name="popup_btn_rename">Rename</string>
     <string name="popup_btn_stop">Stop</string>
+    <string name="popup_btn_set">Set</string>
 
     <string name="internal_storage">Internal storage</string>
 
@@ -232,16 +332,25 @@
     \n\n\u2022 \"FFmpegKit\" library collection by <b>arthenica</b>, available, along with installation guides and documentation, at <a href="https://arthenica.github.io/ffmpeg-kit/">https://arthenica.github.io/ffmpeg-kit/</a>, under the LGPL v3.0 License.
     \n\n\u2022 \"lottie-android\" library by <b>LottieFiles</b>, available at <a href="https://github.com/LottieFiles/lottie-android">https://github.com/LottieFiles/lottie-android</a>, under the Apache License Version 2.0.
     \n\n\u2022 \"Free Loader Animation\" lottie animation by <b>Turlo</b>, available at <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, under the Lottie Simple License.
+    \n\n\u2022 \"NanoHttpd\" library by <b>Paul S. Hawke, 2001,2005-2013 by Jarno Elonen, 2010 by Konstantinos Togias</b>, available at <a href="https://github.com/NanoHttpd/nanohttpd">https://github.com/NanoHttpd/nanohttpd</a>, under the BSD-3-Clause License.
+    \n\n\u2022 \"Roboto\" and "Roboto Mono" fonts by <b>Christian Robertson</b>, available at <a href="https://fonts.google.com/specimen/Roboto">https://fonts.google.com/specimen/Roboto</a> and <a href="https://fonts.google.com/specimen/Roboto+Mono">https://fonts.google.com/specimen/Roboto+Mono</a>, under the Apache License Version 2.0.
+    \n\n\u2022 \"Permanent Marker\" font by <b>Font Diner</b>, available at <a href="https://fonts.google.com/specimen/Permanent+Marker">https://fonts.google.com/specimen/Permanent+Marker</a>, under the Apache License Version 2.0.
+    \n\n\u2022 \"Bebas Neue\" font by <b>Ryoichi Tsunekawa</b>, available at <a href="https://fonts.google.com/specimen/Bebas+Neue">https://fonts.google.com/specimen/Bebas+Neue</a>, under the Open Font License.
+    \n\n\u2022 \"Oswald\" font by <b>Vernon Adams, Kalapi Gajjar, Cyreal</b>, available at <a href="https://fonts.google.com/specimen/Oswald">https://fonts.google.com/specimen/Oswald</a>, under the Open Font License.
+    \n\n\u2022 \"Pacifico\" font by <b>Vernon Adams, Jacques Le Bailly, Botjo Nikoltchev, Ani Petrova</b>, available at <a href="https://fonts.google.com/specimen/Pacifico">https://fonts.google.com/specimen/Pacifico</a>, under the Open Font License.
+    \n\n\u2022 \"Silkscreen\" font by <b>Jason Kottke</b>, available at <a href="https://fonts.google.com/specimen/Silkscreen">https://fonts.google.com/specimen/Silkscreen</a>, under the Open Font License.
+    \n\n\u2022 \"Monoton\" font by <b>Vernon Adams</b>, available at <a href="https://fonts.google.com/specimen/Monoton">https://fonts.google.com/specimen/Monoton</a>, under the Open Font License.
+    \n\n\u2022 \"Orbitron\" font by <b>Matt McInerney</b>, available at <a href="https://fonts.google.com/specimen/Orbitron">https://fonts.google.com/specimen/Orbitron</a>, under the Open Font License.
     </string>
-
-    <!-- TODO ADICIONAR CREDITS nanohttpd -->
 
     <string name="license_mit">MIT License</string>
     <string name="license_apache_v2">Apache License Version 2.0</string>
     <string name="license_lgpl_v3">LGPL v3.0</string>
     <string name="license_lottie">Lottie Simple License</string>
+    <string name="license_bsd3_clause">BSD-3-Clause License</string>
+    <string name="license_open_font">Open Font License</string>
 
-    <string name="no_captures">No captures</string>
+    <string name="no_captures">No kaptures</string>
 
     <string name="selected">Selected</string>
     <string name="selected_plural">Selected</string>
@@ -269,5 +378,17 @@
     <string name="html_size">Size</string>
 
     <string name="popup_wifi_share_title">Sharing</string>
-    <string name="popup_wifi_unknown">Desconhecido</string>
+    <string name="popup_wifi_unknown">Unknown</string>
+
+    <string name="btn_skip_countdown">Skip countdown</string>
+
+    <string name="color_picker_hex">Hex</string>
+    <string name="color_picker_alpha">Alpha</string>
+    <string name="color_picker_red">Red</string>
+    <string name="color_picker_green">Green</string>
+    <string name="color_picker_blue">Blue</string>
+
+    <string name="fonts_message">Fonts (.ttf) added at the app selected folder will be listed here once the app is restarted.</string>
+
+    <string name="relaunch_message">Relaunch is required to prevent errors!</string>
 </resources>

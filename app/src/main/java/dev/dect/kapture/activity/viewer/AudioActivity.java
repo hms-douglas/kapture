@@ -82,7 +82,7 @@ public class AudioActivity extends AppCompatActivity {
         VIEW_MEDIA_PLAYER.setOnCompletionListener((mediaPlayer) -> pause());
 
         VIEW_MEDIA_PLAYER.setOnPreparedListener((mp) -> {
-            ((TextView) findViewById(R.id.maxTime)).setText(Utils.Formatter.time(mp.getDuration()));
+            ((TextView) findViewById(R.id.maxTime)).setText(Utils.Formatter.timeInMillis(mp.getDuration()));
 
             TIME_BAR.setValueFrom(0);
             TIME_BAR.setValueTo(mp.getDuration());
@@ -174,7 +174,7 @@ public class AudioActivity extends AppCompatActivity {
     }
 
     private void updateTimeUI() {
-        CURRENT_TIME.setText(Utils.Formatter.time(VIEW_MEDIA_PLAYER.getCurrentPosition()));
+        CURRENT_TIME.setText(Utils.Formatter.timeInMillis(VIEW_MEDIA_PLAYER.getCurrentPosition()));
 
         TIME_BAR.setValue(VIEW_MEDIA_PLAYER.getCurrentPosition());
     }

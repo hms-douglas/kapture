@@ -8,23 +8,15 @@
     tools:context=".activity.MainActivity"
     android:background="@color/activity_background">
 
-    <LinearLayout
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scrollbars="vertical"
-        android:orientation="vertical"
         android:background="@color/activity_background"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomBar">
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/activity_background"/>
-    </LinearLayout>
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomBar"
@@ -44,11 +36,10 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:weightSum="4"
-            android:visibility="gone"
+            android:background="@color/bottom_bar_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnWifiShare"
@@ -110,10 +101,10 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:weightSum="2"
+            android:background="@color/bottom_bar_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bottomBarBtnCaptures"

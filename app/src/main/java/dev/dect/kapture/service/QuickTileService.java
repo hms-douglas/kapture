@@ -77,6 +77,9 @@ public class QuickTileService extends TileService {
         if(CapturingService.isProcessing()) {
             getQsTile().setState(Tile.STATE_UNAVAILABLE);
             getQsTile().setLabel(getString(R.string.quick_settings_tile_processing));
+        } else if(CapturingService.isInCountdown()) {
+            getQsTile().setState(Tile.STATE_UNAVAILABLE);
+            getQsTile().setLabel(getString(R.string.quick_settings_tile_stop_recording));
         } else if(CapturingService.isRecording()) {
             getQsTile().setState(Tile.STATE_ACTIVE);
             getQsTile().setLabel(getString(R.string.quick_settings_tile_stop_recording));

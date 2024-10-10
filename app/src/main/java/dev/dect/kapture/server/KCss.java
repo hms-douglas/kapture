@@ -1,11 +1,8 @@
 package dev.dect.kapture.server;
 
 import android.content.Context;
-import android.util.Log;
 
 public class KCss {
-    public static final String ID_ERROR_MESSAGE = "message";
-
     private final Context CONTEXT;
 
     private String STYLE = "";

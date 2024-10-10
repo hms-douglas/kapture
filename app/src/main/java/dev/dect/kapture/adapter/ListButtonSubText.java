@@ -17,19 +17,30 @@ import dev.dect.kapture.R;
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 public class ListButtonSubText {
+    public interface OnListButtonSubText {
+        void onButtonClicked(ListButtonSubText listButtonSubText);
+    }
+
     private final int ID_TITLE;
 
     private String VALUE;
 
     private final boolean IS_LAST_FROM_GROUP;
 
-    private final Runnable ON_CLICK;
+    private final OnListButtonSubText LISTENER;
 
-    public ListButtonSubText(int title, String value, Runnable onClick, boolean lastFromGroup) {
+    public ListButtonSubText(int title, String value, OnListButtonSubText onListButtonSubText, boolean lastFromGroup) {
         this.ID_TITLE = title;
         this.VALUE = value;
         this.IS_LAST_FROM_GROUP = lastFromGroup;
-        this.ON_CLICK = onClick;
+        this.LISTENER = onListButtonSubText;
+    }
+
+    public ListButtonSubText(int title, int value, OnListButtonSubText onListButtonSubText, boolean lastFromGroup) {
+        this.ID_TITLE = title;
+        this.VALUE = String.valueOf(value);
+        this.IS_LAST_FROM_GROUP = lastFromGroup;
+        this.LISTENER = onListButtonSubText;
     }
 
     public int getIdTitle() {
@@ -44,12 +55,16 @@ public class ListButtonSubText {
         this.VALUE = v;
     }
 
+    public void setValue(int v) {
+        this.VALUE = String.valueOf(v);
+    }
+
     public boolean isLastItemFromGroup(){
         return IS_LAST_FROM_GROUP;
     }
 
-    private void callOnClick() {
-        ON_CLICK.run();
+    private OnListButtonSubText getListener() {
+        return LISTENER;
     }
 
     public static class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
@@ -97,7 +112,7 @@ public class ListButtonSubText {
                 holder.EL_CONTAINER.setBackgroundResource(R.drawable.list_item_divisor_horizontal_bottom);
             }
 
-            holder.EL_CONTAINER.setOnClickListener((l) -> listButtonSubText.callOnClick());
+            holder.EL_CONTAINER.setOnClickListener((l) -> listButtonSubText.getListener().onButtonClicked(listButtonSubText));
         }
 
         @Override

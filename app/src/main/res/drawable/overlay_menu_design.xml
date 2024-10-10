@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/overlay_background"></solid>
+    <stroke android:color="@color/overlay_background_border" android:width="@dimen/overlay_menu_background_border"/>
+    <corners android:radius="@dimen/overlay_menu_background_radius"/>
+</shape>

@@ -4,5 +4,6 @@
     <integer name="popup_animation_duration_in">150</integer>
     <integer name="popup_animation_duration_out">150</integer>
 
-
+    <integer name="camera_size_max">200</integer>
+    <integer name="camera_size_min">50</integer>
 </resources>

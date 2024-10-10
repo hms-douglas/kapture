@@ -107,6 +107,7 @@
             app:trackColorActive="@color/video_option_seekbar_progress"
             app:trackColorInactive="@color/video_option_seekbar_progress_background"
             app:trackHeight="@dimen/video_option_seekbar_height"
+            app:haloColor="#00000000"
             app:layout_constraintBottom_toTopOf="@+id/optionsContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

@@ -22,8 +22,8 @@ public class DB extends SQLiteOpenHelper {
                                 TABLE_EXTRAS = "extras",
                                 EXTRAS_COL_ID = "e_id",
                                 EXTRAS_COL_ID_KAPTURE = "e_id_kapture",
-                                EXTRA_COL_LOCATION = "e_location",
-                                EXTRA_COL_TYPE = "e_type";
+                                EXTRAS_COL_LOCATION = "e_location",
+                                EXTRAS_COL_TYPE = "e_type";
 
 
     public DB(Context ctx) {
@@ -41,8 +41,8 @@ public class DB extends SQLiteOpenHelper {
                           + TABLE_EXTRAS + " ("
                           + EXTRAS_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                           + EXTRAS_COL_ID_KAPTURE + " INTEGER, "
-                          + EXTRA_COL_LOCATION + " TEXT, "
-                          + EXTRA_COL_TYPE + " INTEGER);";
+                          + EXTRAS_COL_LOCATION + " TEXT, "
+                          + EXTRAS_COL_TYPE + " INTEGER);";
 
         db.execSQL(q0);
         db.execSQL(q1);
@@ -66,8 +66,8 @@ public class DB extends SQLiteOpenHelper {
             final ContentValues valuesExtra = new ContentValues();
 
             valuesExtra.put(EXTRAS_COL_ID_KAPTURE, idKapture);
-            valuesExtra.put(EXTRA_COL_LOCATION, extra.getLocation());
-            valuesExtra.put(EXTRA_COL_TYPE, extra.getType());
+            valuesExtra.put(EXTRAS_COL_LOCATION, extra.getLocation());
+            valuesExtra.put(EXTRAS_COL_TYPE, extra.getType());
 
             final long idExtra = db.insert(TABLE_EXTRAS, null, valuesExtra);
 
@@ -146,8 +146,8 @@ public class DB extends SQLiteOpenHelper {
             final Kapture.Extra extra = new Kapture.Extra();
 
             extra.setId(cursor.getLong(cursor.getColumnIndexOrThrow(EXTRAS_COL_ID)));
-            extra.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(EXTRA_COL_LOCATION)));
-            extra.setType(cursor.getInt(cursor.getColumnIndexOrThrow(EXTRA_COL_TYPE)));
+            extra.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(EXTRAS_COL_LOCATION)));
+            extra.setType(cursor.getInt(cursor.getColumnIndexOrThrow(EXTRAS_COL_TYPE)));
             extra.setIdKapture(cursor.getLong(cursor.getColumnIndexOrThrow(EXTRAS_COL_ID_KAPTURE)));
 
             extras.add(extra);
@@ -204,8 +204,8 @@ public class DB extends SQLiteOpenHelper {
         final ContentValues valuesExtra = new ContentValues();
 
         valuesExtra.put(EXTRAS_COL_ID_KAPTURE, extra.getIdKapture());
-        valuesExtra.put(EXTRA_COL_LOCATION, extra.getLocation());
-        valuesExtra.put(EXTRA_COL_TYPE, extra.getType());
+        valuesExtra.put(EXTRAS_COL_LOCATION, extra.getLocation());
+        valuesExtra.put(EXTRAS_COL_TYPE, extra.getType());
 
         db.update(TABLE_EXTRAS, valuesExtra, EXTRAS_COL_ID + " = " + extra.getId(), null);
     }

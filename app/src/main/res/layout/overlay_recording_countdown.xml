@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="@dimen/countdown_progress_size"
+        android:layout_height="@dimen/countdown_progress_size"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="100"
+        android:progressDrawable="@drawable/countdown_progress_bar"
+        app:layout_constraintBottom_toTopOf="@id/btnStop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <dev.dect.kapture.view.OutlineTextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:textSize="@dimen/countdown_text"
+        android:textColor="@color/countdown_text"
+        app:layout_constraintBottom_toBottomOf="@id/progress"
+        app:layout_constraintEnd_toEndOf="@id/progress"
+        app:layout_constraintStart_toStartOf="@id/progress"
+        app:layout_constraintTop_toTopOf="@id/progress"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_btn_height"
+        android:background="@drawable/countdown_btn_design"
+        android:foreground="@drawable/btn_effect"
+        android:text="@string/btn_skip_countdown"
+        android:textAllCaps="false"
+        android:textColor="@color/countdown_button_text"
+        android:textSize="@dimen/default_font_button"
+        android:textStyle="bold"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

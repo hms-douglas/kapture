@@ -71,8 +71,6 @@ public class SortPopup extends Dialog {
 
         POPUP_CONTAINER.setOnClickListener((v) -> this.dismissWithAnimation());
 
-        Utils.Popup.setInAnimation(this, POPUP_CONTAINER, POPUP_VIEW);
-
         this.setContentView(view);
 
         Objects.requireNonNull(getWindow()).setStatusBarColor(ctx.getColor(R.color.popup_background_transparent));

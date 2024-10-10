@@ -4,10 +4,19 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.RectF;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.provider.Settings;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,6 +32,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import dev.dect.kapture.R;
+import dev.dect.kapture.data.Constants;
 
 public class Utils {
     public static boolean hasWriteSecureSettings(Context ctx) {
@@ -33,8 +43,79 @@ public class Utils {
         return (int) new Date().getTime();
     }
 
-    public static String intColorToHex(Context ctx, int id) {
-        return String.format("#%06X", (0xFFFFFF & ctx.getColor(id)));
+    public static void drawTransparencyBackground(Canvas canvas) {
+        final float height = canvas.getHeight(),
+                width = canvas.getWidth();
+
+        final Paint paint = new Paint();
+
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.parseColor("#FDFDFD"));
+
+        canvas.drawRect(new RectF(0, 0, width, height), paint);
+
+        paint.setColor(Color.parseColor("#808080"));
+
+        final float size = 16.5f,
+                amountLines = height / size;
+
+        for(float i = 0; i < amountLines; i++) {
+            final float startXat = i % 2 == 0 ? 0 : size;
+
+            for(float j = 0; j < ((width - startXat) / size); j += 2) {
+                final float x = (size * j) + startXat,
+                        y = size * i;
+
+                canvas.drawRect(new RectF(x, y, x + size, y + size), paint);
+
+            }
+        }
+    }
+
+    public static class Converter {
+        public static int dpToPx(Context ctx, int dp) {
+            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, ctx.getResources().getDisplayMetrics());
+        }
+
+        public static int dpToPx(Context ctx, float dp) {
+            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, ctx.getResources().getDisplayMetrics());
+        }
+
+        public static int[] secondsToHMS(int seconds) {
+            final int hour = seconds / 3600,
+                      minute = (seconds % 3600) / 60;
+
+            seconds %= 60;
+
+            return new int[]{hour, minute, seconds};
+        }
+
+        public static int timeToSeconds(String s) {
+            final String[] time = s.split(":");
+
+            int seconds = 0;
+
+            int j = 0;
+
+            for(int i = time.length - 1; i >= 0; i--) {
+                seconds += (int) (Integer.parseInt(time[i]) * Math.pow(60, j++));
+            }
+
+            return seconds;
+        }
+
+        public static int hexColorToInt(String hex) {
+            final int[] argb = hexColorToArgb(hex);
+
+            return Color.argb(argb[0], argb[1], argb[2], argb[3]);
+        }
+
+        public static int[] hexColorToArgb(String hex) {
+            final int color = Color.parseColor(hex.substring(0, 7)),
+                      alpha = Integer.valueOf(hex.substring(7), 16);
+
+            return new int[] {alpha, Color.red(color), Color.green(color), Color.blue(color)};
+        }
     }
 
     public static class ExternalActivity {
@@ -74,7 +155,7 @@ public class Utils {
             }
         }
 
-        public static String time(long milli) {
+        public static String timeInMillis(long milli) {
             final long duration = milli / 1000,
                        hours = duration / 3600,
                        minutes = (duration / 60) - (hours * 60),
@@ -87,6 +168,10 @@ public class Utils {
             }
 
             return r;
+        }
+
+        public static String timeInSeconds(int seconds) {
+            return timeInMillis(seconds * 1000L);
         }
     }
 
@@ -111,28 +196,6 @@ public class Utils {
                       maxHeightPercentage = ctx.getResources().getInteger(R.integer.popup_max_height_percentage);
 
             view.setMaxHeight((screenHeight * maxHeightPercentage) / 100);
-        }
-
-        public static void setInAnimation(Dialog dialog, ConstraintLayout container, ConstraintLayout view) {
-            dialog.setOnShowListener((d) -> {
-                final Animation popupAnimationIn = AnimationUtils.loadAnimation(dialog.getContext(), R.anim.popup_in),
-                                popupContainerIn = AnimationUtils.loadAnimation(dialog.getContext(), R.anim.popup_background_in);
-
-                container.startAnimation(popupContainerIn);
-                view.startAnimation(popupAnimationIn);
-            });
-        }
-
-        public static void setInAnimation(Dialog dialog, ConstraintLayout container, ConstraintLayout view, Runnable onShow) {
-            dialog.setOnShowListener((d) -> {
-                final Animation popupAnimationIn = AnimationUtils.loadAnimation(dialog.getContext(), R.anim.popup_in),
-                        popupContainerIn = AnimationUtils.loadAnimation(dialog.getContext(), R.anim.popup_background_in);
-
-                container.startAnimation(popupContainerIn);
-                view.startAnimation(popupAnimationIn);
-
-                onShow.run();
-            });
         }
 
         public static void callOutAnimation(Dialog dialog, ConstraintLayout container, ConstraintLayout view) {
@@ -178,6 +241,67 @@ public class Utils {
 
             container.startAnimation(popupContainerOut);
             view.startAnimation(popupAnimationOut);
+        }
+    }
+
+    public static class Overlay {
+        public static void setBasicLayoutParameters(WindowManager.LayoutParams layoutParams) {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+            layoutParams.format = PixelFormat.TRANSLUCENT;
+            layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+            layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        }
+
+        public static void setLayoutParametersPosition(WindowManager.LayoutParams layoutParams, Context ctx, String keyX, String keyY) {
+            final SharedPreferences sp = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
+
+            if(sp.contains(keyX)) {
+                layoutParams.x = sp.getInt(keyX, 0);
+                layoutParams.y = sp.getInt(keyY, 0);
+            } else {
+                layoutParams.gravity = Gravity.TOP;
+            }
+        }
+
+        public static void setDefaultDraggableView(View view, WindowManager.LayoutParams layoutParams, WindowManager windowManager, String keyX, String keyY) {
+            final int[] coordinates = new int[4];
+
+            final long[] time = new long[1];
+
+            final SharedPreferences.Editor editor = view.getContext().getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit();
+
+            view.setOnTouchListener((v, e) -> {
+                switch(e.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        coordinates[0] = layoutParams.x;
+                        coordinates[1] = layoutParams.y;
+                        coordinates[2] = (int) e.getRawX();
+                        coordinates[3] = (int) e.getRawY();
+
+                        time[0] = System.currentTimeMillis();
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        layoutParams.x = (int) (coordinates[0] + (e.getRawX() - coordinates[2]));
+                        layoutParams.y = (int) (coordinates[1] + (e.getRawY() - coordinates[3]));
+
+                        windowManager.updateViewLayout(view, layoutParams);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        if(new Date().getTime() - time[0] <= 200) {
+                            v.performClick();
+                        } else {
+                            editor.putInt(keyX, layoutParams.x);
+                            editor.putInt(keyY, layoutParams.y);
+
+                            editor.apply();
+                        }
+                }
+
+                return true;
+            });
         }
     }
 }

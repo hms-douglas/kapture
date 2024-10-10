@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import dev.dect.kapture.R;
 
 public class PickerItemAdapter extends RecyclerView.Adapter<PickerItemAdapter.MyViewHolder> {
-    public final String[] DISPLAY_NAMES;
+    private final String[] DISPLAY_NAMES;
 
-    public int INDEX_ACTIVE;
+    private int INDEX_ACTIVE;
 
     private RecyclerView RECYCLER_VIEW;
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
 import android.media.MediaRecorder;
+import android.view.Surface;
 import android.widget.Toast;
 
 import java.io.File;
@@ -106,8 +107,10 @@ public class ScreenMicRecorder {
     private void createTempFile() {
         try {
             TEMP_FILE = File.createTempFile(ScreenMicRecorder.class.getSimpleName() + new Date().getTime(), "." + KSETTINGS.getVideoFileFormat());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignore) {}
+    }
+
+    public Surface getSurface() {
+        return MEDIA_RECORDER.getSurface();
     }
 }

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/controlsMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:divider="@drawable/overlay_menu_divider"
+            android:showDividers="middle|end|beginning"
+            android:background="@drawable/overlay_menu_design"
+            android:layout_marginRight="@dimen/overlay_menu_space"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/controlsPen">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnControlsPen"
+                android:layout_width="@dimen/overlay_menu_draw_size_color_max"
+                android:layout_height="@dimen/overlay_menu_draw_size_color_max"
+                android:background="@drawable/overlay_menu_draw_icon_size_color_background"
+                android:layout_gravity="center"
+                android:clickable="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/penExample"
+                    android:layout_width="@dimen/overlay_menu_draw_size_color_default"
+                    android:layout_height="@dimen/overlay_menu_draw_size_color_default"
+                    android:background="@drawable/overlay_menu_draw_icon_size_color"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageButton
+                android:id="@+id/btnClear"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_draw_icon_clear"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:foreground="?android:attr/selectableItemBackground" />
+
+            <ImageButton
+                android:id="@+id/btnUndo"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_draw_icon_undo"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:foreground="?android:attr/selectableItemBackground" />
+
+            <ImageButton
+                android:id="@+id/btnRedo"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_draw_icon_redo"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:foreground="?android:attr/selectableItemBackground" />
+
+            <ImageButton
+                android:id="@+id/btnClose"
+                android:layout_width="@dimen/overlay_menu_icon_secondary"
+                android:layout_height="@dimen/overlay_menu_icon_secondary"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_draw_icon_close"
+                android:padding="@dimen/overlay_menu_icon_secondary_padding"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/controlsPen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/overlay_menu_space"
+            android:background="@drawable/overlay_menu_design"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/controlsMenu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/overlay_menu_draw_color_size_space"
+                android:orientation="horizontal"
+                android:id="@+id/previousColors">
+
+                <ImageButton
+                    android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
+                    android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
+                    android:background="@drawable/overlay_menu_draw_color"
+                    android:layout_margin="@dimen/overlay_menu_space"/>
+
+                <ImageButton
+                    android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
+                    android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
+                    android:background="@drawable/overlay_menu_draw_color"
+                    android:layout_margin="@dimen/overlay_menu_space"/>
+
+                <ImageButton
+                    android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
+                    android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
+                    android:background="@drawable/overlay_menu_draw_color"
+                    android:layout_margin="@dimen/overlay_menu_space"/>
+
+                <ImageButton
+                    android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
+                    android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
+                    android:background="@drawable/overlay_menu_draw_color"
+                    android:layout_margin="@dimen/overlay_menu_space"/>
+
+                <ImageButton
+                    android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
+                    android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
+                    android:background="@drawable/overlay_menu_draw_color"
+                    android:layout_margin="@dimen/overlay_menu_space"/>
+
+                <ImageButton
+                    android:id="@+id/picker"
+                    android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
+                    android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
+                    android:background="@drawable/overlay_menu_draw_icon_color"
+                    android:layout_margin="@dimen/overlay_menu_space"/>
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sizeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/overlay_menu_draw_size_height"
+                android:paddingLeft="@dimen/overlay_menu_draw_size_space_sides"
+                android:paddingRight="@dimen/overlay_menu_draw_size_space_sides"
+                android:paddingBottom="@dimen/overlay_menu_draw_color_size_space">
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/SeekBar"
+                    app:labelBehavior="gone"
+                    app:tickVisible="false"
+                    app:haloColor="@android:color/transparent"
+                    app:thumbColor="@color/overlay_seekbar_thumb"
+                    app:trackColorActive="@color/overlay_seekbar_progress"
+                    app:trackColorInactive="@color/overlay_seekbar_progress_background"
+                    app:trackHeight="@dimen/default_seekbar_height"
+                    app:thumbRadius="@dimen/overlay_menu_draw_size_thumb"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

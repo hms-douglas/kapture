@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:height="@dimen/overlay_menu_height"
+        android:width="@dimen/overlay_menu_height">
+
+        <shape>
+            <solid android:color="@color/overlay_icon_background"/>
+            <corners android:radius="@dimen/overlay_menu_background_radius"/>
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/icon_capture_stop"
+        android:height="@dimen/overlay_menu_height"
+        android:width="@dimen/overlay_menu_height"
+        android:gravity="center"/>
+</layer-list>

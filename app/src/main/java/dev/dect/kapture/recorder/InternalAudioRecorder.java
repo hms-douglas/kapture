@@ -113,9 +113,7 @@ public class InternalAudioRecorder {
 
             TEMP_PMC_FILE = File.createTempFile(name, ".pmc");
             TEMP_MP3_FILE = File.createTempFile(name, ".mp3");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignore) {}
     }
 
     private void writeToRawTempFile(){

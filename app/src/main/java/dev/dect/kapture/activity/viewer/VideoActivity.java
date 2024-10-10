@@ -108,11 +108,11 @@ public class VideoActivity extends AppCompatActivity {
         OPTIONS.setOnClickListener((l) -> OPTIONS.animate().alpha(0f).setDuration(250).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
+            super.onAnimationEnd(animation);
 
-                OPTIONS.clearAnimation();
+            OPTIONS.clearAnimation();
 
-                OPTIONS.setVisibility(View.GONE);
+            OPTIONS.setVisibility(View.GONE);
             }
         }));
 
@@ -126,7 +126,7 @@ public class VideoActivity extends AppCompatActivity {
 
             DURATION = mp.getDuration();
 
-            TOTAL_TIME = Utils.Formatter.time(DURATION);
+            TOTAL_TIME = Utils.Formatter.timeInMillis(DURATION);
 
             TIME_BAR.setValueFrom(0);
             TIME_BAR.setValueTo(DURATION);
@@ -229,7 +229,7 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     private void updateTimeUI() {
-        TIME.setText(Utils.Formatter.time(VIEW.getCurrentPosition()) + " / " + TOTAL_TIME);
+        TIME.setText(Utils.Formatter.timeInMillis(VIEW.getCurrentPosition()) + " / " + TOTAL_TIME);
 
         TIME_BAR.setValue(VIEW.getCurrentPosition());
     }

@@ -1,5 +1,8 @@
 package dev.dect.kapture.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -20,6 +23,7 @@ import android.text.style.StyleSpan;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.PopupMenu;
 
 import androidx.activity.OnBackPressedCallback;
@@ -42,7 +46,7 @@ import dev.dect.kapture.popup.DialogPopup;
 import dev.dect.kapture.popup.PermissionPopup;
 import dev.dect.kapture.utils.Utils;
 
-@SuppressLint("ApplySharedPref")
+@SuppressLint({"ApplySharedPref", "UnsafeIntentLaunch"})
 public class MainActivity extends AppCompatActivity {
     private static MainActivity ACTIVITY = null;
 
@@ -92,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
 
+        ACTIVITY = this;
+
         if(IS_OUT_FOR_PERMISSION) {
             IS_OUT_FOR_PERMISSION = false;
 
@@ -106,17 +112,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkAndRequestPermissions() {
         switch(SP.getInt(Constants.SP_KEY_PERMISSION_STEPS, 0)) {
             case 0:
-                POPUP = new PermissionPopup(
-                    this,
-                    () -> {
-                        ActivityCompat.requestPermissions(this, new String[] {
-                            Manifest.permission.RECORD_AUDIO,
-                            Manifest.permission.POST_NOTIFICATIONS
-                        }, 0);
-
-                        SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 1).commit();
-                    }
-                );
+                requestAndroidPermissions(true);
 
                 POPUP.show();
                 break;
@@ -128,21 +124,21 @@ public class MainActivity extends AppCompatActivity {
 
                 POPUP = new DialogPopup(
                   this,
-                        R.string.permission_storage_title,
-                        R.string.permission_storage_popup,
-                        R.string.permission_button_settings,
-                        () -> {
-                            SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 2).commit();
+                    R.string.permission_storage_title,
+                    R.string.permission_storage_popup,
+                    R.string.permission_button_settings,
+                    () -> {
+                        SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 2).commit();
 
-                            IS_OUT_FOR_PERMISSION = true;
+                        IS_OUT_FOR_PERMISSION = true;
 
-                            startActivity(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:" + getPackageName())));
-                        },
-                        R.string.permission_button_close,
-                        this::finish,
-                        false,
-                        false,
-                        false
+                        startActivity(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:" + getPackageName())));
+                    },
+                    R.string.permission_button_close,
+                    this::finish,
+                    false,
+                    false,
+                    false
                 );
 
                 POPUP.show();
@@ -154,26 +150,26 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 POPUP = new DialogPopup(
-                        this,
-                        R.string.permission_security_title,
-                        R.string.permission_security_popup,
-                        R.string.permission_button_open_accessibility,
-                        () -> {
-                            SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 3).commit();
+                    this,
+                    R.string.permission_security_title,
+                    R.string.permission_security_popup,
+                    R.string.permission_button_open_accessibility,
+                    () -> {
+                        SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 3).commit();
 
-                            IS_OUT_FOR_PERMISSION = true;
+                        IS_OUT_FOR_PERMISSION = true;
 
-                            Utils.ExternalActivity.requestAccessibility(this);
-                        },
-                        R.string.permission_button_continue_to_app,
-                        () -> {
-                            SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 3).commit();
+                        Utils.ExternalActivity.requestAccessibility(this);
+                    },
+                    R.string.permission_button_continue_to_app,
+                    () -> {
+                        SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 3).commit();
 
-                            checkAndRequestPermissions();
-                        },
-                        false,
-                        false,
-                        false
+                        checkAndRequestPermissions();
+                    },
+                    false,
+                    false,
+                    false
                 );
 
                 POPUP.show();
@@ -190,6 +186,25 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         checkAndRequestPermissions();
+    }
+
+    private void requestAndroidPermissions(boolean continueSteps) {
+        POPUP = new PermissionPopup(
+            this,
+            () -> {
+                ActivityCompat.requestPermissions(this, new String[] {
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                    Manifest.permission.CAMERA
+                }, 0);
+
+                if(continueSteps) {
+                    SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 1).commit();
+                } else {
+                    POPUP.dismiss();
+                }
+            }
+        );
     }
 
     private void initVariables() {
@@ -292,31 +307,24 @@ public class MainActivity extends AppCompatActivity {
         KAPTURE_FRAGMENT.setListener((hasSelection, amountSelected) -> {
             AMOUNT_SELECTED = amountSelected;
 
-            if(hasSelection) {
-                findViewById(R.id.bottomBarNavigation).setVisibility(View.GONE);
-                findViewById(R.id.bottomBarActions).setVisibility(View.VISIBLE);
-
-                VIEW_PAGER.setUserInputEnabled(false);
-
-                KAPTURE_FRAGMENT.setCaptureButtonVisibility(true);
-            } else {
-                findViewById(R.id.bottomBarNavigation).setVisibility(View.VISIBLE);
-                findViewById(R.id.bottomBarActions).setVisibility(View.GONE);
-
-                VIEW_PAGER.setUserInputEnabled(true);
-
-                KAPTURE_FRAGMENT.setCaptureButtonVisibility(false);
-            }
+            toggleBottomMenu(hasSelection);
         });
     }
 
     private void init() {
-        SettingsFragment.setTheme(this, SP.getInt(Constants.SP_KEY_APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
+        SettingsFragment.setTheme(this, SP.getInt(Constants.SP_KEY_APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM), false);
 
         if(checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
             || checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
-            || !Environment.isExternalStorageManager()) {
+            || checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
+            requestAndroidPermissions(false);
+
+            POPUP.show();
+            return;
+        }
+
+        if(!Environment.isExternalStorageManager()) {
             new DialogPopup(
                 this,
                 R.string.permission_missing_popup,
@@ -332,8 +340,6 @@ public class MainActivity extends AppCompatActivity {
                 true,
                 false
             ).show();
-
-            return;
         }
 
         VIEW_PAGER.setOffscreenPageLimit(1);
@@ -342,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
             new FragmentAdapter(
                 this,
                 Arrays.asList(
-                        KAPTURE_FRAGMENT,
+                    KAPTURE_FRAGMENT,
                     new SettingsFragment()
                 )
             )
@@ -378,5 +384,66 @@ public class MainActivity extends AppCompatActivity {
 
     public KapturesFragment getKaptureFragment() {
         return KAPTURE_FRAGMENT;
+    }
+
+    public void relaunch() {
+        navigateUpTo(new Intent(MainActivity.this, MainActivity.class));
+        startActivity(getIntent());
+    }
+
+    private void toggleBottomMenu(boolean show) {
+        if(show) {
+            if(VIEW_PAGER.isUserInputEnabled()) {
+                VIEW_PAGER.setUserInputEnabled(false);
+
+                toggleBottomMenuAnimation(findViewById(R.id.bottomBarActions), findViewById(R.id.bottomBarNavigation));
+
+                KAPTURE_FRAGMENT.setCaptureButtonVisibility(true);
+            }
+        } else {
+            VIEW_PAGER.setUserInputEnabled(true);
+
+            toggleBottomMenuAnimation(findViewById(R.id.bottomBarNavigation), findViewById(R.id.bottomBarActions));
+
+            KAPTURE_FRAGMENT.setCaptureButtonVisibility(false);
+        }
+    }
+
+    private void toggleBottomMenuAnimation(View vIn, View vOut) {
+        final int height = vOut.getHeight();
+
+
+        final ViewGroup.LayoutParams layoutParamsIn = vIn.getLayoutParams(),
+                                     layoutParamsOut = vOut.getLayoutParams();
+
+        final ValueAnimator animation = ValueAnimator.ofInt(1, height);
+
+        animation.addUpdateListener(valueAnimator -> {
+            layoutParamsIn.height = (Integer) valueAnimator.getAnimatedValue();
+            layoutParamsOut.height = height - layoutParamsIn.height;
+
+            vIn.setLayoutParams(layoutParamsIn);
+            vOut.setLayoutParams(layoutParamsOut);
+        });
+
+        animation.setDuration(450);
+
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+
+                vIn.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                vOut.setVisibility(View.GONE);
+            }
+        });
+
+        animation.start();
     }
 }

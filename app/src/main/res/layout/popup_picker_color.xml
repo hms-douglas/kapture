@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/popup_background_transparent"
+    android:id="@+id/popupContainer">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/popup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/popup_padding"
+        android:layout_margin="@dimen/popup_margin"
+        android:background="@drawable/popup_background"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/popupBtnContainer"
+            android:layout_marginBottom="@dimen/color_picker_space">
+
+            <ImageView
+                android:id="@+id/picker"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/color_picker_space"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/hue"/>
+
+            <ImageView
+                android:id="@+id/hue"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/color_picker_hue_height"
+                android:layout_marginBottom="@dimen/color_picker_space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/picker"
+                app:layout_constraintBottom_toTopOf="@id/transparency"/>
+
+            <ImageView
+                android:id="@+id/transparency"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/color_picker_hue_height"
+                android:layout_marginBottom="@dimen/color_picker_space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hue"
+                app:layout_constraintBottom_toTopOf="@id/info"/>
+
+            <LinearLayout
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/color_picker_space"
+                android:weightSum="7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transparency"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/color"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:id="@+id/hexLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/color_picker_hex"
+                        android:textColor="@color/color_picker_label"
+                        android:textSize="@dimen/color_picker_label"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/hex"/>
+
+                    <TextView
+                        android:id="@+id/hex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="#FFFFFFFF"
+                        android:textColor="@color/color_picker_value"
+                        android:textSize="@dimen/color_picker_value"
+                        app:layout_constraintTop_toBottomOf="@id/hexLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/redLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/color_picker_red"
+                        android:textColor="@color/color_picker_label"
+                        android:textSize="@dimen/color_picker_label"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/red"/>
+
+                    <TextView
+                        android:id="@+id/red"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="255"
+                        android:textColor="@color/color_picker_value"
+                        android:textSize="@dimen/color_picker_value"
+                        app:layout_constraintTop_toBottomOf="@id/redLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/greenLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/color_picker_green"
+                        android:textColor="@color/color_picker_label"
+                        android:textSize="@dimen/color_picker_label"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/green"/>
+
+                    <TextView
+                        android:id="@+id/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="255"
+                        android:textColor="@color/color_picker_value"
+                        android:textSize="@dimen/color_picker_value"
+                        app:layout_constraintTop_toBottomOf="@id/greenLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/blueLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/color_picker_blue"
+                        android:textColor="@color/color_picker_label"
+                        android:textSize="@dimen/color_picker_label"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/blue"/>
+
+                    <TextView
+                        android:id="@+id/blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="255"
+                        android:textColor="@color/color_picker_value"
+                        android:textSize="@dimen/color_picker_value"
+                        app:layout_constraintTop_toBottomOf="@id/blueLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/alphaLabelContainer">
+
+                    <TextView
+                        android:id="@+id/alphaLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/color_picker_alpha"
+                        android:textColor="@color/color_picker_label"
+                        android:textSize="@dimen/color_picker_label"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/alpha"/>
+
+                    <TextView
+                        android:id="@+id/alpha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="255"
+                        android:textColor="@color/color_picker_value"
+                        android:textSize="@dimen/color_picker_value"
+                        app:layout_constraintTop_toBottomOf="@id/alphaLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/popupBtnContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/popupBtnNo"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/popup_button_height"
+                android:text="@string/popup_btn_cancel"
+                android:textSize="@dimen/popup_button_text"
+                android:background="@drawable/btn_popup_design"
+                android:foreground="@drawable/btn_effect"
+                android:textColor="@color/popup_btn_text"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:gravity="center"
+                app:elevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/popupBtnDivisor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="HardcodedText"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/popupBtnDivisor"
+                android:layout_width="@dimen/popup_button_divisor_width"
+                android:layout_height="0dp"
+                android:background="@color/popup_btn_divisor"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/popupBtnNo"
+                app:layout_constraintStart_toEndOf="@id/popupBtnNo"
+                app:layout_constraintEnd_toStartOf="@id/popupBtnYes"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/popupBtnYes"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/popup_button_height"
+                android:text="@string/popup_btn_set"
+                android:textSize="@dimen/popup_button_text"
+                android:background="@drawable/btn_popup_design"
+                android:foreground="@drawable/btn_effect"
+                android:textColor="@color/popup_btn_text"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:gravity="center"
+                app:elevation="0dp"
+                app:layout_constraintStart_toEndOf="@id/popupBtnDivisor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="HardcodedText"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

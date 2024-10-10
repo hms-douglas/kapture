@@ -2,7 +2,6 @@ package dev.dect.kapture.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
 import android.webkit.MimeTypeMap;
@@ -35,20 +34,26 @@ public class KFile {
                                 INTERNAL_STORAGE_PATH = "/storage/emulated/0";
 
     public static File generateNewEmptyKaptureFile(Context ctx, KSettings ks) {
-        final SharedPreferences sp = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
+        final int fileId = getFileIdNotGenerated(ctx);
 
-        final int fileId = sp.getInt(Constants.SP_KEY_LAST_FILE_ID, 0) + 1;
-
-        sp.edit().putInt(Constants.SP_KEY_LAST_FILE_ID, fileId).apply();
+        ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit().putInt(Constants.SP_KEY_LAST_FILE_ID, fileId).apply();
 
         final String fileName =
-            String.format(Locale.getDefault(), "%03d", fileId)
+            formatFileId(fileId)
             + FILE_SEPARATOR
             + getDefaultKaptureFileName(ctx)
             + FILE_SEPARATOR
             + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
 
         return new File(ks.getSavingLocationFile(), fileName + VIDEO_EXTENSION);
+    }
+
+    public static int getFileIdNotGenerated(Context ctx) {
+        return ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getInt(Constants.SP_KEY_LAST_FILE_ID, 0) + 1;
+    }
+
+    public static String formatFileId(int id) {
+        return String.format(Locale.getDefault(), "%03d", id);
     }
 
     public static String uriToAbsolutPath(Context ctx, Uri uri) {
@@ -102,11 +107,15 @@ public class KFile {
     }
 
     public static String formatFileDuration(long milli) {
-        return Utils.Formatter.time(milli);
+        return Utils.Formatter.timeInMillis(milli);
     }
 
     public static File getDefaultFileLocation(Context ctx) {
         return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), formatStringResource(ctx, R.string.folder_name));
+    }
+
+    public static File getDefaultScreenshotFileLocation(Context ctx) {
+        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), formatStringResource(ctx, R.string.folder_name) + "/" + formatStringResource(ctx, R.string.folder_screenshot_name));
     }
 
     public static String formatStringResource(Context ctx, int resId) {
@@ -204,9 +213,7 @@ public class KFile {
     public static void copyFile(File from, File to) {
         try {
             Files.copy(from.toPath(), to.toPath());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignore) {}
     }
 
     public static void pmcToMp3(File pmc, File mp3) {
@@ -218,4 +225,21 @@ public class KFile {
     public static String getDefaultKaptureFileName(Context ctx) {
         return formatStringResource(ctx, R.string.file_name);
     }
+
+    public static String getDefaultScreenshotName(Context ctx) {
+        return formatStringResource(ctx, R.string.file_name_screenshot);
+    }
+
+    public static File generateFileIncrementalName(File parent, String name, String ext) {
+        File f = new File(parent, name + FILE_SEPARATOR + 0 + ext);
+
+        int i = 0;
+
+        while(f.exists()) {
+            f = new File(parent, name + FILE_SEPARATOR + ++i + ext);
+        }
+
+        return f;
+    }
+
 }

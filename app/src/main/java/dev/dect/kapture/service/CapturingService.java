@@ -13,18 +13,19 @@ import java.util.Objects;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.DB;
-import dev.dect.kapture.fragment.KapturesFragment;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.notification.SavedNotification;
 import dev.dect.kapture.notification.ProcessingNotification;
+import dev.dect.kapture.overlay.CountdownOverlay;
 import dev.dect.kapture.recorder.ScreenMicRecorder;
+import dev.dect.kapture.recorder.utils.StopOption;
 import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.notification.RecordingNotification;
 import dev.dect.kapture.activity.MainActivity;
 import dev.dect.kapture.activity.TokenActivity;
 import dev.dect.kapture.data.KSettings;
 import dev.dect.kapture.recorder.InternalAudioRecorder;
-import dev.dect.kapture.popup.OverlayPopup;
+import dev.dect.kapture.overlay.Overlay;
 import dev.dect.kapture.utils.KMediaProjection;
 import dev.dect.kapture.utils.Utils;
 
@@ -32,7 +33,8 @@ import dev.dect.kapture.utils.Utils;
 public class CapturingService extends AccessibilityService {
     private static boolean IS_SERVICE_RUNNING = false,
                            IS_RECORDING = false,
-                           IS_PROCESSING = false;
+                           IS_PROCESSING = false,
+                           IS_IN_COUNTDOWN = false;
 
     private static CapturingService CAPTURING_SERVICE;
 
@@ -42,9 +44,11 @@ public class CapturingService extends AccessibilityService {
 
     private InternalAudioRecorder INTERNAL_AUDIO_RECORDER;
 
-    private OverlayPopup OVERLAY_UI;
+    private Overlay OVERLAY_UI;
 
     private KSettings KSETTINGS;
+
+    private StopOption STOP_OPTION;
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {}
@@ -116,27 +120,49 @@ public class CapturingService extends AccessibilityService {
         return IS_PROCESSING;
     }
 
+    public static boolean isInCountdown() {
+        return IS_IN_COUNTDOWN;
+    }
+
     private void startRecording() {
         if(TokenActivity.hasToken()) {
             initVariables();
 
-            initRecorders();
-
-            OVERLAY_UI.requestRender();
-
-            SCREEN_MIC_RECORDER.start();
-
-            INTERNAL_AUDIO_RECORDER.start();
-
-            IS_RECORDING = true;
+            IS_IN_COUNTDOWN = true;
 
             requestUIsUpdate(null);
+
+            new CountdownOverlay(
+                this,
+                KSETTINGS,
+                () -> {
+                    OVERLAY_UI.render();
+
+                    initRecorders();
+
+                    SCREEN_MIC_RECORDER.start();
+
+                    INTERNAL_AUDIO_RECORDER.start();
+
+                    OVERLAY_UI.setMediaRecorderSurface(SCREEN_MIC_RECORDER.getSurface());
+
+                    STOP_OPTION.start();
+
+                    IS_RECORDING = true;
+
+                    IS_IN_COUNTDOWN = false;
+
+                    requestUIsUpdate(null);
+                }
+            ).renderAndStart();
         } else {
             TokenActivity.requestToken(this);
         }
     }
 
     private void stopRecording() {
+        STOP_OPTION.destroy();
+
         NOTIFICATION.destroy();
 
         OVERLAY_UI.destroy();
@@ -182,7 +208,9 @@ public class CapturingService extends AccessibilityService {
 
         INTERNAL_AUDIO_RECORDER = new InternalAudioRecorder(this, KSETTINGS);
 
-        OVERLAY_UI = new OverlayPopup(this, KSETTINGS);
+        OVERLAY_UI = new Overlay(this, KSETTINGS);
+
+        STOP_OPTION = new StopOption(this, KSETTINGS, this::stopRecording);
     }
 
     private void initRecorders() {

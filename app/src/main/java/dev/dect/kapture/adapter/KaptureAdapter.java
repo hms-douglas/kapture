@@ -1,12 +1,13 @@
 package dev.dect.kapture.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,7 +49,7 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
         protected FilterResults performFiltering(CharSequence input) {
             final ArrayList<Kapture> filteredList = new ArrayList<>();
 
-            if(input == null || input.toString().trim().length() == 0) {
+            if(input == null || input.toString().trim().isEmpty()) {
                 filteredList.addAll(INITIAL_LIST_KAPTURES);
             } else {
                 final String search = input.toString().toLowerCase();
@@ -200,13 +201,11 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
         holder.EL_NAME.setText(kapture.getName());
 
         if(holder.STYLE != KapturesFragment.STYLE_LIST) {
-            new Handler(Looper.getMainLooper()).post(() -> {
-                try {
-                    holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
+            kapture.retrieveAllMediaData(() -> {
+                holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
 
-                    holder.EL_DURATION.setText(KFile.formatFileDuration(kapture.getDuration()));
-                    holder.EL_DURATION.setVisibility(View.VISIBLE);
-                } catch (Exception ignore) {}
+                holder.EL_DURATION.setText(KFile.formatFileDuration(kapture.getDuration()));
+                holder.EL_DURATION.setVisibility(View.VISIBLE);
             });
 
             holder.EL_SELECTOR.setImageResource(TRACKER.isSelected((long) position) ? R.drawable.checkbox_on : R.drawable.checkbox_off);
@@ -218,6 +217,8 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
             holder.EL_DATE.setVisibility(View.VISIBLE);
 
             if(kapture.hasExtras()) {
+                holder.EL_EXTRA.setVisibility(View.VISIBLE);
+
                 holder.EL_EXTRA.setOnClickListener((v) -> {
                     if(kapture.hasExtras()) {
                         new ExtraPopup(ctx, kapture.getExtras(), null).show();
@@ -231,34 +232,34 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
                 holder.EL_EXTRA.setVisibility(View.GONE);
             }
 
-            new Handler(Looper.getMainLooper()).post(() -> {
-                try {
-                    holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
+            kapture.retrieveAllMediaData(() -> {
+                holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
 
-                    holder.EL_RESOLUTION.setText(kapture.getThumbnail().getWidth() + "x" + kapture.getThumbnail().getHeight());
-                    holder.EL_RESOLUTION.setVisibility(View.VISIBLE);
+                final int[] size = kapture.getVideoSize();
 
-                    holder.EL_DURATION.setText(KFile.formatFileDuration(kapture.getDuration()));
-                    holder.EL_DURATION.setVisibility(View.VISIBLE);
-                } catch (Exception ignore) {}
+                holder.EL_RESOLUTION.setText(size[0] + "x" + size[1]);
+                holder.EL_RESOLUTION.setVisibility(View.VISIBLE);
 
-                try {
-                    final MediaExtractor extractor = new MediaExtractor();
+                holder.EL_DURATION.setText(KFile.formatFileDuration(kapture.getDuration()));
+                holder.EL_DURATION.setVisibility(View.VISIBLE);
+            });
 
-                    extractor.setDataSource(kapture.getLocation());
+            try {
+                final MediaExtractor extractor = new MediaExtractor();
 
-                    for(int i = 0; i < extractor.getTrackCount(); ++i) {
-                        final MediaFormat format = extractor.getTrackFormat(i);
+                extractor.setDataSource(kapture.getLocation());
 
-                        if(format.getString(MediaFormat.KEY_MIME).startsWith("video/")) {
-                            if(format.containsKey(MediaFormat.KEY_FRAME_RATE)) {
-                                holder.EL_FRAMES.setText(format.getInteger(MediaFormat.KEY_FRAME_RATE) + " fps");
-                                holder.EL_FRAMES.setVisibility(View.VISIBLE);
-                            }
+                for(int i = 0; i < extractor.getTrackCount(); ++i) {
+                    final MediaFormat format = extractor.getTrackFormat(i);
+
+                    if(format.getString(MediaFormat.KEY_MIME).startsWith("video/")) {
+                        if(format.containsKey(MediaFormat.KEY_FRAME_RATE)) {
+                            holder.EL_FRAMES.setText(format.getInteger(MediaFormat.KEY_FRAME_RATE) + " fps");
+                            holder.EL_FRAMES.setVisibility(View.VISIBLE);
                         }
                     }
-                } catch (Exception ignore) {}
-            });
+                }
+            } catch (Exception ignore) {}
 
             if(TRACKER.isSelected((long) position)) {
                 holder.EL_SELECTOR.setImageResource(R.drawable.checkbox_on);
@@ -272,7 +273,56 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
         TRACKER.addObserver(new SelectionTracker.SelectionObserver<Long>() {
             @Override
             public void onSelectionChanged() {
-            holder.EL_SELECTOR.setVisibility(TRACKER.getSelection().size() > 0 ? View.VISIBLE : View.GONE);
+            if(!TRACKER.getSelection().isEmpty()) {
+                if(holder.EL_SELECTOR.getTag() == null) {
+                    holder.EL_SELECTOR.setTag(true);
+
+                    holder.EL_SELECTOR.setVisibility(View.VISIBLE);
+
+                    final ValueAnimator in = ValueAnimator.ofInt(0, (int) ctx.getResources().getDimension(R.dimen.kapture_list_select_icon));
+
+                    in.addUpdateListener(valueAnimator -> {
+                        final int val = (Integer) valueAnimator.getAnimatedValue();
+
+                        final ViewGroup.LayoutParams layoutParams = holder.EL_SELECTOR.getLayoutParams();
+
+                        layoutParams.height = val;
+                        layoutParams.width = val;
+
+                        holder.EL_SELECTOR.setLayoutParams(layoutParams);
+                    });
+
+                    in.setDuration(350);
+
+                    in.start();
+                }
+            } else {
+                holder.EL_SELECTOR.setTag(null);
+
+                final ValueAnimator out = ValueAnimator.ofInt((int) ctx.getResources().getDimension(R.dimen.kapture_list_select_icon), 0);
+
+                out.addUpdateListener(valueAnimator -> {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+
+                    ViewGroup.LayoutParams layoutParams = holder.EL_SELECTOR.getLayoutParams();
+
+                    layoutParams.height = val;
+                    layoutParams.width = val;
+
+                    holder.EL_SELECTOR.setLayoutParams(layoutParams);
+                });
+
+                out.setDuration(350);
+
+                out.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        holder.EL_SELECTOR.setVisibility(View.GONE);
+                    }
+                });
+
+                out.start();
+            }
             }
         });
     }
@@ -286,6 +336,5 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
     public long getItemId(int position) {
         return position;
     }
-
 
 }

@@ -28,8 +28,17 @@
 
     <color name="btn_effect">#EB313337</color>
 
+    <color name="overlay_background">#D2000000</color>
+    <color name="overlay_background_border">@color/c2</color>
     <color name="overlay_icon_background">@color/main</color>
+    <color name="overlay_icon_stop">@color/c0</color>
     <color name="overlay_icon">@color/c0</color>
+    <color name="overlay_icon_secondary">@color/c2</color>
+    <color name="overlay_text">@color/c0</color>
+    <color name="overlay_text_secondary">@color/c1</color>
+    <color name="overlay_menu_draw_size_color_background">#151515</color>
+    <color name="overlay_menu_draw_size_color_background_border">#676767</color>
+
 
     <color name="notification_background">@color/main</color>
 
@@ -49,6 +58,14 @@
     <color name="audio_option_seekbar_progress">@color/default_seekbar_progress</color>
     <color name="audio_option_seekbar_progress_background">@color/default_seekbar_progress_background</color>
     <color name="audio_option_seekbar_thumb">@color/default_seekbar_thumb</color>
+
+    <color name="camera_seekbar_progress">@color/default_seekbar_progress</color>
+    <color name="camera_seekbar_progress_background">@color/c6</color>
+    <color name="camera_seekbar_thumb">@color/default_seekbar_thumb</color>
+
+    <color name="overlay_seekbar_progress">@color/default_seekbar_progress</color>
+    <color name="overlay_seekbar_progress_background">@color/c6</color>
+    <color name="overlay_seekbar_thumb">@color/default_seekbar_thumb</color>
 
     <color name="bottom_bar_background">@color/activity_background</color>
     <color name="bottom_bar_btn_text_color_on">@color/c0</color>
@@ -73,6 +90,8 @@
     <color name="list_item_divisor">@color/c3</color>
 
     <color name="list_group_title">@color/c6</color>
+
+    <color name="group_subtitle">@color/c6</color>
 
     <color name="switch_thumb_on">@color/c0</color>
     <color name="switch_thumb_off">@color/c0</color>
@@ -127,4 +146,17 @@
     <color name="hint_color">@color/c2</color>
 
     <color name="textColorHighlight">@color/main_darker</color>
+
+    <color name="countdown_border">#FFFFFF</color>
+    <color name="countdown_progress">@color/main</color>
+    <color name="countdown_button">@color/main</color>
+    <color name="countdown_button_text">@color/btn_main_color</color>
+    <color name="countdown_text">@color/main</color>
+    <color name="countdown_text_shadow">@color/countdown_border</color>
+
+    <color name="popup_time_picker_font_focused">@color/main</color>
+    <color name="popup_time_picker_font_not_focused">@color/popup_text</color>
+
+    <color name="color_picker_label">@color/c1</color>
+    <color name="color_picker_value">@color/c0</color>
 </resources>

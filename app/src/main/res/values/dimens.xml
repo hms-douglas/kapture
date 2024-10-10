@@ -35,10 +35,29 @@
     <dimen name="permission_font_subtitle_2">@dimen/default_font_secondary_list</dimen>
     <dimen name="permission_margin_1">15dp</dimen>
 
-    <dimen name="overlay_padding">10dp</dimen>
-    <dimen name="overlay_btn_size">35dp</dimen>
+    <dimen name="overlay_menu_background_radius">20dp</dimen>
+    <dimen name="overlay_menu_background_border">0.7dp</dimen>
+    <dimen name="overlay_menu_height">36dp</dimen>
+    <dimen name="overlay_menu_width_minimized">5dp</dimen>
+    <dimen name="overlay_menu_space">3dp</dimen>
+    <dimen name="overlay_menu_font_horizontal">@dimen/default_font_tertiary</dimen>
+    <dimen name="overlay_menu_font_vertical">12sp</dimen>
+    <dimen name="overlay_menu_icon">@dimen/overlay_menu_height</dimen>
+    <dimen name="overlay_menu_icon_padding">2.5dp</dimen>
+    <dimen name="overlay_menu_icon_secondary">25dp</dimen>
+    <dimen name="overlay_menu_icon_secondary_padding">3.5dp</dimen>
 
-    <dimen name="bottom_bar_height">57dp</dimen>
+    <dimen name="overlay_menu_draw_size_color_min">1dp</dimen>
+    <dimen name="overlay_menu_draw_size_color_max">31dp</dimen>
+    <dimen name="overlay_menu_draw_size_color_default">3dp</dimen>
+    <dimen name="overlay_menu_draw_size_color_background_border">@dimen/overlay_menu_background_border</dimen>
+    <dimen name="overlay_menu_draw_color_btn_size">23dp</dimen>
+    <dimen name="overlay_menu_draw_color_size_space">6dp</dimen>
+    <dimen name="overlay_menu_draw_size_thumb">8dp</dimen>
+    <dimen name="overlay_menu_draw_size_height">38dp</dimen>
+    <dimen name="overlay_menu_draw_size_space_sides">8dp</dimen>
+
+    <dimen name="bottom_bar_height">60dp</dimen>
     <dimen name="bottom_bar_padding_sides">30dp</dimen>
 
     <dimen name="bottom_bar_btn_margin_top">4dp</dimen>
@@ -77,12 +96,17 @@
     <dimen name="group_container_radius">26dp</dimen>
     <dimen name="group_padding_sides">24dp</dimen>
     <dimen name="group_margin_bottom">15dp</dimen>
-
     <dimen name="group_title_margin_bottom">3dp</dimen>
+
+    <dimen name="group_subtitle_margin_top">15dp</dimen>
+    <dimen name="group_subtitle_divisor">1.5dp</dimen>
+    <dimen name="group_subtitle_dash_width">@dimen/group_subtitle_divisor</dimen>
+    <dimen name="group_subtitle_dash_gap">5dp</dimen>
+    <dimen name="group_subtitle_divisor_space_text">6dp</dimen>
 
     <dimen name="list_item_min_height">65dp</dimen>
     <dimen name="list_item_divisor_horizontal">1dp</dimen>
-    <dimen name="list_item_divisor_vertical">1px</dimen>
+    <dimen name="list_item_divisor_vertical">1dp</dimen>
     <dimen name="list_item_divisor_space_sides">10dp</dimen>
     <dimen name="list_item_padding_top_bottom">14dp</dimen>
 
@@ -169,5 +193,24 @@
     <dimen name="popup_wifi_share_ip">@dimen/default_font_title</dimen>
     <dimen name="popup_wifi_share_name">@dimen/default_font</dimen>
     <dimen name="popup_wifi_share_space">28dp</dimen>
+
+    <dimen name="countdown_border">1dp</dimen>
+    <dimen name="countdown_progress_width">12dp</dimen>
+    <dimen name="countdown_progress_size">200dp</dimen>
+    <dimen name="countdown_text">65dp</dimen>
+
+    <dimen name="frame_square_corner">15dp</dimen>
+
+    <dimen name="popup_time_picker_font">@dimen/default_font</dimen>
+
+    <dimen name="list_button_color_example">25dp</dimen>
+
+    <dimen name="color_picker_selector">15dp</dimen>
+
+    <dimen name="color_picker_hue_height">17dp</dimen>
+    <dimen name="color_picker_transparency_height">@dimen/color_picker_hue_height</dimen>
+    <dimen name="color_picker_space">18dp</dimen>
+    <dimen name="color_picker_label">@dimen/default_font_tertiary</dimen>
+    <dimen name="color_picker_value">@dimen/default_font_secondary</dimen>
 
 </resources>

@@ -3,6 +3,12 @@ package dev.dect.kapture.model;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
+import android.os.CancellationSignal;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.util.Size;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,6 +29,10 @@ public class Kapture {
     private long DURATION = -1;
 
     private Bitmap THUMBNAIL = null;
+
+    private int[] VIDEO_SIZE;
+
+    private boolean HAS_MEDIA_DATA = false;
 
     public Kapture() {
         this(-1, "", null);
@@ -54,15 +64,7 @@ public class Kapture {
 
     public long getDuration() {
         if(DURATION == -1) {
-            try {
-                final MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-
-                mediaMetadataRetriever.setDataSource(LOCATION);
-
-                DURATION = Long.parseLong(Objects.requireNonNull(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)));
-
-                mediaMetadataRetriever.close();
-            } catch (Exception ignore) {}
+            retrieveAllMediaData();
         }
 
         return DURATION;
@@ -70,18 +72,18 @@ public class Kapture {
 
     public Bitmap getThumbnail() {
         if(THUMBNAIL == null) {
-            try {
-                final MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-
-                mediaMetadataRetriever.setDataSource(LOCATION);
-
-                THUMBNAIL = mediaMetadataRetriever.getFrameAtTime();
-
-                mediaMetadataRetriever.close();
-            } catch (Exception ignore) {}
+            retrieveAllMediaData();
         }
 
         return THUMBNAIL;
+    }
+
+    public int[] getVideoSize() {
+        if(VIDEO_SIZE == null) {
+            retrieveAllMediaData();
+        }
+
+        return VIDEO_SIZE;
     }
 
     public long getId() {
@@ -120,6 +122,53 @@ public class Kapture {
         }
 
         this.EXTRAS.add(extra);
+    }
+
+    public void retrieveAllMediaData() {
+        if(HAS_MEDIA_DATA) {
+            return;
+        }
+
+        try {
+            final MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+
+            mediaMetadataRetriever.setDataSource(LOCATION);
+
+            DURATION = Long.parseLong(Objects.requireNonNull(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)));
+
+            VIDEO_SIZE = new int[] {
+                Integer.parseInt(Objects.requireNonNull(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH))),
+                Integer.parseInt(Objects.requireNonNull(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)))
+            };
+
+            THUMBNAIL = ThumbnailUtils.createVideoThumbnail(
+                new File(LOCATION),
+                new Size(Math.min(1080, VIDEO_SIZE[0]), Math.min(1080, VIDEO_SIZE[1])),
+                new CancellationSignal()
+            );
+
+            mediaMetadataRetriever.close();
+
+            HAS_MEDIA_DATA = true;
+        } catch (Exception ignore) {}
+    }
+
+    public void retrieveAllMediaData(Runnable runnable) {
+        final HandlerThread handlerThread = new HandlerThread("RMD");
+
+        handlerThread.start();
+
+        Handler handler = new Handler(handlerThread.getLooper());
+
+        handler.post(() -> {
+            retrieveAllMediaData();
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                runnable.run();
+
+                handlerThread.quit();
+            }, 0);
+        });
     }
 
     public static class Extra {

@@ -27,12 +27,10 @@ public class WiFiSharePopup extends Dialog {
         this.POPUP_CONTAINER = view.findViewById(R.id.popupContainer);
         this.POPUP_VIEW = view.findViewById(R.id.popup);
 
-        ((TextView) view.findViewById(R.id.title)).setText(ctx.getString(R.string.popup_wifi_share_title) + " (" + amountSharing + ")");
+        ((TextView) view.findViewById(R.id.title)).setText(ctx.getString(R.string.popup_wifi_share_title) + " " + amountSharing + " " + ctx.getString(amountSharing == 1 ? R.string.kapture : R.string.kapture_plural));
         ((TextView) view.findViewById(R.id.ip)).setText("http://" + ip + ":" + port);
 
         view.findViewById(R.id.popupBtnStop).setOnClickListener((v) -> this.dismissWithAnimation(btnStop));
-
-        Utils.Popup.setInAnimation(this, POPUP_CONTAINER, POPUP_VIEW);
 
         this.setCancelable(false);
 

@@ -17,7 +17,6 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/kapture_list_padding_sides"
         android:layout_marginEnd="@dimen/kapture_list_padding_sides"
-        android:layout_marginBottom="@dimen/kapture_list_padding_top_bottom"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +27,7 @@
             android:layout_width="@dimen/kapture_list_select_icon"
             android:layout_height="@dimen/kapture_list_select_icon"
             android:src="@drawable/checkbox_off"
+            android:layout_marginBottom="@dimen/kapture_list_padding_top_bottom"
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -39,15 +39,18 @@
             android:layout_height="match_parent"
             android:src="@drawable/icon_kapture_image_helper"
             android:scaleType="fitCenter"
+            android:layout_marginBottom="@dimen/kapture_list_padding_top_bottom"
             app:layout_constraintWidth_percent="@dimen/kapture_list_thumbnail_width_percentage"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/select"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/kapture_list_space_from_thumbail"
+            android:background="@drawable/list_item_divisor_horizontal_bottom"
+            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/thumbnail"
@@ -135,23 +138,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/frames"/>
+        </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnExtra"
-                android:layout_width="@dimen/kapture_list_extra_btn"
-                android:layout_height="@dimen/kapture_list_extra_btn"
-                android:background="@drawable/btn_extra"
-                android:foreground="@drawable/btn_effect"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExtra"
+            android:layout_width="@dimen/kapture_list_extra_btn"
+            android:layout_height="@dimen/kapture_list_extra_btn"
+            android:background="@drawable/btn_extra"
+            android:foreground="@drawable/btn_effect"
+            android:layout_marginBottom="@dimen/kapture_list_padding_top_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="@dimen/list_item_divisor_horizontal"
-        android:background="@drawable/list_item_divisor_horizontal_bottom"
-        app:layout_constraintStart_toStartOf="@id/infoContainer"
-        app:layout_constraintEnd_toEndOf="@id/infoContainer"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

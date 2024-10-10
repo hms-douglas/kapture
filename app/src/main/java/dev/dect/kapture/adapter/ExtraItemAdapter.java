@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.activity.MainActivity;
@@ -74,7 +75,7 @@ public class ExtraItemAdapter extends RecyclerView.Adapter<ExtraItemAdapter.MyVi
 
             new DialogPopup(
                 ctx,
-                -1,
+                DialogPopup.NO_TEXT,
                 ctx.getString(R.string.popup_delete_text_1) + " " + f.getName() + "?",
                 R.string.popup_btn_delete,
                 () -> {
@@ -82,12 +83,8 @@ public class ExtraItemAdapter extends RecyclerView.Adapter<ExtraItemAdapter.MyVi
 
                     f.delete();
 
-                    EXTRAS.remove(holder.getAbsoluteAdapterPosition());
-
-                    holder.getBindingAdapter().notifyItemRemoved(holder.getAbsoluteAdapterPosition());
-
-                    if(EXTRAS.size() == 0) {
-                        POPUP.dismissWithAnimation();
+                    if(EXTRAS.size() - 1 == 0) {
+                        Objects.requireNonNull(POPUP).dismissWithAnimation();
 
                         try {
                             if(MainActivity.getInstance() != null) {

@@ -56,6 +56,8 @@ public class PickerPopup extends Dialog {
 
         recyclerView.setAdapter(pickerItemAdapter);
 
+        recyclerView.scrollToPosition(activeIndex);
+
         recyclerView.setOnClickListener((v) -> {
             final int i = pickerItemAdapter.getSelected();
 
@@ -67,8 +69,6 @@ public class PickerPopup extends Dialog {
         });
 
         Utils.Popup.setMaxHeight(ctx, view.findViewById(R.id.popup));
-
-        Utils.Popup.setInAnimation(this, POPUP_CONTAINER, POPUP_VIEW);
 
         this.setContentView(view);
 

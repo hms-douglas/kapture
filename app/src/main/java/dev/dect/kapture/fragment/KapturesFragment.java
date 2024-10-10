@@ -13,7 +13,6 @@ import android.os.Looper;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -234,11 +233,11 @@ public class KapturesFragment extends Fragment {
                 } else if(id == R.id.menuShowCommand) {
                     new DialogPopup(
                         CONTEXT,
-                        -1,
+                        DialogPopup.NO_TEXT,
                         R.string.command,
                         R.string.popup_btn_ok,
                         null,
-                        -1,
+                        DialogPopup.NO_TEXT,
                         null,
                         true,
                         false,
@@ -286,7 +285,7 @@ public class KapturesFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().trim().length() == 0) {
+                if(s.toString().trim().isEmpty()) {
                     SEARCH_BTN_MIC_OR_CLEAR.setImageResource(R.drawable.icon_tool_bar_microphone);
                 } else if(s.toString().trim().length() == 1) {
                     SEARCH_BTN_MIC_OR_CLEAR.setImageResource(R.drawable.icon_tool_bar_clear);
@@ -300,7 +299,7 @@ public class KapturesFragment extends Fragment {
         });
 
         SEARCH_BTN_MIC_OR_CLEAR.setOnClickListener((v) -> {
-            if(SEARCH_INPUT.getText().toString().trim().length() == 0) {
+            if(SEARCH_INPUT.getText().toString().trim().isEmpty()) {
                 final Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
                 i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -631,7 +630,7 @@ public class KapturesFragment extends Fragment {
     public void deleteSelected() {
         new DialogPopup(
             CONTEXT,
-            -1,
+            DialogPopup.NO_TEXT,
             getString(R.string.popup_delete_text_2),
             R.string.popup_btn_delete,
             () -> {
@@ -697,24 +696,27 @@ public class KapturesFragment extends Fragment {
             R.string.popup_btn_rename,
             KFile.removeFileExtension(kapture.getName()),
             R.string.popup_btn_rename,
-            (input) -> {
-                unselectAll();
+            new InputPopup.OnInputPopupListener() {
+                @Override
+                public void onStringInputSet(String input) {
+                    unselectAll();
 
-                final File f = KFile.renameFile(input, kapture.getLocation());
+                    final File f = KFile.renameFile(input, kapture.getLocation());
 
-                kapture.setLocation(f.getAbsolutePath());
+                    kapture.setLocation(f.getAbsolutePath());
 
-                for(Kapture.Extra extra : kapture.getExtras()) {
-                    final File fe = KFile.renameFile(input + KFile.FILE_SEPARATOR + extra.getFileNameComplement(CONTEXT), extra.getLocation());
+                    for(Kapture.Extra extra : kapture.getExtras()) {
+                        final File fe = KFile.renameFile(input + KFile.FILE_SEPARATOR + extra.getFileNameComplement(CONTEXT), extra.getLocation());
 
-                    extra.setLocation(fe.getAbsolutePath());
+                        extra.setLocation(fe.getAbsolutePath());
+                    }
+
+                    DATABASE.updateKapture(kapture);
+
+                    clearSearch();
+
+                    Toast.makeText(CONTEXT, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
                 }
-
-                DATABASE.updateKapture(kapture);
-
-                clearSearch();
-
-                Toast.makeText(CONTEXT, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
             },
             R.string.popup_btn_cancel,
             null,
@@ -727,7 +729,7 @@ public class KapturesFragment extends Fragment {
     public void removeSelected() {
         new DialogPopup(
             CONTEXT,
-            -1,
+            DialogPopup.NO_TEXT,
             getString(R.string.popup_remove),
             R.string.popup_btn_remove,
             () -> {
@@ -760,7 +762,7 @@ public class KapturesFragment extends Fragment {
     public void deleteSelectedExtras() {
         new DialogPopup(
             CONTEXT,
-            -1,
+            DialogPopup.NO_TEXT,
             getString(R.string.popup_delete_text_3),
             R.string.popup_btn_delete,
             () -> {
@@ -831,7 +833,7 @@ public class KapturesFragment extends Fragment {
     }
 
     public void requestFloatingButtonUpdate() {
-        BTN_FLOATING.setVisibility(CapturingService.isProcessing() ? View.GONE : View.VISIBLE);
+        BTN_FLOATING.setVisibility(CapturingService.isProcessing() || CapturingService.isInCountdown() ? View.GONE : View.VISIBLE);
 
         BTN_FLOATING.setBackgroundResource(CapturingService.isRecording() ? R.drawable.btn_floating_background_stop : R.drawable.btn_floating_background_start);
     }

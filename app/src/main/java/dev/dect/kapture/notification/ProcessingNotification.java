@@ -12,6 +12,7 @@ import java.util.Date;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.data.DefaultSettings;
 import dev.dect.kapture.utils.Utils;
 
 @SuppressLint("LaunchActivityFromNotification")
@@ -24,11 +25,15 @@ public class ProcessingNotification {
         this.CTX = ctx;
         this.NOTIFICATION_MANAGER = ((NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE));
 
-        NOTIFICATION_MANAGER.createNotificationChannel(new NotificationChannel(Constants.NOTIFICATION_CHANNEL_ID_PROCESSING, CTX.getString(R.string.notification_channel_name_captured), NotificationManager.IMPORTANCE_LOW));
+        NOTIFICATION_MANAGER.createNotificationChannel(new NotificationChannel(Constants.NOTIFICATION_CHANNEL_ID_PROCESSING, CTX.getString(R.string.notification_channel_name_processing), NotificationManager.IMPORTANCE_LOW));
     }
 
     public void createAndShow() {
         NOTIFICATION_MANAGER.cancelAll();
+
+        if(!CTX.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getBoolean(Constants.SP_KEY_IS_TO_SHOW_NOTIFICATION_PROCESSING, DefaultSettings.IS_TO_SHOW_NOTIFICATION_PROCESSING)) {
+            return;
+        }
 
         final NotificationCompat.Builder notificationCompact = new NotificationCompat.Builder(CTX, Constants.NOTIFICATION_CHANNEL_ID_PROCESSING);
 

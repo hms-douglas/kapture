@@ -21,6 +21,8 @@ public class DialogPopup extends Dialog {
     private final ConstraintLayout POPUP_VIEW,
                                    POPUP_CONTAINER;
 
+    public static final int NO_TEXT = -1;
+
     public DialogPopup(Context ctx, int title, int text, int btnYesText, Runnable btnYes, int btnNoText, @Nullable Runnable btnNo, boolean dismissible, boolean dismissibleCallsNo, boolean isDangerousAction) {
         this(ctx, title, ctx.getString(text), btnYesText, btnYes, btnNoText, btnNo, dismissible, dismissibleCallsNo, isDangerousAction);
     }
@@ -30,7 +32,7 @@ public class DialogPopup extends Dialog {
 
         final View view = ((LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.popup_dialog, null);
 
-        if(title == -1) {
+        if(title == NO_TEXT) {
             view.findViewById(R.id.popupTitle).setVisibility(View.GONE);
         } else {
             ((TextView) view.findViewById(R.id.popupTitle)).setText(title);
@@ -54,7 +56,7 @@ public class DialogPopup extends Dialog {
             }
         });
 
-        if(btnNoText == -1) {
+        if(btnNoText == NO_TEXT) {
             view.findViewById(R.id.popupBtnNo).setVisibility(View.GONE);
 
             buttonYes.setAllCaps(true);
@@ -88,8 +90,6 @@ public class DialogPopup extends Dialog {
         }
 
         Utils.Popup.setMaxHeight(ctx, view.findViewById(R.id.popup));
-
-        Utils.Popup.setInAnimation(this, POPUP_CONTAINER, POPUP_VIEW);
 
         this.setContentView(view);
 

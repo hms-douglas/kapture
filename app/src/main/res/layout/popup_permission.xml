@@ -114,8 +114,47 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icon_notif"
                 app:layout_constraintTop_toBottomOf="@id/title_notif" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/permission_margin_1">
 
+            <ImageView
+                android:id="@+id/icon_camera"
+                android:layout_width="@dimen/permission_icon"
+                android:layout_height="@dimen/permission_icon"
+                android:padding="4dp"
+                android:src="@drawable/icon_permission_camera"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_camera"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_camera_title"
+                android:textColor="@color/permission_main_text"
+                android:textSize="@dimen/permission_font_title_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_camera"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/notif_camera"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/permission_icon_margin"
+                android:text="@string/permission_camera_description"
+                android:textColor="@color/permission_secondary_text"
+                android:textSize="@dimen/permission_font_subtitle_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_camera"
+                app:layout_constraintTop_toBottomOf="@id/title_camera" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -202,7 +241,6 @@
                 app:layout_constraintTop_toBottomOf="@id/title_security" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linearLayout"

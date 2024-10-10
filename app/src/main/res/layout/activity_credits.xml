@@ -181,6 +181,38 @@
                         android:layout_marginBottom="@dimen/default_btn_margin_bottom"
                         android:ellipsize="end"
                         android:lines="1"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseBSD3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_bsd3_clause"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_effect"
+                        android:textColor="@color/popup_btn_text"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseOpenFont"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_open_font"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_effect"
+                        android:textColor="@color/popup_btn_text"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"/>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

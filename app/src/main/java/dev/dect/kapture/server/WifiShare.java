@@ -4,18 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Environment;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
@@ -84,6 +77,10 @@ public class WifiShare extends NanoHTTPD {
             Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_no_wifi), Toast.LENGTH_SHORT).show();
 
             return;
+        } else if(ip.equals("?")) {
+            Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
+
+            return;
         }
 
         try {
@@ -105,7 +102,7 @@ public class WifiShare extends NanoHTTPD {
     }
 
     private Response downloadFile(File file) {
-        FileInputStream fileInputStream = null;
+        FileInputStream fileInputStream;
 
         try {
             fileInputStream = new FileInputStream(file);
@@ -123,7 +120,7 @@ public class WifiShare extends NanoHTTPD {
     }
 
     private Response playFile(File file) {
-        FileInputStream fileInputStream = null;
+        FileInputStream fileInputStream;
 
         try {
             fileInputStream = new FileInputStream(file);

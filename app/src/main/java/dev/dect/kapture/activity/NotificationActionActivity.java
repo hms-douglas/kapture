@@ -31,7 +31,7 @@ public class NotificationActionActivity extends AppCompatActivity {
     }
 
     private void init() {
-        SettingsFragment.setTheme(this, getSharedPreferences(Constants.SP, MODE_PRIVATE).getInt(Constants.SP_KEY_APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
+        SettingsFragment.setTheme(this, getSharedPreferences(Constants.SP, MODE_PRIVATE).getInt(Constants.SP_KEY_APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM), false);
 
         if(getIntent().getExtras() == null) {
             finish();
@@ -53,7 +53,7 @@ public class NotificationActionActivity extends AppCompatActivity {
 
                     new DialogPopup(
                         this,
-                        -1,
+                        DialogPopup.NO_TEXT,
                         getString(R.string.popup_delete_text_1) + " " + f.getName() + "?",
                         R.string.popup_btn_delete,
                         () -> {

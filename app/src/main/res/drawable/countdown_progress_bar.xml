@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="270"
+    android:toDegrees="270">
+    <shape
+        android:shape="ring"
+        android:thickness="@dimen/countdown_progress_width"
+        android:useLevel="true">
+
+        <gradient
+            android:angle="0"
+            android:endColor="@color/countdown_progress"
+            android:startColor="@color/countdown_progress"
+            android:type="sweep"
+            android:useLevel="false" />
+
+        <stroke
+            android:width="@dimen/countdown_border"
+            android:color="@color/countdown_border"/>
+    </shape>
+</rotate>
