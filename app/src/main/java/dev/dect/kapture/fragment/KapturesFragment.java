@@ -84,7 +84,8 @@ public class KapturesFragment extends Fragment {
 
     private RecyclerView RECYCLER_VIEW;
 
-    private AppCompatButton BTN_FLOATING;
+    private AppCompatButton BTN_FLOATING_START_STOP,
+                            BTN_FLOATING_PAUSE_RESUME;
 
     private ArrayList<Kapture> KAPTURES;
 
@@ -152,7 +153,8 @@ public class KapturesFragment extends Fragment {
 
         BTN_SELECTED = VIEW.findViewById(R.id.selected);
         BTN_STYLE_LAYOUT_MANAGER = VIEW.findViewById(R.id.btnGrid);
-        BTN_FLOATING = VIEW.findViewById(R.id.startCapturing);
+        BTN_FLOATING_START_STOP = VIEW.findViewById(R.id.startStopCapturing);
+        BTN_FLOATING_PAUSE_RESUME = VIEW.findViewById(R.id.pauseResumeCapturing);
 
         SP = CONTEXT.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
 
@@ -253,7 +255,9 @@ public class KapturesFragment extends Fragment {
             popupMenu.show();
         });
 
-        BTN_FLOATING.setOnClickListener((l) -> CapturingService.requestToggleRecording(CONTEXT));
+        BTN_FLOATING_START_STOP.setOnClickListener((l) -> CapturingService.requestToggleRecording(CONTEXT));
+
+        BTN_FLOATING_PAUSE_RESUME.setOnClickListener((l) -> CapturingService.requestTogglePauseResumeRecording());
 
         BTN_SELECTED.setOnClickListener((l) -> {
             if(TRACKER.getSelection().size() == ADAPTER.getItemCount()) {
@@ -369,6 +373,10 @@ public class KapturesFragment extends Fragment {
 
                 KAPTURES.add(kapture);
             } else {
+                if(kapture.getThumbnailCachedFile().exists()) {
+                    kapture.getThumbnailCachedFile().delete();
+                }
+
                 DATABASE.deleteKapture(kapture);
             }
         }
@@ -489,7 +497,14 @@ public class KapturesFragment extends Fragment {
 
         for(int i = 0; i < KAPTURES.size(); i++) {
             if(!new File(KAPTURES.get(i).getLocation()).exists()) {
-                DATABASE.deleteKapture(KAPTURES.get(i));
+                final Kapture kapture = KAPTURES.get(i);
+
+                if(kapture.getThumbnailCachedFile().exists()) {
+                    kapture.getThumbnailCachedFile().delete();
+                }
+
+                DATABASE.deleteKapture(kapture);
+
                 indexesHelper.add(i);
             }
         }
@@ -651,6 +666,10 @@ public class KapturesFragment extends Fragment {
                         }
                     }
 
+                    if(kapture.getThumbnailCachedFile().exists()) {
+                        kapture.getThumbnailCachedFile().delete();
+                    }
+
                     DATABASE.deleteKapture(kapture);
                 }
 
@@ -737,6 +756,10 @@ public class KapturesFragment extends Fragment {
 
                 for(Kapture kapture : toRemove) {
                     DATABASE.deleteKapture(kapture);
+
+                    if(kapture.getThumbnailCachedFile().exists()) {
+                        kapture.getThumbnailCachedFile().delete();
+                    }
                 }
 
                 unselectAll();
@@ -833,13 +856,22 @@ public class KapturesFragment extends Fragment {
     }
 
     public void requestFloatingButtonUpdate() {
-        BTN_FLOATING.setVisibility(CapturingService.isProcessing() || CapturingService.isInCountdown() ? View.GONE : View.VISIBLE);
+        if(CapturingService.isProcessing() || CapturingService.isInCountdown()) {
+            BTN_FLOATING_START_STOP.setVisibility(View.GONE);
+            BTN_FLOATING_PAUSE_RESUME.setVisibility(View.GONE);
+        } else {
+            BTN_FLOATING_START_STOP.setVisibility(View.VISIBLE);
 
-        BTN_FLOATING.setBackgroundResource(CapturingService.isRecording() ? R.drawable.btn_floating_background_stop : R.drawable.btn_floating_background_start);
+            BTN_FLOATING_PAUSE_RESUME.setVisibility(CapturingService.isRecording() ? View.VISIBLE : View.GONE);
+        }
+
+        BTN_FLOATING_START_STOP.setBackgroundResource(CapturingService.isRecording() ? R.drawable.btn_floating_background_stop : R.drawable.btn_floating_background_start);
+
+        BTN_FLOATING_PAUSE_RESUME.setBackgroundResource(CapturingService.isPaused() ? R.drawable.btn_floating_background_resume : R.drawable.btn_floating_background_pause);
     }
 
     public void setCaptureButtonVisibility(boolean hide) {
-        BTN_FLOATING.setVisibility(hide ? View.GONE : View.VISIBLE);
+        BTN_FLOATING_START_STOP.setVisibility(hide ? View.GONE : View.VISIBLE);
     }
 
     private void updateSubtitle() {

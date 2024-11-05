@@ -6,9 +6,18 @@
     <string name="quick_settings_tile_stop_recording">Parar captura de tela</string>
     <string name="quick_settings_tile_processing">Processando a captura</string>
 
+    <string name="shortcut_start_recording">Iniciar captura de tela</string>
+    <string name="shortcut_stop_recording">Parar captura de tela</string>
+    <string name="shortcut_pause_recording">Pausar captura de tela</string>
+    <string name="shortcut_resume_recording">Retomar captura de tela</string>
+
     <string name="notification_channel_name_capturing">Captura</string>
-    <string name="notification_recording">Capturando</string>
-    <string name="notification_tap_stop">Clique aqui para parar a captura.</string>
+    <string name="notification_recording_recording">Capturando</string>
+    <string name="notification_recording_paused">Pausado</string>
+    <string name="notification_recording_action">Toque aqui para parar ou expanda para mais ações</string>
+    <string name="notification_recording_stop">Parar</string>
+    <string name="notification_recording_pause">Pausar</string>
+    <string name="notification_recording_resume">Retomar</string>
 
     <string name="notification_saved">Captura salva</string>
     <string name="notification_tap_show">Clique aqui para ver a captura.</string>
@@ -163,6 +172,8 @@
 
     <string name="setting_menu_show_time_limit">Mostrar o limite de tempo</string>
     <string name="setting_menu_show_time_limit_description">Apenas é exibido se o \"Por limite de tempo\" estiver ativado.</string>
+
+    <string name="setting_menu_show_pause_resume">Mostrar o botão de pausar/retomar</string>
 
     <string name="setting_menu_show_close">Mostrar o botão de fechar</string>
     <string name="setting_menu_show_close_description">O menu será fechado ao utilizar esse botão. Essa ação não pode ser desfeita.</string>

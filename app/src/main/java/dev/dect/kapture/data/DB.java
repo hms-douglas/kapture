@@ -25,9 +25,12 @@ public class DB extends SQLiteOpenHelper {
                                 EXTRAS_COL_LOCATION = "e_location",
                                 EXTRAS_COL_TYPE = "e_type";
 
+    private Context CONTEXT;
 
     public DB(Context ctx) {
         super(ctx, DB_NAME, null, DB_VERSION);
+
+        this.CONTEXT = ctx;
     }
 
     @Override
@@ -90,7 +93,7 @@ public class DB extends SQLiteOpenHelper {
                 break;
             }
 
-            final Kapture kapture = new Kapture();
+            final Kapture kapture = new Kapture(CONTEXT);
 
             kapture.setId(cursor.getLong(cursor.getColumnIndexOrThrow(KAPTURE_COL_ID)));
             kapture.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_LOCATION)));
@@ -114,7 +117,7 @@ public class DB extends SQLiteOpenHelper {
         final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_KAPTURE + " WHERE " + KAPTURE_COL_ID + " = " + id, null);
 
         if(cursor.moveToFirst()) {
-            final Kapture kapture = new Kapture();
+            final Kapture kapture = new Kapture(CONTEXT);
 
             kapture.setId(cursor.getLong(cursor.getColumnIndexOrThrow(KAPTURE_COL_ID)));
             kapture.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_LOCATION)));

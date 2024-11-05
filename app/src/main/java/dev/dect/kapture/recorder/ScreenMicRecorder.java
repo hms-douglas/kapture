@@ -54,8 +54,8 @@ public class ScreenMicRecorder {
 
             if(KSETTINGS.isToRecordMic()) {
                 MEDIA_RECORDER.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                MEDIA_RECORDER.setAudioEncodingBitRate(KSETTINGS.getMicAudioBitRate());
-                MEDIA_RECORDER.setAudioSamplingRate(KSETTINGS.getMicAudioSampleRate());
+                MEDIA_RECORDER.setAudioEncodingBitRate(96000);
+                MEDIA_RECORDER.setAudioSamplingRate(44100);
             }
 
             MEDIA_RECORDER.setVideoEncodingBitRate(KSETTINGS.getVideoBitRate());
@@ -85,6 +85,14 @@ public class ScreenMicRecorder {
         );
 
         MEDIA_RECORDER.start();
+    }
+
+    public void pause() {
+        MEDIA_RECORDER.pause();
+    }
+
+    public void resume() {
+        MEDIA_RECORDER.resume();
     }
 
     public void stop() {

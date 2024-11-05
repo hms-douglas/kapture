@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -17,7 +18,6 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +32,7 @@ import dev.dect.kapture.data.KSettings;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.utils.Utils;
+import dev.dect.kapture.view.KChronometer;
 
 @SuppressLint({"InflateParams", "SetTextI18n", "ClickableViewAccessibility"})
 public class MenuOverlay {
@@ -55,13 +56,15 @@ public class MenuOverlay {
 
     private WindowManager.LayoutParams LAYOUT_PARAMETERS;
 
-    private Chronometer CHRONOMETER;
+    private KChronometer CHRONOMETER;
 
     private LinearLayout LINEAR_LAYOUT;
 
     private Surface MEDIA_RECORDER_SURFACE;
 
     private boolean IS_MINIMIZED;
+
+    private ImageButton BTN_PAUSE_RESUME;
 
     public MenuOverlay(Context ctx, KSettings ks, WindowManager wm, CameraOverlay co) {
         this.KSETTINGS = ks;
@@ -100,6 +103,18 @@ public class MenuOverlay {
         setDraggableHelper(VIEW.findViewById(R.id.btnStop));
 
         boolean allOptionalIsHidden = true;
+
+        BTN_PAUSE_RESUME = VIEW.findViewById(R.id.btnPauseResume);
+
+        if(KSETTINGS.isToShowPauseResumeButtonOnMenu()) {
+            BTN_PAUSE_RESUME.setOnClickListener((v) -> CapturingService.requestTogglePauseResumeRecording());
+
+            setDraggableHelper(BTN_PAUSE_RESUME);
+
+            allOptionalIsHidden = false;
+        } else {
+            BTN_PAUSE_RESUME.setVisibility(View.GONE);
+        }
 
         if(KSETTINGS.isToShowCameraButtonOnMenu()) {
             VIEW.findViewById(R.id.btnCamera).setOnClickListener((v) -> {
@@ -514,5 +529,21 @@ public class MenuOverlay {
         LINEAR_LAYOUT.setShowDividers(Integer.parseInt(LINEAR_LAYOUT.getTag().toString()));
 
         setViewDraggable();
+    }
+
+    public void refreshRecordingState() {
+        if(CapturingService.isPaused()) {
+            BTN_PAUSE_RESUME.setImageResource(R.drawable.overlay_menu_icon_resume);
+
+            if(CHRONOMETER != null) {
+                CHRONOMETER.pause();
+            }
+        } else {
+            BTN_PAUSE_RESUME.setImageResource(R.drawable.overlay_menu_icon_pause);
+
+            if(CHRONOMETER != null) {
+                CHRONOMETER.resume();
+            }
+        }
     }
 }

@@ -29,14 +29,24 @@
             android:background="@drawable/overlay_btn_stop"/>
 
         <ImageButton
+            android:id="@+id/btnPauseResume"
+            android:layout_width="@dimen/overlay_menu_icon"
+            android:layout_height="@dimen/overlay_menu_icon"
+            android:background="@android:color/transparent"
+            android:src="@drawable/overlay_menu_icon_pause"
+            android:padding="5.5dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="4dp"
+            android:foreground="?android:attr/selectableItemBackground" />
+
+        <ImageButton
             android:id="@+id/btnCamera"
             android:layout_width="@dimen/overlay_menu_icon"
             android:layout_height="@dimen/overlay_menu_icon"
             android:background="@android:color/transparent"
             android:src="@drawable/overlay_menu_icon_camera"
             android:padding="@dimen/overlay_menu_icon_padding"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="4dp" />
+            android:scaleType="fitCenter"/>
 
         <ImageButton
             android:id="@+id/btnScreenshot"
@@ -59,7 +69,7 @@
             android:layout_gravity="center"
             tools:ignore="ContentDescription,HardcodedText,TouchTargetSizeCheck" />
 
-        <Chronometer
+        <dev.dect.kapture.view.KChronometer
             android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

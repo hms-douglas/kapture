@@ -33,7 +33,7 @@ public class KSettings {
 
     public static final String[] INTERNAL_FONTS_PATHS = new String[]{"font/roboto.ttf", "font/roboto_mono.ttf", "font/bebas_neue.ttf", "font/oswald.ttf", "font/pacifico.ttf", "font/permanent_marker.ttf", "font/silkscreen.ttf", "font/monoton.ttf", "font/orbitron.ttf"};
 
-    public static final float[] MICROPHONE_BOOST = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f, 11f, 12f, 13f, 14f, 15f, 20f, 25f};
+    public static final float[] MICROPHONE_BOOST = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f, 11f, 12f, 13f, 14f, 15f, 20f, 25f};
 
 
     private final Context CONTEXT;
@@ -64,6 +64,7 @@ public class KSettings {
                           IS_TO_SHOW_CAMERA_BUTTON_ON_MENU,
                           IS_TO_SHOW_DRAW_BUTTON_ON_MENU,
                           IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU,
+                          IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU,
                           IS_TO_START_MENU_MINIMIZED,
                           IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU,
                           IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU;
@@ -73,8 +74,6 @@ public class KSettings {
                       VIDEO_FRAME_RATE,
                       VIDEO_WIDTH,
                       VIDEO_HEIGHT,
-                      INTERNAL_AUDIO_SAMPLE_RATE,
-                      MIC_AUDIO_SAMPLE_RATE,
                       CAMERA_SIZE,
                       CAMERA_FACING_LENS,
                       CAMERA_SHAPE,
@@ -105,12 +104,10 @@ public class KSettings {
 
         this.IS_TO_RECORD_MIC = sp.getBoolean(Constants.SP_KEY_IS_TO_RECORD_MIC, DefaultSettings.IS_TO_RECORD_MIC);
         this.IS_TO_BOOST_MIC_VOLUME = sp.getBoolean(Constants.SP_KEY_IS_TO_BOOST_MIC_VOLUME, DefaultSettings.IS_TO_BOOST_MIC_VOLUME);
-        this.MIC_AUDIO_SAMPLE_RATE = sp.getInt(Constants.SP_KEY_MIC_AUDIO_SAMPLE_RATE, DefaultSettings.MIC_AUDIO_SAMPLE_RATE);
         this.MIC_BOOST_VOLUME_FACTOR = sp.getFloat(Constants.SP_KEY_MIC_BOOST_VOLUME_FACTOR, DefaultSettings.MIC_BOOST_VOLUME_FACTOR);
 
         this.IS_TO_RECORD_INTERNAL_SOUND = sp.getBoolean(Constants.SP_KEY_IS_TO_RECORD_INTERNAL_AUDIO, DefaultSettings.IS_TO_RECORD_INTERNAL_AUDIO);
         this.IS_TO_RECORD_INTERNAL_SOUND_IN_STEREO = sp.getBoolean(Constants.SP_KEY_IS_TO_RECORD_SOUND_IN_STEREO, DefaultSettings.IS_TO_RECORD_SOUND_IN_STEREO);
-        this.INTERNAL_AUDIO_SAMPLE_RATE = sp.getInt(Constants.SP_KEY_INTERNAL_AUDIO_SAMPLE_RATE, DefaultSettings.INTERNAL_AUDIO_SAMPLE_RATE);
 
         this.IS_TO_DELAY_START_RECORDING = sp.getBoolean(Constants.SP_KEY_IS_TO_DELAY_START_RECORDING, DefaultSettings.IS_TO_DELAY_START_RECORDING);
         this.SECONDS_TO_START_RECORDING = sp.getInt(Constants.SP_KEY_SECONDS_TO_START_RECORDING, DefaultSettings.SECONDS_TO_START_RECORDING);
@@ -149,6 +146,7 @@ public class KSettings {
         this.IS_TO_SHOW_CAMERA_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_CAMERA_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_CAMERA_BUTTON_ON_MENU);
         this.IS_TO_SHOW_DRAW_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_DRAW_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_DRAW_BUTTON_ON_MENU);
         this.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU);
+        this.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU);
 
         this.IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU);
         this.IS_TO_START_MENU_MINIMIZED = sp.getBoolean(Constants.SP_KEY_IS_TO_START_MENU_MINIMIZED, DefaultSettings.IS_TO_START_MENU_MINIMIZED);
@@ -270,16 +268,8 @@ public class KSettings {
         return VIDEO_ORIENTATION;
     }
 
-    public int getInternalAudioSampleRate() {
-        return INTERNAL_AUDIO_SAMPLE_RATE;
-    }
-
     public float getMicBoostVolumeFactor() {
         return MIC_BOOST_VOLUME_FACTOR;
-    }
-
-    public int getMicAudioSampleRate() {
-        return MIC_AUDIO_SAMPLE_RATE;
     }
 
     public File getSavingLocationFile() {
@@ -304,10 +294,6 @@ public class KSettings {
 
     public String getSavingScreenshotLocationPath(boolean simpleFormat) {
         return simpleFormat ? KFile.formatAndroidPathToUser(CONTEXT, SAVE_SCREENSHOT_LOCATION.getAbsolutePath()) : SAVE_SCREENSHOT_LOCATION.getAbsolutePath();
-    }
-
-    public int getMicAudioBitRate() {
-        return 16 * getMicAudioSampleRate();
     }
 
     public int getVideoBitRate() {
@@ -476,6 +462,10 @@ public class KSettings {
 
     public boolean isToShowMinimizeButtonOnMenu() {
         return IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU;
+    }
+
+    public boolean isToShowPauseResumeButtonOnMenu() {
+        return IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU;
     }
 
     public boolean isToStartMenuMinimized() {

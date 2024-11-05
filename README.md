@@ -1,4 +1,4 @@
-# Kapture - Screen recorder ![Static Badge](https://img.shields.io/badge/version-v1.1.0-green) [![Static Badge](https://img.shields.io/badge/license-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/apk_size-114_MB-7C39E0)
+# Kapture - Screen recorder ![Static Badge](https://img.shields.io/badge/version-v1.2.0-green) [![Static Badge](https://img.shields.io/badge/license-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/apk_size-114_MB-7C39E0)
 Change README language: 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/hms-douglas/kapture)
 [![pt-br](https://img.shields.io/badge/lang-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
@@ -36,9 +36,10 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
       <li>Increase/decrease volume.</li>
     </ul>
   </li>
+  <li>Pause/Resume capturing;</li>
   <li>Floating UI;
       <ul>
-         <li>Menu (Stop, screenshot, draw, minimize, close, time, time limit, camera);</li>
+         <li>Menu (Stop, pause, screenshot, draw, minimize, close, time, time limit, camera);</li>
          <li>Camera (front, back / extra styles);</li>
          <li>Text (extra styles);</li>
          <li>Draw (extra styles).</li>
@@ -60,6 +61,7 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
   </li>
   <li>Notification shortcuts;</li>
   <li>Quick tile shortcut;</li>
+  <li>Launcher static shortcuts;</li>
   <li>Manage all captures made by the app:
     <ul>
       <li>Check info like resolution, date of creation, size, ...</li>
@@ -146,7 +148,7 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 #### Option 2:
 <ul>
-  <li>You can download the latest version .apk <a href="https://drive.google.com/file/d/1KZf_e2Z_QKyG7IqygXOb6qPh5va9PUf1/view" target="_blank" rel="noreferrer">here</a>*;</li>
+  <li>You can download the latest version .apk <a href="https://drive.google.com/file/d/1awGg6tp-QBRMJtjp7ow07E7HdDx8FW_A/view" target="_blank" rel="noreferrer">here</a>*;</li>
   <li>You can check all previous versions .apk links for download <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">here</a>*.</li>
 </ul>
 * All .apks listed here were built by me, are not minimified and are hosted on Google Drive.
@@ -161,6 +163,12 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 ##
 ### Log
+<b>v1.2.0</b>
+<ul>
+   <li>Loading performance improved;</li>
+   <li>Pause/resume option added;</li>
+   <li>Launcher static shortcuts added.</li>
+</ul>
 <b>v1.1.0</b>
 <ul>
    <li>Fixed notification actions not closing activity when action is completed;</li>

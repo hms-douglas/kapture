@@ -1,4 +1,4 @@
-# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.1.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-114_MB-7C39E0)
+# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.2.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-114_MB-7C39E0)
 Altere o idioma do README: 
 [![en](https://img.shields.io/badge/idioma-en-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/README.md)
 [![pt-br](https://img.shields.io/badge/idioma-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
@@ -36,9 +36,10 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
       <li>Aumentar/Diminuir o volume.</li>
     </ul>
   </li>
+  <li>Pausar/Retomar a captura;</li>
   <li>Interface flutuante;
     <ul>
-      <li>Menu (Parar, screenshot, desenhar, minimizar, fechar, tempo, tempo limite, câmera);</li>
+      <li>Menu (Parar, pausar, screenshot, desenhar, minimizar, fechar, tempo, tempo limite, câmera);</li>
          <li>Câmera (frontal, traseira / estilização);</li>
          <li>Texto (estilização);</li>
          <li>Desenho (estilização).</li>
@@ -60,6 +61,7 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
   </li>
   <li>Atalhos nas notificações;</li>
   <li>Botão de atalho (Tile);</li>
+  <li>Botões de atalho (Launcher);</li>
   <li>Gerenciar todas as capturas feitas pelo app:
     <ul>
       <li>Verificar informações como resolução, data de criação, tamanho, ...</li>
@@ -146,7 +148,7 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 #### Opção 2:
 <ul>
-  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1KZf_e2Z_QKyG7IqygXOb6qPh5va9PUf1/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
+  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1awGg6tp-QBRMJtjp7ow07E7HdDx8FW_A/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
   <li>Você pode verificar o link para baixar o .apk de versões anteriores <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">aqui</a>*.</li>
 </ul>
 * Todos os .apks listados aqui foram contruidos por mim, eles não estão minificados e estão hospedados no Google Drive.
@@ -161,6 +163,12 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 ##
 ### Log
+<b>v1.2.0</b>
+<ul>
+   <li>Melhora no carregamento;</li>
+   <li>Opção de pausar/retormar captura adicionada;</li>
+   <li>Atalhos estáticos adicionados (clicar e segurar o app na gaveta de aplicativos).</li>
+</ul>
 <b>v1.1.0</b>
 <ul>
   <li>Correção da ações das notificações não fechando a atividade quando concluidas;</li>

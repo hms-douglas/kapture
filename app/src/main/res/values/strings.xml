@@ -15,9 +15,18 @@
     <string name="quick_settings_tile_stop_recording">Stop screen capture</string>
     <string name="quick_settings_tile_processing">Processing capture</string>
 
+    <string name="shortcut_start_recording">Start screen capture</string>
+    <string name="shortcut_stop_recording">Stop screen capture</string>
+    <string name="shortcut_pause_recording">Pause screen capture</string>
+    <string name="shortcut_resume_recording">Resume screen capture</string>
+
     <string name="notification_channel_name_capturing">Capturing</string>
-    <string name="notification_recording">Capturing</string>
-    <string name="notification_tap_stop">Tap here to stop capturing.</string>
+    <string name="notification_recording_recording">Capturing</string>
+    <string name="notification_recording_action">Tap here to stop or expand for more actions</string>
+    <string name="notification_recording_paused">Paused</string>
+    <string name="notification_recording_stop">Stop</string>
+    <string name="notification_recording_pause">Pause</string>
+    <string name="notification_recording_resume">Resume</string>
 
     <string name="notification_saved">Capture saved</string>
     <string name="notification_tap_show">Tap here to see your capturing.</string>
@@ -175,6 +184,8 @@
 
     <string name="setting_menu_show_time_limit">Show time limit</string>
     <string name="setting_menu_show_time_limit_description">Only shows if the \"On time limit\" is enabled.</string>
+
+    <string name="setting_menu_show_pause_resume">Show pause/resume button</string>
 
     <string name="setting_menu_show_close">Show close button</string>
     <string name="setting_menu_show_close_description">The menu will be closed when used this button. It cannot be reopened.</string>

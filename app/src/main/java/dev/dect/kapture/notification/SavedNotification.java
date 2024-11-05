@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat;
         import java.util.Date;
 
 import dev.dect.kapture.R;
-        import dev.dect.kapture.activity.NotificationActionActivity;
+        import dev.dect.kapture.activity.ActionActivity;
         import dev.dect.kapture.activity.viewer.VideoActivity;
         import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DefaultSettings;
@@ -84,10 +84,10 @@ public class SavedNotification {
         );
 
         if(kapture.hasExtras()) {
-            final Intent iExtra = new Intent(CTX, NotificationActionActivity.class);
+            final Intent iExtra = new Intent(CTX, ActionActivity.class);
 
-            iExtra.putExtra(NotificationActionActivity.INTENT_KAPTURE_ID, kapture.getId());
-            iExtra.putExtra(NotificationActionActivity.INTENT_ACTION, Constants.NOTIFICATION_CAPTURED_ACTION_EXTRA);
+            iExtra.putExtra(ActionActivity.INTENT_KAPTURE_ID, kapture.getId());
+            iExtra.putExtra(ActionActivity.INTENT_ACTION, Constants.NOTIFICATION_CAPTURED_ACTION_EXTRA);
 
             iExtra.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
@@ -102,10 +102,10 @@ public class SavedNotification {
                 )
             );
         } else {
-            final Intent iShare = new Intent(CTX, NotificationActionActivity.class);
+            final Intent iShare = new Intent(CTX, ActionActivity.class);
 
-            iShare.putExtra(NotificationActionActivity.INTENT_KAPTURE_ID, kapture.getId());
-            iShare.putExtra(NotificationActionActivity.INTENT_ACTION, Constants.NOTIFICATION_CAPTURED_ACTION_SHARE);
+            iShare.putExtra(ActionActivity.INTENT_KAPTURE_ID, kapture.getId());
+            iShare.putExtra(ActionActivity.INTENT_ACTION, Constants.NOTIFICATION_CAPTURED_ACTION_SHARE);
 
             iShare.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
@@ -121,10 +121,10 @@ public class SavedNotification {
             );
         }
 
-        final Intent iDelete = new Intent(CTX, NotificationActionActivity.class);
+        final Intent iDelete = new Intent(CTX, ActionActivity.class);
 
-        iDelete.putExtra(NotificationActionActivity.INTENT_KAPTURE_ID, kapture.getId());
-        iDelete.putExtra(NotificationActionActivity.INTENT_ACTION, Constants.NOTIFICATION_CAPTURED_ACTION_DELETE);
+        iDelete.putExtra(ActionActivity.INTENT_KAPTURE_ID, kapture.getId());
+        iDelete.putExtra(ActionActivity.INTENT_ACTION, Constants.NOTIFICATION_CAPTURED_ACTION_DELETE);
 
         iDelete.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

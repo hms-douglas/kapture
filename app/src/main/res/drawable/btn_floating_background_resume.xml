@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:height="@dimen/floating_btn_secondary_size"
+        android:width="@dimen/floating_btn_secondary_size">
+
+        <shape>
+            <solid android:color="@color/floating_btn_background"/>
+            <corners android:radius="@dimen/floating_btn_radius"/>
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/icon_capture_resume"
+        android:height="@dimen/floating_btn_icon_size_pause_resume"
+        android:width="@dimen/floating_btn_icon_size_pause_resume"
+        android:gravity="center"/>
+</layer-list>

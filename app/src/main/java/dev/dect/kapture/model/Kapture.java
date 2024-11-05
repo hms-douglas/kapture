@@ -1,16 +1,22 @@
 package dev.dect.kapture.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
+import android.media.MediaScannerConnection;
 import android.media.ThumbnailUtils;
 import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.util.Log;
 import android.util.Size;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -18,6 +24,8 @@ import dev.dect.kapture.R;
 import dev.dect.kapture.utils.KFile;
 
 public class Kapture {
+    private Context CONTEXT;
+
     private long ID;
 
     private String LOCATION;
@@ -34,15 +42,16 @@ public class Kapture {
 
     private boolean HAS_MEDIA_DATA = false;
 
-    public Kapture() {
-        this(-1, "", null);
+    public Kapture(Context ctx) {
+        this(ctx, -1, "", null);
     }
 
-    public Kapture(File file) {
-        this(-1, file.getAbsolutePath(), null);
+    public Kapture(Context ctx, File file) {
+        this(ctx, -1, file.getAbsolutePath(), null);
     }
 
-    public Kapture(long id, String location, ArrayList<Extra> extras) {
+    public Kapture(Context ctx, long id, String location, ArrayList<Extra> extras) {
+        this.CONTEXT = ctx;
         this.ID = id;
         this.LOCATION = location;
         this.EXTRAS = extras == null ? new ArrayList<>() : extras;
@@ -141,11 +150,26 @@ public class Kapture {
                 Integer.parseInt(Objects.requireNonNull(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)))
             };
 
-            THUMBNAIL = ThumbnailUtils.createVideoThumbnail(
-                new File(LOCATION),
-                new Size(Math.min(1080, VIDEO_SIZE[0]), Math.min(1080, VIDEO_SIZE[1])),
-                new CancellationSignal()
-            );
+            if(ID == -1) {
+                THUMBNAIL = generateThumbnail();
+            } else {
+                final File cachedThumbnail = getThumbnailCachedFile();
+
+                if(cachedThumbnail.exists()) {
+                    THUMBNAIL = BitmapFactory.decodeFile(cachedThumbnail.getPath());
+                } else {
+                    THUMBNAIL = generateThumbnail();
+
+                    cachedThumbnail.createNewFile();
+
+                    final FileOutputStream fos = new FileOutputStream(cachedThumbnail);
+
+                    THUMBNAIL.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+
+                    fos.flush();
+                    fos.close();
+                }
+            }
 
             mediaMetadataRetriever.close();
 
@@ -169,6 +193,24 @@ public class Kapture {
                 handlerThread.quit();
             }, 0);
         });
+    }
+
+    private Bitmap generateThumbnail() throws IOException {
+        return ThumbnailUtils.createVideoThumbnail(
+            new File(LOCATION),
+            new Size(Math.min(1080, VIDEO_SIZE[0]), Math.min(1080, VIDEO_SIZE[1])),
+            new CancellationSignal()
+        );
+    }
+
+    public File getThumbnailCachedFile() {
+        return new File(CONTEXT.getCacheDir(), "thumbnail_" + ID + ".jpeg");
+    }
+
+    public void notifyMediaScanner() {
+        try {
+            MediaScannerConnection.scanFile(CONTEXT, new String[]{FILE.getAbsolutePath()}, null, null);
+        } catch (Exception ignore) {}
     }
 
     public static class Extra {

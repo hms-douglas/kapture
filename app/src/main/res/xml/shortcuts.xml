@@ -1,0 +1,65 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="startKapturing"
+        android:enabled="true"
+        android:icon="@drawable/btn_floating_background_start"
+        android:shortcutShortLabel="@string/shortcut_start_recording"
+        android:shortcutLongLabel="@string/shortcut_start_recording">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="dev.dect.kapture"
+            android:targetClass="dev.dect.kapture.activity.ActionActivity">
+
+            <extra android:name="action" android:value="ACTION.START"/>
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="stopKapturing"
+        android:enabled="true"
+        android:icon="@drawable/btn_floating_background_stop"
+        android:shortcutShortLabel="@string/shortcut_stop_recording"
+        android:shortcutLongLabel="@string/shortcut_stop_recording">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="dev.dect.kapture"
+            android:targetClass="dev.dect.kapture.activity.ActionActivity">
+
+            <extra android:name="action" android:value="ACTION.STOP"/>
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="pauseKapturing"
+        android:enabled="true"
+        android:icon="@drawable/btn_floating_background_pause"
+        android:shortcutShortLabel="@string/shortcut_pause_recording"
+        android:shortcutLongLabel="@string/shortcut_pause_recording">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="dev.dect.kapture"
+            android:targetClass="dev.dect.kapture.activity.ActionActivity">
+
+            <extra android:name="action" android:value="ACTION.PAUSE"/>
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="resumeKapturing"
+        android:enabled="true"
+        android:icon="@drawable/btn_floating_background_resume"
+        android:shortcutShortLabel="@string/shortcut_resume_recording"
+        android:shortcutLongLabel="@string/shortcut_resume_recording">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="dev.dect.kapture"
+            android:targetClass="dev.dect.kapture.activity.ActionActivity">
+
+            <extra android:name="action" android:value="ACTION.RESUME"/>
+        </intent>
+    </shortcut>
+</shortcuts>

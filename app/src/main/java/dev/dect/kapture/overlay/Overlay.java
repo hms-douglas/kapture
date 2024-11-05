@@ -43,4 +43,8 @@ public class Overlay {
     public void setMediaRecorderSurface(Surface s) {
         MENU_OVERLAY.setMediaRecorderSurface(s);
     }
+
+    public void refreshRecordingState() {
+        MENU_OVERLAY.refreshRecordingState();
+    }
 }

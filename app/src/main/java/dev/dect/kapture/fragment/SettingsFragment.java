@@ -549,6 +549,7 @@ public class SettingsFragment extends Fragment {
 
         listSwitches0.add(new ListSwitch(R.string.setting_menu_show_time, ListSwitch.NO_TEXT, Constants.SP_KEY_IS_TO_SHOW_TIME_ON_MENU, settings.isToShowTimeOnMenu(), false));
         listSwitches0.add(new ListSwitch(R.string.setting_menu_show_time_limit, R.string.setting_menu_show_time_limit_description, Constants.SP_KEY_IS_TO_SHOW_TIME_LIMIT_ON_MENU, settings.isToShowTimeLimitOnMenuEnabled(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_menu_show_pause_resume, ListSwitch.NO_TEXT, Constants.SP_KEY_IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU, settings.isToShowPauseResumeButtonOnMenu(), false));
         listSwitches0.add(new ListSwitch(R.string.setting_menu_show_close, R.string.setting_menu_show_close_description, Constants.SP_KEY_IS_TO_SHOW_CLOSE_BUTTON_ON_MENU, settings.isToShowCloseButtonOnMenu(), false));
         listSwitches0.add(new ListSwitch(R.string.setting_menu_show_minimize, R.string.setting_menu_show_minimize_description, Constants.SP_KEY_IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU, settings.isToShowMinimizeButtonOnMenu(), false));
         listSwitches0.add(new ListSwitch(R.string.setting_menu_show_camera, R.string.setting_menu_show_camera_description, Constants.SP_KEY_IS_TO_SHOW_CAMERA_BUTTON_ON_MENU, settings.isToShowCameraButtonOnMenu(), false));

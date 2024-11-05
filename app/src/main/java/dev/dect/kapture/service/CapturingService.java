@@ -34,6 +34,7 @@ public class CapturingService extends AccessibilityService {
     private static boolean IS_SERVICE_RUNNING = false,
                            IS_RECORDING = false,
                            IS_PROCESSING = false,
+                           IS_PAUSED = false,
                            IS_IN_COUNTDOWN = false;
 
     private static CapturingService CAPTURING_SERVICE;
@@ -66,6 +67,8 @@ public class CapturingService extends AccessibilityService {
 
         IS_PROCESSING = false;
 
+        IS_PAUSED = false;
+
         CAPTURING_SERVICE = this;
 
         if(Utils.hasWriteSecureSettings(this)) {
@@ -79,13 +82,15 @@ public class CapturingService extends AccessibilityService {
 
         IS_RECORDING = false;
 
+        IS_PAUSED = false;
+
         CAPTURING_SERVICE = null;
 
         super.onDestroy();
     }
 
     public static void requestStartRecording(Context ctx) {
-        if(!IS_RECORDING && !IS_PROCESSING) {
+        if(!IS_RECORDING && !IS_PROCESSING && !IS_PAUSED) {
             if(IS_SERVICE_RUNNING) {
                 CAPTURING_SERVICE.startRecording();
             } else if(Utils.hasWriteSecureSettings(ctx)) {
@@ -112,12 +117,36 @@ public class CapturingService extends AccessibilityService {
         }
     }
 
+    public static void requestPauseRecording() {
+        if(!IS_PAUSED && IS_RECORDING && !IS_PROCESSING) {
+            CAPTURING_SERVICE.pauseRecording();
+        }
+    }
+
+    public static void requestResumeRecording() {
+        if(IS_PAUSED && IS_RECORDING && !IS_PROCESSING) {
+            CAPTURING_SERVICE.resumeRecording();
+        }
+    }
+
+    public static void requestTogglePauseResumeRecording() {
+        if(IS_PAUSED) {
+            CapturingService.requestResumeRecording();
+        } else {
+            CapturingService.requestPauseRecording();
+        }
+    }
+
     public static boolean isRecording() {
         return IS_RECORDING;
     }
 
     public static boolean isProcessing() {
         return IS_PROCESSING;
+    }
+
+    public static boolean isPaused() {
+        return IS_PAUSED;
     }
 
     public static boolean isInCountdown() {
@@ -149,6 +178,8 @@ public class CapturingService extends AccessibilityService {
                     STOP_OPTION.start();
 
                     IS_RECORDING = true;
+                    IS_PAUSED = false;
+                    IS_PROCESSING = false;
 
                     IS_IN_COUNTDOWN = false;
 
@@ -170,6 +201,7 @@ public class CapturingService extends AccessibilityService {
         stopForeground(STOP_FOREGROUND_REMOVE);
 
         IS_RECORDING = false;
+        IS_PAUSED = false;
         IS_PROCESSING = true;
 
         requestUIsProcessing();
@@ -197,6 +229,32 @@ public class CapturingService extends AccessibilityService {
                 disableSelf();
             }
         }).start();
+    }
+
+    private void pauseRecording() {
+        IS_PAUSED = true;
+
+        SCREEN_MIC_RECORDER.pause();
+        INTERNAL_AUDIO_RECORDER.pause();
+
+        NOTIFICATION.refreshRecordingState();
+
+        OVERLAY_UI.refreshRecordingState();
+
+        requestUIsStateChange();
+    }
+
+    private void resumeRecording() {
+        IS_PAUSED = false;
+
+        SCREEN_MIC_RECORDER.resume();
+        INTERNAL_AUDIO_RECORDER.resume();
+
+        NOTIFICATION.refreshRecordingState();
+
+        OVERLAY_UI.refreshRecordingState();
+
+        requestUIsStateChange();
     }
 
     private void initVariables() {
@@ -235,6 +293,12 @@ public class CapturingService extends AccessibilityService {
         QuickTileService.requestUiUpdate(this);
     }
 
+    private void requestUIsStateChange() {
+        if(MainActivity.getInstance() != null) {
+            MainActivity.getInstance().getKaptureFragment().requestFloatingButtonUpdate();
+        }
+    }
+
     private void requestUIsUpdate(Kapture kapture) {
         QuickTileService.requestUiUpdate(this);
 
@@ -248,7 +312,7 @@ public class CapturingService extends AccessibilityService {
                    internalAudioFile = INTERNAL_AUDIO_RECORDER.getFile(),
                    kaptureFile =  KFile.generateNewEmptyKaptureFile(this, KSETTINGS);
 
-        final Kapture kapture = new Kapture(kaptureFile);
+        final Kapture kapture = new Kapture(this, kaptureFile);
 
         if(KSETTINGS.isToRecordInternalAudio()) {
             if(KSETTINGS.isToRecordMic()) {
@@ -392,6 +456,8 @@ public class CapturingService extends AccessibilityService {
                 kapture.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_INTERNAL_ONLY, f));
             }
         }
+
+        kapture.notifyMediaScanner();
 
         return new DB(this).insertKapture(kapture);
     }

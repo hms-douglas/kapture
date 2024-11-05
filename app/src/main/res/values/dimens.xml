@@ -67,11 +67,14 @@
     <dimen name="bottom_bar_btn_icon_text">@dimen/default_font_tertiary</dimen>
 
     <dimen name="floating_btn_size">75dp</dimen>
+    <dimen name="floating_btn_secondary_size">55dp</dimen>
+    <dimen name="floating_btn_secondary_space">12dp</dimen>
     <dimen name="floating_btn_radius">500dp</dimen>
     <dimen name="floating_btn_margin">25dp</dimen>
     <dimen name="floating_btn_elevation">2dp</dimen>
     <dimen name="floating_btn_icon_size_start">35dp</dimen>
     <dimen name="floating_btn_icon_size_stop">75dp</dimen>
+    <dimen name="floating_btn_icon_size_pause_resume">28dp</dimen>
 
     <dimen name="app_bar_height">300dp</dimen>
     <dimen name="app_bar_font_title_expanded">@dimen/default_font_extended_title</dimen>

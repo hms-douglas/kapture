@@ -38,6 +38,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
         </activity>
 
         <activity
@@ -86,7 +88,7 @@
         </activity>
 
         <activity
-            android:name=".activity.NotificationActionActivity"
+            android:name=".activity.ActionActivity"
             android:exported="true"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.Translucent">

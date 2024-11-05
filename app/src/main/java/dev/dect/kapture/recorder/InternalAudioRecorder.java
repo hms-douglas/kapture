@@ -48,26 +48,24 @@ public class InternalAudioRecorder {
         }
 
         final AudioPlaybackCaptureConfiguration config = new AudioPlaybackCaptureConfiguration.Builder(KMediaProjection.get())
-                .addMatchingUsage(AudioAttributes.USAGE_MEDIA)
-                .addMatchingUsage(AudioAttributes.USAGE_GAME)
-                .addMatchingUsage(AudioAttributes.USAGE_UNKNOWN)
-                .build();
+            .addMatchingUsage(AudioAttributes.USAGE_MEDIA)
+            .addMatchingUsage(AudioAttributes.USAGE_GAME)
+            .addMatchingUsage(AudioAttributes.USAGE_UNKNOWN)
+            .build();
 
         final AudioFormat format = new AudioFormat.Builder()
-                .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
-                .setSampleRate(KSETTINGS.getInternalAudioSampleRate())
-                .setChannelMask(KSETTINGS.isToRecordInternalAudioInStereo() ? AudioFormat.CHANNEL_IN_STEREO : AudioFormat.CHANNEL_IN_MONO)
-                .build();
+            .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+            .setSampleRate(44100)
+            .setChannelMask(KSETTINGS.isToRecordInternalAudioInStereo() ? AudioFormat.CHANNEL_IN_STEREO : AudioFormat.CHANNEL_IN_MONO)
+            .build();
 
         AUDIO_RECORDER = new AudioRecord.Builder()
-                .setAudioFormat(format)
-                .setBufferSizeInBytes(BUFFER_SIZE * BYTES_PER_EL)
-                .setAudioPlaybackCaptureConfig(config)
-                .build();
+            .setAudioFormat(format)
+            .setBufferSizeInBytes(BUFFER_SIZE * BYTES_PER_EL)
+            .setAudioPlaybackCaptureConfig(config)
+            .build();
 
-        RECORDING_THREAD = new Thread(this::writeToRawTempFile, CONTEXT.getPackageName());
-
-        RECORDING_THREAD.setPriority(Thread.MAX_PRIORITY);
+        createWritingThread();
     }
 
     public void start(){
@@ -78,6 +76,20 @@ public class InternalAudioRecorder {
         AUDIO_RECORDER.startRecording();
 
         IS_RECORDING_INTERNAL_AUDIO = true;
+
+        RECORDING_THREAD.start();
+    }
+
+    public void pause() {
+        IS_RECORDING_INTERNAL_AUDIO = false;
+
+        RECORDING_THREAD = null;
+    }
+
+    public void resume() {
+        IS_RECORDING_INTERNAL_AUDIO = true;
+
+        createWritingThread();
 
         RECORDING_THREAD.start();
     }
@@ -116,9 +128,15 @@ public class InternalAudioRecorder {
         } catch (Exception ignore) {}
     }
 
+    private void createWritingThread() {
+        RECORDING_THREAD = new Thread(this::writeToRawTempFile, CONTEXT.getPackageName());
+
+        RECORDING_THREAD.setPriority(Thread.MAX_PRIORITY);
+    }
+
     private void writeToRawTempFile(){
         try {
-            final FileOutputStream outputStream = new FileOutputStream(TEMP_PMC_FILE.getAbsolutePath());
+            final FileOutputStream outputStream = new FileOutputStream(TEMP_PMC_FILE.getAbsolutePath(), true);
 
             final short[] data = new short[BUFFER_SIZE];
 
@@ -129,9 +147,7 @@ public class InternalAudioRecorder {
             }
 
             outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException ignore) {}
     }
 
     private byte[] shortToByte(short[] data) {

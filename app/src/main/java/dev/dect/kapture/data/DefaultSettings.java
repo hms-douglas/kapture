@@ -41,15 +41,14 @@ public class DefaultSettings {
         IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU = false,
         IS_TO_START_MENU_MINIMIZED = false,
         IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU = true,
-        IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU = true;
+        IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU = true,
+        IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU = false;
 
     public static final int
         VIDEO_RESOLUTION = -1,
         VIDEO_QUALITY_bitRate = 6000000,
         VIDEO_FRAME_RATE = 30,
         VIDEO_ORIENTATION = Configuration.ORIENTATION_UNDEFINED,
-        INTERNAL_AUDIO_SAMPLE_RATE = 44100,
-        MIC_AUDIO_SAMPLE_RATE = 44100,
         LAYOUT_MANAGER_STYLE = KapturesFragment.STYLE_LIST,
         SORT_BY = SortPopup.SORT_DATE_CAPTURING,
         CAMERA_SIZE = 80,
