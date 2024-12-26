@@ -1,7 +1,9 @@
 package dev.dect.kapture.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.webkit.MimeTypeMap;
@@ -14,6 +16,7 @@ import com.arthenica.ffmpegkit.FFmpegKit;
 import java.io.File;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,9 +25,13 @@ import java.util.Locale;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.activity.viewer.AudioActivity;
+import dev.dect.kapture.activity.viewer.ImageActivity;
 import dev.dect.kapture.activity.viewer.VideoActivity;
 import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.data.DB;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.model.Kapture;
+import dev.dect.kapture.service.CapturingService;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class KFile {
@@ -61,8 +68,14 @@ public class KFile {
 
         String path;
 
+        boolean isFile = false;
+
         if(uriString.startsWith("content://com.android.externalstorage.documents/tree/primary%3A")) {
             path = uriString.replaceFirst("content://com.android.externalstorage.documents/tree/primary%3A", "");
+        } else if(uriString.startsWith("content://com.android.externalstorage.documents/document/primary%3A")) {
+            isFile = true;
+
+            path = uriString.replaceFirst("content://com.android.externalstorage.documents/document/primary%3A", "");
         } else {
             path = uriString.replaceFirst("content://com.sec.android.app.myfiles.FileProvider/device_storage/0/", "");
         }
@@ -73,15 +86,15 @@ public class KFile {
             Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
         }
 
-        File folder = new File(INTERNAL_STORAGE_PATH, path);
+        File f = new File(INTERNAL_STORAGE_PATH, path);
 
-        if(!folder.exists()) {
-            folder = getDefaultFileLocation(ctx);
+        if(!isFile && !f.exists()) {
+            f = getDefaultFileLocation(ctx);
 
             Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
         }
 
-        return folder.getAbsolutePath();
+        return f.getAbsolutePath();
     }
 
     public static String formatAndroidPathToUser(Context ctx, String path) {
@@ -148,13 +161,24 @@ public class KFile {
             if(type.contains("audio/")) {
                 i.setClass(ctx, AudioActivity.class);
                 i.putExtra(AudioActivity.INTENT_URL, f.getAbsolutePath());
-            } else if(type.contains("video/")) {
-                i.setClass(ctx, VideoActivity.class);
-                i.putExtra(VideoActivity.INTENT_URL, f.getAbsolutePath());
             } else {
-                openFile(ctx, f, true);
+                try {
+                    if(((Activity) ctx).isInMultiWindowMode()) {
+                        i.setFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                    }
+                } catch (Exception ignore) {}
 
-                return;
+                if(type.contains("video/")) {
+                    i.setClass(ctx, VideoActivity.class);
+                    i.putExtra(VideoActivity.INTENT_URL, f.getAbsolutePath());
+                } else if(type.contains("image/")) {
+                    i.setClass(ctx, ImageActivity.class);
+                    i.putExtra(ImageActivity.INTENT_URL, f.getAbsolutePath());
+                } else {
+                    openFile(ctx, f, true);
+
+                    return;
+                }
             }
         }
 
@@ -180,7 +204,7 @@ public class KFile {
         ctx.startActivity(Intent.createChooser(i, "Share").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
-    public static void shareFiles(Context ctx, ArrayList<Uri> uris) {
+    public static void shareVideoFiles(Context ctx, ArrayList<Uri> uris) {
         final Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE);
 
         i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
@@ -203,7 +227,11 @@ public class KFile {
     }
 
     public static File renameFile(String name, File f) {
-        final File newFile = new File(f.getParentFile(), name + "." + getFileExtension(f));
+        File newFile = new File(f.getParentFile(), name + "." + getFileExtension(f));
+
+        if(newFile.exists()) {
+            newFile = generateFileIncrementalName(f.getParentFile(), name, "." + getFileExtension(f));
+        }
 
         f.renameTo(newFile);
 
@@ -213,6 +241,12 @@ public class KFile {
     public static void copyFile(File from, File to) {
         try {
             Files.copy(from.toPath(), to.toPath());
+        } catch (Exception ignore) {}
+    }
+
+    public static void replaceFile(File replace, File by) {
+        try {
+            Files.move(by.toPath(), replace.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception ignore) {}
     }
 
@@ -230,7 +264,7 @@ public class KFile {
         return formatStringResource(ctx, R.string.file_name_screenshot);
     }
 
-    public static File generateFileIncrementalName(File parent, String name, String ext) {
+    private static File generateFileIncrementalName(File parent, String name, String ext) {
         File f = new File(parent, name + FILE_SEPARATOR + 0 + ext);
 
         int i = 0;
@@ -242,4 +276,126 @@ public class KFile {
         return f;
     }
 
+    public static File generateScreenshotFile(Context ctx, KSettings ks) {
+        final String fileName = KFile.getFileIdNotGenerated(ctx)
+                                + KFile.FILE_SEPARATOR
+                                + KFile.getDefaultScreenshotName(ctx);
+
+        return KFile.generateFileIncrementalName(ks.getSavingScreenshotLocationFile(), fileName, ".png");
+    }
+
+    public static void notifyMediaScanner(Context ctx, File f) {
+        notifyMediaScanner(ctx, f.getAbsolutePath());
+    }
+
+    public static void notifyMediaScanner(Context ctx, String path) {
+        try {
+            MediaScannerConnection.scanFile(ctx, new String[]{path}, null, null);
+        } catch (Exception ignore) {}
+    }
+
+    public static void clearCache(Context ctx) {
+        if(CapturingService.isRecording()) {
+            Toast.makeText(ctx, ctx.getString(R.string.toast_info_while_recording), Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+
+        deleteDirectory(ctx.getCacheDir());
+        deleteDirectory(ctx.getExternalCacheDir());
+    }
+
+    public static long getCacheSize(Context ctx) {
+        return getDirectorySize(ctx.getCacheDir()) + getDirectorySize(ctx.getExternalCacheDir());
+    }
+
+    public static long getAppTotalFilesSize(Context ctx, boolean includeCache) {
+        long size = 0;
+
+        if(includeCache) {
+            size += getCacheSize(ctx);
+        }
+
+        for(Kapture kapture : new DB(ctx).selectAllKaptures(true)) {
+            if(kapture.getFile().exists()) {
+                size += kapture.getSize();
+
+                for(Kapture.Extra extra : kapture.getExtras()) {
+                    final File f = new File(extra.getLocation());
+
+                    if(f.exists()) {
+                        size += f.length();
+                    }
+                }
+
+                for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+                    final File f = new File(screenshot.getLocation());
+
+                    if(f.exists()) {
+                        size += f.length();
+                    }
+                }
+            }
+        }
+
+        return size;
+    }
+
+    private static long getDirectorySize(File f) {
+        if(f == null) {
+            return 0;
+        }
+
+        long size = 0;
+
+        for(File file : f.listFiles()) {
+            if(file != null) {
+                if(file.isDirectory()) {
+                    size += getDirectorySize(file);
+                } else {
+                    size += file.length();
+                }
+            }
+        }
+
+        return size;
+    }
+
+    private static boolean deleteDirectory(File directory) {
+        try {
+            directory.delete();
+        } catch (Exception ignore) {}
+
+        if(directory == null) {
+            return false;
+        }
+
+        if(!directory.exists()) {
+            return true;
+        }
+
+        if(!directory.isDirectory()) {
+            return false;
+        }
+
+        String[] list = directory.list();
+
+        if(list != null) {
+            for(String s : list) {
+                File entry = new File(directory, s);
+
+                if(entry.isDirectory()) {
+                    if(!deleteDirectory(entry)) {
+                        return false;
+                    }
+                } else {
+                    if(!entry.delete()) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return directory.delete();
+    }
 }

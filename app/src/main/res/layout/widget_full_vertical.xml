@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/pauseResumeCapturing"
+        android:layout_width="@dimen/floating_btn_secondary_size"
+        android:layout_height="@dimen/floating_btn_secondary_size"
+        android:background="@drawable/btn_floating_background_circle_widget_disabled"
+        android:foreground="@drawable/btn_floating_effect"
+        android:drawableLeft="@drawable/icon_capture_pause_widget_disabled"
+        android:paddingLeft="@dimen/floating_btn_padding_secondary"/>
+
+    <RelativeLayout
+        android:layout_width="@dimen/floating_btn_secondary_space"
+        android:layout_height="@dimen/floating_btn_secondary_space"/>
+
+    <Button
+        android:id="@+id/startStopCapturing"
+        android:layout_width="@dimen/floating_btn_size"
+        android:layout_height="@dimen/floating_btn_size"
+        android:background="@drawable/btn_floating_background_circle"
+        android:foreground="@drawable/btn_floating_effect"
+        android:drawableLeft="@drawable/icon_capture_start"
+        android:paddingLeft="@dimen/floating_btn_padding"
+        android:gravity="bottom"/>
+
+</LinearLayout>

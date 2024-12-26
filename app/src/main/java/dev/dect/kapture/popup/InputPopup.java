@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,14 +60,6 @@ public class InputPopup extends Dialog {
         if(isDangerousAction) {
             BTN_YES.setTextColor(ctx.getColor(R.color.popup_btn_text_dangerous));
         }
-
-        BTN_YES.setOnClickListener((v) -> {
-            if(BTN_YES.isEnabled()) {
-                this.dismissWithAnimation();
-
-                btnYes.onStringInputSet(INPUT.getText().toString());
-            }
-        });
 
         if(btnNoText == NO_TEXT) {
             view.findViewById(R.id.popupBtnNo).setVisibility(View.GONE);
@@ -148,6 +142,14 @@ public class InputPopup extends Dialog {
                 return false;
             });
 
+            super.BTN_YES.setOnClickListener((v) -> {
+                if(super.BTN_YES.isEnabled()) {
+                    this.dismissWithAnimation();
+
+                    btnYes.onStringInputSet(super.INPUT.getText().toString());
+                }
+            });
+
             if(text != null) {
                 super.INPUT.setText(text);
 
@@ -173,6 +175,14 @@ public class InputPopup extends Dialog {
                 }
 
                 return false;
+            });
+
+            super.BTN_YES.setOnClickListener((v) -> {
+                if(super.BTN_YES.isEnabled()) {
+                    this.dismissWithAnimation();
+
+                    btnYes.onStringInputSet(super.INPUT.getText().toString());
+                }
             });
 
             if(text != null) {
@@ -205,9 +215,72 @@ public class InputPopup extends Dialog {
                 return false;
             });
 
+            super.BTN_YES.setOnClickListener((v) -> {
+                if(super.BTN_YES.isEnabled()) {
+                    this.dismissWithAnimation();
+
+                    btnYes.onIntInputSet(Integer.parseInt(super.INPUT.getText().toString()));
+                }
+            });
+
             super.INPUT.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             super.INPUT.setText(String.valueOf(value));
+        }
+
+        public NumberInteger(Context ctx, int title, int value, int min, int max, int btnYesText, OnInputPopupListener btnYes, int btnNoText, @Nullable Runnable btnNo, boolean dismissible, boolean dismissibleCallsNo, boolean isDangerousAction) {
+            super(ctx, title, btnYesText, btnYes, btnNoText, btnNo, dismissible, dismissibleCallsNo, isDangerousAction);
+
+            super.INPUT.setOnEditorActionListener((v, actionId, event) -> {
+                if(actionId == EditorInfo.IME_ACTION_DONE && super.BTN_YES.isEnabled()) {
+                    this.dismiss();
+
+                    btnYes.onIntInputSet(Integer.parseInt(super.INPUT.getText().toString()));
+
+                    return true;
+                }
+
+                return false;
+            });
+
+            super.BTN_YES.setOnClickListener((v) -> {
+                if(super.BTN_YES.isEnabled()) {
+                    this.dismissWithAnimation();
+
+                    btnYes.onIntInputSet(Integer.parseInt(super.INPUT.getText().toString()));
+                }
+            });
+
+            super.INPUT.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            super.INPUT.setFilters(new InputFilter[]{ new MinMaxFilter(min, max)});
+
+            super.INPUT.setText(String.valueOf(value));
+        }
+
+        private static class MinMaxFilter implements InputFilter {
+            private final int MIN,
+                              MAX;
+
+            public MinMaxFilter(int min, int max) {
+                this.MIN = min;
+                this.MAX = max;
+            }
+
+            @Override
+            public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
+                try {
+                    final int value = Integer.parseInt(spanned.toString() + charSequence.toString());
+
+                    if(Utils.isInRange(value, MIN, MAX)) {
+                        return null;
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+
+                return "";
+            }
         }
     }
 }

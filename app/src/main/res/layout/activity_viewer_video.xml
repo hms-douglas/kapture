@@ -8,7 +8,7 @@
     android:background="@color/activity_background"
     android:id="@+id/window">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/viewHelper"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -21,15 +21,10 @@
 
         <VideoView
             android:id="@+id/viewVideo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_width="fill_parent"
+            android:layout_centerInParent="true"
+            android:layout_height="fill_parent"/>
+    </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/options"
@@ -37,11 +32,53 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/viewer_option_background_transparent"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/tool_bar_height"
+            android:paddingTop="@dimen/tool_bar_padding_top"
+            android:paddingEnd="@dimen/tool_bar_padding_right"
+            android:paddingStart="@dimen/tool_bar_padding_right"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/viewer_option_icon"
+                android:textSize="@dimen/default_font"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_marginBottom="@dimen/tool_bar_padding_top"
+                android:layout_marginStart="@dimen/tool_bar_btn_padding"
+                android:layout_marginEnd="@dimen/tool_bar_btn_padding"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnMore"/>
+
+            <ImageButton
+                android:id="@+id/btnMore"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/icon_tool_bar_more"
+                android:padding="@dimen/tool_bar_btn_padding"
+                android:foreground="@drawable/btn_floating_effect"
+                android:contentDescription="@string/tooltip_more_options"
+                android:longClickable="true"
+                app:tint="@color/viewer_option_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/optionsContainer"
@@ -60,7 +97,8 @@
                 android:layout_marginLeft="@dimen/video_option_button_margin_sides"
                 android:layout_marginRight="@dimen/video_option_button_margin_sides"
                 android:background="@drawable/icon_viewer_video_rewind"
-                android:foreground="@drawable/btn_viewer_effect"/>
+                android:foreground="@drawable/btn_viewer_effect"
+                android:tooltipText="@string/tooltip_rewind"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnToggle"
@@ -69,7 +107,8 @@
                 android:layout_marginLeft="@dimen/video_option_button_margin_sides"
                 android:layout_marginRight="@dimen/video_option_button_margin_sides"
                 android:background="@drawable/icon_viewer_video_play"
-                android:foreground="@drawable/btn_viewer_effect"/>
+                android:foreground="@drawable/btn_viewer_effect"
+                android:tooltipText="@string/tooltip_play_pause_file"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnForward"
@@ -78,20 +117,21 @@
                 android:layout_marginLeft="@dimen/video_option_button_margin_sides"
                 android:layout_marginRight="@dimen/video_option_button_margin_sides"
                 android:background="@drawable/icon_viewer_video_forward"
-                android:foreground="@drawable/btn_viewer_effect"/>
+                android:foreground="@drawable/btn_viewer_effect"
+                android:tooltipText="@string/tooltip_forward"/>
         </LinearLayout>
 
         <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/video_option_margin"
-                android:text="00:00/00:00"
-                android:textColor="@color/viewer_option_time"
-                android:textSize="@dimen/video_option_time"
-                app:layout_constraintBottom_toTopOf="@+id/timeBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/video_option_margin"
+            android:text="00:00/00:00"
+            android:textColor="@color/viewer_option_time"
+            android:textSize="@dimen/video_option_time"
+            app:layout_constraintBottom_toTopOf="@+id/timeBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <com.google.android.material.slider.Slider
             android:id="@+id/timeBar"

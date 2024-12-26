@@ -1,6 +1,5 @@
 package dev.dect.kapture.data;
 
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.hardware.camera2.CameraCharacteristics;
 import android.view.Gravity;
@@ -15,7 +14,7 @@ public class DefaultSettings {
         IS_TO_SHOW_FLOATING_MENU = false,
         IS_TO_SHOW_FLOATING_CAMERA = false,
         IS_TO_RECORD_SOUND_IN_STEREO = true,
-        IS_TO_BOOST_MIC_VOLUME = true,
+        IS_TO_BOOST_MIC_VOLUME = false,
         IS_TO_GENERATE_MP3_AUDIO = false,
         IS_TO_GENERATE_MP3_ONLY_INTERNAL = false,
         IS_TO_GENERATE_MP3_ONLY_MIC = false,
@@ -30,6 +29,7 @@ public class DefaultSettings {
         IS_TO_USE_TIME_LIMIT = false,
         IS_TO_STOP_ON_SCREEN_OFF = false,
         IS_TO_STOP_ON_SHAKE = false,
+        IS_TO_STOP_ON_BATTERY_LEVEL = false,
         IS_CAMERA_SCALABLE = false,
         IS_TO_SHOW_TEXT = false,
         IS_TO_SHOW_TIME_ON_MENU = true,
@@ -39,10 +39,14 @@ public class DefaultSettings {
         IS_TO_SHOW_CAMERA_BUTTON_ON_MENU = true,
         IS_TO_SHOW_DRAW_BUTTON_ON_MENU = true,
         IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU = false,
+        IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU = false,
         IS_TO_START_MENU_MINIMIZED = false,
         IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU = true,
         IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU = true,
-        IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU = false;
+        IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU = false,
+        IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU = false,
+        IS_TO_SHOW_IMAGE = false,
+        IS_TO_RECYCLE_TOKEN = false;
 
     public static final int
         VIDEO_RESOLUTION = -1,
@@ -52,6 +56,7 @@ public class DefaultSettings {
         LAYOUT_MANAGER_STYLE = KapturesFragment.STYLE_LIST,
         SORT_BY = SortPopup.SORT_DATE_CAPTURING,
         CAMERA_SIZE = 80,
+        IMAGE_SIZE = 80,
         CAMERA_FACING_LENS = CameraCharacteristics.LENS_FACING_FRONT,
         CAMERA_SHAPE = KSettings.CAMERA_SHAPES[0],
         SECONDS_TO_START_RECORDING = 3,
@@ -59,7 +64,8 @@ public class DefaultSettings {
         TEXT_SIZE = 24,
         TEXT_ALIGNMENT = Gravity.START,
         MINIMIZING_SIDE = KSettings.MINIMIZE_SIDES[0],
-        MENU_STYLE = KSettings.MENU_STYLES[0];
+        MENU_STYLE = KSettings.MENU_STYLES[0],
+        STOP_ON_BATTERY_LEVEL_LEVEL = 30;
 
     public static final float
         MIC_BOOST_VOLUME_FACTOR = 5f;
@@ -72,5 +78,6 @@ public class DefaultSettings {
         TEXT_COLOR = "#EB3B2EFF",
         TEXT_BACKGROUND = "#00000000",
         PEN_COLOR = "#EB3B2EFF",
-        PEN_PREVIOUS_COLORS = "#EB3B2EFF,#05AC08FF,#FFFFFFFF,#0478FFFF,#FFD016FF";
+        PEN_PREVIOUS_COLORS = "#EB3B2EFF,#05AC08FF,#FFFFFFFF,#0478FFFF,#FFD016FF",
+        IMAGE_PATH = null;
 }

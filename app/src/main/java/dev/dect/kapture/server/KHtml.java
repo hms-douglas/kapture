@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
@@ -42,10 +43,12 @@ public class KHtml {
             + "<th>" + CONTEXT.getString(R.string.html_size) + "</th>"
             + "<th></th></tr>";
 
-        boolean hasExtra = false;
+        boolean hasExtra = false,
+                hasScreenshots = false;
 
         for(Kapture kapture : kaptures) {
-            boolean b = kapture.hasExtras();
+            boolean b = kapture.hasExtras(),
+                    c = kapture.hasScreenshots();
 
             body += "<tr>"
                 + "<td>" + kapture.getName() + "</td>"
@@ -54,6 +57,32 @@ public class KHtml {
                 + "<td>" + kapture.getThumbnail().getWidth() + "x" + kapture.getThumbnail().getHeight() + "</td>"
                 + "<td>" + KFile.formatFileSize(kapture.getSize()) + "</td>"
                 + "<td>";
+
+            if(c) {
+                hasScreenshots = true;
+
+                String screenshotsBody = "";
+
+                final ArrayList<Kapture.Screenshot> screenshots = kapture.getScreenshots();
+
+
+                for(int i = 0; i < screenshots.size(); i++) {
+                    Kapture.Screenshot screenshot = screenshots.get(i);
+
+                    try {
+                        final JSONObject json = new JSONObject();
+
+                        json.put("n", new File(screenshot.getLocation()).getName());
+                        json.put("l", screenshot.getLocation());
+
+                        screenshotsBody += json + ((i == screenshots.size() - 1) ? "" : ",");
+                    } catch (Exception ignore) {
+                        hasScreenshots = false;
+                    }
+                }
+
+                body += "<div class='screenshot' data-screenshots='[" + screenshotsBody + "]'></div>";
+            }
 
             if(b) {
                 hasExtra = true;
@@ -89,6 +118,14 @@ public class KHtml {
 
         JAVASCRIPT.addList();
 
+        if(hasScreenshots) {
+            CSS.addScreenshot();
+
+            JAVASCRIPT.addScreenshot();
+
+            body += getScreenshotString();
+        }
+
         if(hasExtra) {
             CSS.addExtra();
 
@@ -108,6 +145,10 @@ public class KHtml {
 
     private String getExtraString() {
         return "<div id=\"extras\"><div id=\"extras-body\"><span id=\"extras-title\">" + CONTEXT.getString(R.string.popup_title_extra) + "</span><div id=\"closeExtras\">" + CONTEXT.getString(R.string.popup_btn_close) + "</div></div></div>";
+    }
+
+    private String getScreenshotString() {
+        return "<div id=\"screenshots\"><div id=\"screenshots-body\"><span id=\"screenshots-title\">" + CONTEXT.getString(R.string.popup_title_screenshot) + "</span><div id=\"closeScreenshots\">" + CONTEXT.getString(R.string.popup_btn_close) + "</div></div></div>";
     }
 
     private String getPlayersString() {

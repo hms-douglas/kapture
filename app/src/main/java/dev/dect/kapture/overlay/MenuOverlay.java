@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -29,6 +28,7 @@ import java.util.Date;
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.utils.Utils;
@@ -71,7 +71,7 @@ public class MenuOverlay {
         this.CONTEXT = ctx;
         this.WINDOW_MANAGER = wm;
         this.CAMERA_OVERLAY = co;
-        this.DRAW_OVERLAY = new DrawOverlay(ctx, ks, wm);
+        this.DRAW_OVERLAY = new DrawOverlay(ctx, ks, wm, this);
 
         this.EDITOR = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit();
     }
@@ -227,9 +227,11 @@ public class MenuOverlay {
         MEDIA_RECORDER_SURFACE = s;
     }
 
-    private void takeScreenshot() {
+    public void takeScreenshot() {
         if(MEDIA_RECORDER_SURFACE != null) {
             VIEW.setVisibility(View.GONE);
+
+            DRAW_OVERLAY.hideMenu();
 
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 final Bitmap bitmap = Bitmap.createBitmap(KSETTINGS.getVideoWidth(), KSETTINGS.getVideoHeight(), Bitmap.Config.ARGB_8888);
@@ -243,14 +245,13 @@ public class MenuOverlay {
                     bitmap,
                     (result) -> {
                         if(result == PixelCopy.SUCCESS) {
-                            new Handler(Looper.getMainLooper()).post(() -> VIEW.setVisibility(View.VISIBLE));
+                            new Handler(Looper.getMainLooper()).post(() -> {
+                                VIEW.setVisibility(View.VISIBLE);
 
-                            final String fileName =
-                                    KFile.getFileIdNotGenerated(CONTEXT)
-                                    + KFile.FILE_SEPARATOR
-                                    + KFile.getDefaultScreenshotName(CONTEXT);
+                                DRAW_OVERLAY.showMenu();
+                            });
 
-                            final File screenshot = KFile.generateFileIncrementalName(KSETTINGS.getSavingScreenshotLocationFile(), fileName, ".jpg");
+                            final File screenshot = KFile.generateScreenshotFile(CONTEXT, KSETTINGS);
 
                             try {
                                 final FileOutputStream out = new FileOutputStream(screenshot);
@@ -260,6 +261,9 @@ public class MenuOverlay {
                                 out.flush();
                                 out.close();
 
+                                CapturingService.screenshotTaken(new Kapture.Screenshot(screenshot));
+
+                                KFile.notifyMediaScanner(CONTEXT, screenshot);
                             } catch (Exception ignore) {}
                         }
 

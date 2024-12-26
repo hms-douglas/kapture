@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
+import dev.dect.kapture.service.CapturingService;
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 public class ListButton {
@@ -106,7 +108,15 @@ public class ListButton {
                 holder.EL_CONTAINER.setBackgroundResource(R.drawable.list_item_divisor_horizontal_bottom);
             }
 
-            holder.EL_CONTAINER.setOnClickListener((l) -> listButton.getListener().onButtonClicked());
+            holder.EL_CONTAINER.setOnClickListener((l) -> {
+                if(CapturingService.isRecording()) {
+                    Toast.makeText(ctx, ctx.getString(R.string.toast_info_while_recording), Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+
+                listButton.getListener().onButtonClicked();
+            });
         }
 
         @Override

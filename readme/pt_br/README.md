@@ -1,4 +1,4 @@
-# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.2.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-114_MB-7C39E0)
+# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.3.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-155_MB-7C39E0)
 Altere o idioma do README: 
 [![en](https://img.shields.io/badge/idioma-en-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/README.md)
 [![pt-br](https://img.shields.io/badge/idioma-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
@@ -39,10 +39,11 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
   <li>Pausar/Retomar a captura;</li>
   <li>Interface flutuante;
     <ul>
-      <li>Menu (Parar, pausar, screenshot, desenhar, minimizar, fechar, tempo, tempo limite, câmera);</li>
+        <li>Menu (Parar, pausar, screenshot, desenhar, minimizar, fechar, tempo, tempo limite, câmera);</li>
          <li>Câmera (frontal, traseira / estilização);</li>
          <li>Texto (estilização);</li>
          <li>Desenho (estilização).</li>
+         <li>Imagem.</li>
     </ul>
   </li>
   <li>Gerar arquivos de vídeo extras:
@@ -61,6 +62,13 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
   </li>
   <li>Atalhos nas notificações;</li>
   <li>Botão de atalho (Tile);</li>
+  <li>Widgets:
+    <ul>
+      <li>Básico - Iniciar/Parar;</li>
+      <li>Completo - Iniciar/Parar e Pausar/Resumir;</li>
+      <li>Atalho para compartilhar por WiFi.</li>
+    </ul>
+  </li>
   <li>Botões de atalho (Launcher);</li>
   <li>Gerenciar todas as capturas feitas pelo app:
     <ul>
@@ -74,7 +82,7 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
   </li>
   <li>Compartilhar por WiFi;</li>
   <li>Contagem regressiva para começar a capturar;</li>
-  <li>Opções de paragem automática;</li>
+  <li>Diversas opções de parada automática;</li>
   <li>Visualizadores internos (reprodutores)
      <ul>
        <li>Reprodutor de áudio;</li>
@@ -88,6 +96,8 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
     </ul>
   </li>
   <li>Tema claro e escuro (automaticamente ou manualmente).</li>
+  <li>Controle de armazenamento.</li>
+  <li>Interface para tablet.</li>
 </ul>
 
 ##
@@ -148,7 +158,7 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 #### Opção 2:
 <ul>
-  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1awGg6tp-QBRMJtjp7ow07E7HdDx8FW_A/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
+  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1HyRcaeUA8ZDthKhK4H4-MRrvnEbICe6W/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
   <li>Você pode verificar o link para baixar o .apk de versões anteriores <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">aqui</a>*.</li>
 </ul>
 * Todos os .apks listados aqui foram contruidos por mim, eles não estão minificados e estão hospedados no Google Drive.
@@ -163,6 +173,21 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 ##
 ### Log
+<b>v1.3.0</b>
+<ul>
+   <li>Opção de parada por nível de bateria adicionado;</li>
+   <li>Controle de armazenamento + Opção de limpar cache adicionado;</li>
+   <li>Interface flutuante de imagem adicionada;</li>
+   <li>Widgets adicionados (Básico, Completo, Compartilhar por WiFi);</li>
+   <li>Opção para controlar reciclagem do token adicionada;</li>
+   <li>Opção de tornar a captura "seekable" adicionado no player de vídeo;</li>
+   <li>Suporte para interface de tablet adicionado;</li>
+   <li>A interface flutuante de desenho agora suporta cores com canal alfa;</li>
+   <li>A interface flutuante de desenho agora suporta screenshots (do desenho e/o da tela);</li>
+   <li>A licença do FFmpeg alterada do LGPL v3.0 para GPL v3.0;</li>
+   <li>Correções;</li>
+   <li>Pequenas mudanças na interface.</li>
+</ul>
 <b>v1.2.0</b>
 <ul>
    <li>Melhora no carregamento;</li>

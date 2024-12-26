@@ -59,7 +59,7 @@
         android:lines="1"
         android:textSize="@dimen/kapture_grid_sub_title"
         android:textColor="@color/kapture_grid_time"
-        android:background="@drawable/grid_time_background"
+        android:background="@drawable/grid_el_background"
         android:paddingStart="@dimen/kapture_grid_time_padding_sides"
         android:paddingEnd="@dimen/kapture_grid_time_padding_sides"
         android:visibility="gone"
@@ -69,8 +69,34 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="@dimen/list_item_divisor_horizontal"
-        android:background="@drawable/list_item_divisor_horizontal_bottom"
+        android:background="@drawable/kapture_item_divisor_horizontal_bottom"
         app:layout_constraintStart_toStartOf="@id/thumbnail"
         app:layout_constraintEnd_toEndOf="@id/thumbnail"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/kapture_list_padding_top_bottom"
+        android:orientation="vertical"
+        android:background="@drawable/grid_el_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnScreenshot"
+            android:layout_width="@dimen/kapture_list_btn"
+            android:layout_height="@dimen/kapture_list_btn"
+            android:background="@drawable/btn_screenshot"
+            android:foreground="@drawable/btn_effect"
+            android:tooltipText="@string/tooltip_screenshots"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExtra"
+            android:layout_width="@dimen/kapture_list_btn"
+            android:layout_height="@dimen/kapture_list_btn"
+            android:background="@drawable/btn_extra"
+            android:foreground="@drawable/btn_effect"
+            android:tooltipText="@string/tooltip_extras"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

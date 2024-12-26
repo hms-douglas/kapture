@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/activity_background"
+            app:contentScrim="@color/activity_background"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <androidx.appcompat.widget.Toolbar
@@ -65,57 +66,70 @@
                         android:foreground="@drawable/btn_effect"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:tooltipText="tooltip_select_all"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/searchContainer"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/tool_bar_search_width"
                     android:layout_height="match_parent"
                     android:background="@color/activity_background"
                     android:visibility="gone">
 
-                    <ImageButton
-                        android:id="@+id/btnBack"
-                        android:layout_gravity="start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/activity_background"
-                        android:src="@drawable/icon_tool_bar_back"
-                        android:padding="@dimen/tool_bar_btn_padding"
-                        android:foreground="@drawable/btn_floating_effect"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/tool_bar_search_width"
+                        android:layout_height="match_parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintEnd_toEndOf="parent">
 
-                    <EditText
-                        android:id="@+id/searchInput"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:textColor="@color/input_text"
-                        android:inputType="text"
-                        android:imeOptions="actionSearch"
-                        android:singleLine="true"
-                        android:background="@android:color/transparent"
-                        android:hint="@string/search_hint"
-                        android:textColorHint="@color/hint_color"
-                        app:layout_constraintTop_toTopOf="@id/btnBack"
-                        app:layout_constraintStart_toEndOf="@id/btnBack"
-                        app:layout_constraintEnd_toStartOf="@id/btnMicClear"
-                        app:layout_constraintBottom_toBottomOf="@id/btnBack"/>
+                        <ImageButton
+                            android:id="@+id/btnBack"
+                            android:layout_gravity="start"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/activity_background"
+                            android:src="@drawable/icon_tool_bar_back"
+                            android:padding="@dimen/tool_bar_btn_padding"
+                            android:foreground="@drawable/btn_floating_effect"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:contentDescription="@string/tooltip_close_search"
+                            android:longClickable="true"/>
 
-                    <ImageButton
-                        android:id="@+id/btnMicClear"
-                        android:layout_gravity="start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/activity_background"
-                        android:src="@drawable/icon_tool_bar_microphone"
-                        android:padding="@dimen/tool_bar_btn_padding"
-                        android:foreground="@drawable/btn_floating_effect"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        <EditText
+                            android:id="@+id/searchInput"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:textColor="@color/input_text"
+                            android:inputType="text"
+                            android:imeOptions="actionSearch"
+                            android:singleLine="true"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/search_hint"
+                            android:textColorHint="@color/hint_color"
+                            app:layout_constraintTop_toTopOf="@id/btnBack"
+                            app:layout_constraintStart_toEndOf="@id/btnBack"
+                            app:layout_constraintEnd_toStartOf="@id/btnMicClear"
+                            app:layout_constraintBottom_toBottomOf="@id/btnBack"/>
+
+                        <ImageButton
+                            android:id="@+id/btnMicClear"
+                            android:layout_gravity="start"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/activity_background"
+                            android:src="@drawable/icon_tool_bar_microphone"
+                            android:padding="@dimen/tool_bar_btn_padding"
+                            android:foreground="@drawable/btn_floating_effect"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:contentDescription="@string/tooltip_voice_search"
+                            android:longClickable="true"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
@@ -132,7 +146,9 @@
                         android:background="@color/activity_background"
                         android:src="@drawable/icon_tool_bar_grid_big"
                         android:padding="@dimen/tool_bar_btn_padding"
-                        android:foreground="@drawable/btn_floating_effect"/>
+                        android:foreground="@drawable/btn_floating_effect"
+                        android:contentDescription="@string/tooltip_view_style"
+                        android:longClickable="true"/>
 
                     <ImageButton
                         android:id="@+id/btnSearch"
@@ -142,7 +158,9 @@
                         android:background="@color/activity_background"
                         android:src="@drawable/icon_tool_bar_search"
                         android:padding="@dimen/tool_bar_btn_padding"
-                        android:foreground="@drawable/btn_floating_effect"/>
+                        android:foreground="@drawable/btn_floating_effect"
+                        android:contentDescription="@string/tooltip_search"
+                        android:longClickable="true"/>
 
                     <ImageButton
                         android:id="@+id/btnMore"
@@ -152,14 +170,16 @@
                         android:background="@color/activity_background"
                         android:src="@drawable/icon_tool_bar_more"
                         android:padding="@dimen/tool_bar_btn_padding"
-                        android:foreground="@drawable/btn_floating_effect"/>
+                        android:foreground="@drawable/btn_floating_effect"
+                        android:contentDescription="@string/tooltip_more_options"
+                        android:longClickable="true"/>
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/titleAndSubtitleContainer"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="@dimen/app_bar_container_height"
+                android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/titleAndSubtitle"
@@ -174,7 +194,7 @@
                         android:id="@+id/titleExpanded"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/title_captures"
+                        android:text="@string/app_name"
                         android:gravity="center"
                         android:textSize="@dimen/app_bar_font_title_expanded"
                         android:textColor="@color/app_bar_font_title"
@@ -221,6 +241,26 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
+        android:id="@+id/noCapture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/tool_bar_height"
+        android:visibility="gone"
+        app:behavior_overlapTop="?attr/actionBarSize"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_captures"
+            android:textColor="@color/no_capture"
+            android:textSize="@dimen/no_captures"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -232,17 +272,23 @@
             android:id="@+id/pauseResumeCapturing"
             android:layout_width="@dimen/floating_btn_secondary_size"
             android:layout_height="@dimen/floating_btn_secondary_size"
-            android:background="@drawable/btn_floating_background_pause"
+            android:background="@drawable/btn_floating_background_circle"
             android:foreground="@drawable/btn_floating_effect"
             android:layout_marginBottom="@dimen/floating_btn_secondary_space"
-            app:elevation="@dimen/floating_btn_elevation"/>
+            android:drawableLeft="@drawable/icon_capture_pause"
+            android:paddingLeft="@dimen/floating_btn_padding_secondary"
+            app:elevation="@dimen/floating_btn_elevation"
+            android:tooltipText="@string/tooltip_pause"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/startStopCapturing"
             android:layout_width="@dimen/floating_btn_size"
             android:layout_height="@dimen/floating_btn_size"
-            android:background="@drawable/btn_floating_background_start"
+            android:background="@drawable/btn_floating_background_circle"
             android:foreground="@drawable/btn_floating_effect"
-            app:elevation="@dimen/floating_btn_elevation"/>
+            android:drawableLeft="@drawable/icon_capture_start"
+            android:paddingLeft="@dimen/floating_btn_padding"
+            app:elevation="@dimen/floating_btn_elevation"
+            android:tooltipText="@string/tooltip_start"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

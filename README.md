@@ -1,4 +1,4 @@
-# Kapture - Screen recorder ![Static Badge](https://img.shields.io/badge/version-v1.2.0-green) [![Static Badge](https://img.shields.io/badge/license-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/apk_size-114_MB-7C39E0)
+# Kapture - Screen recorder ![Static Badge](https://img.shields.io/badge/version-v1.3.0-green) [![Static Badge](https://img.shields.io/badge/license-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/apk_size-155_MB-7C39E0)
 Change README language: 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/hms-douglas/kapture)
 [![pt-br](https://img.shields.io/badge/lang-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
@@ -43,6 +43,7 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
          <li>Camera (front, back / extra styles);</li>
          <li>Text (extra styles);</li>
          <li>Draw (extra styles).</li>
+         <li>Image.</li>
       </ul>
    </li>
   <li>Generate extra video files:
@@ -61,6 +62,13 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
   </li>
   <li>Notification shortcuts;</li>
   <li>Quick tile shortcut;</li>
+  <li>Widgets:
+    <ul>
+      <li>Basic - Start/Stop;</li>
+      <li>Full - Start/Stop and Pause/Resume;</li>
+      <li>WiFi Share shortcut.</li>
+    </ul>
+  </li>
   <li>Launcher static shortcuts;</li>
   <li>Manage all captures made by the app:
     <ul>
@@ -74,7 +82,7 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
   </li>
   <li>WiFi share;</li>
   <li>Countdown to start capturing;</li>
-  <li>Auto stop options;</li>
+  <li>Multiple auto stop options;</li>
   <li>Internal viewer (player):
      <ul>
        <li>Audio player;</li>
@@ -88,6 +96,8 @@ Therefore I decided to build one on my own. I'm also sharing it here. You can do
     </ul>
   </li>
   <li>Light and dark mode (auto or manually).</li>
+  <li>Storage control.</li>
+  <li>Tablet UI.</li>
 </ul>
 
 ##
@@ -148,7 +158,7 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 #### Option 2:
 <ul>
-  <li>You can download the latest version .apk <a href="https://drive.google.com/file/d/1awGg6tp-QBRMJtjp7ow07E7HdDx8FW_A/view" target="_blank" rel="noreferrer">here</a>*;</li>
+  <li>You can download the latest version .apk <a href="https://drive.google.com/file/d/1HyRcaeUA8ZDthKhK4H4-MRrvnEbICe6W/view" target="_blank" rel="noreferrer">here</a>*;</li>
   <li>You can check all previous versions .apk links for download <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">here</a>*.</li>
 </ul>
 * All .apks listed here were built by me, are not minimified and are hosted on Google Drive.
@@ -163,6 +173,21 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 ##
 ### Log
+<b>v1.3.0</b>
+<ul>
+   <li>Auto stop option based on battery level added;</li>
+   <li>Storage usage option added + Clear cache option;</li>
+   <li>Image overlay added;</li>
+   <li>Widgets added (Basic, Full, WiFi share);</li>
+   <li>Option to control token recycling added;</li>
+   <li>Option to make video seekable added inside the video viewer;</li>
+   <li>Table UI support added;</li>
+   <li>Draw overlay now supports colors with alpha channel;</li>
+   <li>Draw overlay now supports screenshots (draw only and/or screen);</li>
+   <li>FFmpeg license changed from LGPL v3.0 to GPL v3.0;</li>
+   <li>Bug fix;</li>
+   <li>Minor UI changes.</li>
+</ul>
 <b>v1.2.0</b>
 <ul>
    <li>Loading performance improved;</li>

@@ -1,6 +1,6 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="380dp"
-    android:height="380dp"
+    android:width="@dimen/floating_btn_icon_start_stop"
+    android:height="@dimen/floating_btn_icon_start_stop"
     android:viewportWidth="380"
     android:viewportHeight="380">
 

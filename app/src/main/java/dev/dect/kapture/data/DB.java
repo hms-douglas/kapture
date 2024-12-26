@@ -13,7 +13,7 @@ import dev.dect.kapture.model.Kapture;
 public class DB extends SQLiteOpenHelper {
     private static final String DB_NAME = "kapture.db";
 
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     private static final String TABLE_KAPTURE = "kapture",
                                 KAPTURE_COL_ID = "k_id",
@@ -23,9 +23,14 @@ public class DB extends SQLiteOpenHelper {
                                 EXTRAS_COL_ID = "e_id",
                                 EXTRAS_COL_ID_KAPTURE = "e_id_kapture",
                                 EXTRAS_COL_LOCATION = "e_location",
-                                EXTRAS_COL_TYPE = "e_type";
+                                EXTRAS_COL_TYPE = "e_type",
 
-    private Context CONTEXT;
+                                TABLE_SCREENSHOTS = "screenshots",
+                                SCREENSHOTS_COL_ID = "s_id",
+                                SCREENSHOTS_COL_ID_KAPTURE = "s_id_kapture",
+                                SCREENSHOTS_COL_LOCATION = "s_location";
+
+    private final Context CONTEXT;
 
     public DB(Context ctx) {
         super(ctx, DB_NAME, null, DB_VERSION);
@@ -49,12 +54,30 @@ public class DB extends SQLiteOpenHelper {
 
         db.execSQL(q0);
         db.execSQL(q1);
+
+        createScreenshotsTableHelper(db);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        switch(oldVersion) {
+            case 1:
+                createScreenshotsTableHelper(db);
+                break;
+        }
+    }
 
-    public Kapture insertKapture(Kapture kapture) {
+    private void createScreenshotsTableHelper(SQLiteDatabase db) {
+        final String q = "CREATE TABLE "
+                        + TABLE_SCREENSHOTS + " ("
+                        + SCREENSHOTS_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + SCREENSHOTS_COL_ID_KAPTURE + " INTEGER, "
+                        + SCREENSHOTS_COL_LOCATION + " TEXT);";
+
+        db.execSQL(q);
+    }
+
+    public void insertKapture(Kapture kapture) {
         final SQLiteDatabase db = this.getReadableDatabase();
 
         final ContentValues valuesKapture = new ContentValues();
@@ -77,7 +100,16 @@ public class DB extends SQLiteOpenHelper {
             extra.setId(idExtra);
         }
 
-        return kapture;
+        for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+            final ContentValues valuesScreenshot = new ContentValues();
+
+            valuesScreenshot.put(SCREENSHOTS_COL_ID_KAPTURE, idKapture);
+            valuesScreenshot.put(SCREENSHOTS_COL_LOCATION, screenshot.getLocation());
+
+            final long idScreenshot = db.insert(TABLE_SCREENSHOTS, null, valuesScreenshot);
+
+            screenshot.setId(idScreenshot);
+        }
     }
 
     public ArrayList<Kapture> selectAllKaptures(boolean desc) {
@@ -98,6 +130,7 @@ public class DB extends SQLiteOpenHelper {
             kapture.setId(cursor.getLong(cursor.getColumnIndexOrThrow(KAPTURE_COL_ID)));
             kapture.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_LOCATION)));
             kapture.setExtras(selectExtras(kapture));
+            kapture.setScreenshots(selectScreenshots(kapture));
 
             kaptures.add(kapture);
         }
@@ -122,6 +155,7 @@ public class DB extends SQLiteOpenHelper {
             kapture.setId(cursor.getLong(cursor.getColumnIndexOrThrow(KAPTURE_COL_ID)));
             kapture.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_LOCATION)));
             kapture.setExtras(selectExtras(kapture));
+            kapture.setScreenshots(selectScreenshots(kapture));
 
             cursor.close();
 
@@ -161,6 +195,33 @@ public class DB extends SQLiteOpenHelper {
         return extras;
     }
 
+    public ArrayList<Kapture.Screenshot> selectScreenshots(Kapture kapture) {
+        final ArrayList<Kapture.Screenshot> screenshots = new ArrayList<>();
+
+        final SQLiteDatabase db = this.getReadableDatabase();
+
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_SCREENSHOTS + " WHERE " + SCREENSHOTS_COL_ID_KAPTURE + " = " + kapture.getId(), null);
+
+        while(true) {
+            assert cursor != null;
+            if(!cursor.moveToNext()) {
+                break;
+            }
+
+            final Kapture.Screenshot screenshot = new Kapture.Screenshot();
+
+            screenshot.setId(cursor.getLong(cursor.getColumnIndexOrThrow(SCREENSHOTS_COL_ID)));
+            screenshot.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(SCREENSHOTS_COL_LOCATION)));
+            screenshot.setIdKapture(cursor.getLong(cursor.getColumnIndexOrThrow(SCREENSHOTS_COL_ID_KAPTURE)));
+
+            screenshots.add(screenshot);
+        }
+
+        cursor.close();
+
+        return screenshots;
+    }
+
     public void deleteKapture(Kapture kapture) {
         final SQLiteDatabase db = this.getReadableDatabase();
 
@@ -168,6 +229,7 @@ public class DB extends SQLiteOpenHelper {
 
         db.execSQL("DELETE FROM " + TABLE_KAPTURE + " WHERE " + KAPTURE_COL_ID + " = " +  kapture.getId());
         db.execSQL("DELETE FROM " + TABLE_EXTRAS + " WHERE " + EXTRAS_COL_ID_KAPTURE + " = " + kapture.getId());
+        db.execSQL("DELETE FROM " + TABLE_SCREENSHOTS + " WHERE " + SCREENSHOTS_COL_ID_KAPTURE + " = " + kapture.getId());
 
         db.setTransactionSuccessful();
 
@@ -186,6 +248,18 @@ public class DB extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_EXTRAS + " WHERE " + EXTRAS_COL_ID_KAPTURE + " = " + kapture.getId());
     }
 
+    public void deleteScreenshot(Kapture.Screenshot screenshot) {
+        final SQLiteDatabase db = this.getReadableDatabase();
+
+        db.execSQL("DELETE FROM " + TABLE_SCREENSHOTS + " WHERE " + SCREENSHOTS_COL_ID + " = " + screenshot.getId());
+    }
+
+    public void deleteScreenshots(Kapture kapture) {
+        final SQLiteDatabase db = this.getReadableDatabase();
+
+        db.execSQL("DELETE FROM " + TABLE_SCREENSHOTS + " WHERE " + SCREENSHOTS_COL_ID_KAPTURE + " = " + kapture.getId());
+    }
+
     public void updateKapture(Kapture kapture) {
         final SQLiteDatabase db = this.getReadableDatabase();
 
@@ -196,6 +270,10 @@ public class DB extends SQLiteOpenHelper {
 
         for(Kapture.Extra extra : kapture.getExtras()) {
             updateExtra(extra);
+        }
+
+        for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+            updateScreenshot(screenshot);
         }
 
         db.update(TABLE_KAPTURE, valuesKapture, KAPTURE_COL_ID + " = " + kapture.getId(), null);
@@ -211,5 +289,16 @@ public class DB extends SQLiteOpenHelper {
         valuesExtra.put(EXTRAS_COL_TYPE, extra.getType());
 
         db.update(TABLE_EXTRAS, valuesExtra, EXTRAS_COL_ID + " = " + extra.getId(), null);
+    }
+
+    public void updateScreenshot(Kapture.Screenshot screenshot) {
+        final SQLiteDatabase db = this.getReadableDatabase();
+
+        final ContentValues valuesScreenshot = new ContentValues();
+
+        valuesScreenshot.put(SCREENSHOTS_COL_ID_KAPTURE, screenshot.getIdKapture());
+        valuesScreenshot.put(SCREENSHOTS_COL_LOCATION, screenshot.getLocation());
+
+        db.update(TABLE_SCREENSHOTS, valuesScreenshot, SCREENSHOTS_COL_ID + " = " + screenshot.getId(), null);
     }
 }

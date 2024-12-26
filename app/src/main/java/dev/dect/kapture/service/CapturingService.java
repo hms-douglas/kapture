@@ -51,6 +51,8 @@ public class CapturingService extends AccessibilityService {
 
     private StopOption STOP_OPTION;
 
+    private Kapture KAPTURE;
+
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {}
 
@@ -86,7 +88,15 @@ public class CapturingService extends AccessibilityService {
 
         CAPTURING_SERVICE = null;
 
+        KAPTURE = null;
+
         super.onDestroy();
+    }
+
+    public static void screenshotTaken(Kapture.Screenshot screenshot) {
+        if(CAPTURING_SERVICE.KAPTURE != null) {
+            CAPTURING_SERVICE.KAPTURE.addScreenshot(screenshot);
+        }
     }
 
     public static void requestStartRecording(Context ctx) {
@@ -192,6 +202,10 @@ public class CapturingService extends AccessibilityService {
     }
 
     private void stopRecording() {
+        if(!TokenActivity.isToRecycle(this)) {
+            TokenActivity.clearToken();
+        }
+
         STOP_OPTION.destroy();
 
         NOTIFICATION.destroy();
@@ -213,17 +227,17 @@ public class CapturingService extends AccessibilityService {
         KMediaProjection.destroy();
 
         new Thread(() -> {
-            final Kapture kapture = processAndSave();
+            processAndSave();
 
             SCREEN_MIC_RECORDER.destroy();
 
             INTERNAL_AUDIO_RECORDER.destroy();
 
-            new SavedNotification(this).createAndShow(kapture);
+            new SavedNotification(this).createAndShow(KAPTURE);
 
             IS_PROCESSING = false;
 
-            requestUIsUpdate(kapture);
+            requestUIsUpdate(KAPTURE);
 
             if(Utils.hasWriteSecureSettings(this)) {
                 disableSelf();
@@ -269,6 +283,8 @@ public class CapturingService extends AccessibilityService {
         OVERLAY_UI = new Overlay(this, KSETTINGS);
 
         STOP_OPTION = new StopOption(this, KSETTINGS, this::stopRecording);
+
+        KAPTURE = new Kapture(this);
     }
 
     private void initRecorders() {
@@ -297,6 +313,8 @@ public class CapturingService extends AccessibilityService {
         if(MainActivity.getInstance() != null) {
             MainActivity.getInstance().getKaptureFragment().requestFloatingButtonUpdate();
         }
+
+        Utils.updateWidgets(this);
     }
 
     private void requestUIsUpdate(Kapture kapture) {
@@ -305,14 +323,16 @@ public class CapturingService extends AccessibilityService {
         if(MainActivity.getInstance() != null) {
             MainActivity.getInstance().requestUiUpdate(kapture);
         }
+
+        Utils.updateWidgets(this);
     }
 
-    public Kapture processAndSave() {
+    public void processAndSave() {
         final File videoMicFile = SCREEN_MIC_RECORDER.getFile(),
                    internalAudioFile = INTERNAL_AUDIO_RECORDER.getFile(),
                    kaptureFile =  KFile.generateNewEmptyKaptureFile(this, KSETTINGS);
 
-        final Kapture kapture = new Kapture(this, kaptureFile);
+        KAPTURE.setFile(kaptureFile);
 
         if(KSETTINGS.isToRecordInternalAudio()) {
             if(KSETTINGS.isToRecordMic()) {
@@ -376,7 +396,7 @@ public class CapturingService extends AccessibilityService {
                 KFile.copyFile(internalAudioFile, f);
             }
 
-            kapture.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_AUDIO, f));
+            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_AUDIO, f));
         }
 
         if(KSETTINGS.isToGenerateMp3OnlyInternal() && KSETTINGS.isToRecordInternalAudio()) {
@@ -387,7 +407,7 @@ public class CapturingService extends AccessibilityService {
 
             KFile.copyFile(internalAudioFile, f);
 
-            kapture.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_INTERNAL_ONLY, f));
+            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_INTERNAL_ONLY, f));
         }
 
         if(KSETTINGS.isToGenerateMp3OnlyMic() && KSETTINGS.isToRecordMic()) {
@@ -403,7 +423,7 @@ public class CapturingService extends AccessibilityService {
                 + f.getAbsolutePath() + "\""
             );
 
-            kapture.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_MIC_ONLY, f));
+            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_MIC_ONLY, f));
         }
 
         if(KSETTINGS.isToGenerateMp4NoAudio()) {
@@ -423,7 +443,7 @@ public class CapturingService extends AccessibilityService {
                 KFile.copyFile(videoMicFile, f);
             }
 
-            kapture.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_NO_AUDIO, f));
+            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_NO_AUDIO, f));
         }
 
         if(KSETTINGS.isToRecordMic() && KSETTINGS.isToRecordInternalAudio()) {
@@ -435,7 +455,7 @@ public class CapturingService extends AccessibilityService {
 
                 KFile.copyFile(videoMicFile, f);
 
-                kapture.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_MIC_ONLY, f));
+                KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_MIC_ONLY, f));
             }
 
             if(KSETTINGS.isToGenerateMp4OnlyInternalAudio()) {
@@ -453,13 +473,13 @@ public class CapturingService extends AccessibilityService {
                     +  f.getAbsolutePath() + "\""
                 );
 
-                kapture.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_INTERNAL_ONLY, f));
+                KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_INTERNAL_ONLY, f));
             }
         }
 
-        kapture.notifyMediaScanner();
+        KAPTURE.notifyAllMediaScanner();
 
-        return new DB(this).insertKapture(kapture);
+        new DB(this).insertKapture(KAPTURE);
     }
 }
 

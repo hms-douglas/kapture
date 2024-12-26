@@ -35,6 +35,7 @@ import dev.dect.kapture.data.DefaultSettings;
 import dev.dect.kapture.fragment.KapturesFragment;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.popup.ExtraPopup;
+import dev.dect.kapture.popup.ScreenshotPopup;
 import dev.dect.kapture.utils.KFile;
 
 @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
@@ -112,7 +113,8 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
                          EL_FRAMES,
                          EL_SIZE;
 
-        private AppCompatButton EL_EXTRA;
+        private AppCompatButton EL_EXTRA,
+                                EL_SCREENSHOT;
 
         public MyViewHolder(View view) {
             super(view);
@@ -124,14 +126,14 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
             this.EL_NAME = view.findViewById(R.id.name);
             this.EL_DURATION = view.findViewById(R.id.duration);
             this.EL_SELECTOR = view.findViewById(R.id.select);
+            this.EL_EXTRA = view.findViewById(R.id.btnExtra);
+            this.EL_SCREENSHOT = view.findViewById(R.id.btnScreenshot);
 
             if(this.STYLE == KapturesFragment.STYLE_LIST) {
                 this.EL_RESOLUTION = view.findViewById(R.id.resolution);
                 this.EL_DATE = view.findViewById(R.id.date);
                 this.EL_FRAMES = view.findViewById(R.id.frames);
                 this.EL_SIZE = view.findViewById(R.id.size);
-
-                this.EL_EXTRA = view.findViewById(R.id.btnExtra);
             }
         }
 
@@ -198,7 +200,49 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
 
         holder.EL_CONTAINER.setOnClickListener((v) -> KFile.openFile(ctx, file));
 
+        holder.EL_CONTAINER.setOnLongClickListener((v) -> {
+            if(TRACKER.isSelected((long) position)) {
+                return false;
+            }
+
+            TRACKER.select((long) position);
+
+            return true;
+        });
+
         holder.EL_NAME.setText(kapture.getName());
+
+        if(kapture.hasExtras()) {
+            holder.EL_EXTRA.setVisibility(View.VISIBLE);
+
+            holder.EL_EXTRA.setOnClickListener((v) -> {
+                if(kapture.hasExtras()) {
+                    new ExtraPopup(ctx, kapture.getExtras(), null).show();
+                } else {
+                    holder.EL_EXTRA.setVisibility(View.GONE);
+
+                    Toast.makeText(ctx, ctx.getString(R.string.toast_error_no_extras_found), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            holder.EL_EXTRA.setVisibility(View.GONE);
+        }
+
+        if(kapture.hasScreenshots()) {
+            holder.EL_SCREENSHOT.setVisibility(View.VISIBLE);
+
+            holder.EL_SCREENSHOT.setOnClickListener((v) -> {
+                if(kapture.hasScreenshots()) {
+                    new ScreenshotPopup(ctx, kapture.getScreenshots(), null).show();
+                } else {
+                    holder.EL_SCREENSHOT.setVisibility(View.GONE);
+
+                    Toast.makeText(ctx, ctx.getString(R.string.toast_error_no_screenshots_found), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            holder.EL_SCREENSHOT.setVisibility(View.GONE);
+        }
 
         if(holder.STYLE != KapturesFragment.STYLE_LIST) {
             kapture.retrieveAllMediaData(() -> {
@@ -215,22 +259,6 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
 
             holder.EL_DATE.setText(KFile.formatFileDate(kapture.getCreationTime()));
             holder.EL_DATE.setVisibility(View.VISIBLE);
-
-            if(kapture.hasExtras()) {
-                holder.EL_EXTRA.setVisibility(View.VISIBLE);
-
-                holder.EL_EXTRA.setOnClickListener((v) -> {
-                    if(kapture.hasExtras()) {
-                        new ExtraPopup(ctx, kapture.getExtras(), null).show();
-                    } else {
-                        holder.EL_EXTRA.setVisibility(View.GONE);
-
-                        Toast.makeText(ctx, ctx.getString(R.string.toast_error_no_extras_found), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                holder.EL_EXTRA.setVisibility(View.GONE);
-            }
 
             kapture.retrieveAllMediaData(() -> {
                 holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
@@ -317,7 +345,7 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
                 out.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        holder.EL_SELECTOR.setVisibility(View.GONE);
+                    holder.EL_SELECTOR.setVisibility(View.GONE);
                     }
                 });
 

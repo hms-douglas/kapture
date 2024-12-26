@@ -11,6 +11,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.data.DefaultSettings;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.R;
 
@@ -38,8 +40,6 @@ public class TokenActivity extends AppCompatActivity {
                     CapturingService.requestStartRecording(this);
                 } else {
                     INTENT_TOKEN = null;
-
-                    Toast.makeText(this, getString(R.string.toast_error_access_required), Toast.LENGTH_SHORT).show();
                 }
 
                 finish();
@@ -54,7 +54,7 @@ public class TokenActivity extends AppCompatActivity {
     }
 
     public static void requestToken(Context ctx) {
-        if(!hasToken()) {
+        if(!hasToken() || isToRecycle(ctx)) {
             final Intent i = new Intent(ctx, TokenActivity.class);
 
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -83,5 +83,9 @@ public class TokenActivity extends AppCompatActivity {
         clearToken();
 
         Toast.makeText(ctx, ctx.getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+    }
+
+    public static boolean isToRecycle(Context ctx) {
+        return ctx.getSharedPreferences(Constants.SP, MODE_PRIVATE).getBoolean(Constants.SP_KEY_IS_TO_RECYCLE_TOKEN, DefaultSettings.IS_TO_RECYCLE_TOKEN);
     }
 }

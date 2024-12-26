@@ -10,8 +10,8 @@ android {
         applicationId "dev.dect.kapture"
         minSdk 33
         targetSdk 33
-        versionCode 3
-        versionName "1.2.0"
+        versionCode 4
+        versionName "1.3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,7 +37,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
-    implementation 'com.arthenica:ffmpeg-kit-full:6.0-2'
+    implementation 'com.arthenica:ffmpeg-kit-full-gpl:6.0-2.LTS'
 
     implementation 'com.airbnb.android:lottie:3.5.0'
 

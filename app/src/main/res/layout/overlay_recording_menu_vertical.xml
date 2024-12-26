@@ -26,7 +26,9 @@
             android:id="@+id/btnStop"
             android:layout_width="@dimen/overlay_menu_height"
             android:layout_height="@dimen/overlay_menu_height"
-            android:background="@drawable/overlay_btn_stop"/>
+            android:background="@drawable/overlay_btn_stop"
+            android:contentDescription="@string/tooltip_start"
+            android:longClickable="true"/>
 
         <ImageButton
             android:id="@+id/btnPauseResume"
@@ -37,7 +39,9 @@
             android:padding="5.5dp"
             android:scaleType="fitCenter"
             android:layout_marginTop="4dp"
-            android:foreground="?android:attr/selectableItemBackground" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/tooltip_pause"
+            android:longClickable="true"/>
 
         <ImageButton
             android:id="@+id/btnCamera"
@@ -46,7 +50,9 @@
             android:background="@android:color/transparent"
             android:src="@drawable/overlay_menu_icon_camera"
             android:padding="@dimen/overlay_menu_icon_padding"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/tooltip_camera"
+            android:longClickable="true"/>
 
         <ImageButton
             android:id="@+id/btnScreenshot"
@@ -56,7 +62,9 @@
             android:src="@drawable/overlay_menu_icon_screenshot"
             android:padding="5.5dp"
             android:scaleType="fitCenter"
-            android:foreground="?android:attr/selectableItemBackground" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/tooltip_screenshot_screen"
+            android:longClickable="true"/>
 
         <ImageButton
             android:id="@+id/btnDraw"
@@ -67,7 +75,8 @@
             android:padding="5.5dp"
             android:scaleType="fitCenter"
             android:layout_gravity="center"
-            tools:ignore="ContentDescription,HardcodedText,TouchTargetSizeCheck" />
+            android:contentDescription="@string/tooltip_draw"
+            android:longClickable="true"/>
 
         <dev.dect.kapture.view.KChronometer
             android:id="@+id/time"
@@ -95,7 +104,9 @@
             android:src="@drawable/overlay_menu_icon_minimize_right"
             android:padding="@dimen/overlay_menu_icon_secondary_padding"
             android:scaleType="fitCenter"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:contentDescription="@string/tooltip_minimize"
+            android:longClickable="true"/>
 
         <ImageButton
             android:id="@+id/btnClose"
@@ -105,6 +116,8 @@
             android:src="@drawable/overlay_menu_icon_close"
             android:padding="@dimen/overlay_menu_icon_secondary_padding"
             android:scaleType="fitCenter"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:contentDescription="@string/tooltip_close"
+            android:longClickable="true"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

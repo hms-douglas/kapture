@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/activity_background"
+            app:contentScrim="@color/activity_background"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <androidx.appcompat.widget.Toolbar
@@ -49,13 +50,15 @@
                     android:background="@color/activity_background"
                     android:src="@drawable/icon_tool_bar_more"
                     android:padding="@dimen/tool_bar_btn_padding"
-                    android:foreground="@drawable/btn_floating_effect"/>
+                    android:foreground="@drawable/btn_floating_effect"
+                    android:contentDescription="@string/tooltip_more_options"
+                    android:longClickable="true"/>
             </androidx.appcompat.widget.Toolbar>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/titleAndSubtitleContainer"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="@dimen/app_bar_container_height"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/titleExpanded"

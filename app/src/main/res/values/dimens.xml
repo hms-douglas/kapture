@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
     <dimen name="default_font">17sp</dimen>
     <dimen name="default_font_secondary">15sp</dimen>
     <dimen name="default_font_tertiary">13sp</dimen>
@@ -10,10 +13,8 @@
     <dimen name="default_font_title">19sp</dimen>
     <dimen name="default_font_sub_title">@dimen/default_font_secondary</dimen>
     <dimen name="default_font_button">@dimen/default_font</dimen>
-    <dimen name="default_font_button_small">@dimen/default_font_secondary</dimen>
     <dimen name="default_font_list_title">@dimen/default_font</dimen>
     <dimen name="default_font_list_sub_title">@dimen/default_font_secondary_list</dimen>
-    <dimen name="default_font_body_description">16sp</dimen>
     <dimen name="default_font_group_title">14sp</dimen>
 
     <dimen name="default_btn_height">40dp</dimen>
@@ -60,39 +61,49 @@
     <dimen name="bottom_bar_height">60dp</dimen>
     <dimen name="bottom_bar_padding_sides">30dp</dimen>
 
+    <dimen name="bottom_bar_width_tablet">@dimen/match_parent</dimen>
+    <dimen name="bottom_bar_space_item_tablet">0dp</dimen>
+
     <dimen name="bottom_bar_btn_margin_top">4dp</dimen>
     <dimen name="bottom_bar_btn_margin_bottom">8dp</dimen>
     <dimen name="bottom_bar_btn_text_size">@dimen/default_font_button</dimen>
     <dimen name="bottom_bar_btn_text_underline">2dp</dimen>
     <dimen name="bottom_bar_btn_icon_text">@dimen/default_font_tertiary</dimen>
 
+    <dimen name="floating_btn_icon_start_stop">35dp</dimen>
+    <dimen name="floating_btn_icon_pause_resume">28dp</dimen>
+
     <dimen name="floating_btn_size">75dp</dimen>
     <dimen name="floating_btn_secondary_size">55dp</dimen>
     <dimen name="floating_btn_secondary_space">12dp</dimen>
     <dimen name="floating_btn_radius">500dp</dimen>
-    <dimen name="floating_btn_margin">25dp</dimen>
+    <dimen name="floating_btn_margin">15dp</dimen>
     <dimen name="floating_btn_elevation">2dp</dimen>
-    <dimen name="floating_btn_icon_size_start">35dp</dimen>
-    <dimen name="floating_btn_icon_size_stop">75dp</dimen>
-    <dimen name="floating_btn_icon_size_pause_resume">28dp</dimen>
+
+    <dimen name="floating_btn_padding">20dp</dimen> <!-- (floating_btn_size - floating_btn_icon_start_stop) / 2 -->
+    <dimen name="floating_btn_padding_secondary">13.5dp</dimen> <!-- (floating_btn_secondary_size - floating_btn_icon_pause_resume) / 2 -->
+    <dimen name="floating_btn_font">@dimen/default_font</dimen>
+    <dimen name="floating_btn_font_secondary">@dimen/default_font_secondary</dimen>
 
     <dimen name="app_bar_height">300dp</dimen>
     <dimen name="app_bar_font_title_expanded">@dimen/default_font_extended_title</dimen>
     <dimen name="app_bar_font_sub_title_expanded">@dimen/default_font_extended_subtitle</dimen>
     <dimen name="app_bar_font_sub_title_expanded_marign_top">5dp</dimen>
 
+    <dimen name="app_bar_container_height">@dimen/match_parent</dimen>
+
     <dimen name="app_bar_font_title_collapsed">@dimen/default_font_collapsed_title</dimen>
     <dimen name="app_bar_font_sub_title">@dimen/default_font_sub_title</dimen>
     <dimen name="app_bar_font_sub_title_margin_top">10dp</dimen>
     <dimen name="app_bar_font_sub_title_2_margin_top">8dp</dimen>
-    <dimen name="app_bar_space_sides">@dimen/default_space_sides</dimen>
 
     <dimen name="tool_bar_height">70dp</dimen>
     <dimen name="tool_bar_padding_top">15dp</dimen>
     <dimen name="tool_bar_padding_left">24dp</dimen>
     <dimen name="tool_bar_padding_right">12dp</dimen>
-    <dimen name="tool_bar_btn_radius">500dp</dimen>
     <dimen name="tool_bar_btn_padding">9dp</dimen>
+
+    <dimen name="tool_bar_search_width">@dimen/match_parent</dimen>
 
     <dimen name="fragment_padding_sides">1px</dimen>
 
@@ -118,6 +129,7 @@
     <dimen name="switch_thumb_border">2dp</dimen>
     <dimen name="switch_padding_top_bottom">2dp</dimen>
 
+    <dimen name="popup_width_percentage">1</dimen>
     <dimen name="popup_margin">10dp</dimen>
     <dimen name="popup_padding">22dp</dimen>
     <dimen name="popup_radius">26dp</dimen>
@@ -125,7 +137,11 @@
     <dimen name="popup_button_height">33dp</dimen>
     <dimen name="popup_button_divisor_width">1dp</dimen>
     <dimen name="popup_title">@dimen/default_font</dimen>
+    <dimen name="popup_subtitle">@dimen/default_font_secondary</dimen>
     <dimen name="popup_list_margin_top_bottom">10dp</dimen>
+
+    <dimen name="popup_color_width_percentage">1</dimen>
+    <dimen name="popup_screenshot_width_percentage">1</dimen>
 
     <dimen name="picker_item_padding_top_bottom">10dp</dimen>
     <dimen name="picker_item_padding_sides">3dp</dimen>
@@ -137,7 +153,7 @@
     <dimen name="menu_radius">26dp</dimen>
     <dimen name="menu_horizontal_offset">4dp</dimen>
 
-    <dimen name="about_loader_size">40dp</dimen>
+    <dimen name="about_loader_size">65dp</dimen>
 
     <dimen name="credits_padding">12dp</dimen>
     <dimen name="credits_text">@dimen/default_font</dimen>
@@ -150,8 +166,8 @@
     <dimen name="kapture_list_title">@dimen/default_font</dimen>
     <dimen name="kapture_list_sub_title">@dimen/default_font_secondary_list</dimen>
     <dimen name="kapture_list_select_icon">30dp</dimen>
-    <dimen name="kapture_list_extra_btn">40dp</dimen>
-    <dimen name="kapture_list_extra_btn_icon">25dp</dimen>
+    <dimen name="kapture_list_btn">40dp</dimen>
+    <dimen name="kapture_list_btn_icon">25dp</dimen>
 
     <dimen name="kapture_grid_small_height">200dp</dimen>
     <dimen name="kapture_grid_big_height">280dp</dimen>
@@ -160,7 +176,7 @@
     <dimen name="kapture_grid_sub_title">@dimen/default_font_secondary_list</dimen>
     <dimen name="kapture_grid_select_icon">25dp</dimen>
     <dimen name="kapture_grid_time_padding_sides">5dp</dimen>
-    <dimen name="kapture_grid_time_radius">@dimen/default_btn_radius</dimen>
+    <dimen name="kapture_grid_el_radius">@dimen/default_btn_radius</dimen>
 
     <dimen name="select_text">@dimen/default_font_list_title</dimen>
 
@@ -181,12 +197,14 @@
     <dimen name="audio_option_margin_sides">10dp</dimen>
     <dimen name="audio_option_seekbar_height">@dimen/default_seekbar_height</dimen>
 
-    <dimen name="mtrl_slider_track_side_padding">10dp</dimen>
+    <dimen name="mtrl_slider_track_side_padding" tools:keep="@dimen/mtrl_slider_track_side_padding">10dp</dimen>
 
     <dimen name="extra_size">29dp</dimen>
     <dimen name="extra_space_icon_sides">15dp</dimen>
     <dimen name="extra_text">@dimen/default_font_list_title</dimen>
     <dimen name="extra_text_margin_left">15dp</dimen>
+
+    <dimen name="screenshot_previews_space">2dp</dimen>
 
     <dimen name="input_border_width">2dp</dimen>
 
@@ -194,7 +212,6 @@
 
     <dimen name="icon_wifi_share_popup">90dp</dimen>
     <dimen name="popup_wifi_share_ip">@dimen/default_font_title</dimen>
-    <dimen name="popup_wifi_share_name">@dimen/default_font</dimen>
     <dimen name="popup_wifi_share_space">28dp</dimen>
 
     <dimen name="countdown_border">1dp</dimen>
@@ -208,6 +225,11 @@
 
     <dimen name="list_button_color_example">25dp</dimen>
 
+    <dimen name="list_bar_chart_item_color_example">15dp</dimen>
+    <dimen name="list_bar_chart_item_margin_space">7dp</dimen>
+    <dimen name="list_bar_chart_height">8dp</dimen>
+    <dimen name="list_bar_chart_margin_top_bottom">15dp</dimen>
+
     <dimen name="color_picker_selector">15dp</dimen>
 
     <dimen name="color_picker_hue_height">17dp</dimen>
@@ -216,4 +238,15 @@
     <dimen name="color_picker_label">@dimen/default_font_tertiary</dimen>
     <dimen name="color_picker_value">@dimen/default_font_secondary</dimen>
 
+    <dimen name="frame_layout_tablet_radius">26dp</dimen>
+    <dimen name="frame_layout_tablet_border">1dp</dimen>
+    <dimen name="frame_layout_tablet_padding">4dp</dimen>
+    <dimen name="frame_layout_tablet_width">400dp</dimen>
+    <dimen name="frame_layout_tablet_height">@dimen/match_parent</dimen>
+    <dimen name="frame_layout_tablet_space">10dp</dimen>
+
+    <dimen name="progress_bar_height">4dp</dimen>
+    <dimen name="progress_bar_radius">500dp</dimen>
+
+    <dimen name="widget_background_radius">26dp</dimen>
 </resources>

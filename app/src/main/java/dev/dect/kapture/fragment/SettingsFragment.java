@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
@@ -44,8 +45,11 @@ import dev.dect.kapture.adapter.ListButtonSubTextSwitch;
 import dev.dect.kapture.adapter.ListCameraSize;
 import dev.dect.kapture.adapter.ListGroup;
 import dev.dect.kapture.adapter.ListGroupDivisor;
+import dev.dect.kapture.adapter.ListImageSize;
 import dev.dect.kapture.adapter.ListPicker;
+import dev.dect.kapture.adapter.ListStorage;
 import dev.dect.kapture.adapter.ListSwitch;
+import dev.dect.kapture.adapter.SimpleTextAdapter;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DefaultSettings;
 import dev.dect.kapture.data.KSettings;
@@ -66,14 +70,23 @@ public class SettingsFragment extends Fragment {
     private RecyclerView RECYCLER_VIEW;
 
     private ActivityResultLauncher<Intent> LAUNCH_ACTIVITY_RESULT_FOR_FOLDER_PICKER,
-                                           LAUNCH_ACTIVITY_RESULT_FOR_SCREENSHOT_FOLDER_PICKER;
+                                           LAUNCH_ACTIVITY_RESULT_FOR_SCREENSHOT_FOLDER_PICKER,
+                                           LAUNCH_ACTIVITY_RESULT_FOR_IMAGE_PICKER;
 
     private ListButtonSubText BUTTON_FOLDER,
-                              BUTTON_SCREENSHOT_FOLDER;
+                              BUTTON_SCREENSHOT_FOLDER,
+                              BUTTON_IMAGE;
 
-    private ListButtonSubText.Adapter BUTTON_FOLDER_ADAPTER;
+    private ListButtonSubText.Adapter BUTTON_FOLDER_ADAPTER,
+                                      BUTTON_IMAGE_ADAPTER;
+
+    private ListImageSize.Adapter LIST_IMAGE_SIZE_ADAPTER;
+
+    private ListStorage.Adapter STORAGE_ADAPTER;
 
     private SharedPreferences SP;
+
+    private boolean IS_TABLET_UI = false;
 
     @Nullable
     @Override
@@ -87,6 +100,15 @@ public class SettingsFragment extends Fragment {
         init();
 
         return VIEW;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        updateStorageInfo();
+
+        updateImageInfo();
     }
 
     private void initVariables() {
@@ -123,17 +145,27 @@ public class SettingsFragment extends Fragment {
                 }
             }
         );
+
+        LAUNCH_ACTIVITY_RESULT_FOR_IMAGE_PICKER = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode() == Activity.RESULT_OK) {
+                    final String path = KFile.uriToAbsolutPath(CONTEXT, result.getData().getData());
+
+                    BUTTON_IMAGE.setValue(KFile.formatAndroidPathToUser(CONTEXT, path));
+                    BUTTON_IMAGE_ADAPTER.notifyItemChanged(0);
+
+                    LIST_IMAGE_SIZE_ADAPTER.notifyItemChanged(0);
+
+                    SP.edit().putString(Constants.SP_KEY_IMAGE_PATH, path).commit();
+                }
+            }
+        );
+
+        IS_TABLET_UI = getResources().getBoolean(R.bool.is_tablet);
     }
 
     private void initListeners() {
-        ((AppBarLayout) VIEW.findViewById(R.id.titleBar)).addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-            verticalOffset = Math.abs(verticalOffset);
-
-            final float opacity = (float) verticalOffset / ((appBarLayout.getHeight() - VIEW.findViewById(R.id.toolbar).getHeight()) / 2f);
-
-            VIEW.findViewById(R.id.titleExpanded).setAlpha(1 - opacity);
-        });
-
         VIEW.findViewById(R.id.btnMore).setOnClickListener((v) -> {
             final PopupMenu popupMenu = new PopupMenu(CONTEXT, v, Gravity.END, 0, R.style.KPopupMenu);
 
@@ -142,10 +174,6 @@ public class SettingsFragment extends Fragment {
             menu.setGroupDividerEnabled(true);
 
             popupMenu.getMenuInflater().inflate(R.menu.settings_more, menu);
-
-            if(!TokenActivity.hasToken() || CapturingService.isRecording()) {
-                menu.findItem(R.id.resetToken).setEnabled(false);
-            }
 
             if(CapturingService.isRecording() || CapturingService.isProcessing()) {
                 menu.findItem(R.id.menuResetSettings).setEnabled(false);
@@ -167,8 +195,6 @@ public class SettingsFragment extends Fragment {
                         false,
                         false
                     ).show();
-                } else if(idClicked == R.id.resetToken) {
-                    TokenActivity.clearToken(CONTEXT);
                 } else if(idClicked == R.id.menuOpenAccessibility) {
                     Utils.ExternalActivity.requestAccessibility(CONTEXT);
                 } else if(idClicked == R.id.menuShowCommand) {
@@ -193,6 +219,28 @@ public class SettingsFragment extends Fragment {
 
             popupMenu.show();
         });
+
+        if(IS_TABLET_UI) {
+            VIEW.findViewById(R.id.btnBack).setOnClickListener((v) -> getActivity().onBackPressed());
+
+            ((AppBarLayout) VIEW.findViewById(R.id.titleBar)).addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+                verticalOffset = Math.abs(verticalOffset);
+
+                final float opacity = (float) verticalOffset / ((appBarLayout.getHeight() - VIEW.findViewById(R.id.toolbar).getHeight()) / 2f);
+
+                VIEW.findViewById(R.id.titleExpanded).setAlpha(1 - opacity);
+
+                VIEW.findViewById(R.id.titleCollapsed).setAlpha(opacity != 1 ? opacity - 0.5f : 1);
+            });
+        } else {
+            ((AppBarLayout) VIEW.findViewById(R.id.titleBar)).addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+                verticalOffset = Math.abs(verticalOffset);
+
+                final float opacity = (float) verticalOffset / ((appBarLayout.getHeight() - VIEW.findViewById(R.id.toolbar).getHeight()) / 2f);
+
+                VIEW.findViewById(R.id.titleExpanded).setAlpha(1 - opacity);
+            });
+        }
     }
 
     private void init() {
@@ -239,7 +287,7 @@ public class SettingsFragment extends Fragment {
                 }
 
                 try {
-                    Intent intent = new Intent("com.sec.android.app.myfiles.PICK_SELECT_PATH");
+                    final Intent intent = new Intent("com.sec.android.app.myfiles.PICK_SELECT_PATH");
 
                     intent.addCategory(Intent.CATEGORY_DEFAULT);
 
@@ -266,7 +314,7 @@ public class SettingsFragment extends Fragment {
                 }
 
                 try {
-                    Intent intent = new Intent("com.sec.android.app.myfiles.PICK_SELECT_PATH");
+                    final Intent intent = new Intent("com.sec.android.app.myfiles.PICK_SELECT_PATH");
 
                     intent.addCategory(Intent.CATEGORY_DEFAULT);
 
@@ -479,6 +527,41 @@ public class SettingsFragment extends Fragment {
             )
         );
 
+        listButtonSubTexts1.add(
+            new ListButtonSubTextSwitch(
+                R.string.setting_stop_battery_level,
+                settings.getStopOnBatteryLevelLevel() + "%",
+                (listButtonSubText) -> {
+                new InputPopup.NumberInteger(
+                        CONTEXT,
+                        R.string.setting_stop_battery_level,
+                        Integer.parseInt(listButtonSubText.getValue().replaceAll("%", "")),
+                        1,
+                        99,
+                        R.string.popup_btn_set,
+                        new InputPopup.OnInputPopupListener() {
+                            @Override
+                            public void onIntInputSet(int input) {
+                                SP.edit().putInt(Constants.SP_KEY_STOP_ON_BATTERY_LEVEL_LEVEL, input).commit();
+
+                                listButtonSubText.setValue(input + "%");
+
+                                concatAdapter.notifyItemChanged(4);
+                            }
+                        },
+                        R.string.popup_btn_cancel,
+                        null,
+                        true,
+                        false,
+                        false
+                    ).show();
+                },
+                Constants.SP_KEY_IS_TO_STOP_ON_BATTERY_LEVEL,
+                settings.isToStopOnBatteryLevel(),
+                false
+            )
+        );
+
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
 
         listSwitches0.add(new ListSwitch(R.string.setting_stop_screen_off, ListSwitch.NO_TEXT, Constants.SP_KEY_IS_TO_STOP_ON_SCREEN_OFF, settings.isToStopOnScreenOff(), false));
@@ -501,6 +584,8 @@ public class SettingsFragment extends Fragment {
         buildAndGetFloatingUiGroupAdapter_draw(settings, concatAdapter);
 
         buildAndGetFloatingUiGroupAdapter_text(settings, concatAdapter);
+
+        buildAndGetFloatingUiGroupAdapter_image(settings, concatAdapter);
 
         return new ListGroup.Adapter(new ListGroup(R.string.setting_group_floating_ui, concatAdapter));
     }
@@ -589,7 +674,7 @@ public class SettingsFragment extends Fragment {
 
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
 
-        listSwitches0.add(new ListSwitch(R.string.setting_camera_show, R.string.setting_camera_show, Constants.SP_KEY_IS_TO_SHOW_FLOATING_CAMERA, settings.isToShowFloatingCamera(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_camera_show, R.string.setting_camera_show_description, Constants.SP_KEY_IS_TO_SHOW_FLOATING_CAMERA, settings.isToShowFloatingCamera(), false));
         listSwitches0.add(new ListSwitch(R.string.setting_camera_orientation_toggle, R.string.setting_camera_orientation_toggle_description, Constants.SP_KEY_IS_TO_TOGGLE_CAMERA_ORIENTATION, settings.isToToggleCameraOrientation(), false));
 
         final ArrayList<ListPicker> listPickers0 = new ArrayList<>();
@@ -605,7 +690,7 @@ public class SettingsFragment extends Fragment {
                 new ListPicker.OnListPickerListener() {
                     @Override
                     public void onIntItemPicked(int value) {
-                        listCameraSizeAdapter.notifyItemChanged(0);
+                    listCameraSizeAdapter.notifyItemChanged(0);
                     }
                 }
             )
@@ -622,7 +707,7 @@ public class SettingsFragment extends Fragment {
                 new ListPicker.OnListPickerListener() {
                     @Override
                     public void onIntItemPicked(int value) {
-                        listCameraSizeAdapter.notifyItemChanged(0);
+                    listCameraSizeAdapter.notifyItemChanged(0);
                     }
                 }
             )
@@ -643,6 +728,8 @@ public class SettingsFragment extends Fragment {
     private void buildAndGetFloatingUiGroupAdapter_draw(KSettings settings, ConcatAdapter concatAdapter) {
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
 
+        listSwitches0.add(new ListSwitch(R.string.setting_draw_show_screenshot, R.string.setting_draw_show_screenshot_description, Constants.SP_KEY_IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU, settings.isToShowScreenshotButtonOnDrawMenu(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_draw_show_draw_screenshot, R.string.setting_draw_show_draw_screenshot_description, Constants.SP_KEY_IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU, settings.isToShowDrawScreenshotButtonOnDrawMenu(), false));
         listSwitches0.add(new ListSwitch(R.string.setting_draw_show_undo_redo, ListSwitch.NO_TEXT, Constants.SP_KEY_IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU, settings.isToShowUndoRedoButtonOnDrawMenu(), false));
         listSwitches0.add(new ListSwitch(R.string.setting_draw_show_clear, ListSwitch.NO_TEXT, Constants.SP_KEY_IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU, settings.isToShowClearButtonOnDrawMenu(), true));
 
@@ -777,6 +864,50 @@ public class SettingsFragment extends Fragment {
         concatAdapter.addAdapter(new ListPicker.Adapter(listPickers0));
     }
 
+    private void buildAndGetFloatingUiGroupAdapter_image(KSettings settings, ConcatAdapter concatAdapter) {
+        final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
+
+        listSwitches0.add(new ListSwitch(R.string.setting_image_show, ListSwitch.NO_TEXT, Constants.SP_KEY_IS_TO_SHOW_IMAGE, settings.isToShowImageEnabled(), false));
+
+        final ArrayList<ListButtonSubText> listButtonSubTexts0 = new ArrayList<>();
+
+        BUTTON_IMAGE = new ListButtonSubText(
+            R.string.setting_image_location,
+            settings.getImagePath(true) == null ? CONTEXT.getString(R.string.setting_image_no_image) : settings.getImagePath(true),
+            (listButtonSubText) -> {
+                if(CapturingService.isRecording() || CapturingService.isProcessing()) {
+                    Toast.makeText(CONTEXT, getString(R.string.toast_info_while_recording), Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+
+                try {
+                    final Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                    intent.setType("image/*");
+
+                    LAUNCH_ACTIVITY_RESULT_FOR_IMAGE_PICKER.launch(intent);
+                } catch (Exception ignore) {
+                    Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
+                }
+            },
+            false
+        );
+
+        listButtonSubTexts0.add(BUTTON_IMAGE);
+
+        BUTTON_IMAGE_ADAPTER = new ListButtonSubText.Adapter(listButtonSubTexts0);
+
+        LIST_IMAGE_SIZE_ADAPTER = new ListImageSize.Adapter(new ListImageSize(true));
+
+        concatAdapter.addAdapter(new ListGroupDivisor.Adapter(new ListGroupDivisor(R.string.setting_subgroup_floating_ui_image)));
+        concatAdapter.addAdapter(new ListSwitch.Adapter(listSwitches0));
+        concatAdapter.addAdapter(BUTTON_IMAGE_ADAPTER);
+        concatAdapter.addAdapter(LIST_IMAGE_SIZE_ADAPTER);
+    }
+
     private ListGroup.Adapter buildAndGetExtraVideoGroupAdapter(KSettings settings) {
         final ConcatAdapter concatAdapter = new ConcatAdapter();
 
@@ -827,13 +958,52 @@ public class SettingsFragment extends Fragment {
     private ListGroup.Adapter buildAndGetAppGroupAdapter() {
         final ConcatAdapter concatAdapter = new ConcatAdapter();
 
+        buildAndGetAppGroupAdapter_token(concatAdapter);
+
         buildAndGetAppGroupAdapter_notification(concatAdapter);
+
+        buildAndGetAppGroupAdapter_storage(concatAdapter);
 
         buildAndGetAppGroupAdapter_ui(concatAdapter);
 
         buildAndGetAppGroupAdapter_performance(concatAdapter);
 
         return new ListGroup.Adapter(new ListGroup(R.string.setting_group_app, concatAdapter));
+    }
+
+    private void buildAndGetAppGroupAdapter_token(ConcatAdapter concatAdapter) {
+        final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
+
+        listSwitches0.add(
+            new ListSwitch(
+                    R.string.settings_app_token_recycle,
+                    R.string.settings_app_token_recycle_description,
+                    Constants.SP_KEY_IS_TO_RECYCLE_TOKEN,
+                    TokenActivity.isToRecycle(CONTEXT),
+                    new ListSwitch.OnListSwitchListener() {
+                        @Override
+                        public void onChange(boolean b) {
+                            TokenActivity.clearToken();
+                        }
+                    },
+                    false
+            )
+        );
+
+        final ArrayList<ListButton> listButton0 = new ArrayList<>();
+
+        listButton0.add(
+            new ListButton(
+                R.string.settings_app_token_clear,
+                ListButton.NO_TEXT,
+                () -> TokenActivity.clearToken(CONTEXT),
+                true
+            )
+        );
+
+        concatAdapter.addAdapter(new ListGroupDivisor.Adapter(new ListGroupDivisor(R.string.setting_subgroup_app_token)));
+        concatAdapter.addAdapter(new ListSwitch.Adapter(listSwitches0));
+        concatAdapter.addAdapter(new ListButton.Adapter(listButton0));
     }
 
     private void buildAndGetAppGroupAdapter_notification(ConcatAdapter concatAdapter) {
@@ -861,6 +1031,43 @@ public class SettingsFragment extends Fragment {
 
         concatAdapter.addAdapter(new ListGroupDivisor.Adapter(new ListGroupDivisor(R.string.setting_subgroup_app_notification)));
         concatAdapter.addAdapter(new ListSwitch.Adapter(listSwitches0));
+    }
+
+    private void buildAndGetAppGroupAdapter_storage(ConcatAdapter concatAdapter) {
+        STORAGE_ADAPTER = new ListStorage.Adapter(CONTEXT, true);
+
+        final ArrayList<ListButton> listButton0 = new ArrayList<>();
+
+        listButton0.add(
+            new ListButton(
+                R.string.storage_btn_clear_cache,
+                ListButton.NO_TEXT,
+                () -> {
+                    new DialogPopup(
+                        CONTEXT,
+                        R.string.storage_btn_clear_cache,
+                        R.string.storage_btn_clear_cache_description,
+                        R.string.storage_btn_clear_cache,
+                        () -> {
+                            KFile.clearCache(CONTEXT);
+
+                            updateStorageInfo();
+                        },
+                        R.string.popup_btn_cancel,
+                        null,
+                        true,
+                        false,
+                            true
+                    ).show();
+                },
+                true
+            )
+        );
+
+        concatAdapter.addAdapter(new ListGroupDivisor.Adapter(new ListGroupDivisor(R.string.setting_subgroup_app_storage)));
+        concatAdapter.addAdapter(STORAGE_ADAPTER);
+        concatAdapter.addAdapter(new SimpleTextAdapter(CONTEXT.getString(R.string.storage_message), Gravity.CENTER, false));
+        concatAdapter.addAdapter(new ListButton.Adapter(listButton0));
     }
 
     private void buildAndGetAppGroupAdapter_ui(ConcatAdapter concatAdapter) {
@@ -903,7 +1110,7 @@ public class SettingsFragment extends Fragment {
                     /** @noinspection DataFlowIssue*/
                     @Override
                     public void onIntItemPicked(int value) {
-                        setTheme(getActivity(), value, true);
+                    setTheme(getActivity(), value, true);
                     }
                 }
             )
@@ -913,6 +1120,7 @@ public class SettingsFragment extends Fragment {
         concatAdapter.addAdapter(new ListPicker.Adapter(listPickers0));
     }
 
+    @SuppressLint("BatteryLife")
     private void buildAndGetAppGroupAdapter_performance(ConcatAdapter concatAdapter) {
         if(!((PowerManager) CONTEXT.getSystemService(Context.POWER_SERVICE)).isIgnoringBatteryOptimizations(CONTEXT.getPackageName())) {
             final ArrayList<ListButton> listButton0 = new ArrayList<>();
@@ -948,6 +1156,8 @@ public class SettingsFragment extends Fragment {
 
         if(relaunch) {
             MainActivity.getInstance().relaunch();
+
+            Toast.makeText(CONTEXT, getString(R.string.relaunch_message), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -960,6 +1170,8 @@ public class SettingsFragment extends Fragment {
 
         if(relaunch) {
             MainActivity.getInstance().relaunch();
+
+            Toast.makeText(activity, activity.getString(R.string.relaunch_message), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -996,5 +1208,24 @@ public class SettingsFragment extends Fragment {
         buildRecyclerView();
 
         RECYCLER_VIEW.nestedScrollBy(0, curPosition);
+    }
+
+    private void updateStorageInfo() {
+        try {
+            STORAGE_ADAPTER.updateValues(CONTEXT);
+            STORAGE_ADAPTER.notifyItemChanged(0);
+        } catch (Exception ignore) {}
+    }
+
+    private void updateImageInfo() {
+        try {
+            if(!new File(SP.getString(Constants.SP_KEY_IMAGE_PATH, DefaultSettings.IMAGE_PATH)).exists()) {
+                BUTTON_IMAGE.setValue(CONTEXT.getString(R.string.setting_image_no_image));
+
+                BUTTON_IMAGE_ADAPTER.notifyItemChanged(0);
+
+                LIST_IMAGE_SIZE_ADAPTER.notifyItemChanged(0);
+            }
+        } catch (Exception ignore) {}
     }
 }

@@ -32,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.Arrays;
@@ -50,7 +51,8 @@ import dev.dect.kapture.utils.Utils;
 public class MainActivity extends AppCompatActivity {
     private static MainActivity ACTIVITY = null;
 
-    private boolean IS_OUT_FOR_PERMISSION = false;
+    private boolean IS_OUT_FOR_PERMISSION = false,
+                    IS_TABLET_UI = false;
 
     private SharedPreferences SP;
 
@@ -212,55 +214,65 @@ public class MainActivity extends AppCompatActivity {
 
         SP = getSharedPreferences(Constants.SP, MODE_PRIVATE);
 
-        BTN_TAB_CAPTURES = findViewById(R.id.bottomBarBtnCaptures);
-        BTN_TAB_SETTINGS = findViewById(R.id.bottomBarBtnSettings);
+        IS_TABLET_UI = getResources().getBoolean(R.bool.is_tablet);
+
+        if(!IS_TABLET_UI) {
+            BTN_TAB_CAPTURES = findViewById(R.id.bottomBarBtnCaptures);
+            BTN_TAB_SETTINGS = findViewById(R.id.bottomBarBtnSettings);
+
+            VIEW_PAGER = findViewById(R.id.viewPager);
+        }
 
         KAPTURE_FRAGMENT = new KapturesFragment();
-
-        VIEW_PAGER = findViewById(R.id.viewPager);
     }
 
     private void initListeners() {
-        VIEW_PAGER.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-            if(position == 0) {
-                BTN_TAB_CAPTURES.setTextColor(getColor(R.color.bottom_bar_btn_text_color_on));
-                BTN_TAB_CAPTURES.setText(generateEnabledBottomBarBtn(R.string.title_captures));
+        if(!IS_TABLET_UI) {
+            VIEW_PAGER.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                if (position == 0) {
+                    BTN_TAB_CAPTURES.setTextColor(getColor(R.color.bottom_bar_btn_text_color_on));
+                    BTN_TAB_CAPTURES.setText(generateEnabledBottomBarBtn(R.string.title_captures));
 
-                BTN_TAB_SETTINGS.setTextColor(getColor(R.color.bottom_bar_btn_text_color_off));
-                BTN_TAB_SETTINGS.setText(getString(R.string.title_settings));
-            } else {
-                BTN_TAB_CAPTURES.setTextColor(getColor(R.color.bottom_bar_btn_text_color_off));
-                BTN_TAB_CAPTURES.setText(getString(R.string.title_captures));
-
-                BTN_TAB_SETTINGS.setTextColor(getColor(R.color.bottom_bar_btn_text_color_on));
-                BTN_TAB_SETTINGS.setText(generateEnabledBottomBarBtn(R.string.title_settings));
-            }
-            }
-        });
-
-        BTN_TAB_CAPTURES.setOnClickListener((v) -> goToFragment(0));
-        BTN_TAB_SETTINGS.setOnClickListener((v) -> goToFragment(1));
-
-        ACTIVITY.getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if(VIEW_PAGER.getCurrentItem() == 0) {
-                    if(KAPTURE_FRAGMENT.isSelection()) {
-                        KAPTURE_FRAGMENT.unselectAll();
-                    } else if(KAPTURE_FRAGMENT.isSearching()) {
-                        KAPTURE_FRAGMENT.closeSearch();
-                    } else {
-                        moveTaskToBack(false);
-                    }
+                    BTN_TAB_SETTINGS.setTextColor(getColor(R.color.bottom_bar_btn_text_color_off));
+                    BTN_TAB_SETTINGS.setText(getString(R.string.title_settings));
                 } else {
-                    goToFragment(0);
+                    BTN_TAB_CAPTURES.setTextColor(getColor(R.color.bottom_bar_btn_text_color_off));
+                    BTN_TAB_CAPTURES.setText(getString(R.string.title_captures));
+
+                    BTN_TAB_SETTINGS.setTextColor(getColor(R.color.bottom_bar_btn_text_color_on));
+                    BTN_TAB_SETTINGS.setText(generateEnabledBottomBarBtn(R.string.title_settings));
                 }
-            }
-        });
+                }
+            });
+
+            BTN_TAB_CAPTURES.setOnClickListener((v) -> goToFragment(0));
+            BTN_TAB_SETTINGS.setOnClickListener((v) -> goToFragment(1));
+
+            ACTIVITY.getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    if(VIEW_PAGER.getCurrentItem() == 0) {
+                        if(KAPTURE_FRAGMENT.isSelection()) {
+                            KAPTURE_FRAGMENT.unselectAll();
+                        } else if(KAPTURE_FRAGMENT.isSearching()) {
+                            KAPTURE_FRAGMENT.closeSearch();
+                        } else {
+                            moveTaskToBack(false);
+                        }
+                    } else {
+                        goToFragment(0);
+                    }
+                }
+            });
+        }
 
         findViewById(R.id.btnMore).setOnClickListener((v) -> {
+            if(!KAPTURE_FRAGMENT.isSelection()) {
+                return;
+            }
+
             final PopupMenu popupMenu = new PopupMenu(this, v, Gravity.END, 0, R.style.KPopupMenu);
 
             final Menu menu = popupMenu.getMenu();
@@ -273,8 +285,14 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menuRename).setEnabled(false);
                 menu.findItem(R.id.menuOpenWith).setEnabled(false);
                 menu.findItem(R.id.menuShowExtra).setEnabled(false);
-            } else if(!KAPTURE_FRAGMENT.selectedHasExtra()) {
-                menu.setGroupVisible(R.id.groupExtras, false);
+            } else {
+                if(!KAPTURE_FRAGMENT.selectedHasExtra()) {
+                    menu.setGroupVisible(R.id.groupExtras, false);
+                }
+
+                if(!KAPTURE_FRAGMENT.selectedHasScreenshot()) {
+                    menu.setGroupVisible(R.id.groupScreenshots, false);
+                }
             }
 
             popupMenu.setOnMenuItemClickListener((item) -> {
@@ -288,7 +306,11 @@ public class MainActivity extends AppCompatActivity {
                     KAPTURE_FRAGMENT.deleteSelectedExtras();
                 } else if(idClicked == R.id.menuShowExtra) {
                     KAPTURE_FRAGMENT.showSelectedExtras();
-                } else if(idClicked == R.id.menuOpenWith) {
+                } else if(idClicked == R.id.menuDeleteScreenshot) {
+                    KAPTURE_FRAGMENT.deleteSelectedScreenshots();
+                } else if(idClicked == R.id.menuShowScreenshot) {
+                    KAPTURE_FRAGMENT.showSelectedScreenshots();
+                }else if(idClicked == R.id.menuOpenWith) {
                     KAPTURE_FRAGMENT.openSelectedWith();
                 }
 
@@ -342,21 +364,29 @@ public class MainActivity extends AppCompatActivity {
             ).show();
         }
 
-        VIEW_PAGER.setOffscreenPageLimit(1);
+        if(IS_TABLET_UI) {
+            final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        VIEW_PAGER.setAdapter(
-            new FragmentAdapter(
-                this,
-                Arrays.asList(
-                    KAPTURE_FRAGMENT,
-                    new SettingsFragment()
+            fragmentTransaction.replace(R.id.frameLayout, KAPTURE_FRAGMENT);
+
+            fragmentTransaction.commitNow();
+        } else {
+            VIEW_PAGER.setOffscreenPageLimit(1);
+
+            VIEW_PAGER.setAdapter(
+                new FragmentAdapter(
+                    this,
+                    Arrays.asList(
+                        KAPTURE_FRAGMENT,
+                        new SettingsFragment()
+                    )
                 )
-            )
-        );
+            );
+        }
     }
 
     private void goToFragment(int pos) {
-        if(pos != VIEW_PAGER.getCurrentItem()) {
+        if(!IS_TABLET_UI && pos != VIEW_PAGER.getCurrentItem()) {
             VIEW_PAGER.setCurrentItem(pos, true);
         }
     }
@@ -370,8 +400,8 @@ public class MainActivity extends AppCompatActivity {
         spannableStringBuilder.setSpan(new CharacterStyle() {
             @Override
             public void updateDrawState(TextPaint tp) {
-            tp.underlineColor = getColor(R.color.bottom_bar_btn_text_color_on);
-            tp.underlineThickness = getResources().getDimensionPixelSize(R.dimen.bottom_bar_btn_text_underline);
+                tp.underlineColor = getColor(R.color.bottom_bar_btn_text_color_on);
+                tp.underlineThickness = getResources().getDimensionPixelSize(R.dimen.bottom_bar_btn_text_underline);
             }
         }, 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
@@ -392,38 +422,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void toggleBottomMenu(boolean show) {
-        if(show) {
-            if(VIEW_PAGER.isUserInputEnabled()) {
-                VIEW_PAGER.setUserInputEnabled(false);
-
-                toggleBottomMenuAnimation(findViewById(R.id.bottomBarActions), findViewById(R.id.bottomBarNavigation));
+        if(IS_TABLET_UI) {
+            if(show) {
+                toggleBottomMenuAnimation(findViewById(R.id.bottomBarActions), null);
 
                 KAPTURE_FRAGMENT.setCaptureButtonVisibility(true);
+            } else {
+                toggleBottomMenuAnimation(null, findViewById(R.id.bottomBarActions));
+
+                KAPTURE_FRAGMENT.setCaptureButtonVisibility(false);
             }
         } else {
-            VIEW_PAGER.setUserInputEnabled(true);
+            if(show) {
+                if(VIEW_PAGER.isUserInputEnabled()) {
+                    VIEW_PAGER.setUserInputEnabled(false);
 
-            toggleBottomMenuAnimation(findViewById(R.id.bottomBarNavigation), findViewById(R.id.bottomBarActions));
+                    toggleBottomMenuAnimation(findViewById(R.id.bottomBarActions), findViewById(R.id.bottomBarNavigation));
 
-            KAPTURE_FRAGMENT.setCaptureButtonVisibility(false);
+                    KAPTURE_FRAGMENT.setCaptureButtonVisibility(true);
+                }
+            } else {
+                VIEW_PAGER.setUserInputEnabled(true);
+
+                toggleBottomMenuAnimation(findViewById(R.id.bottomBarNavigation), findViewById(R.id.bottomBarActions));
+
+                KAPTURE_FRAGMENT.setCaptureButtonVisibility(false);
+            }
         }
     }
 
     private void toggleBottomMenuAnimation(View vIn, View vOut) {
-        final int height = vOut.getHeight();
+        final int height = getResources().getDimensionPixelSize(R.dimen.bottom_bar_height);
 
-
-        final ViewGroup.LayoutParams layoutParamsIn = vIn.getLayoutParams(),
-                                     layoutParamsOut = vOut.getLayoutParams();
+        final ViewGroup.LayoutParams layoutParamsIn = vIn == null ? null : vIn.getLayoutParams(),
+                                     layoutParamsOut = vOut == null ? null : vOut.getLayoutParams();
 
         final ValueAnimator animation = ValueAnimator.ofInt(1, height);
 
         animation.addUpdateListener(valueAnimator -> {
-            layoutParamsIn.height = (Integer) valueAnimator.getAnimatedValue();
-            layoutParamsOut.height = height - layoutParamsIn.height;
+            final int animatedValue = (Integer) valueAnimator.getAnimatedValue();
 
-            vIn.setLayoutParams(layoutParamsIn);
-            vOut.setLayoutParams(layoutParamsOut);
+            if(layoutParamsIn != null) {
+                layoutParamsIn.height = animatedValue;
+
+                vIn.setLayoutParams(layoutParamsIn);
+            }
+
+            if(layoutParamsOut != null) {
+                layoutParamsOut.height = height - animatedValue;
+
+                vOut.setLayoutParams(layoutParamsOut);
+            }
         });
 
         animation.setDuration(450);
@@ -433,14 +482,18 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
 
-                vIn.setVisibility(View.VISIBLE);
+                if(vIn != null) {
+                    vIn.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
-                vOut.setVisibility(View.GONE);
+                if(vOut != null) {
+                    vOut.setVisibility(View.GONE);
+                }
             }
         });
 

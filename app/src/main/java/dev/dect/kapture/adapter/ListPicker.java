@@ -3,7 +3,6 @@ package dev.dect.kapture.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -260,7 +259,6 @@ public class ListPicker {
         }
     }
 
-
     public static class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         private final ArrayList<ListPicker> LIST_PICKERS_INT;
 
@@ -343,8 +341,8 @@ public class ListPicker {
                     new PickerPopup(ctx, listPicker.getIdTitle(), listPicker.getDisplayNames(), listPicker.getActiveIndex(), (indexPicked) -> {
                         final SharedPreferences.Editor editor = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit();
 
-                        if (listPicker instanceof ListPicker.Text) {
-                            final ListPicker.Text listText = (ListPicker.Text) listPicker;
+                        if (listPicker instanceof Text) {
+                            final Text listText = (Text) listPicker;
 
                             listText.setActiveByIndex(indexPicked);
 
@@ -353,8 +351,8 @@ public class ListPicker {
                             if (listPicker.getListener() != null) {
                                 listPicker.getListener().onStringItemPicked(listText.getActiveValue());
                             }
-                        } else if (listPicker instanceof ListPicker.NumberFloat) {
-                            final ListPicker.NumberFloat listFloat = (ListPicker.NumberFloat) listPicker;
+                        } else if (listPicker instanceof NumberFloat) {
+                            final NumberFloat listFloat = (NumberFloat) listPicker;
 
                             listFloat.setActiveByIndex(indexPicked);
 
@@ -363,8 +361,8 @@ public class ListPicker {
                             if (listPicker.getListener() != null) {
                                 listPicker.getListener().onFloatItemPicked(listFloat.getActiveValue());
                             }
-                        } else if (listPicker instanceof ListPicker.NumberInteger) {
-                            final ListPicker.NumberInteger listInteger = (ListPicker.NumberInteger) listPicker;
+                        } else if (listPicker instanceof NumberInteger) {
+                            final NumberInteger listInteger = (NumberInteger) listPicker;
 
                             listInteger.setActiveByIndex(indexPicked);
 

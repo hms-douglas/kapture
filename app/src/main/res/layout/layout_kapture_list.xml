@@ -29,9 +29,11 @@
             android:src="@drawable/checkbox_off"
             android:layout_marginBottom="@dimen/kapture_list_padding_top_bottom"
             android:visibility="gone"
+            android:paddingEnd="5dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/thumbnail"/>
 
         <ImageView
             android:id="@+id/thumbnail"
@@ -49,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/kapture_list_space_from_thumbail"
-            android:background="@drawable/list_item_divisor_horizontal_bottom"
+            android:background="@drawable/kapture_item_divisor_horizontal_bottom"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -140,14 +142,30 @@
                 app:layout_constraintTop_toBottomOf="@id/frames"/>
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnExtra"
-            android:layout_width="@dimen/kapture_list_extra_btn"
-            android:layout_height="@dimen/kapture_list_extra_btn"
-            android:background="@drawable/btn_extra"
-            android:foreground="@drawable/btn_effect"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/kapture_list_padding_top_bottom"
+            android:orientation="horizontal"
+            android:background="@drawable/grid_el_background"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnScreenshot"
+                android:layout_width="@dimen/kapture_list_btn"
+                android:layout_height="@dimen/kapture_list_btn"
+                android:background="@drawable/btn_screenshot"
+                android:foreground="@drawable/btn_effect"
+                android:tooltipText="@string/tooltip_screenshots" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnExtra"
+                android:layout_width="@dimen/kapture_list_btn"
+                android:layout_height="@dimen/kapture_list_btn"
+                android:background="@drawable/btn_extra"
+                android:foreground="@drawable/btn_effect"
+                android:tooltipText="@string/tooltip_extras" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

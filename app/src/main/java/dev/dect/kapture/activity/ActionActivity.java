@@ -16,6 +16,7 @@ import dev.dect.kapture.fragment.SettingsFragment;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.popup.DialogPopup;
 import dev.dect.kapture.popup.ExtraPopup;
+import dev.dect.kapture.server.WifiShare;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.utils.KFile;
 
@@ -61,8 +62,12 @@ public class ActionActivity extends AppCompatActivity {
                             () -> {
                                 new DB(this).deleteKapture(kapture);
 
-                                for (Kapture.Extra extra : kapture.getExtras()) {
+                                for(Kapture.Extra extra : kapture.getExtras()) {
                                     new File(extra.getLocation()).delete();
+                                }
+
+                                for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+                                    new File(screenshot.getLocation()).delete();
                                 }
 
                                 f.delete();
@@ -105,6 +110,10 @@ public class ActionActivity extends AppCompatActivity {
                         finish();
                         break;
 
+                    case Constants.SHORTCUT_STATIC_ACTION_WIFI_SHARE:
+                        new WifiShare(this).setListener(this::finish).start();
+                        break;
+
                     default:
                         finish();
                         break;
@@ -112,5 +121,4 @@ public class ActionActivity extends AppCompatActivity {
             }
         }
     }
-
 }

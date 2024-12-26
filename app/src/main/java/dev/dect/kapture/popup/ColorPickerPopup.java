@@ -61,6 +61,7 @@ public class ColorPickerPopup extends Dialog {
                       TRANSPARENCY_HEIGHT;
 
     private int PICKER_SIZE,
+                SCROLLER_SIZE,
                 TRANSPARENCY_255;
 
     private String HEX_COLOR;
@@ -91,9 +92,9 @@ public class ColorPickerPopup extends Dialog {
 
         if(showAlpha) {
             TRANSPARENCY.setOnTouchListener((view1, event) -> {
-                final float x = event.getX() > PICKER_SIZE ? PICKER_SIZE : (event.getX() < 0 ? 0 : event.getX());
+                final float x = event.getX() > SCROLLER_SIZE ? SCROLLER_SIZE : (event.getX() < 0 ? 0 : event.getX());
 
-                TRANSPARENCY_255 = (int) ((255 * x) / PICKER_SIZE);
+                TRANSPARENCY_255 = (int) ((255 * x) / SCROLLER_SIZE);
 
                 drawTransparency();
                 drawTransparencySelector();
@@ -132,6 +133,8 @@ public class ColorPickerPopup extends Dialog {
             public void onGlobalLayout() {
                 PICKER_SIZE = PICKER.getWidth();
 
+                SCROLLER_SIZE = HUE.getWidth();
+
                 drawHue();
                 drawHueSelector();
                 drawSpectrum();
@@ -161,9 +164,9 @@ public class ColorPickerPopup extends Dialog {
         });
 
         HUE.setOnTouchListener((view1, event) -> {
-            final float x = event.getX() > PICKER_SIZE ? PICKER_SIZE : (event.getX() < 0 ? 0 : event.getX());
+            final float x = event.getX() > SCROLLER_SIZE ? SCROLLER_SIZE : (event.getX() < 0 ? 0 : event.getX());
 
-            HSV[0] = (360 * x) / PICKER_SIZE;
+            HSV[0] = (360 * x) / SCROLLER_SIZE;
 
             drawHue();
             drawHueSelector();
@@ -197,23 +200,23 @@ public class ColorPickerPopup extends Dialog {
     }
 
     private void drawTransparency() {
-        TRANSPARENCY_BITMAP = Bitmap.createBitmap(PICKER_SIZE, TRANSPARENCY_HEIGHT, Bitmap.Config.ARGB_8888);
+        TRANSPARENCY_BITMAP = Bitmap.createBitmap(SCROLLER_SIZE, TRANSPARENCY_HEIGHT, Bitmap.Config.ARGB_8888);
 
         final Canvas canvasTransparency = new Canvas(TRANSPARENCY_BITMAP);
 
-        Utils.drawTransparencyBackground(canvasTransparency);
+        Utils.drawTransparencyBackgroundOnCanvas(canvasTransparency);
 
         final Paint paintTransparency = new Paint();
 
-        paintTransparency.setShader(new LinearGradient(0f, 0f, PICKER_SIZE, 0f, Color.TRANSPARENT, Color.HSVToColor(HSV), Shader.TileMode.MIRROR));
+        paintTransparency.setShader(new LinearGradient(0f, 0f, SCROLLER_SIZE, 0f, Color.TRANSPARENT, Color.HSVToColor(HSV), Shader.TileMode.MIRROR));
 
-        canvasTransparency.drawRect(new RectF(0, 0, PICKER_SIZE, TRANSPARENCY_HEIGHT), paintTransparency);
+        canvasTransparency.drawRect(new RectF(0, 0, SCROLLER_SIZE, TRANSPARENCY_HEIGHT), paintTransparency);
 
         TRANSPARENCY.setImageBitmap(TRANSPARENCY_BITMAP);
     }
 
     private void drawTransparencySelector() {
-        final float x = (PICKER_SIZE * TRANSPARENCY_255) / 255f;
+        final float x = (SCROLLER_SIZE * TRANSPARENCY_255) / 255f;
 
         final Canvas canvasSelector = new Canvas(TRANSPARENCY_BITMAP);
 
@@ -236,21 +239,21 @@ public class ColorPickerPopup extends Dialog {
     }
 
     private void drawHue() {
-        HUE_BITMAP = Bitmap.createBitmap(PICKER_SIZE, HUE_HEIGHT, Bitmap.Config.ARGB_8888);
+        HUE_BITMAP = Bitmap.createBitmap(SCROLLER_SIZE, HUE_HEIGHT, Bitmap.Config.ARGB_8888);
 
         final Canvas canvasHue = new Canvas(HUE_BITMAP);
 
         final Paint paintHue = new Paint();
 
-        paintHue.setShader(new LinearGradient(0f, 0f, PICKER_SIZE, 0f, HUE_COLORS, null, Shader.TileMode.MIRROR));
+        paintHue.setShader(new LinearGradient(0f, 0f, SCROLLER_SIZE, 0f, HUE_COLORS, null, Shader.TileMode.MIRROR));
 
-        canvasHue.drawRect(new RectF(0, 0, PICKER_SIZE, HUE_HEIGHT), paintHue);
+        canvasHue.drawRect(new RectF(0, 0, SCROLLER_SIZE, HUE_HEIGHT), paintHue);
 
         HUE.setImageBitmap(HUE_BITMAP);
     }
 
     private void drawHueSelector() {
-        final float x = (PICKER_SIZE * HSV[0]) / 360;
+        final float x = (SCROLLER_SIZE * HSV[0]) / 360;
 
         final Canvas canvasSelector = new Canvas(HUE_BITMAP);
 
@@ -320,7 +323,7 @@ public class ColorPickerPopup extends Dialog {
 
         final Canvas canvasColor = new Canvas(colorBitmap);
 
-        Utils.drawTransparencyBackground(canvasColor);
+        Utils.drawTransparencyBackgroundOnCanvas(canvasColor);
 
         final Paint paintColor = new Paint();
 

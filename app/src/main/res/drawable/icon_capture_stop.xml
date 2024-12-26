@@ -1,13 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:height="24dp"
-    android:viewportHeight="24"
+    android:width="@dimen/floating_btn_icon_start_stop"
+    android:height="@dimen/floating_btn_icon_start_stop"
     android:viewportWidth="24"
-    android:width="24dp">
+    android:viewportHeight="24">
 
     <path
         android:fillColor="@color/overlay_icon_stop"
-        android:pathData="M12,12m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0"/>
-
-    <path android:fillColor="@color/overlay_icon_background"
-          android:pathData="M12,2C6.48,2 2,6.48 2,12c0,5.52 4.48,10 10,10s10,-4.48 10,-10C22,6.48 17.52,2 12,2zM15,16H9c-0.55,0 -1,-0.45 -1,-1V9c0,-0.55 0.45,-1 1,-1h6c0.55,0 1,0.45 1,1v6C16,15.55 15.55,16 15,16z"/>
+        android:fillType="evenOdd"
+        android:pathData="M16.875,5.125L7.125,5.125C6.025,5.125 5.125,6.025 5.125,7.125L5.125,16.875C5.125,17.975 6.025,18.875 7.125,18.875L16.875,18.875C17.975,18.875 18.875,17.975 18.875,16.875L18.875,7.125C18.875,6.025 17.975,5.125 16.875,5.125"
+        android:strokeWidth="1"
+        android:strokeColor="#00000000" />
 </vector>

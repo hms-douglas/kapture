@@ -8,6 +8,8 @@
     android:minHeight="@dimen/list_item_min_height"
     android:paddingTop="@dimen/list_item_padding_top_bottom"
     android:paddingBottom="@dimen/list_item_padding_top_bottom"
+    android:paddingStart="@dimen/group_padding_sides"
+    android:paddingEnd="@dimen/group_padding_sides"
     android:foreground="@drawable/list_item_effect"
     android:clickable="true"
     android:id="@+id/listContainer">

@@ -14,7 +14,7 @@ public class Constants {
         GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_NAME = "versionName",
         GITHUB_PROJECT_LATEST_VERSION_TAG_LINK = "link",
         LICENSE_URL_APACHE_V2 = "https://www.apache.org/licenses/LICENSE-2.0.txt",
-        LICENSE_URL_LGPL_V3 = "https://www.gnu.org/licenses/lgpl-3.0.html#license-text",
+        LICENSE_URL_GPL_V3 = "https://www.gnu.org/licenses/gpl-3.0.html#license-text",
         LICENSE_URL_LOTTIES = "https://lottiefiles.com/page/license",
         LICENSE_URL_MIT = "https://mit-license.org",
         LICENSE_URL_BSD3_CLAUSE = "https://opensource.org/license/bsd-3-clause",
@@ -94,6 +94,16 @@ public class Constants {
         SP_KEY_DRAW_PEN_PREVIOUS_COLORS = "k71",
         SP_KEY_VIDEO_ORIENTATION = "k72",
         SP_KEY_IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU = "k73",
+        SP_KEY_IS_TO_STOP_ON_BATTERY_LEVEL = "k74",
+        SP_KEY_STOP_ON_BATTERY_LEVEL_LEVEL = "k75",
+        SP_KEY_IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU = "k76",
+        SP_KEY_IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU = "k77",
+        SP_KEY_IS_TO_SHOW_IMAGE = "k78",
+        SP_KEY_IMAGE_PATH = "k79",
+        SP_KEY_IMAGE_SIZE = "k80",
+        SP_KEY_OVERLAY_IMAGE_X_POS = "k81",
+        SP_KEY_OVERLAY_IMAGE_Y_POS = "k82",
+        SP_KEY_IS_TO_RECYCLE_TOKEN = "k83",
         NOTIFICATION_CHANNEL_ID_CAPTURING = "channel1",
         NOTIFICATION_CHANNEL_ID_CAPTURED = "channel2",
         NOTIFICATION_CHANNEL_ID_PROCESSING = "channel3",
@@ -107,7 +117,8 @@ public class Constants {
         SHORTCUT_STATIC_ACTION_START = "ACTION.START",
         SHORTCUT_STATIC_ACTION_STOP = NOTIFICATION_CAPTURING_ACTION_STOP,
         SHORTCUT_STATIC_ACTION_PAUSE = NOTIFICATION_CAPTURING_ACTION_PAUSE,
-        SHORTCUT_STATIC_ACTION_RESUME = NOTIFICATION_CAPTURING_ACTION_RESUME;
+        SHORTCUT_STATIC_ACTION_RESUME = NOTIFICATION_CAPTURING_ACTION_RESUME,
+        SHORTCUT_STATIC_ACTION_WIFI_SHARE = "ACTION.WIFI_SHARE";
 
     public static final String[] LANGUAGES = new String[]{"auto", "en-US", "pt-BR"};
 

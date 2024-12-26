@@ -25,18 +25,24 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.slider.Slider;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DefaultSettings;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.popup.ColorPickerPopup;
+import dev.dect.kapture.service.CapturingService;
+import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.utils.Utils;
 
 @SuppressLint({"InflateParams", "ClickableViewAccessibility"})
@@ -49,11 +55,12 @@ public class DrawOverlay {
 
     private final SharedPreferences.Editor EDITOR;
 
-    private final Float ALPHA_OFF = 0.5f;
+    private final Float BUTTON_ALPHA_OFF = 0.5f;
 
     private View VIEW;
 
-    private ImageView IMAGE;
+    private ImageView IMAGE,
+                      IMAGE_DRAWING;
 
     private ImageButton BTN_UNDO,
                         BTN_REDO;
@@ -66,11 +73,14 @@ public class DrawOverlay {
 
     private Slider SIZE_SLIDER;
 
-    private Bitmap BITMAP;
+    private Bitmap BITMAP,
+                   BITMAP_DRAWING;
 
-    private Paint PAINT;
+    private Paint PAINT,
+                  PAINT_DRAWING;
 
-    private Canvas CANVAS;
+    private Canvas CANVAS,
+                   CANVAS_DRAWING;
 
     private Path PATH;
 
@@ -97,10 +107,13 @@ public class DrawOverlay {
 
     private final String[] PEN_PREVIOUS_COLORS;
 
-    public DrawOverlay(Context ctx, KSettings ks, WindowManager wm) {
+    private final MenuOverlay MENU_OVERLAY;
+
+    public DrawOverlay(Context ctx, KSettings ks, WindowManager wm, MenuOverlay mo) {
         this.KSETTINGS = ks;
         this.CONTEXT = ctx;
         this.WINDOW_MANAGER = wm;
+        this.MENU_OVERLAY = mo;
 
         final SharedPreferences sp = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
 
@@ -120,16 +133,20 @@ public class DrawOverlay {
 
         refreshPenExample();
 
-        IMAGE.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        IMAGE_DRAWING.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 initCanvas();
 
-                IMAGE.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                Utils.drawTransparencyBackgroundOnImageView(VIEW.findViewById(R.id.penAlphaBackground));
+
+                IMAGE_DRAWING.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
-        IMAGE.setOnTouchListener(this::draw);
+        IMAGE_DRAWING.setOnTouchListener(this::draw);
+
+        IMAGE_DRAWING.setOnTouchListener(this::draw);
 
         VIEW.findViewById(R.id.btnClose).setOnClickListener((v) -> destroy());
 
@@ -171,6 +188,8 @@ public class DrawOverlay {
 
         IMAGE = VIEW.findViewById(R.id.image);
 
+        IMAGE_DRAWING = VIEW.findViewById(R.id.imageDrawing);
+
         BTN_UNDO = VIEW.findViewById(R.id.btnUndo);
         BTN_REDO = VIEW.findViewById(R.id.btnRedo);
     }
@@ -186,6 +205,7 @@ public class DrawOverlay {
                     PEN_SIZE = (int) value;
 
                     PAINT.setStrokeWidth(PEN_SIZE);
+                    PAINT_DRAWING.setStrokeWidth(PEN_SIZE);
 
                     refreshPenExample();
 
@@ -203,7 +223,7 @@ public class DrawOverlay {
         });
 
         VIEW.findViewById(R.id.picker).setOnClickListener((v) -> {
-            final ColorPickerPopup colorPickerPopup = new ColorPickerPopup(CONTEXT, PEN_COLOR, false, this::setColor);
+            final ColorPickerPopup colorPickerPopup = new ColorPickerPopup(CONTEXT, PEN_COLOR, true, this::setColor);
 
             colorPickerPopup.getWindow().setType(WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY);
 
@@ -245,8 +265,8 @@ public class DrawOverlay {
                 clearUndo();
                 clearRedo();
 
-                BTN_UNDO.setAlpha(ALPHA_OFF);
-                BTN_REDO.setAlpha(ALPHA_OFF);
+                BTN_UNDO.setAlpha(BUTTON_ALPHA_OFF);
+                BTN_REDO.setAlpha(BUTTON_ALPHA_OFF);
             });
         } else {
             VIEW.findViewById(R.id.btnClear).setVisibility(View.GONE);
@@ -256,11 +276,23 @@ public class DrawOverlay {
             BTN_UNDO.setOnClickListener((v) -> undo());
             BTN_REDO.setOnClickListener((v) -> redo());
 
-            BTN_UNDO.setAlpha(ALPHA_OFF);
-            BTN_REDO.setAlpha(ALPHA_OFF);
+            BTN_UNDO.setAlpha(BUTTON_ALPHA_OFF);
+            BTN_REDO.setAlpha(BUTTON_ALPHA_OFF);
         } else  {
             BTN_UNDO.setVisibility(View.GONE);
             BTN_REDO.setVisibility(View.GONE);
+        }
+
+        if(KSETTINGS.isToShowScreenshotButtonOnDrawMenu()) {
+            VIEW.findViewById(R.id.btnScreenshot).setOnClickListener((l) -> MENU_OVERLAY.takeScreenshot());
+        } else  {
+            VIEW.findViewById(R.id.btnScreenshot).setVisibility(View.GONE);
+        }
+
+        if(KSETTINGS.isToShowDrawScreenshotButtonOnDrawMenu()) {
+            VIEW.findViewById(R.id.btnScreenshotDraw).setOnClickListener((l) -> takeDrawScreenshot());
+        } else  {
+            VIEW.findViewById(R.id.btnScreenshotDraw).setVisibility(View.GONE);
         }
     }
 
@@ -273,9 +305,11 @@ public class DrawOverlay {
         RECEIVER_ORIENTATION = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                IMAGE.setImageBitmap(null);
+            IMAGE.setImageBitmap(null);
 
-                new Handler(Looper.getMainLooper()).postDelayed(() -> initCanvas(), 350);
+            IMAGE_DRAWING.setImageBitmap(null);
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> initCanvas(), 350);
             }
         };
 
@@ -350,34 +384,56 @@ public class DrawOverlay {
     private void initCanvas() {
         BITMAP = Bitmap.createBitmap(IMAGE.getWidth(), IMAGE.getHeight(), Bitmap.Config.ARGB_8888);
 
+        BITMAP_DRAWING = Bitmap.createBitmap(IMAGE_DRAWING.getWidth(), IMAGE_DRAWING.getHeight(), Bitmap.Config.ARGB_8888);
+
         CANVAS = new Canvas(BITMAP);
+
+        CANVAS_DRAWING = new Canvas(BITMAP_DRAWING);
 
         IMAGE.setImageBitmap(BITMAP);
 
+        IMAGE_DRAWING.setImageBitmap(BITMAP_DRAWING);
+
         PATH = new Path();
 
-        generateNewBasicPaint();
+        setNewBasicPaint();
 
         clearUndo();
     }
 
-    private void generateNewBasicPaint() {
-        PAINT = new Paint();
+    private void setNewBasicPaint() {
+        PAINT = generateBasicPaint();
 
-        PAINT.setAntiAlias(true);
-        PAINT.setStyle(Paint.Style.STROKE);
-        PAINT.setStrokeJoin(Paint.Join.ROUND);
-        PAINT.setStrokeCap(Paint.Cap.ROUND);
-
-        PAINT.setStrokeWidth(PEN_SIZE);
+        PAINT_DRAWING = generateBasicPaint();
 
         setColor(PEN_COLOR);
+    }
+
+    private Paint generateBasicPaint() {
+        final Paint p = new Paint();
+
+        p.setAntiAlias(true);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeJoin(Paint.Join.ROUND);
+        p.setStrokeCap(Paint.Cap.ROUND);
+
+        p.setStrokeWidth(PEN_SIZE);
+
+        return p;
     }
 
     private void clearCanvas() {
         CANVAS.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         IMAGE.setImageBitmap(BITMAP);
+
+        clearDrawingCanvas();
+    }
+
+    private void clearDrawingCanvas() {
+        CANVAS_DRAWING.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+        IMAGE_DRAWING.setImageBitmap(BITMAP_DRAWING);
     }
 
     private boolean draw(View v, MotionEvent event) {
@@ -387,21 +443,30 @@ public class DrawOverlay {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 closeControlsPen();
+
                 clearUndo();
+
                 PATH.moveTo(x, y);
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 PATH.lineTo(x, y);
-                CANVAS.drawPath(PATH, PAINT);
+
+                CANVAS_DRAWING.drawPath(PATH, PAINT_DRAWING);
+
+                IMAGE_DRAWING.setImageBitmap(BITMAP_DRAWING);
                 break;
 
             case MotionEvent.ACTION_UP:
+                CANVAS.drawPath(PATH, PAINT);
+
+                IMAGE.setImageBitmap(BITMAP);
+
+                clearDrawingCanvas();
+
                 addUndo();
                 break;
         }
-
-        IMAGE.setImageBitmap(BITMAP);
 
         return true;
     }
@@ -418,7 +483,7 @@ public class DrawOverlay {
 
         PATH = new Path();
 
-        generateNewBasicPaint();
+        setNewBasicPaint();
 
         BTN_UNDO.setAlpha(1f);
     }
@@ -439,7 +504,7 @@ public class DrawOverlay {
             BTN_REDO.setAlpha(1f);
 
             if(PATHS_DRAWN.isEmpty()) {
-                BTN_UNDO.setAlpha(ALPHA_OFF);
+                BTN_UNDO.setAlpha(BUTTON_ALPHA_OFF);
             }
         }
     }
@@ -465,7 +530,7 @@ public class DrawOverlay {
             BTN_UNDO.setAlpha(1f);
 
             if(PATHS_UNDONE.isEmpty()) {
-                BTN_REDO.setAlpha(ALPHA_OFF);
+                BTN_REDO.setAlpha(BUTTON_ALPHA_OFF);
             }
         }
     }
@@ -487,6 +552,10 @@ public class DrawOverlay {
         final int[] argb = Utils.Converter.hexColorToArgb(color);
 
         PAINT.setARGB(argb[0], argb[1], argb[2], argb[3]);
+
+        PAINT_DRAWING.setARGB(255, argb[1], argb[2], argb[3]);
+
+        IMAGE_DRAWING.setImageAlpha(argb[0]);
 
         refreshPenExample();
 
@@ -535,5 +604,41 @@ public class DrawOverlay {
                 SIZE_SLIDER.setLayoutParams(layoutParamsSizeSlider);
             }, 50);
         }
+    }
+
+    public void hideMenu() {
+        if(VIEW != null && VIEW.isAttachedToWindow()) {
+            CONTROLS.setVisibility(View.GONE);
+        }
+    }
+
+    public void showMenu() {
+        if(VIEW != null && VIEW.isAttachedToWindow()) {
+            CONTROLS.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void takeDrawScreenshot() {
+        hideMenu();
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            try {
+                final File screenshot = KFile.generateScreenshotFile(CONTEXT, KSETTINGS);
+
+                final FileOutputStream fileOutputStream = new FileOutputStream(screenshot);
+
+                BITMAP.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+
+                fileOutputStream.close();
+
+                CapturingService.screenshotTaken(new Kapture.Screenshot(screenshot));
+
+                KFile.notifyMediaScanner(CONTEXT, screenshot);
+            } catch (Exception ignore) {
+                Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
+            }
+
+            showMenu();
+        }, 50);
     }
 }

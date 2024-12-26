@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/frame_layout_tablet_background"></solid>
+    <corners android:radius="@dimen/frame_layout_tablet_radius"/>
+    <stroke
+        android:width="@dimen/frame_layout_tablet_border"
+        android:color="@color/frame_layout_tablet_border"/>
+</shape>

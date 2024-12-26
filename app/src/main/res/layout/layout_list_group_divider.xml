@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/group_subtitle_margin_top"
+    android:layout_marginStart="@dimen/group_padding_sides"
+    android:layout_marginEnd="@dimen/group_padding_sides"
     android:background="@drawable/list_subtitle_divisor_horizontal">
 
     <TextView

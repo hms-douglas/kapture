@@ -19,7 +19,8 @@
         android:foreground="@drawable/btn_effect"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:tooltipText="@string/tooltip_play_file"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnShare"
@@ -30,7 +31,8 @@
         android:layout_marginStart="@dimen/extra_space_icon_sides"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnPlay"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:tooltipText="@string/tooltip_share_file"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnDelete"
@@ -41,14 +43,15 @@
         android:layout_marginStart="@dimen/extra_space_icon_sides"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnShare"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:tooltipText="@string/tooltip_delete_file"/>
 
     <TextView
         android:id="@+id/extraName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:textSize="@dimen/radio_text"
+        android:textSize="@dimen/extra_text"
         android:textColor="@color/extra_text"
         android:layout_marginStart="@dimen/extra_text_margin_left"
         app:layout_constraintTop_toTopOf="parent"

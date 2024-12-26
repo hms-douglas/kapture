@@ -10,6 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <ImageView
+        android:id="@+id/imageDrawing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <LinearLayout
         android:id="@+id/controls"
         android:layout_width="wrap_content"
@@ -35,8 +40,19 @@
                 android:layout_width="@dimen/overlay_menu_draw_size_color_max"
                 android:layout_height="@dimen/overlay_menu_draw_size_color_max"
                 android:background="@drawable/overlay_menu_draw_icon_size_color_background"
+                android:clipToOutline="true"
                 android:layout_gravity="center"
-                android:clickable="true">
+                android:clickable="true"
+                android:tooltipText="@string/tooltip_pen_settings">
+
+                <ImageView
+                    android:id="@+id/penAlphaBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/penExample"
@@ -50,6 +66,32 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageButton
+                android:id="@+id/btnScreenshot"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_screenshot"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/tooltip_screenshot_screen"
+                android:longClickable="true"/>
+
+            <ImageButton
+                android:id="@+id/btnScreenshotDraw"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_draw_icon_screenshot_draw"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/tooltip_screenshot_draw"
+                android:longClickable="true"/>
+
+            <ImageButton
                 android:id="@+id/btnClear"
                 android:layout_width="@dimen/overlay_menu_icon"
                 android:layout_height="@dimen/overlay_menu_icon"
@@ -58,7 +100,9 @@
                 android:padding="5.5dp"
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
-                android:foreground="?android:attr/selectableItemBackground" />
+                android:foreground="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/tooltip_clear"
+                android:longClickable="true"/>
 
             <ImageButton
                 android:id="@+id/btnUndo"
@@ -69,7 +113,9 @@
                 android:padding="5.5dp"
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
-                android:foreground="?android:attr/selectableItemBackground" />
+                android:foreground="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/tooltip_undo"
+                android:longClickable="true"/>
 
             <ImageButton
                 android:id="@+id/btnRedo"
@@ -80,7 +126,9 @@
                 android:padding="5.5dp"
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
-                android:foreground="?android:attr/selectableItemBackground" />
+                android:foreground="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/tooltip_redo"
+                android:longClickable="true"/>
 
             <ImageButton
                 android:id="@+id/btnClose"
@@ -90,7 +138,9 @@
                 android:src="@drawable/overlay_menu_draw_icon_close"
                 android:padding="@dimen/overlay_menu_icon_secondary_padding"
                 android:scaleType="fitCenter"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:contentDescription="@string/tooltip_close"
+                android:longClickable="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -117,38 +167,50 @@
                     android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
                     android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
                     android:background="@drawable/overlay_menu_draw_color"
-                    android:layout_margin="@dimen/overlay_menu_space"/>
+                    android:layout_margin="@dimen/overlay_menu_space"
+                    android:contentDescription="@string/tooltip_previous_color"
+                    android:longClickable="true"/>
 
                 <ImageButton
                     android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
                     android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
                     android:background="@drawable/overlay_menu_draw_color"
-                    android:layout_margin="@dimen/overlay_menu_space"/>
+                    android:layout_margin="@dimen/overlay_menu_space"
+                    android:contentDescription="@string/tooltip_previous_color"
+                    android:longClickable="true"/>
 
                 <ImageButton
                     android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
                     android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
                     android:background="@drawable/overlay_menu_draw_color"
-                    android:layout_margin="@dimen/overlay_menu_space"/>
+                    android:layout_margin="@dimen/overlay_menu_space"
+                    android:contentDescription="@string/tooltip_previous_color"
+                    android:longClickable="true"/>
 
                 <ImageButton
                     android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
                     android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
                     android:background="@drawable/overlay_menu_draw_color"
-                    android:layout_margin="@dimen/overlay_menu_space"/>
+                    android:layout_margin="@dimen/overlay_menu_space"
+                    android:contentDescription="@string/tooltip_previous_color"
+                    android:longClickable="true"/>
 
                 <ImageButton
                     android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
                     android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
                     android:background="@drawable/overlay_menu_draw_color"
-                    android:layout_margin="@dimen/overlay_menu_space"/>
+                    android:layout_margin="@dimen/overlay_menu_space"
+                    android:contentDescription="@string/tooltip_previous_color"
+                    android:longClickable="true"/>
 
                 <ImageButton
                     android:id="@+id/picker"
                     android:layout_width="@dimen/overlay_menu_draw_color_btn_size"
                     android:layout_height="@dimen/overlay_menu_draw_color_btn_size"
                     android:background="@drawable/overlay_menu_draw_icon_color"
-                    android:layout_margin="@dimen/overlay_menu_space"/>
+                    android:layout_margin="@dimen/overlay_menu_space"
+                    android:contentDescription="@string/tooltip_picker"
+                    android:longClickable="true"/>
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity"
+    android:background="@color/activity_background">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/activity_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/bottomBarActions"
+        android:layout_width="@dimen/bottom_bar_width_tablet"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="4"
+        android:background="@color/bottom_bar_background"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnWifiShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/icon_bottom_bar_wifi_share"
+            android:text="@string/bottom_bar_wifi_share"
+            android:textSize="@dimen/bottom_bar_btn_icon_text"
+            android:textColor="@color/bottom_bar_icon_text"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent"
+            android:foreground="@drawable/btn_effect"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="@dimen/bottom_bar_space_item_tablet"
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/icon_bottom_bar_share"
+            android:text="@string/bottom_bar_share"
+            android:textSize="@dimen/bottom_bar_btn_icon_text"
+            android:textColor="@color/bottom_bar_icon_text"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent"
+            android:foreground="@drawable/btn_effect"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="@dimen/bottom_bar_space_item_tablet"
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/icon_bottom_bar_delete"
+            android:text="@string/bottom_bar_delete"
+            android:textSize="@dimen/bottom_bar_btn_icon_text"
+            android:textColor="@color/bottom_bar_icon_text"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent"
+            android:foreground="@drawable/btn_effect"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="@dimen/bottom_bar_space_item_tablet"
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/icon_bottom_bar_more"
+            android:text="@string/bottom_bar_more"
+            android:textSize="@dimen/bottom_bar_btn_icon_text"
+            android:textColor="@color/bottom_bar_icon_text"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent"
+            android:foreground="@drawable/btn_effect"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

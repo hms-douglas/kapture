@@ -24,6 +24,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.selection.SelectionPredicates;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StableIdKeyProvider;
@@ -51,9 +53,7 @@ import java.util.Objects;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.activity.AboutActivity;
-import dev.dect.kapture.activity.TokenActivity;
 import dev.dect.kapture.adapter.KaptureAdapter;
-import dev.dect.kapture.adapter.KaptureEmptyAdapter;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DB;
 import dev.dect.kapture.data.DefaultSettings;
@@ -61,6 +61,7 @@ import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.popup.DialogPopup;
 import dev.dect.kapture.popup.ExtraPopup;
 import dev.dect.kapture.popup.InputPopup;
+import dev.dect.kapture.popup.ScreenshotPopup;
 import dev.dect.kapture.popup.SortPopup;
 import dev.dect.kapture.server.WifiShare;
 import dev.dect.kapture.service.CapturingService;
@@ -97,13 +98,15 @@ public class KapturesFragment extends Fragment {
 
     private int SORT_BY;
 
-    private boolean SORT_ASC;
+    private boolean SORT_ASC,
+                    IS_TABLET_UI;
 
     private SelectionTracker<Long> TRACKER;
 
     private AppCompatButton BTN_SELECTED;
 
-    private ImageButton BTN_STYLE_LAYOUT_MANAGER;
+    private ImageButton BTN_STYLE_LAYOUT_MANAGER,
+                        BTN_SETTINGS__TABLET_UI;
 
     private OnCaptureFragment LISTENER;
 
@@ -118,6 +121,10 @@ public class KapturesFragment extends Fragment {
     private ActivityResultLauncher<Intent> LAUNCH_ACTIVITY_RESULT_FOR_SPEECH_TO_TEXT;
 
     private TextView SUBTITLE;
+
+    private AppBarLayout TITLE_BAR;
+
+    private SettingsFragment SETTINGS_FRAGMENT__TABLE_UI;
 
     @Nullable
     @Override
@@ -146,6 +153,8 @@ public class KapturesFragment extends Fragment {
 
     private void initVariables() {
         CONTEXT = VIEW.getContext();
+
+        TITLE_BAR = VIEW.findViewById(R.id.titleBar);
 
         RECYCLER_VIEW = VIEW.findViewById(R.id.recyclerView);
 
@@ -182,17 +191,17 @@ public class KapturesFragment extends Fragment {
         DATABASE = new DB(CONTEXT);
 
         getAndValidateKaptures();
+
+        IS_TABLET_UI = CONTEXT.getResources().getBoolean(R.bool.is_tablet);
+
+        if(IS_TABLET_UI) {
+            BTN_SETTINGS__TABLET_UI = VIEW.findViewById(R.id.btnSettings);
+
+            SETTINGS_FRAGMENT__TABLE_UI = new SettingsFragment();
+        }
     }
 
     private void initListeners() {
-        ((AppBarLayout) VIEW.findViewById(R.id.titleBar)).addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-            verticalOffset = Math.abs(verticalOffset);
-
-            final float opacity = (float) verticalOffset / ((appBarLayout.getHeight() - VIEW.findViewById(R.id.toolbar).getHeight()) / 2f);
-
-            VIEW.findViewById(R.id.titleAndSubtitle).setAlpha(1 - opacity);
-        });
-
         SWIPE_REFRESH.setOnRefreshListener(this::triggerRefresh);
 
         VIEW.findViewById(R.id.btnMore).setOnClickListener((v) -> {
@@ -213,10 +222,6 @@ public class KapturesFragment extends Fragment {
                 }
             }
 
-            if(!TokenActivity.hasToken() || CapturingService.isRecording() || CapturingService.isProcessing()) {
-                menu.findItem(R.id.resetToken).setEnabled(false);
-            }
-
             popupMenu.setOnMenuItemClickListener((item) -> {
                 final int id = item.getItemId();
 
@@ -228,8 +233,6 @@ public class KapturesFragment extends Fragment {
                     new SortPopup(CONTEXT, SORT_BY, SORT_ASC, this::sortBy).show();
                 } else if(id == R.id.wifiShare) {
                     new WifiShare(CONTEXT, KAPTURES).start();
-                } else if(id == R.id.resetToken) {
-                    TokenActivity.clearToken(CONTEXT);
                 } else if(id == R.id.menuOpenAccessibility) {
                     Utils.ExternalActivity.requestAccessibility(CONTEXT);
                 } else if(id == R.id.menuShowCommand) {
@@ -315,15 +318,73 @@ public class KapturesFragment extends Fragment {
             }
         });
 
-        VIEW.findViewById(R.id.btnSearch).setOnClickListener((v) -> openSearch());
+        VIEW.findViewById(R.id.btnSearch).setOnClickListener((v) -> toggleSearch());
 
         VIEW.findViewById(R.id.btnBack).setOnClickListener((v) -> closeSearch());
+
+        if(IS_TABLET_UI) {
+            BTN_SETTINGS__TABLET_UI.setOnClickListener((v) -> {
+                if(SETTINGS_FRAGMENT__TABLE_UI.isVisible()) {
+                    getChildFragmentManager().beginTransaction().hide(SETTINGS_FRAGMENT__TABLE_UI).commitNow();
+                    VIEW.findViewById(R.id.frameLayoutContainer).setVisibility(View.GONE);
+                } else {
+                    getChildFragmentManager().beginTransaction().show(SETTINGS_FRAGMENT__TABLE_UI).commitNow();
+                    VIEW.findViewById(R.id.frameLayoutContainer).setVisibility(View.VISIBLE);
+                    SETTINGS_FRAGMENT__TABLE_UI.onResume();
+                }
+            });
+
+            VIEW.findViewById(R.id.frameLayoutContainer).setOnClickListener((v) -> BTN_SETTINGS__TABLET_UI.callOnClick());
+
+            getActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    if(SETTINGS_FRAGMENT__TABLE_UI.isVisible()) {
+                        BTN_SETTINGS__TABLET_UI.callOnClick();
+                    } else {
+                        getActivity().moveTaskToBack(false);
+                    }
+                }
+            });
+
+            TITLE_BAR.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+                verticalOffset = Math.abs(verticalOffset);
+
+                final float opacity = (float) verticalOffset / ((appBarLayout.getHeight() - VIEW.findViewById(R.id.toolbar).getHeight()) / 2f);
+
+                VIEW.findViewById(R.id.titleAndSubtitle).setAlpha(1 - opacity);
+
+                VIEW.findViewById(R.id.titleCollapsed).setAlpha(opacity != 1 ? opacity - 0.5f : 1);
+            });
+        } else {
+            TITLE_BAR.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+                verticalOffset = Math.abs(verticalOffset);
+
+                final float opacity = (float) verticalOffset / ((appBarLayout.getHeight() - VIEW.findViewById(R.id.toolbar).getHeight()) / 2f);
+
+                VIEW.findViewById(R.id.titleAndSubtitle).setAlpha(1 - opacity);
+            });
+        }
+    }
+
+    private void toggleSearch() {
+        if(isSearching()) {
+            closeSearch();
+        } else {
+            openSearch();
+        }
     }
 
     private void openSearch() {
         SEARCH_CONTAINER.setVisibility(View.VISIBLE);
 
+        TITLE_BAR.setExpanded(false, true);
+
         Utils.Keyboard.requestShowForInput(SEARCH_INPUT);
+
+        if(IS_TABLET_UI) {
+            VIEW.findViewById(R.id.titleCollapsed).setVisibility(View.GONE);
+        }
     }
 
     public void closeSearch() {
@@ -332,6 +393,10 @@ public class KapturesFragment extends Fragment {
         SEARCH_CONTAINER.setVisibility(View.GONE);
 
         clearSearch();
+
+        if(IS_TABLET_UI) {
+            VIEW.findViewById(R.id.titleCollapsed).setVisibility(View.VISIBLE);
+        }
     }
 
     private void clearSearch() {
@@ -348,6 +413,16 @@ public class KapturesFragment extends Fragment {
         buildRecyclerView();
 
         requestFloatingButtonUpdate();
+
+        if(IS_TABLET_UI) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+
+            fragmentTransaction.replace(R.id.frameLayout, SETTINGS_FRAGMENT__TABLE_UI);
+
+            fragmentTransaction.hide(SETTINGS_FRAGMENT__TABLE_UI);
+
+            fragmentTransaction.commitNow();
+        }
     }
 
     private void getAndValidateKaptures() {
@@ -371,6 +446,22 @@ public class KapturesFragment extends Fragment {
                     }
                 }
 
+                if(kapture.hasScreenshots()) {
+                    final ArrayList<Kapture.Screenshot> screenshots = new ArrayList<>();
+
+                    for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+                        if(new File(screenshot.getLocation()).exists()) {
+                            screenshots.add(screenshot);
+                        } else {
+                            DATABASE.deleteScreenshot(screenshot);
+                        }
+                    }
+
+                    if(screenshots.size() != kapture.getExtras().size()) {
+                        kapture.setScreenshots(screenshots);
+                    }
+                }
+
                 KAPTURES.add(kapture);
             } else {
                 if(kapture.getThumbnailCachedFile().exists()) {
@@ -391,27 +482,52 @@ public class KapturesFragment extends Fragment {
 
         setLayoutManager(SP.getInt(Constants.SP_KEY_LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE));
 
-        RECYCLER_VIEW.setAdapter(KAPTURES.isEmpty() ? new KaptureEmptyAdapter() : ADAPTER);
+        if(KAPTURES.isEmpty()) {
+            VIEW.findViewById(R.id.noCapture).setVisibility(View.VISIBLE);
+            RECYCLER_VIEW.setVisibility(View.GONE);
+        } else {
+            RECYCLER_VIEW.setAdapter(ADAPTER);
+            RECYCLER_VIEW.setVisibility(View.VISIBLE);
+        }
 
         initTracker();
     }
 
     private void setLayoutManager(int style) {
-        switch(style) {
-            case STYLE_GRID_BIG:
-                RECYCLER_VIEW.setLayoutManager(new LinearLayoutManager(CONTEXT));
-                BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_list);
-                break;
+        if(IS_TABLET_UI) {
+            switch (style) {
+                case STYLE_GRID_BIG:
+                    RECYCLER_VIEW.setLayoutManager(new GridLayoutManager(CONTEXT, 2));
+                    BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_list);
+                    break;
 
-            case STYLE_GRID_SMALL:
-                RECYCLER_VIEW.setLayoutManager(new GridLayoutManager(CONTEXT, 2));
-                BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_small);
-                break;
+                case STYLE_GRID_SMALL:
+                    RECYCLER_VIEW.setLayoutManager(new GridLayoutManager(CONTEXT, 4));
+                    BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_small);
+                    break;
 
-            default:
-                RECYCLER_VIEW.setLayoutManager(new LinearLayoutManager(CONTEXT));
-                BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_big);
-                break;
+                default:
+                    RECYCLER_VIEW.setLayoutManager(new GridLayoutManager(CONTEXT, 2));
+                    BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_big);
+                    break;
+            }
+        } else {
+            switch (style) {
+                case STYLE_GRID_BIG:
+                    RECYCLER_VIEW.setLayoutManager(new LinearLayoutManager(CONTEXT));
+                    BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_list);
+                    break;
+
+                case STYLE_GRID_SMALL:
+                    RECYCLER_VIEW.setLayoutManager(new GridLayoutManager(CONTEXT, 2));
+                    BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_small);
+                    break;
+
+                default:
+                    RECYCLER_VIEW.setLayoutManager(new LinearLayoutManager(CONTEXT));
+                    BTN_STYLE_LAYOUT_MANAGER.setImageResource(R.drawable.icon_tool_bar_grid_big);
+                    break;
+            }
         }
 
         RECYCLER_VIEW.setAdapter(ADAPTER);
@@ -422,13 +538,24 @@ public class KapturesFragment extends Fragment {
     private void setEmptyAdapterIfEmpty() {
         if(KAPTURES.isEmpty()) {
             RECYCLER_VIEW.setLayoutManager(new LinearLayoutManager(CONTEXT));
-            RECYCLER_VIEW.setAdapter(new KaptureEmptyAdapter());
+
+            RECYCLER_VIEW.removeAllViews();
+
+            VIEW.findViewById(R.id.noCapture).setVisibility(View.VISIBLE);
+            RECYCLER_VIEW.setVisibility(View.GONE);
 
             BTN_STYLE_LAYOUT_MANAGER.setVisibility(View.GONE);
+
+            VIEW.findViewById(R.id.btnSearch).setVisibility(View.GONE);
         } else if(KAPTURES.size() == 1) {
+            VIEW.findViewById(R.id.noCapture).setVisibility(View.GONE);
+            RECYCLER_VIEW.setVisibility(View.VISIBLE);
+
             BTN_STYLE_LAYOUT_MANAGER.setVisibility(View.VISIBLE);
 
             setLayoutManager(SP.getInt(Constants.SP_KEY_LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE));
+
+            VIEW.findViewById(R.id.btnSearch).setVisibility(View.VISIBLE);
         }
     }
 
@@ -519,10 +646,12 @@ public class KapturesFragment extends Fragment {
         indexesHelper.clear();
 
         for(int i = 0; i < KAPTURES.size(); i++) {
-            if(KAPTURES.get(i).hasExtras()) {
+            final Kapture kapture = KAPTURES.get(i);
+
+            if(kapture.hasExtras()) {
                 final ArrayList<Kapture.Extra> extras = new ArrayList<>();
 
-                for(Kapture.Extra extra : KAPTURES.get(i).getExtras()) {
+                for(Kapture.Extra extra : kapture.getExtras()) {
 
                     if(new File(extra.getLocation()).exists()) {
                         extras.add(extra);
@@ -532,8 +661,28 @@ public class KapturesFragment extends Fragment {
                     }
                 }
 
-                if(extras.size() != KAPTURES.get(i).getExtras().size()) {
-                    KAPTURES.get(i).setExtras(extras);
+                if(extras.size() != kapture.getExtras().size()) {
+                    kapture.setExtras(extras);
+
+                    indexesHelper.add(i);
+                }
+            }
+
+            if(kapture.hasScreenshots()) {
+                final ArrayList<Kapture.Screenshot> screenshots = new ArrayList<>();
+
+                for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+
+                    if(new File(screenshot.getLocation()).exists()) {
+                        screenshots.add(screenshot);
+                    } else {
+
+                        DATABASE.deleteScreenshot(screenshot);
+                    }
+                }
+
+                if(screenshots.size() != kapture.getScreenshots().size()) {
+                    kapture.setScreenshots(screenshots);
 
                     indexesHelper.add(i);
                 }
@@ -643,6 +792,10 @@ public class KapturesFragment extends Fragment {
     }
 
     public void deleteSelected() {
+        if(!TRACKER.hasSelection()) {
+            return;
+        }
+
         new DialogPopup(
             CONTEXT,
             DialogPopup.NO_TEXT,
@@ -660,6 +813,14 @@ public class KapturesFragment extends Fragment {
 
                     for(Kapture.Extra extra : kapture.getExtras()) {
                         f = new File(extra.getLocation());
+
+                        if(f.exists()) {
+                            f.delete();
+                        }
+                    }
+
+                    for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+                        f = new File(screenshot.getLocation());
 
                         if(f.exists()) {
                             f.delete();
@@ -694,16 +855,24 @@ public class KapturesFragment extends Fragment {
     }
 
     public void shareSelected() {
+        if(!TRACKER.hasSelection()) {
+            return;
+        }
+
         final ArrayList<Uri> uris = new ArrayList<>();
 
         for(Kapture kapture : getSelected()) {
             uris.add(Uri.parse(kapture.getLocation()));
         }
 
-        KFile.shareFiles(CONTEXT, uris);
+        KFile.shareVideoFiles(CONTEXT, uris);
     }
 
     public void wifiShareSelected() {
+        if(!TRACKER.hasSelection()) {
+            return;
+        }
+
         new WifiShare(CONTEXT, getSelected()).start();
     }
 
@@ -728,6 +897,12 @@ public class KapturesFragment extends Fragment {
                         final File fe = KFile.renameFile(input + KFile.FILE_SEPARATOR + extra.getFileNameComplement(CONTEXT), extra.getLocation());
 
                         extra.setLocation(fe.getAbsolutePath());
+                    }
+
+                    for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+                        final File fs = KFile.renameFile(input + KFile.FILE_SEPARATOR + KFile.getDefaultScreenshotName(CONTEXT), screenshot.getLocation());
+
+                        screenshot.setLocation(fs.getAbsolutePath());
                     }
 
                     DATABASE.updateKapture(kapture);
@@ -819,6 +994,43 @@ public class KapturesFragment extends Fragment {
         ).show();
     }
 
+    public void deleteSelectedScreenshots() {
+        new DialogPopup(
+            CONTEXT,
+            DialogPopup.NO_TEXT,
+            getString(R.string.popup_delete_text_4),
+            R.string.popup_btn_delete,
+            () -> {
+                for(long index : TRACKER.getSelection()) {
+                    final Kapture kapture = KAPTURES.get((int) index);
+
+                    DATABASE.deleteScreenshots(kapture);
+
+                    for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+                        final File f = new File(screenshot.getLocation());
+
+                        if(f.exists()) {
+                            f.delete();
+                        }
+                    }
+
+                    kapture.setScreenshots(null);
+                }
+
+                unselectAll();
+
+                clearSearch();
+
+                Toast.makeText(CONTEXT, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+            },
+            R.string.popup_btn_cancel,
+            null,
+            false,
+            false,
+            true
+        ).show();
+    }
+
     public void showSelectedExtras() {
         final Kapture kapture = getSelected().get(0);
 
@@ -829,8 +1041,22 @@ public class KapturesFragment extends Fragment {
         }
     }
 
+    public void showSelectedScreenshots() {
+        final Kapture kapture = getSelected().get(0);
+
+        if(kapture.hasScreenshots()) {
+            new ScreenshotPopup(CONTEXT, kapture.getScreenshots(), null).show();
+        } else {
+            Toast.makeText(CONTEXT, getString(R.string.toast_error_no_screenshots_found), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public boolean selectedHasExtra() {
         return getSelected().get(0).hasExtras();
+    }
+
+    public boolean selectedHasScreenshot() {
+        return getSelected().get(0).hasScreenshots();
     }
 
     public void openSelectedWith() {
@@ -865,9 +1091,29 @@ public class KapturesFragment extends Fragment {
             BTN_FLOATING_PAUSE_RESUME.setVisibility(CapturingService.isRecording() ? View.VISIBLE : View.GONE);
         }
 
-        BTN_FLOATING_START_STOP.setBackgroundResource(CapturingService.isRecording() ? R.drawable.btn_floating_background_stop : R.drawable.btn_floating_background_start);
+        if(IS_TABLET_UI) {
+            BTN_FLOATING_START_STOP.setText(CapturingService.isRecording() ? R.string.floating_btn_stop : R.string.floating_btn_start);
+            BTN_FLOATING_PAUSE_RESUME.setText(CapturingService.isPaused() ? R.string.floating_btn_resume : R.string.floating_btn_pause);
+        }
 
-        BTN_FLOATING_PAUSE_RESUME.setBackgroundResource(CapturingService.isPaused() ? R.drawable.btn_floating_background_resume : R.drawable.btn_floating_background_pause);
+        if(CapturingService.isRecording()) {
+            BTN_FLOATING_START_STOP.setTooltipText(getString(R.string.tooltip_stop));
+
+            BTN_FLOATING_START_STOP.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_capture_stop, getContext().getTheme()), null, null, null);
+
+        } else {
+            BTN_FLOATING_START_STOP.setTooltipText(getString(R.string.tooltip_start));
+
+            BTN_FLOATING_START_STOP.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_capture_start, getContext().getTheme()), null, null, null);
+        }
+
+        if(CapturingService.isPaused()) {
+            BTN_FLOATING_PAUSE_RESUME.setTooltipText(getString(R.string.tooltip_resume));
+            BTN_FLOATING_PAUSE_RESUME.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_capture_resume, getContext().getTheme()), null, null, null);
+        } else {
+            BTN_FLOATING_PAUSE_RESUME.setTooltipText(getString(R.string.tooltip_pause));
+            BTN_FLOATING_PAUSE_RESUME.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_capture_pause, getContext().getTheme()), null, null, null);
+        }
     }
 
     public void setCaptureButtonVisibility(boolean hide) {

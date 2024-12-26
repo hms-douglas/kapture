@@ -15,6 +15,8 @@ public class Overlay {
 
     private final TextOverlay TEXT_OVERLAY;
 
+    private final ImageOverlay IMAGE_OVERLAY;
+
     public Overlay(Context ctx, KSettings ks) {
         final WindowManager windowManager = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
 
@@ -22,6 +24,7 @@ public class Overlay {
 
         this.MENU_OVERLAY = new MenuOverlay(ctx, ks, windowManager, CAMERA_OVERLAY);
         this.TEXT_OVERLAY = new TextOverlay(ctx, ks, windowManager);
+        this.IMAGE_OVERLAY = new ImageOverlay(ctx, ks, windowManager);
     }
 
     public void render() {
@@ -30,6 +33,8 @@ public class Overlay {
         CAMERA_OVERLAY.render();
 
         TEXT_OVERLAY.render();
+
+        IMAGE_OVERLAY.render();
     }
 
     public void destroy() {
@@ -38,6 +43,8 @@ public class Overlay {
         CAMERA_OVERLAY.destroy();
 
         TEXT_OVERLAY.destroy();
+
+        IMAGE_OVERLAY.render();
     }
 
     public void setMediaRecorderSurface(Surface s) {

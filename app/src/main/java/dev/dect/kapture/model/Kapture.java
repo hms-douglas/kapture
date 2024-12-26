@@ -1,17 +1,14 @@
 package dev.dect.kapture.model;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
-import android.media.MediaScannerConnection;
 import android.media.ThumbnailUtils;
 import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.util.Log;
 import android.util.Size;
 
 import java.io.File;
@@ -32,6 +29,8 @@ public class Kapture {
 
     private ArrayList<Extra> EXTRAS;
 
+    private ArrayList<Screenshot> SCREENSHOTS;
+
     private File FILE;
 
     private long DURATION = -1;
@@ -43,18 +42,19 @@ public class Kapture {
     private boolean HAS_MEDIA_DATA = false;
 
     public Kapture(Context ctx) {
-        this(ctx, -1, "", null);
+        this(ctx, -1, "", null, null);
     }
 
     public Kapture(Context ctx, File file) {
-        this(ctx, -1, file.getAbsolutePath(), null);
+        this(ctx, -1, file.getAbsolutePath(), null, null);
     }
 
-    public Kapture(Context ctx, long id, String location, ArrayList<Extra> extras) {
+    public Kapture(Context ctx, long id, String location, ArrayList<Extra> extras, ArrayList<Screenshot> screenshots) {
         this.CONTEXT = ctx;
         this.ID = id;
         this.LOCATION = location;
         this.EXTRAS = extras == null ? new ArrayList<>() : extras;
+        this.SCREENSHOTS = screenshots == null ? new ArrayList<>() : screenshots;
 
         this.FILE = new File(location);
     }
@@ -107,8 +107,20 @@ public class Kapture {
         return EXTRAS;
     }
 
+    public ArrayList<Screenshot> getScreenshots() {
+        return SCREENSHOTS;
+    }
+
+    public File getFile() {
+        return FILE;
+    }
+
     public boolean hasExtras() {
         return !EXTRAS.isEmpty();
+    }
+
+    public boolean hasScreenshots() {
+        return !SCREENSHOTS.isEmpty();
     }
 
     public void setId(long id) {
@@ -121,8 +133,18 @@ public class Kapture {
         this.LOCATION = l;
     }
 
+    public void setFile(File f) {
+        this.FILE = f;
+
+        this.LOCATION = f.getAbsolutePath();
+    }
+
     public void setExtras(ArrayList<Extra> extras) {
         this.EXTRAS = extras == null ? new ArrayList<>() : extras;
+    }
+
+    public void setScreenshots(ArrayList<Screenshot> screenshots) {
+        this.SCREENSHOTS = screenshots == null ? new ArrayList<>() : screenshots;
     }
 
     public void addExtra(Extra extra) {
@@ -131,6 +153,14 @@ public class Kapture {
         }
 
         this.EXTRAS.add(extra);
+    }
+
+    public void addScreenshot(Screenshot screenshot) {
+        if(screenshot.getIdKapture() == -1) {
+            screenshot.setIdKapture(this.ID);
+        }
+
+        this.SCREENSHOTS.add(screenshot);
     }
 
     public void retrieveAllMediaData() {
@@ -207,10 +237,12 @@ public class Kapture {
         return new File(CONTEXT.getCacheDir(), "thumbnail_" + ID + ".jpeg");
     }
 
-    public void notifyMediaScanner() {
-        try {
-            MediaScannerConnection.scanFile(CONTEXT, new String[]{FILE.getAbsolutePath()}, null, null);
-        } catch (Exception ignore) {}
+    public void notifyAllMediaScanner() {
+        KFile.notifyMediaScanner(CONTEXT, FILE);
+
+        for(Extra extra : EXTRAS) {
+            KFile.notifyMediaScanner(CONTEXT, extra.getLocation());
+        }
     }
 
     public static class Extra {
@@ -338,6 +370,55 @@ public class Kapture {
                 default:
                     return null;
             }
+        }
+    }
+
+    public static class Screenshot {
+        private long ID,
+                     ID_KAPTURE;
+
+        private String LOCATION;
+
+        public Screenshot() {
+            this("");
+        }
+
+        public Screenshot(File file) {
+            this(file.getAbsolutePath());
+        }
+
+        public Screenshot(String location) {
+            this(-1, location, -1);
+        }
+
+        public Screenshot(long id, String location, long idKapture) {
+            this.ID = id;
+            this.LOCATION = location;
+            this.ID_KAPTURE = idKapture;
+        }
+
+        public long getId() {
+            return ID;
+        }
+
+        public long getIdKapture() {
+            return ID_KAPTURE;
+        }
+
+        public String getLocation() {
+            return LOCATION;
+        }
+
+        public void setId(long id) {
+            this.ID = id;
+        }
+
+        public void setIdKapture(long idKapture) {
+            this.ID_KAPTURE = idKapture;
+        }
+
+        public void setLocation(String l) {
+            this.LOCATION = l;
         }
     }
 }

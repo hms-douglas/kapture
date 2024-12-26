@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="popup_width_percentage">0.375</dimen>
+
+    <dimen name="tool_bar_search_width">450dp</dimen>
+
+    <dimen name="app_bar_height">@dimen/tool_bar_height</dimen>
+
+    <dimen name="app_bar_container_height">0dp</dimen>
+
+    <dimen name="default_btn_width_percentage">0.35</dimen>
+
+    <dimen name="bottom_bar_width_tablet">@dimen/wrap_content</dimen>
+
+    <dimen name="bottom_bar_space_item_tablet">35dp</dimen>
+</resources>

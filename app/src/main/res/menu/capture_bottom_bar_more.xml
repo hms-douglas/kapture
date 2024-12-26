@@ -23,4 +23,14 @@
             android:id="@+id/menuDeleteExtra"
             android:title="@string/bottom_bar_more_delete_extra" />
     </group>
+
+    <group android:id="@+id/groupScreenshots">
+        <item
+            android:id="@+id/menuShowScreenshot"
+            android:title="@string/bottom_bar_more_show_screenshot" />
+
+        <item
+            android:id="@+id/menuDeleteScreenshot"
+            android:title="@string/bottom_bar_more_delete_screenshot" />
+    </group>
 </menu>

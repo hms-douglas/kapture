@@ -21,6 +21,10 @@ import dev.dect.kapture.service.CapturingService;
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 public class ListSwitch {
+    public interface OnListSwitchListener {
+        default void onChange(boolean b) {}
+    }
+
     public static final int NO_TEXT = -1;
 
     private final int ID_TITLE,
@@ -32,12 +36,24 @@ public class ListSwitch {
 
     private final boolean IS_LAST_FROM_GROUP;
 
+    private final OnListSwitchListener LISTENER;
+
     public ListSwitch(int title, int subTitle, String key, boolean b, boolean lastFromGroup) {
         this.ID_TITLE = title;
         this.ID_SUB_TITLE = subTitle;
         this.SP_KEY = key;
         this.IS_ENABLED = b;
         this.IS_LAST_FROM_GROUP = lastFromGroup;
+        this.LISTENER = null;
+    }
+
+    public ListSwitch(int title, int subTitle, String key, boolean b, OnListSwitchListener listener, boolean lastFromGroup) {
+        this.ID_TITLE = title;
+        this.ID_SUB_TITLE = subTitle;
+        this.SP_KEY = key;
+        this.IS_ENABLED = b;
+        this.IS_LAST_FROM_GROUP = lastFromGroup;
+        this.LISTENER = listener;
     }
 
     public int getIdTitle() {
@@ -66,6 +82,10 @@ public class ListSwitch {
 
     public boolean isLastItemFromGroup(){
         return IS_LAST_FROM_GROUP;
+    }
+
+    public OnListSwitchListener getListener() {
+        return LISTENER;
     }
 
     public static class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
@@ -134,7 +154,11 @@ public class ListSwitch {
 
                 listSwitch.setEnabled(b);
 
-                ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit().putBoolean(listSwitch.getSpKey(), b).apply();
+                ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit().putBoolean(listSwitch.getSpKey(), b).commit();
+
+                if(listSwitch.LISTENER != null) {
+                    listSwitch.getListener().onChange(b);
+                }
             });
         }
 

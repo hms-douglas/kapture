@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:left="-100dp"
-        android:right="-100dp"
-        android:top="-100dp">
+        android:gravity="bottom"
+        android:left="@dimen/group_padding_sides"
+        android:right="@dimen/group_padding_sides">
 
-        <shape android:shape="rectangle">
-            <stroke
-                android:width="@dimen/list_item_divisor_horizontal"
-                android:color="@color/list_item_divisor" />
+        <shape
+            android:shape="rectangle">
+            <size
+                android:height="@dimen/list_item_divisor_horizontal"/>
+            <solid
+                android:color="@color/list_item_divisor"/>
         </shape>
     </item>
 </layer-list>

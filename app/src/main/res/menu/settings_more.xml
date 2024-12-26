@@ -8,10 +8,6 @@
 
     <group android:id="@+id/group1">
         <item
-            android:id="@+id/resetToken"
-            android:title="@string/menu_settings_clear_token" />
-
-        <item
             android:id="@+id/menuOpenAccessibility"
             android:title="@string/menu_settings_open_accessibility" />
 

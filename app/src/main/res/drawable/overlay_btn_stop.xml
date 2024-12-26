@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:height="@dimen/overlay_menu_height"
         android:width="@dimen/overlay_menu_height">
@@ -12,7 +11,7 @@
     </item>
 
     <item android:drawable="@drawable/icon_capture_stop"
-        android:height="@dimen/overlay_menu_height"
-        android:width="@dimen/overlay_menu_height"
+        android:height="24dp"
+        android:width="24dp"
         android:gravity="center"/>
 </layer-list>

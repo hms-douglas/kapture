@@ -4,12 +4,13 @@
 
     <string name="lang_pt_br" translatable="false">Português (BR)</string>
     <string name="lang_en_us" translatable="false">English (US)</string>
-    <string name="lang_auto">Auto</string>
 
     <string name="kapture" translatable="false">Kapture</string>
     <string name="kapture_plural" translatable="false">Kaptures</string>
 
     <!-- ALL BELLOW CAN BE TRANSLATED -->
+
+    <string name="lang_auto">Auto</string>
 
     <string name="quick_settings_tile_start_recording">Start screen capture</string>
     <string name="quick_settings_tile_stop_recording">Stop screen capture</string>
@@ -75,8 +76,8 @@
     <string name="toast_error_viewer_external">No external viewer found!</string>
     <string name="toast_error_file_not_found">File not found!</string>
     <string name="toast_error_no_extras_found">No extras found!</string>
+    <string name="toast_error_no_screenshots_found">No screenshots found!</string>
     <string name="toast_error_generic">Something went wrong!</string>
-    <string name="toast_error_access_required">Access is required!</string>
     <string name="toast_error_check_update">Could not check if new versions are available. Do it manually!</string>
     <string name="toast_error_download">Could not download the file. Do it manually!</string>
     <string name="toast_error_no_wifi">Connect to a WiFi first!</string>
@@ -98,6 +99,8 @@
     <string name="file_name_screenshot">screenshot</string>
 
     <string name="popup_title_extra">Extra</string>
+    <string name="popup_title_screenshot">Screenshot</string>
+    <string name="popup_title_converting">Converting...</string>
 
     <string name="popup_extra_mp3_audio">Audio</string>
     <string name="popup_extra_mp3_internal">Audio: internal</string>
@@ -109,6 +112,7 @@
     <string name="popup_delete_text_1">Do you want to delete the file:</string>
     <string name="popup_delete_text_2">Do you want to delete the selected file(s)?</string>
     <string name="popup_delete_text_3">Do you want to delete the extra files from the selected file(s)?</string>
+    <string name="popup_delete_text_4">Do you want to delete the screenshots files from the selected file(s)?</string>
 
     <string name="popup_remove">Do you want to remove the selected file(s) from the app? No file will be deleted from the device.</string>
 
@@ -124,6 +128,7 @@
 
     <string name="title_captures">Kaptures</string>
     <string name="title_settings">Settings</string>
+    <string name="title_credits">Credits</string>
 
     <string name="setting_group_folder">Folder</string>
 
@@ -133,14 +138,13 @@
     <string name="setting_group_video">Video</string>
 
     <string name="setting_video_resolution">Resolution</string>
-    <string name="setting_video_resolution_auto">Device resolution</string>
+    <string name="setting_video_resolution_auto">Auto</string>
 
     <string name="setting_video_quality">Quality</string>
 
     <string name="setting_video_fps">FPS</string>
 
     <string name="setting_video_file_format">Output format</string>
-    <string name="setting_video_file_format_description">The format of the video output file.</string>
     <string name="setting_video_file_format_mp4">MP4</string>
 
     <string name="setting_video_orientation">Orientation</string>
@@ -170,6 +174,7 @@
     <string name="setting_stop_time_limit">On time limit</string>
     <string name="setting_stop_screen_off">On screen off</string>
     <string name="setting_stop_shake">On shake</string>
+    <string name="setting_stop_battery_level">On battery level</string>
 
     <string name="setting_group_floating_ui">Floating UI</string>
 
@@ -234,6 +239,18 @@
     <string name="setting_draw_show_undo_redo">Show undo/redo buttons</string>
     <string name="setting_draw_show_clear">Show clear button</string>
 
+    <string name="setting_subgroup_floating_ui_image">Image</string>
+    <string name="setting_image_show">Show image</string>
+    <string name="setting_image_location">Image location</string>
+    <string name="setting_image_size">Default size</string>
+    <string name="setting_image_no_image">No image</string>
+
+    <string name="setting_draw_show_screenshot">Show screenshot button</string>
+    <string name="setting_draw_show_screenshot_description">Takes a screenshot of the screen, including the drawing.</string>
+
+    <string name="setting_draw_show_draw_screenshot">Show draw screenshot button</string>
+    <string name="setting_draw_show_draw_screenshot_description">Takes a screenshot of the draw only.</string>
+
     <string name="setting_subgroup_floating_ui_text">Text</string>
     <string name="setting_text_show">Show text</string>
     <string name="setting_text_text">Text</string>
@@ -269,12 +286,13 @@
     <string name="setting_extra_mic_description">Includes microphone audio. Ignores internal audio. Only generated if capturing microphone audio.</string>
 
     <string name="setting_audio_file_format">Output format</string>
-    <string name="setting_audio_file_format_description">The format of the audio output file(s).</string>
     <string name="setting_audio_file_format_mp3">MP3</string>
 
     <string name="setting_group_app">App</string>
 
     <string name="setting_subgroup_app_ui">UI</string>
+
+    <string name="setting_subgroup_app_storage">Storage</string>
 
     <string name="setting_ui_language">Language</string>
     <string name="setting_ui_theme">Theme</string>
@@ -282,6 +300,12 @@
     <string name="setting_ui_theme_auto">Auto</string>
     <string name="setting_ui_theme_dark">Dark</string>
     <string name="setting_ui_theme_light">Light</string>
+
+    <string name="setting_subgroup_app_token">Token</string>
+
+    <string name="settings_app_token_clear">Clear token</string>
+    <string name="settings_app_token_recycle">Recycle token</string>
+    <string name="settings_app_token_recycle_description">The app will try to recycle the token, so you will not have to grant access multiple times. This option may cause crashes!</string>
 
     <string name="setting_subgroup_app_notification">Notification</string>
 
@@ -310,7 +334,6 @@
     <string name="menu_capture_sort">Sort</string>
     <string name="menu_capture_wifi_share">WiFi share</string>
 
-    <string name="menu_settings_clear_token">Clear permission token</string>
     <string name="menu_settings_open_accessibility">Open accessibility</string>
     <string name="menu_settings_show_command">Show command</string>
     <string name="menu_about">About</string>
@@ -318,6 +341,10 @@
     <string name="menu_settings_reset_settings">Reset settings</string>
     <string name="menu_settings_reset_settings_confirm">@string/popup_btn_confirm</string>
     <string name="menu_settings_reset_settings_confirm_description">Reset all settings to the default values?</string>
+
+    <string name="menu_viewer_video_make_seekable">Make video seekable</string>
+    <string name="menu_viewer_video_open_externally">Open externally</string>
+    <string name="menu_viewer_video_share">@string/bottom_bar_share</string>
 
     <string name="command">adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS</string>
 
@@ -333,14 +360,12 @@
     <string name="about_btn_update">Update</string>
     <string name="about_btn_update_description">Download the latest \".apk\" and install it to update your app.</string>
 
-    <string name="title_credits">Credits</string>
-
     <string name="credits">This application was made by <b>Douglas Silva</b> only.
     \n\nResources used are listed bellow. <i>Licenses text can be accessed at the bottom of the page.</i>
     \n\n\u2022 User Interface (UI) was inspired on OneUI from Samsung, documentation is available at <a href="https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf">https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf</a>.
     \n\n\u2022 Some icons are from <b>Google Fonts</b>, available at <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a> under the Apache License Version 2.0.
     \n\n\u2022 Some icons are from <b>OneUIProject</b>, available at <a href="https://github.com/OneUIProject/oneui-icons">https://github.com/OneUIProject/oneui-icons</a> under the MIT License.
-    \n\n\u2022 \"FFmpegKit\" library collection by <b>arthenica</b>, available, along with installation guides and documentation, at <a href="https://arthenica.github.io/ffmpeg-kit/">https://arthenica.github.io/ffmpeg-kit/</a>, under the LGPL v3.0 License.
+    \n\n\u2022 \"FFmpegKit\" library collection by <b>arthenica</b>, available, along with installation guides and documentation, at <a href="https://arthenica.github.io/ffmpeg-kit/">https://arthenica.github.io/ffmpeg-kit/</a>, under the GPL v3.0 License.
     \n\n\u2022 \"lottie-android\" library by <b>LottieFiles</b>, available at <a href="https://github.com/LottieFiles/lottie-android">https://github.com/LottieFiles/lottie-android</a>, under the Apache License Version 2.0.
     \n\n\u2022 \"Free Loader Animation\" lottie animation by <b>Turlo</b>, available at <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, under the Lottie Simple License.
     \n\n\u2022 \"NanoHttpd\" library by <b>Paul S. Hawke, 2001,2005-2013 by Jarno Elonen, 2010 by Konstantinos Togias</b>, available at <a href="https://github.com/NanoHttpd/nanohttpd">https://github.com/NanoHttpd/nanohttpd</a>, under the BSD-3-Clause License.
@@ -356,7 +381,7 @@
 
     <string name="license_mit">MIT License</string>
     <string name="license_apache_v2">Apache License Version 2.0</string>
-    <string name="license_lgpl_v3">LGPL v3.0</string>
+    <string name="license_gpl_v3">GPL v3.0</string>
     <string name="license_lottie">Lottie Simple License</string>
     <string name="license_bsd3_clause">BSD-3-Clause License</string>
     <string name="license_open_font">Open Font License</string>
@@ -375,6 +400,8 @@
     <string name="bottom_bar_more_remove">Remove</string>
     <string name="bottom_bar_more_show_extra">Show extras</string>
     <string name="bottom_bar_more_delete_extra">Delete extras</string>
+    <string name="bottom_bar_more_show_screenshot">Show screenshots</string>
+    <string name="bottom_bar_more_delete_screenshot">Delete screenshots</string>
     <string name="bottom_bar_more_open_with">Open with</string>
 
     <string name="search_hint">Search</string>
@@ -389,7 +416,6 @@
     <string name="html_size">Size</string>
 
     <string name="popup_wifi_share_title">Sharing</string>
-    <string name="popup_wifi_unknown">Unknown</string>
 
     <string name="btn_skip_countdown">Skip countdown</string>
 
@@ -402,4 +428,67 @@
     <string name="fonts_message">Fonts (.ttf) added at the app selected folder will be listed here once the app is restarted.</string>
 
     <string name="relaunch_message">Relaunch is required to prevent errors!</string>
+
+    <string name="floating_btn_start">Start</string>
+    <string name="floating_btn_stop">Stop</string>
+    <string name="floating_btn_pause">Pause</string>
+    <string name="floating_btn_resume">Resume</string>
+
+    <string name="storage_usage">Storage usage</string>
+    <string name="storage_other">Other apps</string>
+    <string name="storage_kaptures">Kapture files</string>
+    <string name="storage_cache">Kapture cache</string>
+    <string name="storage_free">Free</string>
+
+    <string name="storage_message">Kaptures removed from the app or removed externally, and their corresponding files, are not included in the \"Kapture files\" category.</string>
+
+    <string name="storage_btn_clear_cache">Clear cache</string>
+    <string name="storage_btn_clear_cache_description">Kaptures, extra files and screenshots will not be removed.</string>
+
+    <string name="tooltip_go_back">Go back</string>
+    <string name="tooltip_app_info">App info</string>
+    <string name="tooltip_close">Close</string>
+    <string name="tooltip_forward">Forward</string>
+    <string name="tooltip_rewind">Rewind</string>
+    <string name="tooltip_more_options">@string/bottom_bar_more</string>
+    <string name="tooltip_search">Search</string>
+    <string name="tooltip_view_style">View style</string>
+    <string name="tooltip_close_search">Close search</string>
+    <string name="tooltip_voice_search">Voice search</string>
+    <string name="tooltip_start">@string/floating_btn_start</string>
+    <string name="tooltip_stop">@string/floating_btn_stop</string>
+    <string name="tooltip_pause">@string/floating_btn_pause</string>
+    <string name="tooltip_resume">@string/floating_btn_resume</string>
+    <string name="tooltip_select_all">@string/menu_capture_select_all</string>
+    <string name="tooltip_settings">@string/title_settings</string>
+    <string name="tooltip_play_pause_file">Play/Pause</string>
+    <string name="tooltip_play_file">Play</string>
+    <string name="tooltip_share_file">@string/bottom_bar_share</string>
+    <string name="tooltip_delete_file">@string/bottom_bar_delete</string>
+    <string name="tooltip_screenshots">@string/bottom_bar_more_show_screenshot</string>
+    <string name="tooltip_extras">@string/bottom_bar_more_show_extra</string>
+    <string name="tooltip_pen_settings">Size/Color</string>
+    <string name="tooltip_screenshot_screen">Screen screenshot</string>
+    <string name="tooltip_screenshot_draw">Draw screenshot</string>
+    <string name="tooltip_clear">Clear</string>
+    <string name="tooltip_undo">Undo</string>
+    <string name="tooltip_redo">Redo</string>
+    <string name="tooltip_previous_color">Previous color</string>
+    <string name="tooltip_picker">Picker</string>
+    <string name="tooltip_camera">Camera</string>
+    <string name="tooltip_draw">Draw</string>
+    <string name="tooltip_minimize">Minimize</string>
+    <string name="tooltip_hour">Hour</string>
+    <string name="tooltip_minute">Minute</string>
+    <string name="tooltip_second">Second</string>
+
+    <string name="widget_basic">Basic</string>
+    <string name="widget_basic_description">Start or stop a capture</string>
+
+    <string name="widget_full">Full</string>
+    <string name="widget_full_description">Start, stop, pause or resume a capture</string>
+
+    <string name="widget_wifi_share">@string/bottom_bar_wifi_share</string>
+    <string name="widget_wifi_share_description">Shortcut to share all kaptures over wifi</string>
+    <string name="widget_wifi_share_btn">WiFi\nshare</string>
 </resources>

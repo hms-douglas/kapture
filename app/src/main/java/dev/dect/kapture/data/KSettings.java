@@ -21,7 +21,7 @@ import dev.dect.kapture.utils.KFile;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class KSettings {
-    public static final int[] VIDEO_RESOLUTIONS = new int[]{-1, 1080, 720, 640, 540, 480, 360, 240},
+    public static final int[] VIDEO_RESOLUTIONS = new int[]{-1, 1440, 1080, 720, 640, 540, 480, 360, 240},
                               VIDEO_QUALITIES = new int[]{16000000, 14000000, 12000000, 10000000, 8000000, 6000000, 4000000, 2000000, 1000000},
                               VIDEO_FRAME_RATES = new int[]{144, 120, 90, 60, 50, 40, 30, 25, 20, 15, 10},
                               CAMERA_FACING_LENSES = new int[]{CameraCharacteristics.LENS_FACING_FRONT, CameraCharacteristics.LENS_FACING_BACK},
@@ -55,6 +55,7 @@ public class KSettings {
                           IS_TO_USE_TIME_LIMIT,
                           IS_TO_STOP_ON_SCREEN_OFF,
                           IS_TO_STOP_ON_SHAKE,
+                          IS_TO_STOP_ON_BATTERY_LEVEL,
                           IS_CAMERA_SCALABLE,
                           IS_TO_SHOW_TEXT,
                           IS_TO_SHOW_TIME_ON_MENU,
@@ -67,7 +68,10 @@ public class KSettings {
                           IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU,
                           IS_TO_START_MENU_MINIMIZED,
                           IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU,
-                          IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU;
+                          IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU,
+                          IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU,
+                          IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU,
+                          IS_TO_SHOW_IMAGE;
 
     private final int VIDEO_RESOLUTION,
                       VIDEO_QUALITY,
@@ -83,7 +87,9 @@ public class KSettings {
                       TEXT_ALIGNMENT,
                       MINIMIZING_SIDE,
                       MENU_STYLE,
-                      VIDEO_ORIENTATION;
+                      VIDEO_ORIENTATION,
+                      STOP_ON_BATTERY_LEVEL_LEVEL,
+                      IMAGE_SIZE;
 
     private final float MIC_BOOST_VOLUME_FACTOR;
 
@@ -95,7 +101,8 @@ public class KSettings {
                          TEXT_TEXT,
                          TEXT_COLOR,
                          TEXT_BACKGROUND,
-                         TEXT_FONT_PATH;
+                         TEXT_FONT_PATH,
+                         IMAGE_PATH;
 
     public KSettings(Context ctx) {
         this.CONTEXT = ctx;
@@ -117,6 +124,9 @@ public class KSettings {
 
         this.IS_TO_STOP_ON_SCREEN_OFF = sp.getBoolean(Constants.SP_KEY_IS_TO_STOP_ON_SCREEN_OFF, DefaultSettings.IS_TO_STOP_ON_SCREEN_OFF);
         this.IS_TO_STOP_ON_SHAKE = sp.getBoolean(Constants.SP_KEY_IS_TO_STOP_ON_SHAKE, DefaultSettings.IS_TO_STOP_ON_SHAKE);
+
+        this.IS_TO_STOP_ON_BATTERY_LEVEL= sp.getBoolean(Constants.SP_KEY_IS_TO_STOP_ON_BATTERY_LEVEL, DefaultSettings.IS_TO_STOP_ON_BATTERY_LEVEL);
+        this.STOP_ON_BATTERY_LEVEL_LEVEL = sp.getInt(Constants.SP_KEY_STOP_ON_BATTERY_LEVEL_LEVEL, DefaultSettings.STOP_ON_BATTERY_LEVEL_LEVEL);
 
         this.IS_TO_SHOW_FLOATING_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_FLOATING_MENU, DefaultSettings.IS_TO_SHOW_FLOATING_MENU);
         this.MENU_STYLE = sp.getInt(Constants.SP_KEY_MENU_STYLE, DefaultSettings.MENU_STYLE);
@@ -140,6 +150,10 @@ public class KSettings {
             this.TEXT_FONT_PATH = DefaultSettings.TEXT_FONT_PATH;
         }
 
+        this.IS_TO_SHOW_IMAGE = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_IMAGE, DefaultSettings.IS_TO_SHOW_IMAGE);
+        this.IMAGE_PATH = sp.getString(Constants.SP_KEY_IMAGE_PATH, DefaultSettings.IMAGE_PATH);
+        this.IMAGE_SIZE = sp.getInt(Constants.SP_KEY_IMAGE_SIZE, DefaultSettings.IMAGE_SIZE);
+
         this.IS_TO_SHOW_TIME_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_TIME_ON_MENU, DefaultSettings.IS_TO_SHOW_TIME_ON_MENU);
         this.IS_TO_SHOW_TIME_LIMIT_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_TIME_LIMIT_ON_MENU, DefaultSettings.IS_TO_SHOW_TIME_LIMIT_ON_MENU);
         this.IS_TO_SHOW_CLOSE_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_CLOSE_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_CLOSE_BUTTON_ON_MENU);
@@ -154,6 +168,8 @@ public class KSettings {
 
         this.IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU);
         this.IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU);
+        this.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU);
+        this.IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU);
 
         this.CAMERA_SIZE = sp.getInt(Constants.SP_KEY_CAMERA_SIZE, DefaultSettings.CAMERA_SIZE);
         this.CAMERA_FACING_LENS = sp.getInt(Constants.SP_KEY_CAMERA_FACING_LENS, DefaultSettings.CAMERA_FACING_LENS);
@@ -195,21 +211,33 @@ public class KSettings {
         final int min = Math.min(rect.width(), rect.height()),
                   max = Math.max(rect.width(), rect.height());
 
-        if(VIDEO_RESOLUTION == -1) {
-            if(orientation == Configuration.ORIENTATION_PORTRAIT) {
-                return new int[]{min, max};
-            }
+        int videoResolutionUsing = VIDEO_RESOLUTION;
 
-            return new int[]{max, min};
+        if(videoResolutionUsing == -1) {
+            for(int i = 0; i < VIDEO_RESOLUTIONS.length; i++) {
+                if(VIDEO_RESOLUTIONS[i] < 0) {
+                    continue;
+                }
+
+                if(VIDEO_RESOLUTIONS[i] <= min) {
+                    videoResolutionUsing = VIDEO_RESOLUTIONS[i];
+
+                    break;
+                }
+            }
         }
 
-        final int percentage = (VIDEO_RESOLUTION * 100) / max;
+        final float scale = (float) videoResolutionUsing / (float) min;
+
+        int scaled = (int) ((float) max * scale);
+
+        scaled = scaled % 2 == 0 ? scaled : (scaled + 1);
 
         if(orientation == Configuration.ORIENTATION_PORTRAIT) {
-            return new int[]{(min * percentage) / 100, VIDEO_RESOLUTION};
+            return new int[]{videoResolutionUsing, scaled};
         }
 
-        return new int[]{VIDEO_RESOLUTION, (min * percentage) / 100};
+        return new int[]{scaled, videoResolutionUsing};
     }
 
     public boolean isToRecordMic() {
@@ -344,6 +372,14 @@ public class KSettings {
         return IS_TO_STOP_ON_SHAKE;
     }
 
+    public boolean isToStopOnBatteryLevel() {
+        return IS_TO_STOP_ON_BATTERY_LEVEL;
+    }
+
+    public int getStopOnBatteryLevelLevel() {
+        return STOP_ON_BATTERY_LEVEL_LEVEL;
+    }
+
     public int getMilliSecondsTimeLimit() {
         return SECONDS_TIME_LIMIT * 1000;
     }
@@ -402,6 +438,22 @@ public class KSettings {
 
     public boolean isToShowText() {
         return IS_TO_SHOW_TEXT;
+    }
+
+    public boolean isToShowImageEnabled() {
+        return IS_TO_SHOW_IMAGE;
+    }
+
+    public boolean isToShowImage() {
+        return isToShowImageEnabled() && new File(IMAGE_PATH).exists();
+    }
+
+    public String getImagePath(boolean simpleFormat) {
+        return (IMAGE_PATH == null || IMAGE_PATH.trim().equals("") || !new File(IMAGE_PATH).exists()) ? null : (simpleFormat ?  KFile.formatAndroidPathToUser(CONTEXT, IMAGE_PATH) : IMAGE_PATH);
+    }
+
+    public int getImageSize() {
+        return IMAGE_SIZE;
     }
 
     public String getTextText() {
@@ -478,6 +530,14 @@ public class KSettings {
 
     public boolean isToShowClearButtonOnDrawMenu() {
         return IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU;
+    }
+
+    public boolean isToShowScreenshotButtonOnDrawMenu() {
+        return IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU;
+    }
+
+    public boolean isToShowDrawScreenshotButtonOnDrawMenu() {
+        return IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU;
     }
 
     public int getMinimizingSide() {

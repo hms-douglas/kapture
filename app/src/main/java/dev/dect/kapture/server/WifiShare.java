@@ -12,12 +12,17 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
+import dev.dect.kapture.data.DB;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.popup.WiFiSharePopup;
 import dev.dect.kapture.utils.KFile;
 import fi.iki.elonen.NanoHTTPD;
 
 public class WifiShare extends NanoHTTPD {
+    public interface OnWifiShareListener {
+        void onStop();
+    }
+
     public static final int PORT = 8080;
 
     private final Context CONTEXT;
@@ -25,6 +30,12 @@ public class WifiShare extends NanoHTTPD {
     private final ArrayList<Kapture> KAPTURES;
 
     private final ArrayList<String> LOCATIONS = new ArrayList<>();
+
+    private OnWifiShareListener LISTENER;
+
+    public WifiShare(Context ctx) {
+        this(ctx, new DB(ctx).selectAllKaptures(true));
+    }
 
     public WifiShare(Context ctx, ArrayList<Kapture> kaptures) {
         super(PORT);
@@ -37,6 +48,10 @@ public class WifiShare extends NanoHTTPD {
 
             for(Kapture.Extra extra : kapture.getExtras()) {
                 LOCATIONS.add(extra.getLocation());
+            }
+
+            for(Kapture.Screenshot screenshot : kapture.getScreenshots()) {
+                LOCATIONS.add(screenshot.getLocation());
             }
         }
     }
@@ -70,6 +85,12 @@ public class WifiShare extends NanoHTTPD {
         }
     }
 
+    public WifiShare setListener(OnWifiShareListener listener) {
+        this.LISTENER = listener;
+
+        return this;
+    }
+
     public void start() {
         final String ip = getIdAddress();
 
@@ -91,7 +112,13 @@ public class WifiShare extends NanoHTTPD {
                 ip,
                 PORT,
                 KAPTURES.size(),
-                this::stop
+                    () -> {
+                        stop();
+
+                        if(LISTENER != null) {
+                            LISTENER.onStop();
+                        }
+                    }
             ).show();
 
         } catch (Exception ignore) {

@@ -83,7 +83,13 @@ public class ExtraItemAdapter extends RecyclerView.Adapter<ExtraItemAdapter.MyVi
 
                     f.delete();
 
-                    if(EXTRAS.size() - 1 == 0) {
+                    try{
+                        this.EXTRAS.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, EXTRAS.size());
+                    } catch (Exception ignore){}
+
+                    if(EXTRAS.size() <= 0) {
                         Objects.requireNonNull(POPUP).dismissWithAnimation();
 
                         try {

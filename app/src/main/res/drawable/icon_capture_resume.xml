@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
+    android:height="@dimen/floating_btn_icon_pause_resume"
+    android:viewportHeight="24"
     android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:width="@dimen/floating_btn_icon_pause_resume">
+
     <path
         android:fillColor="@color/overlay_icon_stop"
         android:fillType="evenOdd"

@@ -19,6 +19,7 @@
         android:layout_margin="@dimen/popup_margin"
         android:background="@drawable/popup_background"
         android:clickable="true"
+        app:layout_constraintWidth_percent="@dimen/popup_width_percentage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -40,7 +41,8 @@
                 android:foreground="@drawable/btn_viewer_effect"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:tooltipText="@string/tooltip_play_pause_file"/>
 
             <TextView
                 android:id="@+id/fileName"
@@ -66,7 +68,8 @@
                 android:foreground="@drawable/btn_viewer_effect"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:tooltipText="@string/tooltip_close"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

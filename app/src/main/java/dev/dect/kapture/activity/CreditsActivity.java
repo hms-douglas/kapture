@@ -36,7 +36,7 @@ public class CreditsActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnLicenseApacheV2).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_APACHE_V2));
-        findViewById(R.id.btnLicenseLGPLv3).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_LGPL_V3));
+        findViewById(R.id.btnLicenseLGPLv3).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_GPL_V3));
         findViewById(R.id.btnLicenseMit).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_MIT));
         findViewById(R.id.btnLicenseLotties).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_LOTTIES));
         findViewById(R.id.btnLicenseBSD3).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_BSD3_CLAUSE));

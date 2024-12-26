@@ -63,7 +63,19 @@
         <activity
             android:name=".activity.viewer.VideoActivity"
             android:exported="false"
-            android:theme="@style/Theme.FullScreen">
+            android:theme="@style/Theme.FullScreen"
+            android:configChanges="orientation|screenSize|keyboardHidden|colorMode|screenLayout|navigation|fontScale|locale">
+
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.viewer.ImageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FullScreen"
+            android:configChanges="orientation|screenSize|keyboardHidden|colorMode|screenLayout|navigation|fontScale|locale">
 
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -139,6 +151,42 @@
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_SCREEN_OFF" />
             </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".widget.BasicWidget"
+            android:exported="false"
+            android:label="@string/widget_basic">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_basic" />
+        </receiver>
+
+        <receiver
+            android:name=".widget.FullWidget"
+            android:exported="false"
+            android:label="@string/widget_full">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_full" />
+        </receiver>
+
+        <receiver
+            android:name=".widget.WifiShareWidget"
+            android:exported="false"
+            android:label="@string/widget_wifi_share">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_wifi_share" />
         </receiver>
     </application>
 </manifest>

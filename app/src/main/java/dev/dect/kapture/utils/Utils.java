@@ -6,10 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.provider.Settings;
@@ -22,6 +26,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -33,8 +38,15 @@ import java.util.Locale;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.widget.BasicWidget;
+import dev.dect.kapture.widget.FullWidget;
 
 public class Utils {
+    public static void updateWidgets(Context ctx) {
+        BasicWidget.requestUpdateAllFromType(ctx);
+        FullWidget.requestUpdateAllFromType(ctx);
+    }
+
     public static boolean hasWriteSecureSettings(Context ctx) {
         return ctx.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
     }
@@ -43,9 +55,19 @@ public class Utils {
         return (int) new Date().getTime();
     }
 
-    public static void drawTransparencyBackground(Canvas canvas) {
+    public static void drawTransparencyBackgroundOnImageView(ImageView imageView) {
+        final Bitmap b = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
+
+        final Canvas c = new Canvas(b);
+
+        Utils.drawTransparencyBackgroundOnCanvas(c);
+
+        imageView.setImageBitmap(b);
+    }
+
+    public static void drawTransparencyBackgroundOnCanvas(Canvas canvas) {
         final float height = canvas.getHeight(),
-                width = canvas.getWidth();
+                    width = canvas.getWidth();
 
         final Paint paint = new Paint();
 
@@ -67,9 +89,49 @@ public class Utils {
                         y = size * i;
 
                 canvas.drawRect(new RectF(x, y, x + size, y + size), paint);
-
             }
         }
+    }
+
+    public static void drawColorSampleOnImageView(ImageView imageView, int color) {
+        final int colorSize = 100;
+
+        final Bitmap bitmap = Bitmap.createBitmap(colorSize, colorSize, Bitmap.Config.ARGB_8888);
+
+        final Canvas canvas = new Canvas(bitmap);
+
+        Utils.drawTransparencyBackgroundOnCanvas(canvas);
+
+        final Paint paintColor = new Paint();
+
+        paintColor.setStyle(Paint.Style.FILL);
+        paintColor.setColor(color);
+
+        canvas.drawRect(new RectF(0, 0, colorSize, colorSize), paintColor);
+
+        final Bitmap cuttedBitmap = Bitmap.createBitmap(colorSize, colorSize, Bitmap.Config.ARGB_8888);
+
+        final Canvas canvasCut = new Canvas(cuttedBitmap);
+
+        final Rect rect = new Rect(0, 0, colorSize, colorSize);
+
+        final Paint paintCut = new Paint();
+
+        paintCut.setAntiAlias(true);
+
+        canvasCut.drawARGB(0, 0, 0, 0);
+
+        canvasCut.drawCircle(colorSize / 2f, colorSize / 2f, colorSize / 2f, paintCut);
+
+        paintCut.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        canvasCut.drawBitmap(bitmap, rect, rect, paintCut);
+
+        imageView.setImageBitmap(cuttedBitmap);
+    }
+
+    public static boolean isInRange(int value, int min, int max) {
+        return (max > min) ? (value >= min && value <= max) : (value >= max && value <= min);
     }
 
     public static class Converter {

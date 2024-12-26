@@ -3,7 +3,7 @@
     <color name="main">#EB3B2E</color>
     <color name="main_darker">#7A1F18</color>
 
-    <color name="background_transparent">#B4000000</color>
+    <color name="background_transparent">#C9000000</color>
 
     <color name="activity_background">#000000</color>
     <color name="activity_background_transparent">@color/background_transparent</color>
@@ -20,7 +20,6 @@
     <color name="permission_secondary_text">@color/c1</color>
 
     <color name="permission_icon">@color/c0</color>
-    <color name="permission_description">#C1EDEDED</color>
 
     <color name="btn_main_background">@color/main</color>
     <color name="btn_main_color">@color/c0</color>
@@ -36,9 +35,7 @@
     <color name="overlay_icon_secondary">@color/c2</color>
     <color name="overlay_text">@color/c0</color>
     <color name="overlay_text_secondary">@color/c1</color>
-    <color name="overlay_menu_draw_size_color_background">#151515</color>
     <color name="overlay_menu_draw_size_color_background_border">#676767</color>
-
 
     <color name="notification_background">@color/main</color>
 
@@ -63,9 +60,16 @@
     <color name="camera_seekbar_progress_background">@color/c6</color>
     <color name="camera_seekbar_thumb">@color/default_seekbar_thumb</color>
 
+    <color name="image_seekbar_progress">@color/default_seekbar_progress</color>
+    <color name="image_seekbar_progress_background">@color/c6</color>
+    <color name="image_seekbar_thumb">@color/default_seekbar_thumb</color>
+
     <color name="overlay_seekbar_progress">@color/default_seekbar_progress</color>
     <color name="overlay_seekbar_progress_background">@color/c6</color>
     <color name="overlay_seekbar_thumb">@color/default_seekbar_thumb</color>
+
+    <color name="popup_progress">@color/main</color>
+    <color name="popup_progress_background">@color/c6</color>
 
     <color name="bottom_bar_background">@color/activity_background</color>
     <color name="bottom_bar_btn_text_color_on">@color/c0</color>
@@ -74,6 +78,7 @@
     <color name="bottom_bar_icon_text">@color/c1</color>
 
     <color name="floating_btn_background">@color/main</color>
+    <color name="floating_btn_text">@color/c0</color>
 
     <color name="group_container_background">#191919</color>
 
@@ -130,9 +135,9 @@
     <color name="kapture_title">@color/c0</color>
     <color name="kapture_sub_title">@color/c1</color>
     <color name="kapture_image_helper">@color/c3</color>
-    <color name="kapture_extra">@color/c1</color>
+    <color name="kapture_btn">@color/c1</color>
     <color name="kapture_grid_time">@color/kapture_title</color>
-    <color name="kapture_grid_time_background">#703B3B40</color>
+    <color name="kapture_grid_el_background">#923B3B40</color>
 
     <color name="audio_option_button_close">@color/c5</color>
     <color name="audio_option_title">@color/c0</color>
@@ -152,11 +157,23 @@
     <color name="countdown_button">@color/main</color>
     <color name="countdown_button_text">@color/btn_main_color</color>
     <color name="countdown_text">@color/main</color>
-    <color name="countdown_text_shadow">@color/countdown_border</color>
 
     <color name="popup_time_picker_font_focused">@color/main</color>
     <color name="popup_time_picker_font_not_focused">@color/popup_text</color>
 
     <color name="color_picker_label">@color/c1</color>
     <color name="color_picker_value">@color/c0</color>
+
+    <color name="frame_layout_tablet_background">@color/activity_background</color>
+    <color name="frame_layout_tablet_border">@color/c0</color>
+
+    <color name="storage_other">@color/main_darker</color>
+    <color name="storage_kaptures">@color/main</color>
+    <color name="storage_cache">@color/c1</color>
+    <color name="storage_free">@color/c2</color>
+
+    <color name="widget_background">#181818</color>
+    <color name="widget_font">@color/c1</color>
+    <color name="floating_btn_background_widget_disabled">@color/c3</color>
+    <color name="floating_btn_icon_widget_disabled">@color/c2</color>
 </resources>
