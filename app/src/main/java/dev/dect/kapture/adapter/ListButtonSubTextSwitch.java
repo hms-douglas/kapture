@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
-import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.service.CapturingService;
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
@@ -107,8 +107,11 @@ public class ListButtonSubTextSwitch {
     public static class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         private final ArrayList<ListButtonSubTextSwitch> LIST_BUTTONS;
 
-        public Adapter(ArrayList<ListButtonSubTextSwitch> listButtonSubTexts) {
+        private final boolean IS_APP_SETTINGS;
+
+        public Adapter(ArrayList<ListButtonSubTextSwitch> listButtonSubTexts, boolean isAppSettings) {
             this.LIST_BUTTONS = listButtonSubTexts;
+            this.IS_APP_SETTINGS = isAppSettings;
         }
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -179,7 +182,7 @@ public class ListButtonSubTextSwitch {
 
                 listButtonSubTextSwitch.setEnabled(b);
 
-                ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit().putBoolean(listButtonSubTextSwitch.getSpKey(), b).apply();
+                (IS_APP_SETTINGS ? KSharedPreferences.getAppSp(ctx) : KSharedPreferences.getActiveProfileSp(ctx)).edit().putBoolean(listButtonSubTextSwitch.getSpKey(), b).apply();
             });
         }
 

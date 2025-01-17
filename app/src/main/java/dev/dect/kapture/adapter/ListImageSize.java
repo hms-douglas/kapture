@@ -22,6 +22,7 @@ import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DefaultSettings;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.utils.Utils;
 
@@ -72,7 +73,7 @@ public class ListImageSize {
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             final Context ctx = holder.EL_IMAGE_EXAMPLE.getContext();
 
-            final SharedPreferences sp = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
+            final SharedPreferences sp = KSharedPreferences.getActiveProfileSp(ctx);
 
             final KSettings ks = new KSettings(ctx);
 
@@ -106,10 +107,10 @@ public class ListImageSize {
 
                 holder.EL_IMAGE_EXAMPLE.setLayoutParams(layoutParams);
 
-                sp.edit().putInt(Constants.SP_KEY_IMAGE_SIZE, (int) value).apply();
+                sp.edit().putInt(Constants.Sp.Profile.IMAGE_SIZE, (int) value).apply();
             });
 
-            holder.EL_SLIDER.setValue(sp.getInt(Constants.SP_KEY_IMAGE_SIZE, DefaultSettings.IMAGE_SIZE));
+            holder.EL_SLIDER.setValue(sp.getInt(Constants.Sp.Profile.IMAGE_SIZE, DefaultSettings.IMAGE_SIZE));
         }
 
         @Override

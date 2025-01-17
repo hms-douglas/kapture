@@ -53,16 +53,16 @@ public class TextOverlay {
         Utils.Overlay.setLayoutParametersPosition(
             layoutParams,
             CONTEXT,
-            Constants.SP_KEY_OVERLAY_TEXT_X_POS,
-            Constants.SP_KEY_OVERLAY_TEXT_Y_POS
+            Constants.Sp.Profile.OVERLAY_TEXT_X_POS,
+            Constants.Sp.Profile.OVERLAY_TEXT_Y_POS
         );
 
         Utils.Overlay.setDefaultDraggableView(
             VIEW,
             layoutParams,
             WINDOW_MANAGER,
-            Constants.SP_KEY_OVERLAY_TEXT_X_POS,
-            Constants.SP_KEY_OVERLAY_TEXT_Y_POS
+            Constants.Sp.Profile.OVERLAY_TEXT_X_POS,
+            Constants.Sp.Profile.OVERLAY_TEXT_Y_POS
         );
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {

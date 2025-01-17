@@ -1,5 +1,6 @@
 package dev.dect.kapture.data;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -10,6 +11,8 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.view.Gravity;
 import android.view.WindowManager;
 
+import org.json.JSONArray;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +21,7 @@ import java.util.stream.Stream;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.utils.KFile;
+import dev.dect.kapture.utils.Utils;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class KSettings {
@@ -34,7 +38,6 @@ public class KSettings {
     public static final String[] INTERNAL_FONTS_PATHS = new String[]{"font/roboto.ttf", "font/roboto_mono.ttf", "font/bebas_neue.ttf", "font/oswald.ttf", "font/pacifico.ttf", "font/permanent_marker.ttf", "font/silkscreen.ttf", "font/monoton.ttf", "font/orbitron.ttf"};
 
     public static final float[] MICROPHONE_BOOST = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f, 11f, 12f, 13f, 14f, 15f, 20f, 25f};
-
 
     private final Context CONTEXT;
 
@@ -71,7 +74,12 @@ public class KSettings {
                           IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU,
                           IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU,
                           IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU,
-                          IS_TO_SHOW_IMAGE;
+                          IS_TO_SHOW_IMAGE,
+                          IS_TO_BEFORE_START_URL,
+                          IS_TO_BEFORE_START_SET_MEDIA_VOLUME,
+                          IS_TO_BEFORE_START_LAUNCH_APP,
+                          IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU,
+                          IS_TO_OPEN_SHORTCUTS_ON_POPUP;
 
     private final int VIDEO_RESOLUTION,
                       VIDEO_QUALITY,
@@ -89,7 +97,8 @@ public class KSettings {
                       MENU_STYLE,
                       VIDEO_ORIENTATION,
                       STOP_ON_BATTERY_LEVEL_LEVEL,
-                      IMAGE_SIZE;
+                      IMAGE_SIZE,
+                      BEFORE_START_MEDIA_VOLUME_PERCENTAGE;
 
     private final float MIC_BOOST_VOLUME_FACTOR;
 
@@ -102,47 +111,52 @@ public class KSettings {
                          TEXT_COLOR,
                          TEXT_BACKGROUND,
                          TEXT_FONT_PATH,
-                         IMAGE_PATH;
+                         IMAGE_PATH,
+                         BEFORE_START_URL,
+                         BEFORE_START_LAUNCH_APP_PACKAGE;
+
+    private JSONArray SHORTCUTS_BUTTON_ON_MENU;
 
     public KSettings(Context ctx) {
         this.CONTEXT = ctx;
 
-        final SharedPreferences sp = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
+        final SharedPreferences spProfile = KSharedPreferences.getActiveProfileSp(ctx),
+                                spApp = KSharedPreferences.getAppSp(ctx);
 
-        this.IS_TO_RECORD_MIC = sp.getBoolean(Constants.SP_KEY_IS_TO_RECORD_MIC, DefaultSettings.IS_TO_RECORD_MIC);
-        this.IS_TO_BOOST_MIC_VOLUME = sp.getBoolean(Constants.SP_KEY_IS_TO_BOOST_MIC_VOLUME, DefaultSettings.IS_TO_BOOST_MIC_VOLUME);
-        this.MIC_BOOST_VOLUME_FACTOR = sp.getFloat(Constants.SP_KEY_MIC_BOOST_VOLUME_FACTOR, DefaultSettings.MIC_BOOST_VOLUME_FACTOR);
+        this.IS_TO_RECORD_MIC = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_RECORD_MIC, DefaultSettings.IS_TO_RECORD_MIC);
+        this.IS_TO_BOOST_MIC_VOLUME = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_BOOST_MIC_VOLUME, DefaultSettings.IS_TO_BOOST_MIC_VOLUME);
+        this.MIC_BOOST_VOLUME_FACTOR = spProfile.getFloat(Constants.Sp.Profile.MIC_BOOST_VOLUME_FACTOR, DefaultSettings.MIC_BOOST_VOLUME_FACTOR);
 
-        this.IS_TO_RECORD_INTERNAL_SOUND = sp.getBoolean(Constants.SP_KEY_IS_TO_RECORD_INTERNAL_AUDIO, DefaultSettings.IS_TO_RECORD_INTERNAL_AUDIO);
-        this.IS_TO_RECORD_INTERNAL_SOUND_IN_STEREO = sp.getBoolean(Constants.SP_KEY_IS_TO_RECORD_SOUND_IN_STEREO, DefaultSettings.IS_TO_RECORD_SOUND_IN_STEREO);
+        this.IS_TO_RECORD_INTERNAL_SOUND = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_RECORD_INTERNAL_AUDIO, DefaultSettings.IS_TO_RECORD_INTERNAL_AUDIO);
+        this.IS_TO_RECORD_INTERNAL_SOUND_IN_STEREO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_RECORD_SOUND_IN_STEREO, DefaultSettings.IS_TO_RECORD_SOUND_IN_STEREO);
 
-        this.IS_TO_DELAY_START_RECORDING = sp.getBoolean(Constants.SP_KEY_IS_TO_DELAY_START_RECORDING, DefaultSettings.IS_TO_DELAY_START_RECORDING);
-        this.SECONDS_TO_START_RECORDING = sp.getInt(Constants.SP_KEY_SECONDS_TO_START_RECORDING, DefaultSettings.SECONDS_TO_START_RECORDING);
+        this.IS_TO_DELAY_START_RECORDING = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_DELAY_START_RECORDING, DefaultSettings.IS_TO_DELAY_START_RECORDING);
+        this.SECONDS_TO_START_RECORDING = spProfile.getInt(Constants.Sp.Profile.SECONDS_TO_START_RECORDING, DefaultSettings.SECONDS_TO_START_RECORDING);
 
-        this.IS_TO_USE_TIME_LIMIT = sp.getBoolean(Constants.SP_KEY_IS_TO_USE_TIME_LIMIT, DefaultSettings.IS_TO_USE_TIME_LIMIT);
-        this.SECONDS_TIME_LIMIT = sp.getInt(Constants.SP_KEY_SECONDS_TIME_LIMIT, DefaultSettings.SECONDS_TIME_LIMIT);
+        this.IS_TO_USE_TIME_LIMIT = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_USE_TIME_LIMIT, DefaultSettings.IS_TO_USE_TIME_LIMIT);
+        this.SECONDS_TIME_LIMIT = spProfile.getInt(Constants.Sp.Profile.SECONDS_TIME_LIMIT, DefaultSettings.SECONDS_TIME_LIMIT);
 
-        this.IS_TO_STOP_ON_SCREEN_OFF = sp.getBoolean(Constants.SP_KEY_IS_TO_STOP_ON_SCREEN_OFF, DefaultSettings.IS_TO_STOP_ON_SCREEN_OFF);
-        this.IS_TO_STOP_ON_SHAKE = sp.getBoolean(Constants.SP_KEY_IS_TO_STOP_ON_SHAKE, DefaultSettings.IS_TO_STOP_ON_SHAKE);
+        this.IS_TO_STOP_ON_SCREEN_OFF = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_STOP_ON_SCREEN_OFF, DefaultSettings.IS_TO_STOP_ON_SCREEN_OFF);
+        this.IS_TO_STOP_ON_SHAKE = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_STOP_ON_SHAKE, DefaultSettings.IS_TO_STOP_ON_SHAKE);
 
-        this.IS_TO_STOP_ON_BATTERY_LEVEL= sp.getBoolean(Constants.SP_KEY_IS_TO_STOP_ON_BATTERY_LEVEL, DefaultSettings.IS_TO_STOP_ON_BATTERY_LEVEL);
-        this.STOP_ON_BATTERY_LEVEL_LEVEL = sp.getInt(Constants.SP_KEY_STOP_ON_BATTERY_LEVEL_LEVEL, DefaultSettings.STOP_ON_BATTERY_LEVEL_LEVEL);
+        this.IS_TO_STOP_ON_BATTERY_LEVEL= spProfile.getBoolean(Constants.Sp.Profile.IS_TO_STOP_ON_BATTERY_LEVEL, DefaultSettings.IS_TO_STOP_ON_BATTERY_LEVEL);
+        this.STOP_ON_BATTERY_LEVEL_LEVEL = spProfile.getInt(Constants.Sp.Profile.STOP_ON_BATTERY_LEVEL_LEVEL, DefaultSettings.STOP_ON_BATTERY_LEVEL_LEVEL);
 
-        this.IS_TO_SHOW_FLOATING_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_FLOATING_MENU, DefaultSettings.IS_TO_SHOW_FLOATING_MENU);
-        this.MENU_STYLE = sp.getInt(Constants.SP_KEY_MENU_STYLE, DefaultSettings.MENU_STYLE);
+        this.IS_TO_SHOW_FLOATING_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_FLOATING_MENU, DefaultSettings.IS_TO_SHOW_FLOATING_MENU);
+        this.MENU_STYLE = spProfile.getInt(Constants.Sp.Profile.MENU_STYLE, DefaultSettings.MENU_STYLE);
 
-        this.IS_TO_SHOW_FLOATING_CAMERA = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_FLOATING_CAMERA, DefaultSettings.IS_TO_SHOW_FLOATING_CAMERA);
-        this.IS_TO_TOGGLE_CAMERA_ORIENTATION = sp.getBoolean(Constants.SP_KEY_IS_TO_TOGGLE_CAMERA_ORIENTATION, DefaultSettings.IS_TO_TOGGLE_CAMERA_ORIENTATION);
-        this.IS_CAMERA_SCALABLE = sp.getBoolean(Constants.SP_KEY_IS_CAMERA_SCALABLE, DefaultSettings.IS_CAMERA_SCALABLE);
+        this.IS_TO_SHOW_FLOATING_CAMERA = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_FLOATING_CAMERA, DefaultSettings.IS_TO_SHOW_FLOATING_CAMERA);
+        this.IS_TO_TOGGLE_CAMERA_ORIENTATION = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_TOGGLE_CAMERA_ORIENTATION, DefaultSettings.IS_TO_TOGGLE_CAMERA_ORIENTATION);
+        this.IS_CAMERA_SCALABLE = spProfile.getBoolean(Constants.Sp.Profile.IS_CAMERA_SCALABLE, DefaultSettings.IS_CAMERA_SCALABLE);
 
-        this.IS_TO_SHOW_TEXT = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_TEXT, DefaultSettings.IS_TO_SHOW_TEXT);
-        this.TEXT_TEXT = sp.getString(Constants.SP_KEY_TEXT_TEXT, ctx.getString(R.string.app_name));
-        this.TEXT_SIZE = sp.getInt(Constants.SP_KEY_TEXT_SIZE, DefaultSettings.TEXT_SIZE);
-        this.TEXT_COLOR = sp.getString(Constants.SP_KEY_TEXT_COLOR, DefaultSettings.TEXT_COLOR);
-        this.TEXT_BACKGROUND = sp.getString(Constants.SP_KEY_TEXT_BACKGROUND, DefaultSettings.TEXT_BACKGROUND);
-        this.TEXT_ALIGNMENT = sp.getInt(Constants.SP_KEY_TEXT_ALIGNMENT, DefaultSettings.TEXT_ALIGNMENT);
+        this.IS_TO_SHOW_TEXT = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_TEXT, DefaultSettings.IS_TO_SHOW_TEXT);
+        this.TEXT_TEXT = spProfile.getString(Constants.Sp.Profile.TEXT_TEXT, ctx.getString(R.string.app_name));
+        this.TEXT_SIZE = spProfile.getInt(Constants.Sp.Profile.TEXT_SIZE, DefaultSettings.TEXT_SIZE);
+        this.TEXT_COLOR = spProfile.getString(Constants.Sp.Profile.TEXT_COLOR, DefaultSettings.TEXT_COLOR);
+        this.TEXT_BACKGROUND = spProfile.getString(Constants.Sp.Profile.TEXT_BACKGROUND, DefaultSettings.TEXT_BACKGROUND);
+        this.TEXT_ALIGNMENT = spProfile.getInt(Constants.Sp.Profile.TEXT_ALIGNMENT, DefaultSettings.TEXT_ALIGNMENT);
 
-        final String fontPath = sp.getString(Constants.SP_KEY_TEXT_FONT_PATH, DefaultSettings.TEXT_FONT_PATH);
+        final String fontPath = spProfile.getString(Constants.Sp.Profile.TEXT_FONT_PATH, DefaultSettings.TEXT_FONT_PATH);
 
         if(fontPath.startsWith("font/") || new File(fontPath).exists()) {
             this.TEXT_FONT_PATH = fontPath;
@@ -150,50 +164,70 @@ public class KSettings {
             this.TEXT_FONT_PATH = DefaultSettings.TEXT_FONT_PATH;
         }
 
-        this.IS_TO_SHOW_IMAGE = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_IMAGE, DefaultSettings.IS_TO_SHOW_IMAGE);
-        this.IMAGE_PATH = sp.getString(Constants.SP_KEY_IMAGE_PATH, DefaultSettings.IMAGE_PATH);
-        this.IMAGE_SIZE = sp.getInt(Constants.SP_KEY_IMAGE_SIZE, DefaultSettings.IMAGE_SIZE);
+        this.IS_TO_SHOW_IMAGE = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_IMAGE, DefaultSettings.IS_TO_SHOW_IMAGE);
+        this.IMAGE_PATH = spProfile.getString(Constants.Sp.Profile.IMAGE_PATH, DefaultSettings.IMAGE_PATH);
+        this.IMAGE_SIZE = spProfile.getInt(Constants.Sp.Profile.IMAGE_SIZE, DefaultSettings.IMAGE_SIZE);
 
-        this.IS_TO_SHOW_TIME_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_TIME_ON_MENU, DefaultSettings.IS_TO_SHOW_TIME_ON_MENU);
-        this.IS_TO_SHOW_TIME_LIMIT_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_TIME_LIMIT_ON_MENU, DefaultSettings.IS_TO_SHOW_TIME_LIMIT_ON_MENU);
-        this.IS_TO_SHOW_CLOSE_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_CLOSE_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_CLOSE_BUTTON_ON_MENU);
-        this.IS_TO_SHOW_CAMERA_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_CAMERA_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_CAMERA_BUTTON_ON_MENU);
-        this.IS_TO_SHOW_DRAW_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_DRAW_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_DRAW_BUTTON_ON_MENU);
-        this.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU);
-        this.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU);
+        this.IS_TO_SHOW_TIME_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_TIME_ON_MENU, DefaultSettings.IS_TO_SHOW_TIME_ON_MENU);
+        this.IS_TO_SHOW_TIME_LIMIT_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_TIME_LIMIT_ON_MENU, DefaultSettings.IS_TO_SHOW_TIME_LIMIT_ON_MENU);
+        this.IS_TO_SHOW_CLOSE_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_CLOSE_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_CLOSE_BUTTON_ON_MENU);
+        this.IS_TO_SHOW_CAMERA_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_CAMERA_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_CAMERA_BUTTON_ON_MENU);
+        this.IS_TO_SHOW_DRAW_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_DRAW_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_DRAW_BUTTON_ON_MENU);
+        this.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU);
+        this.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU);
 
-        this.IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU);
-        this.IS_TO_START_MENU_MINIMIZED = sp.getBoolean(Constants.SP_KEY_IS_TO_START_MENU_MINIMIZED, DefaultSettings.IS_TO_START_MENU_MINIMIZED);
-        this.MINIMIZING_SIDE = sp.getInt(Constants.SP_KEY_MINIMIZING_SIDE, DefaultSettings.MINIMIZING_SIDE);
+        this.IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU);
 
-        this.IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU);
-        this.IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU);
-        this.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU);
-        this.IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU = sp.getBoolean(Constants.SP_KEY_IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU);
+        try {
+            this.SHORTCUTS_BUTTON_ON_MENU = new JSONArray(spProfile.getString(Constants.Sp.Profile.SHORTCUTS_BUTTON_ON_MENU, DefaultSettings.SHORTCUTS_BUTTON_ON_MENU));
+        } catch (Exception ignore) {
+            this.SHORTCUTS_BUTTON_ON_MENU = new JSONArray();
+            this.SHORTCUTS_BUTTON_ON_MENU.put(Constants.HOME_PACKAGE_NAME);
+        }
 
-        this.CAMERA_SIZE = sp.getInt(Constants.SP_KEY_CAMERA_SIZE, DefaultSettings.CAMERA_SIZE);
-        this.CAMERA_FACING_LENS = sp.getInt(Constants.SP_KEY_CAMERA_FACING_LENS, DefaultSettings.CAMERA_FACING_LENS);
-        this.CAMERA_SHAPE = sp.getInt(Constants.SP_KEY_CAMERA_SHAPE, DefaultSettings.CAMERA_SHAPE);
+        this.IS_TO_OPEN_SHORTCUTS_ON_POPUP = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_OPEN_SHORTCUTS_ON_POPUP, DefaultSettings.IS_TO_OPEN_SHORTCUTS_ON_POPUP);
 
-        this.VIDEO_RESOLUTION = sp.getInt(Constants.SP_KEY_VIDEO_RESOLUTION, DefaultSettings.VIDEO_RESOLUTION);
-        this.VIDEO_QUALITY = sp.getInt(Constants.SP_KEY_VIDEO_QUALITY_bitRate, DefaultSettings.VIDEO_QUALITY_bitRate);
-        this.VIDEO_FRAME_RATE = sp.getInt(Constants.SP_KEY_VIDEO_FRAME_RATE, DefaultSettings.VIDEO_FRAME_RATE);
-        this.VIDEO_ORIENTATION = sp.getInt(Constants.SP_KEY_VIDEO_ORIENTATION, DefaultSettings.VIDEO_ORIENTATION);
+        this.IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_MINIMIZE_BUTTON_ON_MENU);
+        this.IS_TO_START_MENU_MINIMIZED = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_START_MENU_MINIMIZED, DefaultSettings.IS_TO_START_MENU_MINIMIZED);
+        this.MINIMIZING_SIDE = spProfile.getInt(Constants.Sp.Profile.MINIMIZING_SIDE, DefaultSettings.MINIMIZING_SIDE);
 
-        this.IS_TO_GENERATE_MP3_AUDIO = sp.getBoolean(Constants.SP_KEY_IS_TO_GENERATE_MP3_AUDIO, DefaultSettings.IS_TO_GENERATE_MP3_AUDIO);
-        this.IS_TO_GENERATE_MP3_ONLY_INTERNAL = sp.getBoolean(Constants.SP_KEY_IS_TO_GENERATE_MP3_ONLY_INTERNAL, DefaultSettings.IS_TO_GENERATE_MP3_ONLY_INTERNAL);
-        this.IS_TO_GENERATE_MP3_ONLY_MIC = sp.getBoolean(Constants.SP_KEY_IS_TO_GENERATE_MP3_ONLY_MIC, DefaultSettings.IS_TO_GENERATE_MP3_ONLY_MIC);
+        this.IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_UNDO_REDO_BUTTON_ON_DRAW_MENU);
+        this.IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_CLEAR_BUTTON_ON_DRAW_MENU);
+        this.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_DRAW_MENU);
+        this.IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU, DefaultSettings.IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU);
 
-        this.IS_TO_GENERATE_MP4_NO_AUDIO = sp.getBoolean(Constants.SP_KEY_IS_TO_GENERATE_MP4_NO_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_NO_AUDIO);
-        this.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO = sp.getBoolean(Constants.SP_KEY_IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO);
-        this.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO = sp.getBoolean(Constants.SP_KEY_IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO);
+        this.IS_TO_BEFORE_START_URL = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_BEFORE_START_URL, DefaultSettings.IS_TO_BEFORE_START_URL);
+        this.BEFORE_START_URL = spProfile.getString(Constants.Sp.Profile.BEFORE_START_URL, DefaultSettings.BEFORE_START_URL);
 
-        this.SAVE_LOCATION = new File(sp.getString(Constants.SP_KEY_FILE_SAVING_PATH, KFile.getDefaultFileLocation(ctx).getAbsolutePath()));
+        this.IS_TO_BEFORE_START_SET_MEDIA_VOLUME = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_BEFORE_START_SET_MEDIA_VOLUME, DefaultSettings.IS_TO_BEFORE_START_SET_MEDIA_VOLUME);
+        this.BEFORE_START_MEDIA_VOLUME_PERCENTAGE = spProfile.getInt(Constants.Sp.Profile.BEFORE_START_MEDIA_VOLUME_PERCENTAGE, DefaultSettings.BEFORE_START_MEDIA_VOLUME_PERCENTAGE);
 
-        this.SAVE_SCREENSHOT_LOCATION = new File(sp.getString(Constants.SP_KEY_SCREENSHOT_FILE_SAVING_PATH, KFile.getDefaultScreenshotFileLocation(ctx).getAbsolutePath()));
+        this.IS_TO_BEFORE_START_LAUNCH_APP = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_BEFORE_START_LAUNCH_APP, DefaultSettings.IS_TO_BEFORE_START_LAUNCH_APP);
+        this.BEFORE_START_LAUNCH_APP_PACKAGE = spProfile.getString(Constants.Sp.Profile.BEFORE_START_LAUNCH_APP_PACKAGE, DefaultSettings.BEFORE_START_LAUNCH_APP_PACKAGE);
 
-        this.CAPTURE_FILE_FORMAT = sp.getString(Constants.SP_KEY_VIDEO_FILE_FORMAT, DefaultSettings.CAPTURE_FILE_FORMAT);
-        this.AUDIO_FILE_FORMAT = sp.getString(Constants.SP_KEY_AUDIO_FILE_FORMAT, DefaultSettings.AUDIO_FILE_FORMAT);
+        this.CAMERA_SIZE = spProfile.getInt(Constants.Sp.Profile.CAMERA_SIZE, DefaultSettings.CAMERA_SIZE);
+        this.CAMERA_FACING_LENS = spProfile.getInt(Constants.Sp.Profile.CAMERA_FACING_LENS, DefaultSettings.CAMERA_FACING_LENS);
+        this.CAMERA_SHAPE = spProfile.getInt(Constants.Sp.Profile.CAMERA_SHAPE, DefaultSettings.CAMERA_SHAPE);
+
+        this.VIDEO_RESOLUTION = spProfile.getInt(Constants.Sp.Profile.VIDEO_RESOLUTION, DefaultSettings.VIDEO_RESOLUTION);
+        this.VIDEO_QUALITY = spProfile.getInt(Constants.Sp.Profile.VIDEO_QUALITY_bitRate, DefaultSettings.VIDEO_QUALITY_bitRate);
+        this.VIDEO_FRAME_RATE = spProfile.getInt(Constants.Sp.Profile.VIDEO_FRAME_RATE, DefaultSettings.VIDEO_FRAME_RATE);
+        this.VIDEO_ORIENTATION = spProfile.getInt(Constants.Sp.Profile.VIDEO_ORIENTATION, DefaultSettings.VIDEO_ORIENTATION);
+
+        this.IS_TO_GENERATE_MP3_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP3_AUDIO, DefaultSettings.IS_TO_GENERATE_MP3_AUDIO);
+        this.IS_TO_GENERATE_MP3_ONLY_INTERNAL = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP3_ONLY_INTERNAL, DefaultSettings.IS_TO_GENERATE_MP3_ONLY_INTERNAL);
+        this.IS_TO_GENERATE_MP3_ONLY_MIC = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP3_ONLY_MIC, DefaultSettings.IS_TO_GENERATE_MP3_ONLY_MIC);
+
+        this.IS_TO_GENERATE_MP4_NO_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP4_NO_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_NO_AUDIO);
+        this.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO);
+        this.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO);
+
+        this.SAVE_LOCATION = new File(spApp.getString(Constants.Sp.App.FILE_SAVING_PATH, KFile.getDefaultFileLocation(ctx).getAbsolutePath()));
+
+        this.SAVE_SCREENSHOT_LOCATION = new File(spApp.getString(Constants.Sp.App.SCREENSHOT_FILE_SAVING_PATH, KFile.getDefaultScreenshotFileLocation(ctx).getAbsolutePath()));
+
+        this.CAPTURE_FILE_FORMAT = spProfile.getString(Constants.Sp.Profile.VIDEO_FILE_FORMAT, DefaultSettings.CAPTURE_FILE_FORMAT);
+        this.AUDIO_FILE_FORMAT = spProfile.getString(Constants.Sp.Profile.AUDIO_FILE_FORMAT, DefaultSettings.AUDIO_FILE_FORMAT);
 
         final int[] wh = getSize(ctx, VIDEO_ORIENTATION);
 
@@ -520,6 +554,14 @@ public class KSettings {
         return IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU;
     }
 
+    public boolean isToShowShortcutsButtonOnMenu() {
+        return IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU;
+    }
+
+    public boolean isToOpenShortcutOnPopup() {
+        return IS_TO_OPEN_SHORTCUTS_ON_POPUP;
+    }
+
     public boolean isToStartMenuMinimized() {
         return IS_TO_START_MENU_MINIMIZED;
     }
@@ -540,6 +582,38 @@ public class KSettings {
         return IS_TO_SHOW_DRAW_SCREENSHOT_BUTTON_ON_DRAW_MENU;
     }
 
+    public boolean isToOpenUrlBeforeStart() {
+        return IS_TO_BEFORE_START_URL;
+    }
+
+    public String getBeforeStartUrl() {
+        return BEFORE_START_URL;
+    }
+
+    public boolean isToSetMediaVolumeBeforeStart() {
+        return IS_TO_BEFORE_START_SET_MEDIA_VOLUME;
+    }
+
+    public int getBeforeStartMediaVolumePercentage() {
+        return BEFORE_START_MEDIA_VOLUME_PERCENTAGE;
+    }
+
+    public boolean isToSetLaunchAppBeforeStart() {
+        return IS_TO_BEFORE_START_LAUNCH_APP;
+    }
+
+    public String getBeforeStartLaunchAppPackage() {
+        return BEFORE_START_LAUNCH_APP_PACKAGE;
+    }
+
+    public String getBeforeStartLaunchAppName() {
+        if(getBeforeStartLaunchAppPackage().equals(Constants.HOME_PACKAGE_NAME)) {
+            return CONTEXT.getString(R.string.package_launch_home);
+        }
+
+        return Utils.Package.getAppName(CONTEXT, getBeforeStartLaunchAppPackage());
+    }
+
     public int getMinimizingSide() {
         return MINIMIZING_SIDE;
     }
@@ -556,6 +630,38 @@ public class KSettings {
         }
 
         return "?";
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public JSONArray getShortcutsPackagesForMenu() {
+        JSONArray shortcuts = new JSONArray();
+
+        boolean update = false;
+
+        try {
+            for(int i = 0; i < SHORTCUTS_BUTTON_ON_MENU.length(); i++) {
+                if(Utils.Package.isAppInstalledAndEnabled(CONTEXT, SHORTCUTS_BUTTON_ON_MENU.getString(i))) {
+                    shortcuts.put(SHORTCUTS_BUTTON_ON_MENU.getString(i));
+                } else {
+                    update = true;
+                }
+            }
+
+            SHORTCUTS_BUTTON_ON_MENU = shortcuts;
+
+            if(update) {
+                KSharedPreferences.getActiveProfileSp(CONTEXT).edit().putString(Constants.Sp.Profile.SHORTCUTS_BUTTON_ON_MENU, shortcuts.toString()).commit();
+            }
+        } catch (Exception ignore) {
+            shortcuts = new JSONArray();
+            shortcuts.put(Constants.HOME_PACKAGE_NAME);
+        }
+
+        return shortcuts;
+    }
+
+    public String getShortcutsNamesFormattedForMenu() {
+        return Utils.Converter.jsonArrayPacksToStringAppNames(CONTEXT, getShortcutsPackagesForMenu());
     }
 
     public static String[] getMenuStylesFormatted(Context ctx) {

@@ -83,7 +83,7 @@ public class AboutActivity extends AppCompatActivity {
 
         findViewById(R.id.btnCredits).setOnClickListener((v) -> startActivity(new Intent(this, CreditsActivity.class)));
 
-        findViewById(R.id.btnGithub).setOnClickListener((v) -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.GITHUB_REPOSITORY_URL))));
+        findViewById(R.id.btnGithub).setOnClickListener((v) -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.Url.App.REPOSITORY))));
 
         BUTTON_UPDATE.setOnClickListener((v) -> {
             final DialogPopup updateDialog = new DialogPopup(
@@ -135,10 +135,10 @@ public class AboutActivity extends AppCompatActivity {
             }
 
             try {
-                if(getPackageManager().getPackageInfo(getPackageName(), 0).versionCode < data.getInt(Constants.GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_CODE)) {
-                    LATEST_VERSION_EL.setText(getString(R.string.about_version_available) + " " + data.getString(Constants.GITHUB_PROJECT_LATEST_VERSION_TAG_VERSION_NAME));
+                if(getPackageManager().getPackageInfo(getPackageName(), 0).versionCode < data.getInt(Constants.Url.App.KeyTag.LATEST_VERSION_VERSION_CODE)) {
+                    LATEST_VERSION_EL.setText(getString(R.string.about_version_available) + " " + data.getString(Constants.Url.App.KeyTag.LATEST_VERSION_VERSION_NAME));
 
-                    LATEST_URL_DOWNLOAD = data.getString(Constants.GITHUB_PROJECT_LATEST_VERSION_TAG_LINK);
+                    LATEST_URL_DOWNLOAD = data.getString(Constants.Url.App.KeyTag.LATEST_VERSION_LINK);
 
                     BUTTON_UPDATE.setVisibility(View.VISIBLE);
                 }
@@ -168,7 +168,7 @@ public class AboutActivity extends AppCompatActivity {
             String data = "";
 
             try {
-                final URL url = new URL(Constants.GITHUB_PROJECT_LATEST_VERSION_URL);
+                final URL url = new URL(Constants.Url.App.LATEST_VERSION_FILE);
 
                 final HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 

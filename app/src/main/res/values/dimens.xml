@@ -78,7 +78,6 @@
     <dimen name="floating_btn_secondary_space">12dp</dimen>
     <dimen name="floating_btn_radius">500dp</dimen>
     <dimen name="floating_btn_margin">15dp</dimen>
-    <dimen name="floating_btn_elevation">2dp</dimen>
 
     <dimen name="floating_btn_padding">20dp</dimen> <!-- (floating_btn_size - floating_btn_icon_start_stop) / 2 -->
     <dimen name="floating_btn_padding_secondary">13.5dp</dimen> <!-- (floating_btn_secondary_size - floating_btn_icon_pause_resume) / 2 -->
@@ -97,6 +96,9 @@
     <dimen name="app_bar_font_sub_title_margin_top">10dp</dimen>
     <dimen name="app_bar_font_sub_title_2_margin_top">8dp</dimen>
 
+    <dimen name="app_bar_font_title_profile">@dimen/default_font</dimen>
+    <dimen name="app_bar_profile_padding_start">5dp</dimen>
+
     <dimen name="tool_bar_height">70dp</dimen>
     <dimen name="tool_bar_padding_top">15dp</dimen>
     <dimen name="tool_bar_padding_left">24dp</dimen>
@@ -109,7 +111,7 @@
 
     <dimen name="group_container_radius">26dp</dimen>
     <dimen name="group_padding_sides">24dp</dimen>
-    <dimen name="group_margin_bottom">15dp</dimen>
+    <dimen name="group_margin_bottom">20dp</dimen>
     <dimen name="group_title_margin_bottom">3dp</dimen>
 
     <dimen name="group_subtitle_margin_top">15dp</dimen>
@@ -146,12 +148,13 @@
     <dimen name="picker_item_padding_top_bottom">10dp</dimen>
     <dimen name="picker_item_padding_sides">3dp</dimen>
 
-    <dimen name="radio_size">29dp</dimen>
-    <dimen name="radio_text">@dimen/default_font_list_title</dimen>
-    <dimen name="radio_text_margin_left">15dp</dimen>
+    <dimen name="radio_checkbox_size">29dp</dimen>
+    <dimen name="radio_checkbox_text">@dimen/default_font_list_title</dimen>
+    <dimen name="radio_checkbox_text_margin_left">15dp</dimen>
+    <dimen name="radio_checkbox_icon_size">35dp</dimen>
 
-    <dimen name="menu_radius">26dp</dimen>
-    <dimen name="menu_horizontal_offset">4dp</dimen>
+    <dimen name="menu_radius">17dp</dimen>
+    <dimen name="menu_horizontal_offset">1dp</dimen>
 
     <dimen name="about_loader_size">65dp</dimen>
 
@@ -213,6 +216,7 @@
     <dimen name="icon_wifi_share_popup">90dp</dimen>
     <dimen name="popup_wifi_share_ip">@dimen/default_font_title</dimen>
     <dimen name="popup_wifi_share_space">28dp</dimen>
+    <dimen name="popup_wifi_share_password">@dimen/default_font_title</dimen>
 
     <dimen name="countdown_border">1dp</dimen>
     <dimen name="countdown_progress_width">12dp</dimen>
@@ -249,4 +253,44 @@
     <dimen name="progress_bar_radius">500dp</dimen>
 
     <dimen name="widget_background_radius">26dp</dimen>
+    <dimen name="widget_background_internal_radius">22dp</dimen>
+    <dimen name="widget_background_margin">8dp</dimen>
+
+    <dimen name="btn_back_to_top_size">43dp</dimen>
+    <dimen name="btn_back_to_top_radius">@dimen/floating_btn_radius</dimen>
+    <dimen name="btn_back_to_top_space">@dimen/floating_btn_margin</dimen>
+    <dimen name="btn_back_to_top_elevation">4dp</dimen>
+
+    <dimen name="basic_activity_width_percentage">1</dimen>
+    <dimen name="profile_editor_circle">75dp</dimen>
+    <dimen name="profile_editor_circle_radius">41.5dp</dimen> <!-- (profile_editor_circle + profile_editor_circle_icon_padding) / 2-->
+    <dimen name="profile_editor_circle_icon">46dp</dimen>
+    <dimen name="profile_editor_circle_icon_padding">18dp</dimen>
+    <dimen name="profile_editor_card_padding">35dp</dimen>
+    <dimen name="profile_editor_card_icons_padding">20dp</dimen>
+    <dimen name="profile_editor_card_icons_padding_half">10dp</dimen>
+    <dimen name="profile_editor_icon_pick_padding">10dp</dimen>
+    <dimen name="profile_editor_color_pick">30dp</dimen>
+    <dimen name="profile_editor_color_pick_space">6dp</dimen>
+
+    <dimen name="profile_manager_list_height">60dp</dimen>
+    <dimen name="profile_manager_padding_sides">12dp</dimen>
+    <dimen name="profile_manager_icon">35dp</dimen>
+    <dimen name="profile_manager_btn_icon">40dp</dimen>
+
+    <dimen name="splash_icon">108dp</dimen>
+
+    <dimen name="widget_profile_btn_title">35dp</dimen>
+
+    <dimen name="widget_profile_btn_main">67dp</dimen>
+    <dimen name="widget_profile_btn_secondary">47dp</dimen>
+    <dimen name="widget_profile_btn_main_padding">16dp</dimen> <!-- (floating_btn_size - floating_btn_icon_start_stop) / 2 -->
+    <dimen name="widget_profile_btn_secondary_padding">9.5dp</dimen> <!-- (floating_btn_secondary_size - floating_btn_icon_pause_resume) / 2 -->
+
+    <dimen name="widget_profile_item_height">53dp</dimen>
+    <dimen name="widget_profile_item_icon">30dp</dimen>
+    <dimen name="widget_profile_item_radio_size">25dp</dimen>
+
+    <dimen name="popup_volume_icon">30dp</dimen>
+
 </resources>

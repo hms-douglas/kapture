@@ -10,4 +10,6 @@
     <dimen name="floating_btn_margin">20dp</dimen>
 
     <dimen name="default_btn_width_percentage">0.5</dimen>
+
+    <dimen name="basic_activity_width_percentage">0.9</dimen>
 </resources>

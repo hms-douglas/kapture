@@ -7,6 +7,10 @@
         <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
         <item name="colorAccent">@color/main</item>
+
+        <item name="android:windowSplashScreenBackground">@color/activity_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/animation_splash_icon</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/main</item>
     </style>
 
     <style name="Theme.Translucent" parent="Theme.AppCompat.NoActionBar">

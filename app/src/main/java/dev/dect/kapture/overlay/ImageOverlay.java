@@ -51,16 +51,16 @@ public class ImageOverlay {
         Utils.Overlay.setLayoutParametersPosition(
             layoutParams,
             CONTEXT,
-            Constants.SP_KEY_OVERLAY_IMAGE_X_POS,
-            Constants.SP_KEY_OVERLAY_IMAGE_Y_POS
+            Constants.Sp.Profile.OVERLAY_IMAGE_X_POS,
+            Constants.Sp.Profile.OVERLAY_IMAGE_Y_POS
         );
 
         Utils.Overlay.setDefaultDraggableView(
             VIEW,
             layoutParams,
             WINDOW_MANAGER,
-            Constants.SP_KEY_OVERLAY_IMAGE_X_POS,
-            Constants.SP_KEY_OVERLAY_IMAGE_Y_POS
+            Constants.Sp.Profile.OVERLAY_IMAGE_X_POS,
+            Constants.Sp.Profile.OVERLAY_IMAGE_Y_POS
         );
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> WINDOW_MANAGER.addView(VIEW, layoutParams), 300);

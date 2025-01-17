@@ -37,8 +37,10 @@ public class BasicWidget extends AppWidgetProvider {
 
         intentStartStop.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
+        intentStartStop.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_WIDGET);
+
         if(CapturingService.isRecording()) {
-            intentStartStop.putExtra(ActionActivity.INTENT_ACTION, Constants.SHORTCUT_STATIC_ACTION_STOP);
+            intentStartStop.putExtra(ActionActivity.INTENT_ACTION, Constants.Widget.Action.STOP);
 
             views.setTextViewCompoundDrawables(
                 R.id.startStopCapturing,
@@ -49,7 +51,7 @@ public class BasicWidget extends AppWidgetProvider {
             );
 
         } else {
-            intentStartStop.putExtra(ActionActivity.INTENT_ACTION, Constants.SHORTCUT_STATIC_ACTION_START);
+            intentStartStop.putExtra(ActionActivity.INTENT_ACTION, Constants.Widget.Action.START);
 
             views.setTextViewCompoundDrawables(
                 R.id.startStopCapturing,

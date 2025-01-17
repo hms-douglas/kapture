@@ -35,12 +35,12 @@ public class CreditsActivity extends AppCompatActivity {
             findViewById(R.id.titleCollapsed).setAlpha(opacity != 1 ? opacity - 0.5f : 1);
         });
 
-        findViewById(R.id.btnLicenseApacheV2).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_APACHE_V2));
-        findViewById(R.id.btnLicenseLGPLv3).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_GPL_V3));
-        findViewById(R.id.btnLicenseMit).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_MIT));
-        findViewById(R.id.btnLicenseLotties).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_LOTTIES));
-        findViewById(R.id.btnLicenseBSD3).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_BSD3_CLAUSE));
-        findViewById(R.id.btnLicenseOpenFont).setOnClickListener((v) -> openLicenseUrlText(Constants.LICENSE_URL_OPEN_FONT));
+        findViewById(R.id.btnLicenseApacheV2).setOnClickListener((v) -> openLicenseUrlText(Constants.Url.License.APACHE_V2));
+        findViewById(R.id.btnLicenseLGPLv3).setOnClickListener((v) -> openLicenseUrlText(Constants.Url.License.GPL_V3));
+        findViewById(R.id.btnLicenseMit).setOnClickListener((v) -> openLicenseUrlText(Constants.Url.License.MIT));
+        findViewById(R.id.btnLicenseLotties).setOnClickListener((v) -> openLicenseUrlText(Constants.Url.License.LOTTIES));
+        findViewById(R.id.btnLicenseBSD3).setOnClickListener((v) -> openLicenseUrlText(Constants.Url.License.BSD3_CLAUSE));
+        findViewById(R.id.btnLicenseOpenFont).setOnClickListener((v) -> openLicenseUrlText(Constants.Url.License.OPEN_FONT));
     }
 
     private void openLicenseUrlText(String url) {

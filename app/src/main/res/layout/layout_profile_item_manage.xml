@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/profile_manager_list_height"
+    android:paddingStart="@dimen/profile_manager_padding_sides"
+    android:paddingEnd="@dimen/profile_manager_padding_sides"
+    android:foreground="@drawable/list_item_effect"
+    android:clickable="true"
+    android:id="@+id/container">
+
+    <ImageView
+        android:id="@+id/profileIcon"
+        android:layout_width="@dimen/profile_manager_icon"
+        android:layout_height="@dimen/profile_manager_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/profileName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/profileName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textColor="@color/list_item_title"
+        android:textSize="@dimen/default_font_list_title"
+        android:layout_marginStart="9dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnDelete"
+        app:layout_constraintStart_toEndOf="@id/profileIcon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnDelete"
+        android:layout_width="@dimen/profile_manager_btn_icon"
+        android:layout_height="@dimen/profile_manager_btn_icon"
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_profile_manager_delete"
+        android:padding="@dimen/tool_bar_btn_padding"
+        android:foreground="@drawable/btn_floating_effect"
+        android:contentDescription="@string/tooltip_profile_delete"
+        android:longClickable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

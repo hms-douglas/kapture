@@ -1,123 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:minWidth="@dimen/overlay_menu_width_minimized"
-    android:id="@+id/container">
+    android:minWidth="@dimen/overlay_menu_width_minimized">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/controls"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="@dimen/overlay_menu_width_minimized"
-        android:minHeight="@dimen/overlay_menu_height"
-        android:background="@drawable/overlay_menu_design"
-        android:orientation="vertical"
-        android:divider="@drawable/overlay_menu_divider"
-        android:showDividers="middle|end"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btnStop"
-            android:layout_width="@dimen/overlay_menu_height"
-            android:layout_height="@dimen/overlay_menu_height"
-            android:background="@drawable/overlay_btn_stop"
-            android:contentDescription="@string/tooltip_start"
-            android:longClickable="true"/>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/overlay_menu_width_minimized"
+            android:minHeight="@dimen/overlay_menu_height"
+            android:background="@drawable/overlay_menu_design"
+            android:orientation="vertical"
+            android:divider="@drawable/overlay_menu_divider"
+            android:showDividers="middle|end">
 
-        <ImageButton
-            android:id="@+id/btnPauseResume"
-            android:layout_width="@dimen/overlay_menu_icon"
-            android:layout_height="@dimen/overlay_menu_icon"
-            android:background="@android:color/transparent"
-            android:src="@drawable/overlay_menu_icon_pause"
-            android:padding="5.5dp"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="4dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/tooltip_pause"
-            android:longClickable="true"/>
+            <ImageButton
+                android:id="@+id/btnStop"
+                android:layout_width="@dimen/overlay_menu_height"
+                android:layout_height="@dimen/overlay_menu_height"
+                android:background="@drawable/overlay_btn_stop"
+                android:contentDescription="@string/tooltip_start"
+                android:longClickable="true"/>
 
-        <ImageButton
-            android:id="@+id/btnCamera"
-            android:layout_width="@dimen/overlay_menu_icon"
-            android:layout_height="@dimen/overlay_menu_icon"
-            android:background="@android:color/transparent"
-            android:src="@drawable/overlay_menu_icon_camera"
-            android:padding="@dimen/overlay_menu_icon_padding"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/tooltip_camera"
-            android:longClickable="true"/>
+            <ImageButton
+                android:id="@+id/btnPauseResume"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_pause"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="4dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/tooltip_pause"
+                android:longClickable="true"/>
 
-        <ImageButton
-            android:id="@+id/btnScreenshot"
-            android:layout_width="@dimen/overlay_menu_icon"
-            android:layout_height="@dimen/overlay_menu_icon"
-            android:background="@android:color/transparent"
-            android:src="@drawable/overlay_menu_icon_screenshot"
-            android:padding="5.5dp"
-            android:scaleType="fitCenter"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/tooltip_screenshot_screen"
-            android:longClickable="true"/>
+            <ImageButton
+                android:id="@+id/btnCamera"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_camera"
+                android:padding="@dimen/overlay_menu_icon_padding"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/tooltip_camera"
+                android:longClickable="true"/>
 
-        <ImageButton
-            android:id="@+id/btnDraw"
-            android:layout_width="@dimen/overlay_menu_icon"
-            android:layout_height="@dimen/overlay_menu_icon"
-            android:background="@android:color/transparent"
-            android:src="@drawable/overlay_menu_icon_draw"
-            android:padding="5.5dp"
-            android:scaleType="fitCenter"
-            android:layout_gravity="center"
-            android:contentDescription="@string/tooltip_draw"
-            android:longClickable="true"/>
+            <ImageButton
+                android:id="@+id/btnScreenshot"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_screenshot"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/tooltip_screenshot_screen"
+                android:longClickable="true"/>
 
-        <dev.dect.kapture.view.KChronometer
-            android:id="@+id/time"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/overlay_menu_font_vertical"
-            android:textStyle="bold"
-            android:textColor="@color/overlay_text"
-            android:gravity="center"/>
+            <ImageButton
+                android:id="@+id/btnDraw"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_draw"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:contentDescription="@string/tooltip_draw"
+                android:longClickable="true"/>
 
-        <TextView
-            android:id="@+id/timeLimit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="00:00"
-            android:textColor="@color/overlay_text_secondary"
-            android:textSize="@dimen/overlay_menu_font_vertical"
-            android:gravity="center"/>
+            <ImageButton
+                android:id="@+id/btnShortcut"
+                android:layout_width="@dimen/overlay_menu_icon"
+                android:layout_height="@dimen/overlay_menu_icon"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_shortcut"
+                android:padding="5.5dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:contentDescription="@string/tooltip_draw"
+                android:longClickable="true"/>
 
-        <ImageButton
-            android:id="@+id/btnMinimize"
-            android:layout_width="@dimen/overlay_menu_icon_secondary"
-            android:layout_height="@dimen/overlay_menu_icon_secondary"
-            android:background="@android:color/transparent"
-            android:src="@drawable/overlay_menu_icon_minimize_right"
-            android:padding="@dimen/overlay_menu_icon_secondary_padding"
-            android:scaleType="fitCenter"
-            android:layout_gravity="center"
-            android:contentDescription="@string/tooltip_minimize"
-            android:longClickable="true"/>
+            <dev.dect.kapture.view.KChronometer
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/overlay_menu_font_vertical"
+                android:textStyle="bold"
+                android:textColor="@color/overlay_text"
+                android:gravity="center"/>
 
-        <ImageButton
-            android:id="@+id/btnClose"
-            android:layout_width="@dimen/overlay_menu_icon_secondary"
-            android:layout_height="@dimen/overlay_menu_icon_secondary"
-            android:background="@android:color/transparent"
-            android:src="@drawable/overlay_menu_icon_close"
-            android:padding="@dimen/overlay_menu_icon_secondary_padding"
-            android:scaleType="fitCenter"
-            android:layout_gravity="center"
-            android:contentDescription="@string/tooltip_close"
-            android:longClickable="true"/>
+            <TextView
+                android:id="@+id/timeLimit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="00:00"
+                android:textColor="@color/overlay_text_secondary"
+                android:textSize="@dimen/overlay_menu_font_vertical"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/btnMinimize"
+                android:layout_width="@dimen/overlay_menu_icon_secondary"
+                android:layout_height="@dimen/overlay_menu_icon_secondary"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_minimize_right"
+                android:padding="@dimen/overlay_menu_icon_secondary_padding"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:contentDescription="@string/tooltip_minimize"
+                android:longClickable="true"/>
+
+            <ImageButton
+                android:id="@+id/btnClose"
+                android:layout_width="@dimen/overlay_menu_icon_secondary"
+                android:layout_height="@dimen/overlay_menu_icon_secondary"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_close"
+                android:padding="@dimen/overlay_menu_icon_secondary_padding"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:contentDescription="@string/tooltip_close"
+                android:longClickable="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shortcuts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/overlay_menu_space"
+            android:background="@drawable/overlay_menu_design"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/btnCloseShortcut"
+                android:layout_width="@dimen/overlay_menu_icon_secondary"
+                android:layout_height="@dimen/overlay_menu_icon_secondary"
+                android:background="@android:color/transparent"
+                android:src="@drawable/overlay_menu_icon_close"
+                android:padding="@dimen/overlay_menu_icon_secondary_padding"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:contentDescription="@string/tooltip_close"
+                android:longClickable="true"/>
+        </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

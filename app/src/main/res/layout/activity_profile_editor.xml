@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/list_background"
+        android:clipToOutline="true"
+        app:layout_constraintWidth_percent="@dimen/basic_activity_width_percentage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/group_margin_bottom">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/group_margin_bottom"
+                android:layout_marginBottom="@dimen/group_margin_bottom">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_editor_circle_radius"
+                    android:background="@drawable/group_background"
+                    android:paddingTop="@dimen/profile_editor_circle_radius"
+                    android:paddingStart="@dimen/profile_editor_card_padding"
+                    android:paddingEnd="@dimen/profile_editor_card_padding"
+                    android:paddingBottom="@dimen/profile_editor_card_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <EditText
+                        android:id="@+id/userNameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/popup_list_margin_top_bottom"
+                        android:textColor="@color/input_text"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:background="@drawable/input_design"
+                        android:selectAllOnFocus="true"
+                        android:hint="@string/profile_name_placeholder"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="@dimen/profile_editor_circle"
+                    android:layout_height="@dimen/profile_editor_circle"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/profile_editor_circle_background"
+                    android:src="@drawable/icon_profile_i_default"
+                    android:padding="@dimen/profile_editor_circle_icon_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/group_background"
+                android:paddingTop="@dimen/profile_editor_card_icons_padding"
+                android:paddingBottom="@dimen/profile_editor_card_icons_padding"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/pickerContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/profile_editor_card_icons_padding_half"
+                    android:background="@drawable/list_item_divisor_horizontal_bottom">
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_editor_color_pick"
+                        android:layout_height="@dimen/profile_editor_color_pick"
+                        android:background="@drawable/overlay_menu_draw_color"
+                        android:layout_margin="@dimen/profile_editor_color_pick_space"
+                        android:longClickable="true"
+                        android:backgroundTint="@color/app_bar_profile"/>
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_editor_color_pick"
+                        android:layout_height="@dimen/profile_editor_color_pick"
+                        android:background="@drawable/overlay_menu_draw_color"
+                        android:layout_margin="@dimen/profile_editor_color_pick_space"
+                        android:backgroundTint="#DB7FA7"/>
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_editor_color_pick"
+                        android:layout_height="@dimen/profile_editor_color_pick"
+                        android:background="@drawable/overlay_menu_draw_color"
+                        android:layout_margin="@dimen/profile_editor_color_pick_space"
+                        android:backgroundTint="#E18C5E"/>
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_editor_color_pick"
+                        android:layout_height="@dimen/profile_editor_color_pick"
+                        android:background="@drawable/overlay_menu_draw_color"
+                        android:layout_margin="@dimen/profile_editor_color_pick_space"
+                        android:backgroundTint="#E3AB40"/>
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_editor_color_pick"
+                        android:layout_height="@dimen/profile_editor_color_pick"
+                        android:background="@drawable/overlay_menu_draw_color"
+                        android:layout_margin="@dimen/profile_editor_color_pick_space"
+                        android:backgroundTint="#67B2A7"/>
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_editor_color_pick"
+                        android:layout_height="@dimen/profile_editor_color_pick"
+                        android:background="@drawable/overlay_menu_draw_color"
+                        android:layout_margin="@dimen/profile_editor_color_pick_space"
+                        android:backgroundTint="#6CB179"/>
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_editor_color_pick"
+                        android:layout_height="@dimen/profile_editor_color_pick"
+                        android:background="@drawable/overlay_menu_draw_color"
+                        android:layout_margin="@dimen/profile_editor_color_pick_space"
+                        android:backgroundTint="#699ADA"/>
+
+                    <ImageButton
+                        android:id="@+id/picker"
+                        android:layout_width="@dimen/profile_editor_color_pick"
+                        android:layout_height="@dimen/profile_editor_color_pick"
+                        android:background="@drawable/overlay_menu_draw_icon_color"
+                        android:layout_margin="@dimen/profile_editor_color_pick_space"
+                        android:contentDescription="@string/tooltip_picker"
+                        android:longClickable="true"/>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/profile_editor_card_icons_padding"
+                    android:layout_marginEnd="@dimen/profile_editor_card_icons_padding"
+                    android:layout_marginTop="@dimen/profile_editor_card_icons_padding_half"/>
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/list_item_padding_top_bottom"
+                android:paddingBottom="@dimen/list_item_padding_top_bottom"
+                android:paddingStart="@dimen/group_padding_sides"
+                android:paddingEnd="@dimen/group_padding_sides">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_about_message"
+                    android:textSize="@dimen/default_font_list_sub_title"
+                    android:textColor="@color/list_item_sub_title"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2"
+        android:background="@color/bottom_bar_background"
+        app:layout_constraintStart_toStartOf="@id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="@id/nestedScrollView"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bottom_bar_btn_margin_top"
+            android:layout_marginBottom="@dimen/bottom_bar_btn_margin_bottom"
+            android:layout_weight="1"
+            android:background="@color/bottom_bar_background"
+            android:foreground="@drawable/btn_effect"
+            android:text="@string/popup_btn_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/bottom_bar_btn_text_color_on"
+            android:textSize="@dimen/bottom_bar_btn_text_size" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/bottom_bar_btn_margin_top"
+            android:layout_marginBottom="@dimen/bottom_bar_btn_margin_bottom"
+            android:layout_weight="1"
+            android:background="@color/bottom_bar_background"
+            android:foreground="@drawable/btn_effect"
+            android:text="@string/popup_btn_done"
+            android:textAllCaps="false"
+            android:textColor="@color/bottom_bar_btn_text_color_on"
+            android:textSize="@dimen/bottom_bar_btn_text_size" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

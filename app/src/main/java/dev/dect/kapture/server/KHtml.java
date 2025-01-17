@@ -33,6 +33,13 @@ public class KHtml {
             + "<link rel='icon' type='image/x-icon' href='/favicon.ico'>";
     }
 
+    private String getLoginTags() {
+        return "<meta charset='UTF-8'>"
+            + "<title>" + CONTEXT.getString(R.string.app_name) + " - " + CONTEXT.getString(R.string.html_login) + "</title>"
+            + "<meta name='viewport' content='user-scalable=no'>"
+            + "<link rel='icon' type='image/x-icon' href='/favicon.ico'>";
+    }
+
     public String getList(ArrayList<Kapture> kaptures) {
         String body = getHeaderString(kaptures.size())
             + "<table><tr>"
@@ -54,7 +61,7 @@ public class KHtml {
                 + "<td>" + kapture.getName() + "</td>"
                 + "<td>" + KFile.formatFileDate(kapture.getCreationTime()) + "</td>"
                 + "<td>" + KFile.formatFileDuration(kapture.getDuration()) + "</td>"
-                + "<td>" + kapture.getThumbnail().getWidth() + "x" + kapture.getThumbnail().getHeight() + "</td>"
+                + "<td>" + kapture.getVideoSize()[0] + "x" + kapture.getVideoSize()[1]+ "</td>"
                 + "<td>" + KFile.formatFileSize(kapture.getSize()) + "</td>"
                 + "<td>";
 
@@ -169,5 +176,17 @@ public class KHtml {
         CSS.set500();
 
         return getDefaultError(500, R.string.html_500);
+    }
+
+    public String getLogin() {
+        JAVASCRIPT.setLogin();
+
+        String inputs = "";
+
+        for(int i = 0; i < KSecurity.PASSWORD_LENGTH; i++) {
+            inputs += "<input class=\"pass\"type=\"number\"/>";
+        }
+
+        return "<html><head>" + getLoginTags() + "</head><body><style>" + CSS.getLogin()  + "</style><div id=\"cp\"><label>" + CONTEXT.getString(R.string.html_enter_password) + "</label><div id=\"cpi\">" + inputs + "</div></div><form enctype=\"multipart/form-data\"method=\"post\"id=\"l\"><input type=\"hidden\"name=\"p\"id=\"p\"/></form><div id=\"h\"></div><div class=\"lo\"></div><script>" + JAVASCRIPT.getJavascript() + "</script></body></html>";
     }
 }

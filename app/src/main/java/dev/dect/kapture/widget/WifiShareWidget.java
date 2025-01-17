@@ -12,7 +12,6 @@ import dev.dect.kapture.activity.ActionActivity;
 import dev.dect.kapture.data.Constants;
 
 public class WifiShareWidget extends AppWidgetProvider {
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for(int appWidgetId : appWidgetIds) {
@@ -25,7 +24,9 @@ public class WifiShareWidget extends AppWidgetProvider {
 
         final Intent intentWifiShare = new Intent(ctx, ActionActivity.class);
 
-        intentWifiShare.putExtra(ActionActivity.INTENT_ACTION, Constants.SHORTCUT_STATIC_ACTION_WIFI_SHARE);
+        intentWifiShare.putExtra(ActionActivity.INTENT_ACTION, Constants.Widget.Action.WIFI_SHARE);
+
+        intentWifiShare.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_WIDGET);
 
         final PendingIntent pendingIntentWifiShare = PendingIntent.getActivity(
             ctx,

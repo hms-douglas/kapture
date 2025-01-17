@@ -32,6 +32,7 @@ import java.util.Date;
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.utils.Utils;
 
 @SuppressLint("InflateParams")
@@ -71,7 +72,7 @@ public class CameraOverlay {
 
     private long TIME;
 
-    private SharedPreferences.Editor EDITOR;
+    private SharedPreferences.Editor EDITOR_PROFILE;
 
     public CameraOverlay(Context ctx, KSettings ks, WindowManager wm) {
         this.KSETTINGS = ks;
@@ -110,8 +111,8 @@ public class CameraOverlay {
         Utils.Overlay.setLayoutParametersPosition(
             LAYOUT_PARAMETERS,
             CONTEXT,
-            Constants.SP_KEY_OVERLAY_CAMERA_X_POS,
-            Constants.SP_KEY_OVERLAY_CAMERA_Y_POS
+            Constants.Sp.Profile.OVERLAY_CAMERA_X_POS,
+            Constants.Sp.Profile.OVERLAY_CAMERA_Y_POS
         );
 
         if(KSETTINGS.isCameraScalable()) {
@@ -132,7 +133,7 @@ public class CameraOverlay {
                 }
             });
 
-            EDITOR = CONTEXT.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit();
+            EDITOR_PROFILE = KSharedPreferences.getActiveProfileSp(CONTEXT).edit();
 
             VIEW.setOnTouchListener((view, e) -> {
                 switch(e.getAction()) {
@@ -156,10 +157,10 @@ public class CameraOverlay {
                         if(new Date().getTime() - TIME <= 200) {
                             VIEW.performClick();
                         } else {
-                            EDITOR.putInt(Constants.SP_KEY_OVERLAY_CAMERA_X_POS, LAYOUT_PARAMETERS.x);
-                            EDITOR.putInt(Constants.SP_KEY_OVERLAY_CAMERA_Y_POS, LAYOUT_PARAMETERS.y);
+                            EDITOR_PROFILE.putInt(Constants.Sp.Profile.OVERLAY_CAMERA_X_POS, LAYOUT_PARAMETERS.x);
+                            EDITOR_PROFILE.putInt(Constants.Sp.Profile.OVERLAY_CAMERA_Y_POS, LAYOUT_PARAMETERS.y);
 
-                            EDITOR.apply();
+                            EDITOR_PROFILE.apply();
                         }
                 }
 
@@ -170,8 +171,8 @@ public class CameraOverlay {
                 VIEW,
                 LAYOUT_PARAMETERS,
                 WINDOW_MANAGER,
-                Constants.SP_KEY_OVERLAY_CAMERA_X_POS,
-                Constants.SP_KEY_OVERLAY_CAMERA_Y_POS
+                Constants.Sp.Profile.OVERLAY_CAMERA_X_POS,
+                Constants.Sp.Profile.OVERLAY_CAMERA_Y_POS
             );
         }
 

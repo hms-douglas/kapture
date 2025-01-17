@@ -89,7 +89,7 @@ public class ExtraItemAdapter extends RecyclerView.Adapter<ExtraItemAdapter.MyVi
                         notifyItemRangeChanged(position, EXTRAS.size());
                     } catch (Exception ignore){}
 
-                    if(EXTRAS.size() <= 0) {
+                    if(EXTRAS.isEmpty()) {
                         Objects.requireNonNull(POPUP).dismissWithAnimation();
 
                         try {

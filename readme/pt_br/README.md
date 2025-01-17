@@ -1,4 +1,4 @@
-# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.3.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-155_MB-7C39E0)
+# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.4.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-155_MB-7C39E0)
 Altere o idioma do README: 
 [![en](https://img.shields.io/badge/idioma-en-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/README.md)
 [![pt-br](https://img.shields.io/badge/idioma-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
@@ -13,9 +13,7 @@ Os que eu encontrei tinham quer ser instalados por fora, o que me deixou um pouc
 Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. Você pode baixar o .apk e instalar, ou voce pode baixar o código fonte, lê-lo e gerar o app (built).
 </br>
 </br>
-<img src="./screenshots/0.png" width="19%"/> <img src="./screenshots/1.png" width="19%"/> <img src="./screenshots/2.png" width="19%"/> <img src="./screenshots/3.png" width="19%"/> <img src="./screenshots/4.png" width="19%"/>
-<img src="./screenshots/5.png" width="19%"/> <img src="./screenshots/6.png" width="19%"/> <img src="./screenshots/7.png" width="19%"/> <img src="./screenshots/8.png" width="19%"/> <img src="./screenshots/9.png" width="19%"/>
-##
+<img src="./app.gif" width="40%"/>##
 ### Recursos
 <ul>
   <li>Capturar tela:
@@ -37,13 +35,15 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
     </ul>
   </li>
   <li>Pausar/Retomar a captura;</li>
+  <li>Perfis;</li>
   <li>Interface flutuante;
     <ul>
         <li>Menu (Parar, pausar, screenshot, desenhar, minimizar, fechar, tempo, tempo limite, câmera);</li>
          <li>Câmera (frontal, traseira / estilização);</li>
          <li>Texto (estilização);</li>
          <li>Desenho (estilização).</li>
-         <li>Imagem.</li>
+         <li>Imagem;</li>
+         <li>Atalhos.</li>
     </ul>
   </li>
   <li>Gerar arquivos de vídeo extras:
@@ -61,12 +61,18 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
     </ul>
   </li>
   <li>Atalhos nas notificações;</li>
-  <li>Botão de atalho (Tile);</li>
+  <li>Botão de atalho (Tile):
+    <ul>
+      <li>Iniciar/Parar uma captura;</li>
+      <li>Compartilhar por WiFi.</li>
+    </ul>
+  </li>
   <li>Widgets:
     <ul>
       <li>Básico - Iniciar/Parar;</li>
       <li>Completo - Iniciar/Parar e Pausar/Resumir;</li>
-      <li>Atalho para compartilhar por WiFi.</li>
+      <li>Atalho para compartilhar por WiFi;</li>
+      <li>Atalho para perfis.</li>
     </ul>
   </li>
   <li>Botões de atalho (Launcher);</li>
@@ -83,13 +89,14 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
   <li>Compartilhar por WiFi;</li>
   <li>Contagem regressiva para começar a capturar;</li>
   <li>Diversas opções de parada automática;</li>
+  <li>Diversas opções de configuração automáticas para antes de iniciar;</li>
   <li>Visualizadores internos (reprodutores)
      <ul>
        <li>Reprodutor de áudio;</li>
        <li>Repordutor de vídeo.</li>
      </ul>
   </li>
-  <li>Definir o idioma (automaticamente ou manualmente)
+  <li>Idiomas:
    <ul>
       <li>English</li>
       <li>Português (Brasil).</li>
@@ -149,6 +156,11 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
       <li>android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS</li>
     </ul>
   </li>
+  <li>Pacotes: Usado para listar, adicionar e abrir apps:
+    <ul>
+      <li>android.permission.QUERY_ALL_PACKAGES</li>
+    </ul>
+  </li>
 </ul>
 
 ##
@@ -158,7 +170,7 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 #### Opção 2:
 <ul>
-  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1HyRcaeUA8ZDthKhK4H4-MRrvnEbICe6W/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
+  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1ARA2P2UIZ9leSuChZ1q2N5OHGd_t4vss/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
   <li>Você pode verificar o link para baixar o .apk de versões anteriores <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">aqui</a>*.</li>
 </ul>
 * Todos os .apks listados aqui foram contruidos por mim, eles não estão minificados e estão hospedados no Google Drive.
@@ -173,6 +185,20 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 ##
 ### Log
+<b>v1.4.0</b>
+<ul>
+   <li>Botão de atalho para compartilhar por wifi adicionado (Tile);</li>
+   <li>Atalho de apps adicionado ao menu flutuante;</li>
+   <li>Senha adicionada ao compartilhar por wifi (+ opção de renovar a senha a cada nova conexão);</li>
+   <li>Perfis adicionado;</li>
+   <li>Widget de perfis adicionado;</li>
+   <li>Opções para antes de iniciar a captura adicionado;</li>
+   <li>Botão de volta ao topo adicionado no menu Kapturas;</li>
+   <li>O idioma do app agora é gerenciado pelo menu de configurações do sistema android;</li>
+   <li>As notificações foram aprimoradas;</li>
+   <li>Correções;</li>
+   <li>Pequenas mudanças na interface.</li>
+</ul>
 <b>v1.3.0</b>
 <ul>
    <li>Opção de parada por nível de bateria adicionado;</li>

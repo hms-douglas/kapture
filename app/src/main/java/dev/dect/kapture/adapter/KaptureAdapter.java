@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DefaultSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.fragment.KapturesFragment;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.popup.ExtraPopup;
@@ -113,13 +114,13 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
                          EL_FRAMES,
                          EL_SIZE;
 
-        private AppCompatButton EL_EXTRA,
-                                EL_SCREENSHOT;
+        private final AppCompatButton EL_EXTRA,
+                                      EL_SCREENSHOT;
 
         public MyViewHolder(View view) {
             super(view);
 
-            this.STYLE = view.getContext().getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getInt(Constants.SP_KEY_LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE);
+            this.STYLE = KSharedPreferences.getAppSp(view.getContext()).getInt(Constants.Sp.App.LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE);
 
             this.EL_CONTAINER = view.findViewById(R.id.kapture);
             this.EL_THUMBNAIL = view.findViewById(R.id.thumbnail);
@@ -178,7 +179,7 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
     @NonNull
     @Override
     public KaptureAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch(parent.getContext().getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getInt(Constants.SP_KEY_LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE)) {
+        switch(KSharedPreferences.getAppSp(parent.getContext()).getInt(Constants.Sp.App.LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE)) {
             case KapturesFragment.STYLE_GRID_BIG:
                 return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_kapture_grid_big, parent, false));
 

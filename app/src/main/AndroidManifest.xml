@@ -20,6 +20,8 @@
 
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
 
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -37,6 +39,8 @@
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES"/>
             </intent-filter>
 
             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
@@ -93,6 +97,24 @@
         </activity>
 
         <activity
+            android:name=".activity.profile.ProfileEditorActivity"
+            android:exported="false">
+
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.profile.ProfileManagerActivity"
+            android:exported="false">
+
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".activity.TokenActivity"
             android:exported="true"
             android:excludeFromRecents="true"
@@ -118,7 +140,7 @@
         </service>
 
         <service
-            android:name=".service.QuickTileService"
+            android:name=".service.QuickTileCapturingService"
             android:exported="true"
             android:label="@string/quick_settings_tile_start_recording"
             android:icon="@drawable/icon_quick_settings_not_recording"
@@ -128,8 +150,19 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
 
-            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
-                       android:value="true" />
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE" android:value="true" />
+        </service>
+
+        <service
+            android:name=".service.QuickTileWifiShareService"
+            android:exported="true"
+            android:label="@string/quick_settings_tile_wifi_share"
+            android:icon="@drawable/icon_quick_settings_wifi_share"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
         </service>
 
         <provider
@@ -188,5 +221,21 @@
 
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_wifi_share" />
         </receiver>
+
+        <receiver
+            android:name=".widget.ProfileWidget"
+            android:exported="false"
+            android:label="@string/widget_profile">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_profile" />
+        </receiver>
+
+        <service
+            android:name=".service.ProfileWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 </manifest>

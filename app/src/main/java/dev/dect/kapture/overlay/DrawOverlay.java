@@ -39,6 +39,7 @@ import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DefaultSettings;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.popup.ColorPickerPopup;
 import dev.dect.kapture.service.CapturingService;
@@ -53,7 +54,7 @@ public class DrawOverlay {
 
     private final WindowManager WINDOW_MANAGER;
 
-    private final SharedPreferences.Editor EDITOR;
+    private final SharedPreferences.Editor EDITOR_PROFILE;
 
     private final Float BUTTON_ALPHA_OFF = 0.5f;
 
@@ -115,13 +116,13 @@ public class DrawOverlay {
         this.WINDOW_MANAGER = wm;
         this.MENU_OVERLAY = mo;
 
-        final SharedPreferences sp = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
+        final SharedPreferences sp = KSharedPreferences.getActiveProfileSp(CONTEXT);
 
-        this.EDITOR = sp.edit();
+        this.EDITOR_PROFILE = sp.edit();
 
-        this.PEN_SIZE = sp.getInt(Constants.SP_KEY_DRAW_PEN_SIZE, ctx.getResources().getDimensionPixelSize(R.dimen.overlay_menu_draw_size_color_default));
-        this.PEN_COLOR = sp.getString(Constants.SP_KEY_DRAW_PEN_COLOR, DefaultSettings.PEN_COLOR);
-        this.PEN_PREVIOUS_COLORS = sp.getString(Constants.SP_KEY_DRAW_PEN_PREVIOUS_COLORS, DefaultSettings.PEN_PREVIOUS_COLORS).split(",");
+        this.PEN_SIZE = sp.getInt(Constants.Sp.Profile.DRAW_PEN_SIZE, ctx.getResources().getDimensionPixelSize(R.dimen.overlay_menu_draw_size_color_default));
+        this.PEN_COLOR = sp.getString(Constants.Sp.Profile.DRAW_PEN_COLOR, DefaultSettings.PEN_COLOR);
+        this.PEN_PREVIOUS_COLORS = sp.getString(Constants.Sp.Profile.DRAW_PEN_PREVIOUS_COLORS, DefaultSettings.PEN_PREVIOUS_COLORS).split(",");
     }
 
     public void render() {
@@ -209,7 +210,7 @@ public class DrawOverlay {
 
                     refreshPenExample();
 
-                    EDITOR.putInt(Constants.SP_KEY_DRAW_PEN_SIZE, PEN_SIZE).commit();
+                    EDITOR_PROFILE.putInt(Constants.Sp.Profile.DRAW_PEN_SIZE, PEN_SIZE).commit();
                 } catch (Exception ignore){}
             }
         });
@@ -331,10 +332,10 @@ public class DrawOverlay {
     }
 
     private void setInitialPosition() {
-        final SharedPreferences sp = CONTEXT.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
+        final SharedPreferences sp = KSharedPreferences.getActiveProfileSp(CONTEXT);
 
-        CONTROLS_LAYOUT_PARAMETERS.leftMargin = sp.getInt(Constants.SP_KEY_OVERLAY_DRAW_X_POS, 0);
-        CONTROLS_LAYOUT_PARAMETERS.topMargin = sp.getInt(Constants.SP_KEY_OVERLAY_DRAW_Y_POS, 0);
+        CONTROLS_LAYOUT_PARAMETERS.leftMargin = sp.getInt(Constants.Sp.Profile.OVERLAY_DRAW_X_POS, 0);
+        CONTROLS_LAYOUT_PARAMETERS.topMargin = sp.getInt(Constants.Sp.Profile.OVERLAY_DRAW_Y_POS, 0);
 
         CONTROLS.setLayoutParams(CONTROLS_LAYOUT_PARAMETERS);
     }
@@ -370,10 +371,10 @@ public class DrawOverlay {
                 if(System.currentTimeMillis() - TIME_CONTROLS_TOUCH <= 200) {
                     v.callOnClick();
                 } else {
-                    EDITOR.putInt(Constants.SP_KEY_OVERLAY_DRAW_X_POS, CONTROLS_LAYOUT_PARAMETERS.leftMargin);
-                    EDITOR.putInt(Constants.SP_KEY_OVERLAY_DRAW_Y_POS, CONTROLS_LAYOUT_PARAMETERS.topMargin);
+                    EDITOR_PROFILE.putInt(Constants.Sp.Profile.OVERLAY_DRAW_X_POS, CONTROLS_LAYOUT_PARAMETERS.leftMargin);
+                    EDITOR_PROFILE.putInt(Constants.Sp.Profile.OVERLAY_DRAW_Y_POS, CONTROLS_LAYOUT_PARAMETERS.topMargin);
 
-                    EDITOR.apply();
+                    EDITOR_PROFILE.apply();
                 }
                 break;
         }
@@ -559,7 +560,7 @@ public class DrawOverlay {
 
         refreshPenExample();
 
-        EDITOR.putString(Constants.SP_KEY_DRAW_PEN_COLOR, PEN_COLOR).commit();
+        EDITOR_PROFILE.putString(Constants.Sp.Profile.DRAW_PEN_COLOR, PEN_COLOR).commit();
 
         for(String s : PEN_PREVIOUS_COLORS) {
             if(s.equals(PEN_COLOR)) {
@@ -585,7 +586,7 @@ public class DrawOverlay {
         btn.setBackgroundTintList(ColorStateList.valueOf(Utils.Converter.hexColorToInt(color)));
         btn.setOnClickListener((v) -> setColor(color));
 
-        EDITOR.putString(Constants.SP_KEY_DRAW_PEN_PREVIOUS_COLORS, String.join(",", PEN_PREVIOUS_COLORS)).commit();
+        EDITOR_PROFILE.putString(Constants.Sp.Profile.DRAW_PEN_PREVIOUS_COLORS, String.join(",", PEN_PREVIOUS_COLORS)).commit();
     }
 
     private void closeControlsPen() {

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.res.ResourcesCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.selection.SelectionPredicates;
@@ -57,6 +58,7 @@ import dev.dect.kapture.adapter.KaptureAdapter;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DB;
 import dev.dect.kapture.data.DefaultSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.popup.DialogPopup;
 import dev.dect.kapture.popup.ExtraPopup;
@@ -66,6 +68,7 @@ import dev.dect.kapture.popup.SortPopup;
 import dev.dect.kapture.server.WifiShare;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.utils.KFile;
+import dev.dect.kapture.utils.KProfile;
 import dev.dect.kapture.utils.Utils;
 
 /** @noinspection ResultOfMethodCallIgnored*/
@@ -86,7 +89,14 @@ public class KapturesFragment extends Fragment {
     private RecyclerView RECYCLER_VIEW;
 
     private AppCompatButton BTN_FLOATING_START_STOP,
-                            BTN_FLOATING_PAUSE_RESUME;
+                            BTN_FLOATING_PAUSE_RESUME,
+                            BTN_PROFILE;
+
+    private ImageButton BTN_BACK_TO_TOP;
+
+    private LinearLayout BTNS_FLOATING_CONTAINER;
+
+    private NestedScrollView NESTED_SCROLL_VIEW;
 
     private ArrayList<Kapture> KAPTURES;
 
@@ -110,7 +120,7 @@ public class KapturesFragment extends Fragment {
 
     private OnCaptureFragment LISTENER;
 
-    private SharedPreferences SP;
+    private SharedPreferences SP_APP;
 
     private ConstraintLayout SEARCH_CONTAINER;
 
@@ -125,6 +135,10 @@ public class KapturesFragment extends Fragment {
     private AppBarLayout TITLE_BAR;
 
     private SettingsFragment SETTINGS_FRAGMENT__TABLE_UI;
+
+    private Handler SCROLL_HANDLER;
+
+    private SharedPreferences.OnSharedPreferenceChangeListener PROFILE_LISTENER;
 
     @Nullable
     @Override
@@ -145,6 +159,17 @@ public class KapturesFragment extends Fragment {
         super.onResume();
 
         refreshAll();
+
+        KProfile.updateButtonUi(CONTEXT, BTN_PROFILE);
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            SP_APP.unregisterOnSharedPreferenceChangeListener(PROFILE_LISTENER);
+        } catch (Exception ignore) {}
+
+        super.onDestroy();
     }
 
     public void setListener(OnCaptureFragment listener) {
@@ -156,19 +181,28 @@ public class KapturesFragment extends Fragment {
 
         TITLE_BAR = VIEW.findViewById(R.id.titleBar);
 
+        NESTED_SCROLL_VIEW = VIEW.findViewById(R.id.nestedScrollView);
+
         RECYCLER_VIEW = VIEW.findViewById(R.id.recyclerView);
 
         SWIPE_REFRESH = VIEW.findViewById(R.id.swipeToRefresh);
 
         BTN_SELECTED = VIEW.findViewById(R.id.selected);
         BTN_STYLE_LAYOUT_MANAGER = VIEW.findViewById(R.id.btnGrid);
+
         BTN_FLOATING_START_STOP = VIEW.findViewById(R.id.startStopCapturing);
         BTN_FLOATING_PAUSE_RESUME = VIEW.findViewById(R.id.pauseResumeCapturing);
 
-        SP = CONTEXT.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
+        BTN_PROFILE = VIEW.findViewById(R.id.btnProfile);
 
-        SORT_BY = SP.getInt(Constants.SP_KEY_SORT_BY, DefaultSettings.SORT_BY);
-        SORT_ASC = SP.getBoolean(Constants.SP_KEY_SORT_BY_ASC, DefaultSettings.SORT_BY_ASC);
+        BTN_BACK_TO_TOP = VIEW.findViewById(R.id.btnBackToTop);
+
+        BTNS_FLOATING_CONTAINER = VIEW.findViewById(R.id.controlsBtnContainer);
+
+        SP_APP = KSharedPreferences.getAppSp(CONTEXT);
+
+        SORT_BY = SP_APP.getInt(Constants.Sp.App.SORT_BY, DefaultSettings.SORT_BY);
+        SORT_ASC = SP_APP.getBoolean(Constants.Sp.App.SORT_BY_ASC, DefaultSettings.SORT_BY_ASC);
 
         SEARCH_CONTAINER = VIEW.findViewById(R.id.searchContainer);
         SEARCH_INPUT = VIEW.findViewById(R.id.searchInput);
@@ -176,17 +210,22 @@ public class KapturesFragment extends Fragment {
 
         SUBTITLE = VIEW.findViewById(R.id.subtitleExpanded);
 
+        SCROLL_HANDLER = new Handler(Looper.getMainLooper());
+
         LAUNCH_ACTIVITY_RESULT_FOR_SPEECH_TO_TEXT = registerForActivityResult(
-        new ActivityResultContracts.StartActivityForResult(),
-        result -> {
-            if(result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                ArrayList<String> r = result.getData().getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    ArrayList<String> r = result.getData().getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-                SEARCH_INPUT.setText(Objects.requireNonNull(r).get(0));
+                    SEARCH_INPUT.setText(Objects.requireNonNull(r).get(0));
 
-                SEARCH_BTN_MIC_OR_CLEAR.setImageResource(R.drawable.icon_tool_bar_clear);
+                    SEARCH_BTN_MIC_OR_CLEAR.setImageResource(R.drawable.icon_tool_bar_clear);
+                }
             }
-        });
+        );
+
+        PROFILE_LISTENER = KProfile.createAndAddProfileListenerUpdate(SP_APP, BTN_PROFILE, null);
 
         DATABASE = new DB(CONTEXT);
 
@@ -271,7 +310,7 @@ public class KapturesFragment extends Fragment {
         });
 
         BTN_STYLE_LAYOUT_MANAGER.setOnClickListener((v) -> {
-            switch(SP.getInt(Constants.SP_KEY_LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE)) {
+            switch(SP_APP.getInt(Constants.Sp.App.LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE)) {
                 case STYLE_GRID_BIG:
                     setLayoutManager(STYLE_LIST);
                     break;
@@ -322,15 +361,32 @@ public class KapturesFragment extends Fragment {
 
         VIEW.findViewById(R.id.btnBack).setOnClickListener((v) -> closeSearch());
 
+        BTN_BACK_TO_TOP.setOnClickListener((v) -> NESTED_SCROLL_VIEW.smoothScrollTo(0, 0));
+
+        NESTED_SCROLL_VIEW.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, x, y, oldX, oldY) -> {
+            SCROLL_HANDLER.removeCallbacksAndMessages(null);
+
+            if(y <= 5) {
+                BTN_BACK_TO_TOP.setVisibility(View.GONE);
+                BTNS_FLOATING_CONTAINER.setVisibility(View.VISIBLE);
+            } else {
+                BTN_BACK_TO_TOP.setVisibility(View.VISIBLE);
+                BTNS_FLOATING_CONTAINER.setVisibility(View.GONE);
+
+                SCROLL_HANDLER.postDelayed(() -> {
+                    BTNS_FLOATING_CONTAINER.setVisibility(View.VISIBLE);
+                    BTN_BACK_TO_TOP.setVisibility(View.GONE);
+                }, 1500);
+            }
+        });
+
         if(IS_TABLET_UI) {
             BTN_SETTINGS__TABLET_UI.setOnClickListener((v) -> {
                 if(SETTINGS_FRAGMENT__TABLE_UI.isVisible()) {
                     getChildFragmentManager().beginTransaction().hide(SETTINGS_FRAGMENT__TABLE_UI).commitNow();
                     VIEW.findViewById(R.id.frameLayoutContainer).setVisibility(View.GONE);
                 } else {
-                    getChildFragmentManager().beginTransaction().show(SETTINGS_FRAGMENT__TABLE_UI).commitNow();
-                    VIEW.findViewById(R.id.frameLayoutContainer).setVisibility(View.VISIBLE);
-                    SETTINGS_FRAGMENT__TABLE_UI.onResume();
+                    openSettings_tabletUi();
                 }
             });
 
@@ -353,8 +409,6 @@ public class KapturesFragment extends Fragment {
                 final float opacity = (float) verticalOffset / ((appBarLayout.getHeight() - VIEW.findViewById(R.id.toolbar).getHeight()) / 2f);
 
                 VIEW.findViewById(R.id.titleAndSubtitle).setAlpha(1 - opacity);
-
-                VIEW.findViewById(R.id.titleCollapsed).setAlpha(opacity != 1 ? opacity - 0.5f : 1);
             });
         } else {
             TITLE_BAR.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
@@ -376,27 +430,27 @@ public class KapturesFragment extends Fragment {
     }
 
     private void openSearch() {
+        if(IS_TABLET_UI) {
+            BTN_PROFILE.setVisibility(View.GONE);
+        }
+
         SEARCH_CONTAINER.setVisibility(View.VISIBLE);
 
         TITLE_BAR.setExpanded(false, true);
 
         Utils.Keyboard.requestShowForInput(SEARCH_INPUT);
-
-        if(IS_TABLET_UI) {
-            VIEW.findViewById(R.id.titleCollapsed).setVisibility(View.GONE);
-        }
     }
 
     public void closeSearch() {
+        if(IS_TABLET_UI) {
+            BTN_PROFILE.setVisibility(View.VISIBLE);
+        }
+
         Utils.Keyboard.requestCloseFromInput(CONTEXT, SEARCH_INPUT);
 
         SEARCH_CONTAINER.setVisibility(View.GONE);
 
         clearSearch();
-
-        if(IS_TABLET_UI) {
-            VIEW.findViewById(R.id.titleCollapsed).setVisibility(View.VISIBLE);
-        }
     }
 
     private void clearSearch() {
@@ -413,6 +467,8 @@ public class KapturesFragment extends Fragment {
         buildRecyclerView();
 
         requestFloatingButtonUpdate();
+
+        KProfile.init(BTN_PROFILE);
 
         if(IS_TABLET_UI) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
@@ -480,7 +536,7 @@ public class KapturesFragment extends Fragment {
 
         RECYCLER_VIEW.setNestedScrollingEnabled(false);
 
-        setLayoutManager(SP.getInt(Constants.SP_KEY_LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE));
+        setLayoutManager(SP_APP.getInt(Constants.Sp.App.LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE));
 
         if(KAPTURES.isEmpty()) {
             VIEW.findViewById(R.id.noCapture).setVisibility(View.VISIBLE);
@@ -532,7 +588,7 @@ public class KapturesFragment extends Fragment {
 
         RECYCLER_VIEW.setAdapter(ADAPTER);
 
-        SP.edit().putInt(Constants.SP_KEY_LAYOUT_MANAGER_STYLE, style).commit();
+        SP_APP.edit().putInt(Constants.Sp.App.LAYOUT_MANAGER_STYLE, style).commit();
     }
 
     private void setEmptyAdapterIfEmpty() {
@@ -553,7 +609,7 @@ public class KapturesFragment extends Fragment {
 
             BTN_STYLE_LAYOUT_MANAGER.setVisibility(View.VISIBLE);
 
-            setLayoutManager(SP.getInt(Constants.SP_KEY_LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE));
+            setLayoutManager(SP_APP.getInt(Constants.Sp.App.LAYOUT_MANAGER_STYLE, DefaultSettings.LAYOUT_MANAGER_STYLE));
 
             VIEW.findViewById(R.id.btnSearch).setVisibility(View.VISIBLE);
         }
@@ -583,7 +639,7 @@ public class KapturesFragment extends Fragment {
                 BTN_SELECTED.setText(size + " " + (size == 1 ? CONTEXT.getString(R.string.selected) : CONTEXT.getString(R.string.selected_plural)));
 
                 BTN_SELECTED.setCompoundDrawablesWithIntrinsicBounds(
-                    ResourcesCompat.getDrawable(getResources(), size == ADAPTER.getItemCount() ? R.drawable.checkbox_on : R.drawable.checkbox_off, CONTEXT.getTheme()),
+                    Utils.getDrawable(CONTEXT, size == ADAPTER.getItemCount() ? R.drawable.checkbox_on : R.drawable.checkbox_off),
                     null,
                     null,
                     null
@@ -614,7 +670,7 @@ public class KapturesFragment extends Fragment {
 
                 SWIPE_REFRESH.setRefreshing(false);
 
-                Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
             }
         }.start();
     }
@@ -704,9 +760,9 @@ public class KapturesFragment extends Fragment {
         SORT_BY = sortBy;
         SORT_ASC = asc;
 
-        SP.edit()
-            .putInt(Constants.SP_KEY_SORT_BY, SORT_BY)
-            .putBoolean(Constants.SP_KEY_SORT_BY_ASC, SORT_ASC)
+        SP_APP.edit()
+            .putInt(Constants.Sp.App.SORT_BY, SORT_BY)
+            .putBoolean(Constants.Sp.App.SORT_BY_ASC, SORT_ASC)
         .apply();
 
         sortAdapter(true);
@@ -844,7 +900,7 @@ public class KapturesFragment extends Fragment {
 
                 updateSubtitle();
 
-                Toast.makeText(CONTEXT, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CONTEXT, getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
             },
             R.string.popup_btn_cancel,
             null,
@@ -909,7 +965,7 @@ public class KapturesFragment extends Fragment {
 
                     clearSearch();
 
-                    Toast.makeText(CONTEXT, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CONTEXT, getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
                 }
             },
             R.string.popup_btn_cancel,
@@ -947,7 +1003,7 @@ public class KapturesFragment extends Fragment {
 
                 updateSubtitle();
 
-                Toast.makeText(CONTEXT, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CONTEXT, getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
             },
             R.string.popup_btn_cancel,
             null,
@@ -984,7 +1040,7 @@ public class KapturesFragment extends Fragment {
 
                 clearSearch();
 
-                Toast.makeText(CONTEXT, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CONTEXT, getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
             },
             R.string.popup_btn_cancel,
             null,
@@ -1021,7 +1077,7 @@ public class KapturesFragment extends Fragment {
 
                 clearSearch();
 
-                Toast.makeText(CONTEXT, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CONTEXT, getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
             },
             R.string.popup_btn_cancel,
             null,
@@ -1099,20 +1155,20 @@ public class KapturesFragment extends Fragment {
         if(CapturingService.isRecording()) {
             BTN_FLOATING_START_STOP.setTooltipText(getString(R.string.tooltip_stop));
 
-            BTN_FLOATING_START_STOP.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_capture_stop, getContext().getTheme()), null, null, null);
+            BTN_FLOATING_START_STOP.setCompoundDrawablesWithIntrinsicBounds(Utils.getDrawable(CONTEXT, R.drawable.icon_capture_stop), null, null, null);
 
         } else {
             BTN_FLOATING_START_STOP.setTooltipText(getString(R.string.tooltip_start));
 
-            BTN_FLOATING_START_STOP.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_capture_start, getContext().getTheme()), null, null, null);
+            BTN_FLOATING_START_STOP.setCompoundDrawablesWithIntrinsicBounds(Utils.getDrawable(CONTEXT, R.drawable.icon_capture_start), null, null, null);
         }
 
         if(CapturingService.isPaused()) {
             BTN_FLOATING_PAUSE_RESUME.setTooltipText(getString(R.string.tooltip_resume));
-            BTN_FLOATING_PAUSE_RESUME.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_capture_resume, getContext().getTheme()), null, null, null);
+            BTN_FLOATING_PAUSE_RESUME.setCompoundDrawablesWithIntrinsicBounds(Utils.getDrawable(CONTEXT, R.drawable.icon_capture_resume), null, null, null);
         } else {
             BTN_FLOATING_PAUSE_RESUME.setTooltipText(getString(R.string.tooltip_pause));
-            BTN_FLOATING_PAUSE_RESUME.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_capture_pause, getContext().getTheme()), null, null, null);
+            BTN_FLOATING_PAUSE_RESUME.setCompoundDrawablesWithIntrinsicBounds(Utils.getDrawable(CONTEXT, R.drawable.icon_capture_pause), null, null, null);
         }
     }
 
@@ -1122,5 +1178,13 @@ public class KapturesFragment extends Fragment {
 
     private void updateSubtitle() {
         SUBTITLE.setText(KAPTURES.size() + " " + CONTEXT.getString(KAPTURES.size() == 1 ? R.string.kapture : R.string.kapture_plural));
+    }
+
+    public void openSettings_tabletUi() {
+        if(IS_TABLET_UI) {
+            getChildFragmentManager().beginTransaction().show(SETTINGS_FRAGMENT__TABLE_UI).commitNow();
+            VIEW.findViewById(R.id.frameLayoutContainer).setVisibility(View.VISIBLE);
+            SETTINGS_FRAGMENT__TABLE_UI.onResume();
+        }
     }
 }

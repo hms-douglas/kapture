@@ -223,7 +223,7 @@ public class VideoActivity extends AppCompatActivity {
 
                                     popup.dismissWithAnimation();
 
-                                    Toast.makeText(this, getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
                                 });
 
                                 KFile.notifyMediaScanner(this, FILE);

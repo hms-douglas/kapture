@@ -132,6 +132,22 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/activity_background"
+                    android:foreground="@drawable/btn_effect"
+                    android:paddingLeft="@dimen/app_bar_profile_padding_start"
+                    android:drawableLeft="@drawable/icon_profile_i_default"
+                    android:drawableRight="@drawable/dropdown_arrow"
+                    android:tooltipText="@string/tooltip_profile"
+                    android:text="@string/profile_default"
+                    android:textSize="@dimen/app_bar_font_title_profile"
+                    android:textColor="@color/app_bar_profile"
+                    android:drawablePadding="4dp"
+                    android:textAllCaps="false"/>
+
                 <LinearLayout
                     android:id="@+id/toolbarBtns"
                     android:layout_width="wrap_content"
@@ -186,16 +202,6 @@
                         android:contentDescription="@string/tooltip_settings"
                         android:longClickable="true"/>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/titleCollapsed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textColor="@color/app_bar_font_title"
-                    android:textSize="@dimen/app_bar_font_title_collapsed"
-                    android:textStyle="bold"
-                    android:paddingStart="@dimen/tool_bar_padding_right"/>
             </androidx.appcompat.widget.Toolbar>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -283,6 +289,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/controlsBtnContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -299,7 +306,6 @@
             android:layout_marginBottom="@dimen/floating_btn_secondary_space"
             android:drawableLeft="@drawable/icon_capture_pause"
             android:paddingLeft="@dimen/floating_btn_padding_secondary"
-            app:elevation="@dimen/floating_btn_elevation"
             android:tooltipText="@string/tooltip_pause"
             android:text="@string/floating_btn_pause"
             android:textSize="@dimen/floating_btn_font_secondary"
@@ -315,7 +321,6 @@
             android:foreground="@drawable/btn_floating_effect"
             android:drawableLeft="@drawable/icon_capture_start"
             android:paddingLeft="@dimen/floating_btn_padding"
-            app:elevation="@dimen/floating_btn_elevation"
             android:tooltipText="@string/tooltip_start"
             android:text="@string/floating_btn_start"
             android:textSize="@dimen/floating_btn_font"
@@ -324,6 +329,19 @@
             android:padding="20dp"
             android:drawablePadding="8dp"/>
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnBackToTop"
+        android:visibility="gone"
+        android:layout_width="@dimen/btn_back_to_top_size"
+        android:layout_height="@dimen/btn_back_to_top_size"
+        android:background="@drawable/btn_back_top_background_circle"
+        android:foreground="@drawable/btn_floating_effect"
+        android:layout_margin="@dimen/btn_back_to_top_space"
+        android:src="@drawable/icon_back_to_top"
+        android:elevation="@dimen/btn_back_to_top_elevation"
+        android:tooltipText="@string/tooltip_back_top"
+        android:layout_gravity="bottom|center"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayoutContainer"

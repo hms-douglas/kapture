@@ -14,9 +14,9 @@
     android:id="@+id/radioContainer">
 
         <ImageView
-            android:id="@+id/radioIcon"
-            android:layout_width="@dimen/radio_size"
-            android:layout_height="@dimen/radio_size"
+            android:id="@+id/selectIcon"
+            android:layout_width="@dimen/radio_checkbox_size"
+            android:layout_height="@dimen/radio_checkbox_size"
             android:src="@drawable/radio_on"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +27,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Title"
-            android:textSize="@dimen/radio_text"
-            android:textColor="@color/radio_text"
-            android:layout_marginStart="@dimen/radio_text_margin_left"
+            android:textSize="@dimen/radio_checkbox_text"
+            android:textColor="@color/radio_checkbox_text"
+            android:layout_marginStart="@dimen/radio_checkbox_text_margin_left"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/radioIcon"
+            app:layout_constraintStart_toEndOf="@id/selectIcon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="HardcodedText" />

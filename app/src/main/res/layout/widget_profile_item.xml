@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/widget_profile_item_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="@dimen/widget_background_margin"
+    android:paddingEnd="@dimen/widget_background_margin"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:id="@+id/profile">
+
+    <ImageView
+        android:id="@+id/radio"
+        android:layout_width="@dimen/widget_profile_item_radio_size"
+        android:layout_height="@dimen/widget_profile_item_radio_size"
+        android:src="@drawable/radio_on"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/icon"
+        android:src="@drawable/icon_profile_i_default"
+        android:layout_width="@dimen/widget_profile_item_icon"
+        android:layout_height="@dimen/widget_profile_item_icon"
+        android:layout_marginStart="@dimen/widget_background_margin"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_default"
+        android:textSize="@dimen/default_font_secondary"
+        android:textColor="@color/widget_font_label"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/widget_background_margin"/>
+</LinearLayout>

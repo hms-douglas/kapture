@@ -40,6 +40,7 @@ import java.util.Arrays;
 import dev.dect.kapture.adapter.FragmentAdapter;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.R;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.fragment.KapturesFragment;
 import dev.dect.kapture.fragment.SettingsFragment;
 import dev.dect.kapture.model.Kapture;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean IS_OUT_FOR_PERMISSION = false,
                     IS_TABLET_UI = false;
 
-    private SharedPreferences SP;
+    private SharedPreferences SP_APP;
 
     private AppCompatButton BTN_TAB_CAPTURES,
                             BTN_TAB_SETTINGS;
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkAndRequestPermissions() {
-        switch(SP.getInt(Constants.SP_KEY_PERMISSION_STEPS, 0)) {
+        switch(SP_APP.getInt(Constants.Sp.App.PERMISSION_STEPS, 0)) {
             case 0:
                 requestAndroidPermissions(true);
 
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     R.string.permission_storage_popup,
                     R.string.permission_button_settings,
                     () -> {
-                        SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 2).commit();
+                        SP_APP.edit().putInt(Constants.Sp.App.PERMISSION_STEPS, 2).commit();
 
                         IS_OUT_FOR_PERMISSION = true;
 
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     R.string.permission_security_popup,
                     R.string.permission_button_open_accessibility,
                     () -> {
-                        SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 3).commit();
+                        SP_APP.edit().putInt(Constants.Sp.App.PERMISSION_STEPS, 3).commit();
 
                         IS_OUT_FOR_PERMISSION = true;
 
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                     },
                     R.string.permission_button_continue_to_app,
                     () -> {
-                        SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 3).commit();
+                        SP_APP.edit().putInt(Constants.Sp.App.PERMISSION_STEPS, 3).commit();
 
                         checkAndRequestPermissions();
                     },
@@ -201,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 }, 0);
 
                 if(continueSteps) {
-                    SP.edit().putInt(Constants.SP_KEY_PERMISSION_STEPS, 1).commit();
+                    SP_APP.edit().putInt(Constants.Sp.App.PERMISSION_STEPS, 1).commit();
                 } else {
                     POPUP.dismiss();
                 }
@@ -212,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
     private void initVariables() {
         ACTIVITY = this;
 
-        SP = getSharedPreferences(Constants.SP, MODE_PRIVATE);
+        SP_APP = KSharedPreferences.getAppSp(this);
 
         IS_TABLET_UI = getResources().getBoolean(R.bool.is_tablet);
 
@@ -334,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        SettingsFragment.setTheme(this, SP.getInt(Constants.SP_KEY_APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM), false);
+        SettingsFragment.setTheme(this, SP_APP.getInt(Constants.Sp.App.APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM), false);
 
         if(checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
             || checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
@@ -364,12 +365,16 @@ public class MainActivity extends AppCompatActivity {
             ).show();
         }
 
+        final boolean isToLaunchNotificationSettings = getIntent().getCategories().contains("android.intent.category.NOTIFICATION_PREFERENCES");
+
         if(IS_TABLET_UI) {
             final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
             fragmentTransaction.replace(R.id.frameLayout, KAPTURE_FRAGMENT);
 
             fragmentTransaction.commitNow();
+
+            KAPTURE_FRAGMENT.openSettings_tabletUi();
         } else {
             VIEW_PAGER.setOffscreenPageLimit(1);
 
@@ -382,13 +387,21 @@ public class MainActivity extends AppCompatActivity {
                     )
                 )
             );
+
+            if(isToLaunchNotificationSettings) {
+                goToFragment(1, false);
+            }
+        }
+    }
+
+    private void goToFragment(int pos, boolean animate) {
+        if(!IS_TABLET_UI && pos != VIEW_PAGER.getCurrentItem()) {
+            VIEW_PAGER.setCurrentItem(pos, animate);
         }
     }
 
     private void goToFragment(int pos) {
-        if(!IS_TABLET_UI && pos != VIEW_PAGER.getCurrentItem()) {
-            VIEW_PAGER.setCurrentItem(pos, true);
-        }
+        goToFragment(pos, true);
     }
 
     private SpannableStringBuilder generateEnabledBottomBarBtn(int s) {

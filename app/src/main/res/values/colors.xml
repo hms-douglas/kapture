@@ -2,6 +2,7 @@
 <resources>
     <color name="main">#EB3B2E</color>
     <color name="main_darker">#7A1F18</color>
+    <color name="main_transparent">#CBEB3B2E</color>
 
     <color name="background_transparent">#B5000000</color>
 
@@ -68,6 +69,10 @@
     <color name="overlay_seekbar_progress_background">@color/c6</color>
     <color name="overlay_seekbar_thumb">@color/default_seekbar_thumb</color>
 
+    <color name="popup_seekbar_progress">@color/default_seekbar_progress</color>
+    <color name="popup_seekbar_progress_background">@color/c6</color>
+    <color name="popup_seekbar_thumb">@color/default_seekbar_thumb</color>
+
     <color name="popup_progress">@color/main</color>
     <color name="popup_progress_background">@color/c6</color>
 
@@ -85,6 +90,8 @@
     <color name="app_bar_font_title">@color/c0</color>
     <color name="app_bar_font_sub_title_expanded">@color/c1</color>
     <color name="app_bar_font_sub_title">@color/c2</color>
+
+    <color name="app_bar_profile">@color/c0</color>
 
     <color name="tool_bar_icon">@color/c0</color>
 
@@ -114,13 +121,13 @@
     <color name="popup_title">@color/c0</color>
     <color name="popup_text">#646464</color>
 
-    <color name="input_background">@color/popup_container_background</color>
+    <color name="input_background">@android:color/transparent</color>
     <color name="input_border">@color/c0</color>
     <color name="input_text">@color/c0</color>
 
     <color name="radio_on">@color/main</color>
     <color name="radio_off">@color/c6</color>
-    <color name="radio_text">@color/c0</color>
+    <color name="radio_checkbox_text">@color/c0</color>
 
     <color name="checkbox_on">@color/main</color>
     <color name="checkbox_off">@color/c6</color>
@@ -172,8 +179,19 @@
     <color name="storage_cache">@color/c3</color>
     <color name="storage_free">@color/c6</color>
 
-    <color name="widget_background">#E2E2E2</color>
-    <color name="widget_font">@color/c2</color>
+    <color name="widget_background">#FAFAFA</color>
+    <color name="widget_background_internal">#F0EFEF</color>
+    <color name="widget_font_btn">@color/c2</color>
+    <color name="widget_font_label">@color/c0</color>
+    <color name="widget_font_btn_title">@color/c0</color>
     <color name="floating_btn_background_widget_disabled">@color/c6</color>
     <color name="floating_btn_icon_widget_disabled">#5E5E5E</color>
+
+    <color name="back_top_top_btn_background">#F3F3F3</color>
+    <color name="back_top_top_btn_icon">@color/c0</color>
+
+    <color name="profile_editor_circle_background">#F0F0F3</color>
+    <color name="profile_editor_icon_picker">@color/c2</color>
+
+    <color name="profile_manager_btn_delete">#DB332A</color>
 </resources>

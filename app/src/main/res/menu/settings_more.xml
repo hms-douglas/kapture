@@ -2,8 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/group0">
         <item
-            android:id="@+id/menuResetSettings"
-            android:title="@string/menu_settings_reset_settings" />
+            android:id="@+id/menuAppResetSettings"
+            android:title="@string/menu_settings_reset_app_settings" />
+
+        <item
+            android:id="@+id/menuProfileResetSettings"
+            android:title="@string/menu_settings_reset_profile_settings" />
     </group>
 
     <group android:id="@+id/group1">

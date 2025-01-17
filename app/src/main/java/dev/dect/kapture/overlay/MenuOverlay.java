@@ -7,9 +7,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.PixelCopy;
@@ -18,8 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.json.JSONArray;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,6 +33,7 @@ import java.util.Date;
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.utils.KFile;
@@ -42,7 +48,7 @@ public class MenuOverlay {
 
     private final WindowManager WINDOW_MANAGER;
 
-    private final SharedPreferences.Editor EDITOR;
+    private final SharedPreferences.Editor EDITOR_PROFILE;
 
     private final CameraOverlay CAMERA_OVERLAY;
 
@@ -58,7 +64,8 @@ public class MenuOverlay {
 
     private KChronometer CHRONOMETER;
 
-    private LinearLayout LINEAR_LAYOUT;
+    private LinearLayout LINEAR_LAYOUT,
+                         SHORTCUTS_MENU;
 
     private Surface MEDIA_RECORDER_SURFACE;
 
@@ -73,7 +80,7 @@ public class MenuOverlay {
         this.CAMERA_OVERLAY = co;
         this.DRAW_OVERLAY = new DrawOverlay(ctx, ks, wm, this);
 
-        this.EDITOR = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit();
+        this.EDITOR_PROFILE = KSharedPreferences.getActiveProfileSp(ctx).edit();
     }
 
     public void render() {
@@ -92,8 +99,8 @@ public class MenuOverlay {
         Utils.Overlay.setLayoutParametersPosition(
             LAYOUT_PARAMETERS,
             CONTEXT,
-            Constants.SP_KEY_OVERLAY_MENU_X_POS,
-            Constants.SP_KEY_OVERLAY_MENU_Y_POS
+            Constants.Sp.Profile.OVERLAY_MENU_X_POS,
+            Constants.Sp.Profile.OVERLAY_MENU_Y_POS
         );
 
         setViewDraggable();
@@ -198,6 +205,16 @@ public class MenuOverlay {
             VIEW.findViewById(R.id.time).setVisibility(View.GONE);
         }
 
+        if(KSETTINGS.isToShowShortcutsButtonOnMenu()) {
+            SHORTCUTS_MENU = VIEW.findViewById(R.id.shortcuts);
+
+            allOptionalIsHidden = false;
+
+            initShortcuts();
+        } else {
+            VIEW.findViewById(R.id.btnShortcut).setVisibility(View.GONE);
+        }
+
         if(allOptionalIsHidden) {
             LINEAR_LAYOUT.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
         }
@@ -298,10 +315,10 @@ public class MenuOverlay {
                     if(new Date().getTime() - TIME_HELPER[0] <= 200) {
                         v.performClick();
                     } else {
-                        EDITOR.putInt(Constants.SP_KEY_OVERLAY_MENU_X_POS, LAYOUT_PARAMETERS.x);
-                        EDITOR.putInt(Constants.SP_KEY_OVERLAY_MENU_Y_POS, LAYOUT_PARAMETERS.y);
+                        EDITOR_PROFILE.putInt(Constants.Sp.Profile.OVERLAY_MENU_X_POS, LAYOUT_PARAMETERS.x);
+                        EDITOR_PROFILE.putInt(Constants.Sp.Profile.OVERLAY_MENU_Y_POS, LAYOUT_PARAMETERS.y);
 
-                        EDITOR.apply();
+                        EDITOR_PROFILE.apply();
                     }
             }
 
@@ -314,8 +331,8 @@ public class MenuOverlay {
             VIEW,
             LAYOUT_PARAMETERS,
             WINDOW_MANAGER,
-            Constants.SP_KEY_OVERLAY_MENU_X_POS,
-            Constants.SP_KEY_OVERLAY_MENU_Y_POS
+            Constants.Sp.Profile.OVERLAY_MENU_X_POS,
+            Constants.Sp.Profile.OVERLAY_MENU_Y_POS
         );
     }
 
@@ -325,7 +342,11 @@ public class MenuOverlay {
         }
 
         IS_MINIMIZED = true;
-
+        
+        if(SHORTCUTS_MENU != null) {
+            SHORTCUTS_MENU.setVisibility(View.GONE);
+        }
+        
         VIEW.setPadding(12,18,12,18);
 
         final ValueAnimator move = ValueAnimator.ofInt(LAYOUT_PARAMETERS.x, WINDOW_MANAGER.getCurrentWindowMetrics().getBounds().width() / (KSETTINGS.getMinimizingSide() == 0 ? 2 : -2));
@@ -536,18 +557,98 @@ public class MenuOverlay {
     }
 
     public void refreshRecordingState() {
-        if(CapturingService.isPaused()) {
-            BTN_PAUSE_RESUME.setImageResource(R.drawable.overlay_menu_icon_resume);
+        if(VIEW != null && VIEW.isAttachedToWindow()) {
+            if(CapturingService.isPaused()) {
+                BTN_PAUSE_RESUME.setImageResource(R.drawable.overlay_menu_icon_resume);
 
-            if(CHRONOMETER != null) {
-                CHRONOMETER.pause();
-            }
-        } else {
-            BTN_PAUSE_RESUME.setImageResource(R.drawable.overlay_menu_icon_pause);
+                if (CHRONOMETER != null) {
+                    CHRONOMETER.pause();
+                }
+            } else {
+                BTN_PAUSE_RESUME.setImageResource(R.drawable.overlay_menu_icon_pause);
 
-            if(CHRONOMETER != null) {
-                CHRONOMETER.resume();
+                if (CHRONOMETER != null) {
+                    CHRONOMETER.resume();
+                }
             }
         }
+    }
+    
+    private void initShortcuts() {
+        final JSONArray shortcuts = KSETTINGS.getShortcutsPackagesForMenu();
+
+        setDraggableHelper(VIEW.findViewById(R.id.btnShortcut));
+
+        if(shortcuts.length() == 1) {
+            setShortcut(VIEW.findViewById(R.id.btnShortcut), shortcuts, 0);
+        } else {
+            setDraggableHelper(VIEW.findViewById(R.id.btnCloseShortcut));
+
+            VIEW.findViewById(R.id.btnCloseShortcut).setOnClickListener((v) -> SHORTCUTS_MENU.setVisibility(View.GONE));
+            
+            VIEW.findViewById(R.id.btnShortcut).setOnClickListener((v) -> {
+                if(SHORTCUTS_MENU.getVisibility() == View.VISIBLE) {
+                    SHORTCUTS_MENU.setVisibility(View.GONE);
+                } else {
+                    SHORTCUTS_MENU.setVisibility(View.VISIBLE);
+                }
+            });
+
+            final LinearLayout shortcutsContainer = VIEW.findViewById(R.id.shortcuts);
+
+            final int shortcutSize = CONTEXT.getResources().getDimensionPixelSize(R.dimen.overlay_menu_icon),
+                      shortcutPadding = (int) (CONTEXT.getResources().getDisplayMetrics().density * 6);
+
+            final LinearLayout.LayoutParams layoutParamsShortcut = new LinearLayout.LayoutParams(shortcutSize, shortcutSize);
+
+            layoutParamsShortcut.gravity = Gravity.CENTER;
+
+            for(int i = 0; i < Constants.OVERLAY_MAX_SHORTCUTS; i++) {
+                final ImageButton shortcut = new ImageButton(CONTEXT);
+
+                shortcut.setPadding(shortcutPadding, shortcutPadding, shortcutPadding, shortcutPadding);
+                shortcut.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                shortcut.setBackgroundColor(Color.TRANSPARENT);
+                shortcut.setImageResource(R.drawable.icon_launch_app);
+                shortcut.setLayoutParams(layoutParamsShortcut);
+
+                shortcutsContainer.addView(shortcut, i);
+
+                setShortcut(shortcut, shortcuts, i);
+            }
+        }
+    }
+    
+    private void setShortcut(ImageButton btn, JSONArray shortcuts, int index) {
+        String[] packageName = new String[1];
+        
+        try {
+            packageName[0] = shortcuts.getString(index);
+        } catch (Exception ignore) {
+            packageName[0] = Constants.HOME_PACKAGE_NAME;
+        }
+        
+        if(packageName[0].equals(Constants.HOME_PACKAGE_NAME)) {
+            btn.setImageResource(R.drawable.icon_launch_home);
+        } else {
+            btn.setImageResource(R.drawable.icon_launch_app);
+
+            new Handler(Looper.getMainLooper()).post(() -> {
+                try {
+                    btn.setImageDrawable(Utils.Package.getAppIcon(CONTEXT, packageName[0]));
+                } catch (Exception ignore) {}
+            });
+        }
+
+        if(shortcuts.length() == 1) {
+            btn.setOnClickListener((v) -> Utils.ExternalActivity.requestApp(CONTEXT, packageName[0], KSETTINGS.isToOpenShortcutOnPopup()));
+        } else {
+            btn.setOnClickListener((v) -> {
+                SHORTCUTS_MENU.setVisibility(View.GONE);
+                Utils.ExternalActivity.requestApp(CONTEXT, packageName[0], KSETTINGS.isToOpenShortcutOnPopup());
+            });
+        }
+
+        setDraggableHelper(btn);
     }
 }

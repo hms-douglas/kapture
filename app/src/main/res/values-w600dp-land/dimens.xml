@@ -13,4 +13,6 @@
     <dimen name="bottom_bar_width_tablet">@dimen/wrap_content</dimen>
 
     <dimen name="bottom_bar_space_item_tablet">35dp</dimen>
+
+    <dimen name="basic_activity_width_percentage">0.75</dimen>
 </resources>

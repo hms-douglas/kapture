@@ -1,6 +1,7 @@
 package dev.dect.kapture.server;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -9,11 +10,17 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
+import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DB;
+import dev.dect.kapture.data.DefaultSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.model.Kapture;
+import dev.dect.kapture.notification.WifiShareNotification;
+import dev.dect.kapture.popup.DialogPopup;
 import dev.dect.kapture.popup.WiFiSharePopup;
 import dev.dect.kapture.utils.KFile;
 import fi.iki.elonen.NanoHTTPD;
@@ -33,6 +40,15 @@ public class WifiShare extends NanoHTTPD {
 
     private OnWifiShareListener LISTENER;
 
+    private WifiShareNotification NOTIFICATION;
+
+    private WiFiSharePopup POPUP;
+
+    private boolean IS_TO_REQUEST_PASSWORD,
+                    IS_TO_REFRESH_PASSWORD;
+
+    private KSecurity KSECURITY;
+
     public WifiShare(Context ctx) {
         this(ctx, new DB(ctx).selectAllKaptures(true));
     }
@@ -42,6 +58,7 @@ public class WifiShare extends NanoHTTPD {
 
         this.CONTEXT = ctx;
         this.KAPTURES = kaptures;
+        this.NOTIFICATION = new WifiShareNotification(ctx);
 
         for(Kapture kapture : kaptures) {
             LOCATIONS.add(kapture.getLocation());
@@ -54,6 +71,33 @@ public class WifiShare extends NanoHTTPD {
                 LOCATIONS.add(screenshot.getLocation());
             }
         }
+
+        final SharedPreferences sp = KSharedPreferences.getAppSp(ctx);
+
+        this.IS_TO_REQUEST_PASSWORD = sp.getBoolean(Constants.Sp.App.WIFI_SHARE_IS_TO_SHOW_PASSWORD, DefaultSettings.WIFI_SHARE_IS_TO_SHOW_PASSWORD);
+        this.IS_TO_REFRESH_PASSWORD = sp.getBoolean(Constants.Sp.App.WIFI_SHARE_IS_TO_REFRESH_PASSWORD, DefaultSettings.WIFI_SHARE_IS_TO_REFRESH_PASSWORD);
+
+        this.POPUP = new WiFiSharePopup(ctx);
+        this.POPUP.setPort(PORT);
+        this.POPUP.setAmount(KAPTURES.size());
+        this.POPUP.setListener(this::stop);
+
+        if(IS_TO_REQUEST_PASSWORD) {
+            this.KSECURITY = new KSecurity();
+            this.POPUP.setKSecurity(this.KSECURITY);
+        }
+    }
+
+    @Override
+    public void stop() {
+        NOTIFICATION.destroy();
+
+        if(LISTENER != null) {
+            LISTENER.onStop();
+        }
+
+
+        super.stop();
     }
 
     @Override
@@ -65,6 +109,14 @@ public class WifiShare extends NanoHTTPD {
                 return newChunkedResponse(Response.Status.OK,  "image/x-icon", CONTEXT.getResources().openRawResource(R.raw.favicon));
             } catch(Exception e) {
                 return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.NOT_FOUND, "image/x-icon", "");
+            }
+        }
+
+        if(IS_TO_REQUEST_PASSWORD && !KSECURITY.hasAccess(session)) {
+            if(KSECURITY.validateSessionLogin(session)) {
+                newDeviceConnected();
+            } else {
+                return newFixedLengthResponse(new KHtml(CONTEXT).getLogin());
             }
         }
 
@@ -91,7 +143,18 @@ public class WifiShare extends NanoHTTPD {
         return this;
     }
 
+
     public void start() {
+        if(KAPTURES.isEmpty()) {
+            Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_no_kaptures_found), Toast.LENGTH_SHORT).show();
+
+            if(LISTENER != null) {
+                LISTENER.onStop();
+            }
+
+            return;
+        }
+
         final String ip = getIdAddress();
 
         if(ip == null) {
@@ -107,24 +170,34 @@ public class WifiShare extends NanoHTTPD {
         try {
             super.start();
 
-            new WiFiSharePopup(
-                CONTEXT,
-                ip,
-                PORT,
-                KAPTURES.size(),
-                    () -> {
-                        stop();
+            NOTIFICATION.createAndShow();
 
-                        if(LISTENER != null) {
-                            LISTENER.onStop();
-                        }
-                    }
-            ).show();
+            POPUP.setIP(ip);
 
-        } catch (Exception ignore) {
-            Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
+            POPUP.refreshPasswordField();
 
-            super.stop();
+            POPUP.show();
+        } catch (IOException e) {
+            if(e.getMessage().contains("EADDRINUSE")) {
+                NOTIFICATION.destroy();
+
+                new DialogPopup(
+                    CONTEXT,
+                    R.string.wifi_share_popup_error,
+                    R.string.wifi_share_popup_error_message,
+                    R.string.popup_btn_close_app,
+                    () -> System.exit(0),
+                    DialogPopup.NO_TEXT,
+                    null,
+                    false,
+                    false,
+                    true
+                ).show();
+
+                return;
+            }
+
+            Toast.makeText(CONTEXT, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -180,5 +253,12 @@ public class WifiShare extends NanoHTTPD {
         }
 
         return "?";
+    }
+
+    private void newDeviceConnected() {
+        if(IS_TO_REFRESH_PASSWORD) {
+            KSECURITY.generateNewPassword();
+            POPUP.refreshPasswordField();
+        }
     }
 }

@@ -12,15 +12,17 @@ import java.io.File;
 import java.util.Objects;
 
 import dev.dect.kapture.R;
+import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DB;
 import dev.dect.kapture.model.Kapture;
-import dev.dect.kapture.notification.SavedNotification;
+import dev.dect.kapture.notification.CapturedNotification;
 import dev.dect.kapture.notification.ProcessingNotification;
 import dev.dect.kapture.overlay.CountdownOverlay;
 import dev.dect.kapture.recorder.ScreenMicRecorder;
+import dev.dect.kapture.recorder.utils.BeforeStartOption;
 import dev.dect.kapture.recorder.utils.StopOption;
 import dev.dect.kapture.utils.KFile;
-import dev.dect.kapture.notification.RecordingNotification;
+import dev.dect.kapture.notification.CapturingNotification;
 import dev.dect.kapture.activity.MainActivity;
 import dev.dect.kapture.activity.TokenActivity;
 import dev.dect.kapture.data.KSettings;
@@ -39,7 +41,9 @@ public class CapturingService extends AccessibilityService {
 
     private static CapturingService CAPTURING_SERVICE;
 
-    private RecordingNotification NOTIFICATION;
+    private CapturingNotification NOTIFICATION_CAPTURING;
+
+    private ProcessingNotification NOTIFICATION_PROCESSING;
 
     private ScreenMicRecorder SCREEN_MIC_RECORDER;
 
@@ -50,6 +54,8 @@ public class CapturingService extends AccessibilityService {
     private KSettings KSETTINGS;
 
     private StopOption STOP_OPTION;
+
+    private BeforeStartOption BEFORE_START_OPTION;
 
     private Kapture KAPTURE;
 
@@ -167,6 +173,8 @@ public class CapturingService extends AccessibilityService {
         if(TokenActivity.hasToken()) {
             initVariables();
 
+            BEFORE_START_OPTION.start();
+
             IS_IN_COUNTDOWN = true;
 
             requestUIsUpdate(null);
@@ -208,9 +216,11 @@ public class CapturingService extends AccessibilityService {
 
         STOP_OPTION.destroy();
 
-        NOTIFICATION.destroy();
+        NOTIFICATION_CAPTURING.destroy();
 
         OVERLAY_UI.destroy();
+
+        BEFORE_START_OPTION.destroy();
 
         stopForeground(STOP_FOREGROUND_REMOVE);
 
@@ -233,7 +243,9 @@ public class CapturingService extends AccessibilityService {
 
             INTERNAL_AUDIO_RECORDER.destroy();
 
-            new SavedNotification(this).createAndShow(KAPTURE);
+            NOTIFICATION_PROCESSING.destroy();
+
+            new CapturedNotification(this).createAndShow(KAPTURE);
 
             IS_PROCESSING = false;
 
@@ -251,7 +263,7 @@ public class CapturingService extends AccessibilityService {
         SCREEN_MIC_RECORDER.pause();
         INTERNAL_AUDIO_RECORDER.pause();
 
-        NOTIFICATION.refreshRecordingState();
+        NOTIFICATION_CAPTURING.refreshRecordingState();
 
         OVERLAY_UI.refreshRecordingState();
 
@@ -264,7 +276,7 @@ public class CapturingService extends AccessibilityService {
         SCREEN_MIC_RECORDER.resume();
         INTERNAL_AUDIO_RECORDER.resume();
 
-        NOTIFICATION.refreshRecordingState();
+        NOTIFICATION_CAPTURING.refreshRecordingState();
 
         OVERLAY_UI.refreshRecordingState();
 
@@ -272,7 +284,9 @@ public class CapturingService extends AccessibilityService {
     }
 
     private void initVariables() {
-        NOTIFICATION = new RecordingNotification(this);
+        NOTIFICATION_CAPTURING = new CapturingNotification(this);
+
+        NOTIFICATION_PROCESSING = new ProcessingNotification(this);
 
         KSETTINGS = new KSettings(this);
 
@@ -284,11 +298,13 @@ public class CapturingService extends AccessibilityService {
 
         STOP_OPTION = new StopOption(this, KSETTINGS, this::stopRecording);
 
+        BEFORE_START_OPTION = new BeforeStartOption(this, KSETTINGS);
+
         KAPTURE = new Kapture(this);
     }
 
     private void initRecorders() {
-        startForeground(NOTIFICATION.getId(), NOTIFICATION.create());
+        startForeground(Constants.Notification.Id.CAPTURING, NOTIFICATION_CAPTURING.create());
 
         KMediaProjection.generate(this);
 
@@ -298,15 +314,15 @@ public class CapturingService extends AccessibilityService {
     }
 
     private void requestUIsProcessing() {
-        Toast.makeText(this, getString(R.string.notification_notification_processing_message), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.notificationprocessing_message), Toast.LENGTH_SHORT).show();
 
-        new ProcessingNotification(this).createAndShow();
+        NOTIFICATION_PROCESSING.createAndShow();
 
         if(MainActivity.getInstance() != null) {
             MainActivity.getInstance().getKaptureFragment().requestFloatingButtonUpdate();
         }
 
-        QuickTileService.requestUiUpdate(this);
+        QuickTileCapturingService.requestUiUpdate(this);
     }
 
     private void requestUIsStateChange() {
@@ -314,17 +330,17 @@ public class CapturingService extends AccessibilityService {
             MainActivity.getInstance().getKaptureFragment().requestFloatingButtonUpdate();
         }
 
-        Utils.updateWidgets(this);
+        Utils.Widget.updateWidgetsCapturingBtns(this);
     }
 
     private void requestUIsUpdate(Kapture kapture) {
-        QuickTileService.requestUiUpdate(this);
+        QuickTileCapturingService.requestUiUpdate(this);
 
         if(MainActivity.getInstance() != null) {
             MainActivity.getInstance().requestUiUpdate(kapture);
         }
 
-        Utils.updateWidgets(this);
+        Utils.Widget.updateWidgetsCapturingBtns(this);
     }
 
     public void processAndSave() {

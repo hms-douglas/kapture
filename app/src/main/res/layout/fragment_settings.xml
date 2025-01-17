@@ -34,13 +34,29 @@
                 android:contentInsetEnd="0dp"
                 android:paddingTop="@dimen/tool_bar_padding_top"
                 android:paddingEnd="@dimen/tool_bar_padding_right"
-                android:paddingStart="@dimen/tool_bar_padding_left"
+                android:paddingStart="@dimen/tool_bar_padding_right"
                 android:background="@color/activity_background"
                 app:layout_collapseMode="pin"
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
                 app:contentInsetRight="0dp"
                 app:contentInsetEnd="0dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/activity_background"
+                    android:foreground="@drawable/btn_effect"
+                    android:paddingLeft="@dimen/app_bar_profile_padding_start"
+                    android:drawableLeft="@drawable/icon_profile_i_default"
+                    android:drawableRight="@drawable/dropdown_arrow"
+                    android:tooltipText="@string/tooltip_profile"
+                    android:text="@string/profile_default"
+                    android:textSize="@dimen/app_bar_font_title_profile"
+                    android:textColor="@color/app_bar_profile"
+                    android:drawablePadding="4dp"
+                    android:textAllCaps="false"/>
 
                 <ImageButton
                     android:id="@+id/btnMore"

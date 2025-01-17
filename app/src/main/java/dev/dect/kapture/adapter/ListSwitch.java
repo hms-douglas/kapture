@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import dev.dect.kapture.R;
-import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.service.CapturingService;
 
-@SuppressLint("UseSwitchCompatOrMaterialCode")
+@SuppressLint({"UseSwitchCompatOrMaterialCode", "ApplySharedPref"})
 public class ListSwitch {
     public interface OnListSwitchListener {
         default void onChange(boolean b) {}
@@ -91,8 +91,11 @@ public class ListSwitch {
     public static class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         private final ArrayList<ListSwitch> LIST_SWITCHES;
 
-        public Adapter(ArrayList<ListSwitch> listSwitches) {
+        private final boolean IS_APP_SETTINGS;
+
+        public Adapter(ArrayList<ListSwitch> listSwitches, boolean isAppSettings) {
             this.LIST_SWITCHES = listSwitches;
+            this.IS_APP_SETTINGS = isAppSettings;
         }
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -154,7 +157,7 @@ public class ListSwitch {
 
                 listSwitch.setEnabled(b);
 
-                ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit().putBoolean(listSwitch.getSpKey(), b).commit();
+                (IS_APP_SETTINGS ? KSharedPreferences.getAppSp(ctx) : KSharedPreferences.getActiveProfileSp(ctx)).edit().putBoolean(listSwitch.getSpKey(), b).commit();
 
                 if(listSwitch.LISTENER != null) {
                     listSwitch.getListener().onChange(b);

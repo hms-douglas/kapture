@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import dev.dect.kapture.R;
@@ -341,17 +340,9 @@ public class ColorPickerPopup extends Dialog {
     }
 
     private void colorPicked() {
-        final int color = Color.HSVToColor(HSV),
-                  r = Color.red(color),
-                  g = Color.green(color),
-                  b = Color.blue(color);
+        final int color = Color.HSVToColor(HSV);
 
-        final String rH = Integer.toHexString(r),
-                     gH = Integer.toHexString(g),
-                     bH = Integer.toHexString(b),
-                     a = Integer.toHexString(TRANSPARENCY_255);
-
-        HEX_COLOR = "#" + formatHexIndividualNumber(rH) + formatHexIndividualNumber(gH) + formatHexIndividualNumber(bH) + formatHexIndividualNumber(a);
+        HEX_COLOR = Utils.Converter.intColorToHex(color, TRANSPARENCY_255);
 
         if(SHOW_ALPHA) {
             TEXT_ALPHA.setText(String.valueOf(TRANSPARENCY_255));
@@ -360,14 +351,10 @@ public class ColorPickerPopup extends Dialog {
             TEXT_HEX.setText(HEX_COLOR.substring(0, 7));
         }
 
-        TEXT_RED.setText(String.valueOf(r));
-        TEXT_GREEN.setText(String.valueOf(g));
-        TEXT_BLUE.setText(String.valueOf(b));
+        TEXT_RED.setText(String.valueOf(Color.red(color)));
+        TEXT_GREEN.setText(String.valueOf(Color.green(color)));
+        TEXT_BLUE.setText(String.valueOf(Color.blue(color)));
 
         drawColor();
-    }
-
-    private String formatHexIndividualNumber(String n) {
-        return (n.length() == 1 ? "0" + n : n).toUpperCase(Locale.ROOT);
     }
 }

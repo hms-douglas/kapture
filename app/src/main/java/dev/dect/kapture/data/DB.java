@@ -1,5 +1,6 @@
 package dev.dect.kapture.data;
 
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -234,6 +235,10 @@ public class DB extends SQLiteOpenHelper {
         db.setTransactionSuccessful();
 
         db.endTransaction();
+
+        try {
+            ((NotificationManager) CONTEXT.getSystemService(Context.NOTIFICATION_SERVICE)).cancel((int) kapture.getId());
+        } catch (Exception ignore) {}
     }
 
     public void deleteExtra(Kapture.Extra extra) {

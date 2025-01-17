@@ -20,8 +20,9 @@ import java.util.Objects;
 import dev.dect.kapture.R;
 import dev.dect.kapture.utils.KFile;
 
+/** @noinspection ResultOfMethodCallIgnored*/
 public class Kapture {
-    private Context CONTEXT;
+    private final Context CONTEXT;
 
     private long ID;
 

@@ -27,7 +27,7 @@ public class PickerFontItemAdapter extends RecyclerView.Adapter<PickerFontItemAd
         this.INDEX_ACTIVE = indexActive;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         private final ConstraintLayout EL_CONTAINER;
 
         private final ImageView EL_RADIO;
@@ -41,15 +41,15 @@ public class PickerFontItemAdapter extends RecyclerView.Adapter<PickerFontItemAd
 
             this.EL_NAME = view.findViewById(R.id.radioName);
 
-            this.EL_RADIO = view.findViewById(R.id.radioIcon);
+            this.EL_RADIO = view.findViewById(R.id.selectIcon);
         }
     }
 
     @NonNull
     @Override
     public PickerFontItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PickerFontItemAdapter.MyViewHolder(
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_picker_item, parent, false)
+        return new MyViewHolder(
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_picker_item, parent, false)
         );
     }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="lang_auto">Automático</string>
-
     <string name="quick_settings_tile_start_recording">Iniciar captura de tela</string>
     <string name="quick_settings_tile_stop_recording">Parar captura de tela</string>
     <string name="quick_settings_tile_processing">Processando a captura</string>
+
+    <string name="quick_settings_tile_wifi_share">Compartilhar no WiFi (Kapture)</string>
 
     <string name="shortcut_start_recording">Iniciar captura de tela</string>
     <string name="shortcut_stop_recording">Parar captura de tela</string>
@@ -23,7 +23,9 @@
     <string name="notification_tap_show">Clique aqui para ver a captura.</string>
 
     <string name="notification_processing">Processando captura</string>
-    <string name="notification_notification_processing_message">Aguarde enquanto a captura é processada!</string>
+    <string name="notificationprocessing_message">Aguarde enquanto a captura é processada!</string>
+
+    <string name="notification_wifi_share">Compartilhar no WiFi está sendo executado!</string>
 
     <string name="notification_btn_play">Reproduzir</string>
     <string name="notification_btn_share">Compartilhar</string>
@@ -32,6 +34,7 @@
 
     <string name="notification_channel_name_captured">Capturado</string>
     <string name="notification_channel_name_processing">Processando</string>
+    <string name="notification_channel_name_wifi_share">@string/bottom_bar_wifi_share</string>
 
     <string name="permission_title">Kapture utiliza as seguintes permissões</string>
     <string name="permission_required">Permissões obrigatórias</string>
@@ -67,14 +70,24 @@
     <string name="toast_error_file_not_found">Arquivo não encontrado!</string>
     <string name="toast_error_no_extras_found">Nenhum extra encontrado!</string>
     <string name="toast_error_no_screenshots_found">Nenhum screenshot encontrado!</string>
+    <string name="toast_error_no_kaptures_found">Nenhuma kaptura encontrada!</string>
+    <string name="toast_error_no_profiles_found">Nenhum perfil encontrado!</string>
     <string name="toast_error_generic">Algo deu errado!</string>
-    <string name="toast_error_check_update">Não foi possivel procurar por novas versões. Tente manualmente!</string>
-    <string name="toast_error_download">Não foi possivel baixar o arquivo. Tente manualmente!</string>
+    <string name="toast_error_open_url">Não foi possível abrir a url!</string>
+    <string name="toast_error_launch_homescreen">Não foi possível ir para a tela inicial!</string>
+    <string name="toast_error_launch_app">Não foi possível abrir o app!</string>
+    <string name="toast_error_check_update">Não foi possível procurar por novas versões. Tente manualmente!</string>
+    <string name="toast_error_download">Não foi possível baixar o arquivo. Tente manualmente!</string>
     <string name="toast_error_no_wifi">Conecte-se a um WiFi primeiro!</string>
-    <string name="toast_info_enable_accessibility_manually">Não foi possivel abrir o menu de acessibilidate. Tente manualmente!</string>
+    <string name="toast_error_profile_name_empty">É necessário adicionar um nome para o perfil!</string>
+    <string name="toast_error_profile_name_long">O número máximo de caracteres para o nome do perfil é de:</string>
+    <string name="toast_error_select_one_app">Pelo menos um app é necessário!</string>
+    <string name="toast_error_select_app_max">Apenas %d apps são permitidos!</string>
+    <string name="toast_info_enable_accessibility_manually">Não foi possível abrir o menu de acessibilidate. Tente manualmente!</string>
     <string name="toast_info_accessibility_manually">Inicie o serviço de acessibilidate primeiro!</string>
     <string name="toast_info_while_recording">Não é possível alterar as configurações enquanto está capturando!</string>
-    <string name="toast_info_success_generic">Feito!</string>
+    <string name="toast_success_generic">Feito!</string>
+    <string name="toast_success_active_profile">Perfil ativo:</string>
 
     <string name="file_name">captura</string>
     <string name="file_name_extra_mp3_audio">áudio</string>
@@ -100,6 +113,7 @@
     <string name="popup_delete_text_2">Você deseja apagar o(s) arquivo(s) selecionado(s)?</string>
     <string name="popup_delete_text_3">Você deseja apagar os extras do(s) arquivo(s) selecionado(s)?</string>
     <string name="popup_delete_text_4">Você deseja apagar os screenshots do(s) arquivo(s) selecionado(s)?</string>
+    <string name="popup_delete_text_5">Você deseja apagar o perfil:</string>
 
     <string name="popup_remove">Você deseja remover o(s) arquivo(s) selecionado(s) do app? Nenhum arquivo será apagado do seu celular.</string>
 
@@ -163,6 +177,21 @@
     <string name="setting_stop_shake">Por agitação</string>
     <string name="setting_stop_battery_level">Por nível de bateria</string>
 
+    <string name="setting_subgroup_capturing_start">Opções antes de iniciar</string>
+
+    <string name="setting_start_app">Ir para</string>
+    <string name="setting_start_url">Abrir url</string>
+    <string name="setting_start_volume">Ajudar volume (mídia)</string>
+    <string name="setting_start_launch">Abrir app</string>
+    <string name="setting_start_launch_select">Selecione um app</string>
+
+    <string name="package_launch_home">Tela inicial</string>
+
+    <string name="setting_start_message">
+        As opções serão executadas na ordem listada aqui, portanto algumas podem ser sobrescritas;
+        \nAs seguintes opções serão restauradas para o valor inicial quando você parar a captura: Volume (mídia).
+    </string>
+
     <string name="setting_group_floating_ui">Interface flutuante</string>
 
     <string name="setting_subgroup_floating_ui_menu">Menu</string>
@@ -182,16 +211,18 @@
     <string name="setting_menu_show_close">Mostrar o botão de fechar</string>
     <string name="setting_menu_show_close_description">O menu será fechado ao utilizar esse botão. Essa ação não pode ser desfeita.</string>
 
-    <string name="setting_menu_show_minimize">Mostrar o botão de minimizar</string>
+    <string name="setting_menu_show_minimize">Mostrar o botão de minimizar no menu</string>
     <string name="setting_menu_show_minimize_description">O menu será escondido ao mostrar esse botão. Essa ação pode ser desfeita.</string>
 
-    <string name="setting_menu_show_camera">Mostrar o botão de câmera</string>
+    <string name="setting_menu_show_camera">Mostrar o botão de câmera no menu</string>
     <string name="setting_menu_show_camera_description">Permite alternar a visibilidade da câmera.</string>
 
     <string name="setting_menu_show_screenshot">Mostrar o botão de screenshot no menu</string>
 
-    <string name="setting_menu_show_draw">Mostrar o botão de desenho</string>
+    <string name="setting_menu_show_draw">Mostrar o botão de desenhar no menu</string>
     <string name="setting_menu_show_draw_description">Permite desenhar na tela.</string>
+
+    <string name="setting_menu_show_shortcut">Mostrar o botão de atalhos no menu</string>
 
     <string name="setting_subgroup_floating_ui_menu_minimize">Menu \u2022 Minimizar</string>
 
@@ -200,6 +231,13 @@
     <string name="setting_minimize_side">Minimizar para o lado</string>
     <string name="setting_minimize_side_left">Esquerdo</string>
     <string name="setting_minimize_side_right">Direito</string>
+
+    <string name="setting_subgroup_floating_ui_menu_shortcut">Menu \u2022 Atalhos</string>
+
+    <string name="setting_shortcut_shortcuts">Atalhos</string>
+    <string name="setting_shortcut_select">Selecione até %d apps</string>
+    <string name="setting_shortcut_pop">Abrir em janela pop-up</string>
+    <string name="setting_shortcut_pop_description">Caso o app não consiga abrir em modo pop-up o app se aberto no modo janela divida.</string>
 
     <string name="setting_subgroup_floating_ui_camera">Câmera</string>
     <string name="setting_camera_show">Mostrar câmera ao iniciar</string>
@@ -250,11 +288,13 @@
     <string name="setting_text_alignment_center">Centro</string>
     <string name="setting_text_alignment_end">Direita</string>
 
+    <string name="setting_menu_show_more">Verifique as categorias abaixos para ativar/desativar outros botões, mais as suas configurações extras.</string>
+
     <string name="setting_group_extra_video">Gerar arquivos extras de vídeo</string>
 
     <string name="setting_extra_vid_no_audio">Sem áudio</string>
 
-    <string name="setting_extra_vid_no_audio_description">Apenas o video. Somente é gerado se estiver capturando algum áudio.</string>
+    <string name="setting_extra_vid_no_audio_description">Apenas o vídeo. Somente é gerado se estiver capturando algum áudio.</string>
     <string name="setting_extra_vid_internal">Apenas interno</string>
 
     <string name="setting_extra_vid_internal_description">Vídeo com o áudio interno apenas. Somente gerado se estiver capturando o microfone.</string>
@@ -274,6 +314,11 @@
 
     <string name="setting_audio_file_format">Formato de saída</string>
     <string name="setting_audio_file_format_mp3">MP3</string>
+
+    <string name="setting_group_wifi_share">@string/menu_capture_wifi_share</string>
+    <string name="setting_group_wifi_share_request_password">Pedir senha</string>
+    <string name="setting_group_wifi_share_refresh_password">Renovar senha</string>
+    <string name="setting_group_wifi_share_refresh_password_description">A senha será renovada toda vez que um dispositivo se conectar.</string>
 
     <string name="setting_group_app">App</string>
 
@@ -310,6 +355,7 @@
     <string name="popup_btn_rename">Renomear</string>
     <string name="popup_btn_stop">Parar</string>
     <string name="popup_btn_set">Definir</string>
+    <string name="popup_btn_close_app">Fechar o app</string>
 
     <string name="internal_storage">Armazenamento interno</string>
 
@@ -322,9 +368,11 @@
     <string name="menu_settings_show_command">Mostrar comando</string>
     <string name="menu_about">Sobre</string>
 
-    <string name="menu_settings_reset_settings">Restaurar configurações</string>
+    <string name="menu_settings_reset_app_settings">Restaurar configurações do app</string>
+    <string name="menu_settings_reset_profile_settings">Restaurar configurações do perfil ativo</string>
     <string name="menu_settings_reset_settings_confirm">@string/popup_btn_confirm</string>
-    <string name="menu_settings_reset_settings_confirm_description">Restaurar todas as configurações para os valores iniciais?</string>
+    <string name="menu_settings_reset_app_settings_confirm_description">Restaurar todas as configurações do app para os valores iniciais?</string>
+    <string name="menu_settings_reset_profile_settings_confirm_description">Restaurar todas as configurações do perfil atual para os valores iniciais?</string>
 
     <string name="menu_viewer_video_make_seekable">Tornar vídeo seekable</string>
     <string name="menu_viewer_video_open_externally">Abrir externamente</string>
@@ -400,6 +448,8 @@
     <string name="html_duration">Duração</string>
     <string name="html_resolution">Resolução</string>
     <string name="html_size">Tamanho</string>
+    <string name="html_login">Acesso</string>
+    <string name="html_enter_password">Digite a senha</string>
 
     <string name="popup_wifi_share_title">Compartilhando</string>
 
@@ -467,6 +517,12 @@
     <string name="tooltip_hour">Hora</string>
     <string name="tooltip_minute">Minuto</string>
     <string name="tooltip_second">Segundo</string>
+    <string name="tooltip_show_password">Mostrar senha</string>
+    <string name="tooltip_hide_password">Esconder senha</string>
+    <string name="tooltip_back_top">Voltar ao topo</string>
+    <string name="tooltip_profile">Perfil</string>
+    <string name="tooltip_profile_delete">Remover perfil</string>
+    <string name="tooltip_app_shortcut">Atalho</string>
 
     <string name="widget_basic">Básico</string>
     <string name="widget_basic_description">Inicie ou pare uma captura</string>
@@ -477,4 +533,23 @@
     <string name="widget_wifi_share">@string/bottom_bar_wifi_share</string>
     <string name="widget_wifi_share_description">Atalho para compartilhar todas as kapturas por wifi</string>
     <string name="widget_wifi_share_btn">Compartilhar\nno WiFi</string>
+
+    <string name="widget_profile">Perfis</string>
+    <string name="widget_profile_description">Alterne entre perfis, inicie, pare, pause ou resuma uma captura</string>
+
+    <string name="wifi_share_popup_error">Erro</string>
+    <string name="wifi_share_popup_error_message">É necessário reiniciar o app!</string>
+
+    <string name="profile_default">Padrão</string>
+    <string name="profile_new">Novo perfil</string>
+    <string name="profile_manage">Gerenciar perfis</string>
+    <string name="profile_name_placeholder">Digite o nome do perfil aqui</string>
+    <string name="profile_about_message">
+        \u2022 Perfis permitem que você mude as configurações de captura facilmente. Quando você alterar uma configuração ela será aplicada somente ao perfil ativo.
+        \n\u2022 Quando um perfil é criado, ele copia as configurações do perfil ativo.
+        \n\u2022 Configurações dentro dos groupos \"Pasta\", \"Compartilhar no WiFi\" e \"App\" não são afetadas por perfis!
+    </string>
+
+    <string name="popup_media_volume">Mídia</string>
+
 </resources>

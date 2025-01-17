@@ -30,6 +30,7 @@ import dev.dect.kapture.activity.viewer.VideoActivity;
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DB;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.model.Kapture;
 import dev.dect.kapture.service.CapturingService;
 
@@ -43,7 +44,7 @@ public class KFile {
     public static File generateNewEmptyKaptureFile(Context ctx, KSettings ks) {
         final int fileId = getFileIdNotGenerated(ctx);
 
-        ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit().putInt(Constants.SP_KEY_LAST_FILE_ID, fileId).apply();
+        KSharedPreferences.getAppSp(ctx).edit().putInt(Constants.Sp.App.LAST_FILE_ID, fileId).apply();
 
         final String fileName =
             formatFileId(fileId)
@@ -56,7 +57,7 @@ public class KFile {
     }
 
     public static int getFileIdNotGenerated(Context ctx) {
-        return ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getInt(Constants.SP_KEY_LAST_FILE_ID, 0) + 1;
+        return KSharedPreferences.getAppSp(ctx).getInt(Constants.Sp.App.LAST_FILE_ID, 0) + 1;
     }
 
     public static String formatFileId(int id) {

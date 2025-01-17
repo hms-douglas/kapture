@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import dev.dect.kapture.R;
-import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.KSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.popup.PickerFontPopup;
 import dev.dect.kapture.popup.PickerPopup;
 import dev.dect.kapture.service.CapturingService;
@@ -262,8 +262,11 @@ public class ListPicker {
     public static class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         private final ArrayList<ListPicker> LIST_PICKERS_INT;
 
-        public Adapter(ArrayList<ListPicker> listPickers) {
+        private final boolean IS_APP_SETTINGS;
+
+        public Adapter(ArrayList<ListPicker> listPickers, boolean isAppSettings) {
             this.LIST_PICKERS_INT = listPickers;
+            this.IS_APP_SETTINGS = isAppSettings;
         }
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -313,7 +316,7 @@ public class ListPicker {
                     }
 
                     new PickerFontPopup(ctx, listPicker.getIdTitle(), listPicker.getDisplayNames(),  ((ListPicker.Font) listPicker).getValues(), listPicker.getActiveIndex(), (indexPicked) -> {
-                        final SharedPreferences.Editor editor = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit();
+                        final SharedPreferences.Editor editor = (IS_APP_SETTINGS ? KSharedPreferences.getAppSp(ctx) : KSharedPreferences.getActiveProfileSp(ctx)).edit();
 
                         final ListPicker.Font listFont = (ListPicker.Font) listPicker;
 
@@ -339,7 +342,7 @@ public class ListPicker {
                     }
 
                     new PickerPopup(ctx, listPicker.getIdTitle(), listPicker.getDisplayNames(), listPicker.getActiveIndex(), (indexPicked) -> {
-                        final SharedPreferences.Editor editor = ctx.getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).edit();
+                        final SharedPreferences.Editor editor = (IS_APP_SETTINGS ? KSharedPreferences.getAppSp(ctx) : KSharedPreferences.getActiveProfileSp(ctx)).edit();
 
                         if (listPicker instanceof Text) {
                             final Text listText = (Text) listPicker;

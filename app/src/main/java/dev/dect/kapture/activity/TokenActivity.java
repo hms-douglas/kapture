@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.DefaultSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.R;
 
@@ -82,10 +83,10 @@ public class TokenActivity extends AppCompatActivity {
     public static void clearToken(Context ctx) {
         clearToken();
 
-        Toast.makeText(ctx, ctx.getString(R.string.toast_info_success_generic), Toast.LENGTH_SHORT).show();
+        Toast.makeText(ctx, ctx.getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
     }
 
     public static boolean isToRecycle(Context ctx) {
-        return ctx.getSharedPreferences(Constants.SP, MODE_PRIVATE).getBoolean(Constants.SP_KEY_IS_TO_RECYCLE_TOKEN, DefaultSettings.IS_TO_RECYCLE_TOKEN);
+        return KSharedPreferences.getAppSp(ctx).getBoolean(Constants.Sp.App.IS_TO_RECYCLE_TOKEN, DefaultSettings.IS_TO_RECYCLE_TOKEN);
     }
 }
