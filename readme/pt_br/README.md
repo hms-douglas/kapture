@@ -13,7 +13,8 @@ Os que eu encontrei tinham quer ser instalados por fora, o que me deixou um pouc
 Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. Você pode baixar o .apk e instalar, ou voce pode baixar o código fonte, lê-lo e gerar o app (built).
 </br>
 </br>
-<img src="./app.gif" width="40%"/>##
+<img src="../app.gif" width="40%"/>
+##
 ### Recursos
 <ul>
   <li>Capturar tela:
