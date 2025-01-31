@@ -154,6 +154,15 @@ public class Constants {
         }
     }
 
+    public static class Shortcut {
+        public static class Action { // also change on shortcuts.xml
+            public static final String
+                START = Constants.Action.START,
+                STOP = Constants.Action.STOP,
+                PAUSE = Constants.Action.PAUSE,
+                RESUME = Constants.Action.RESUME;
+        }
+    }
 
     public static class Url {
         public static class License {

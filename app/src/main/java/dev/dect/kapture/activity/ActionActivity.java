@@ -25,15 +25,16 @@ import dev.dect.kapture.utils.KProfile;
 /** @noinspection ResultOfMethodCallIgnored*/
 public class ActionActivity extends AppCompatActivity {
     public static String INTENT_KAPTURE_ID = "id",
-                         INTENT_ACTION = "action",
+                         INTENT_ACTION = "action", // also change on shortcuts.xml
                          INTENT_NOTIFICATION_ID = "not_id",
-                         INTENT_FROM = "from",
+                         INTENT_FROM = "from", // also change on shortcuts.xml
                          INTENT_PROFILE_NAME = "name";
 
     public static final int FROM_APP = 0,
                             FROM_NOTIFICATION = 1,
                             FROM_QUICK_TILE = 2,
-                            FROM_WIDGET = 3;
+                            FROM_WIDGET = 3,
+                            FROM_SHORTCUT = 4; // also change on shortcuts.xml
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -59,6 +60,10 @@ public class ActionActivity extends AppCompatActivity {
 
                 case FROM_WIDGET:
                     fromWidget();
+                    break;
+
+                case FROM_SHORTCUT:
+                    fromShortcut();
                     break;
 
                 default:
@@ -171,5 +176,35 @@ public class ActionActivity extends AppCompatActivity {
         }
     }
 
-    private void fromApp() {}
+    private void fromShortcut() {
+        switch(getIntent().getExtras().getString(INTENT_ACTION, null)) {
+            case Constants.Shortcut.Action.START:
+                CapturingService.requestStartRecording(this);
+                finish();
+                break;
+
+            case Constants.Shortcut.Action.STOP:
+                CapturingService.requestStopRecording();
+                finish();
+                break;
+
+            case Constants.Shortcut.Action.PAUSE:
+                CapturingService.requestPauseRecording();
+                finish();
+                break;
+
+            case Constants.Shortcut.Action.RESUME:
+                CapturingService.requestResumeRecording();
+                finish();
+                break;
+
+            default:
+                finish();
+                break;
+        }
+    }
+
+    private void fromApp() {
+        finish();
+    }
 }

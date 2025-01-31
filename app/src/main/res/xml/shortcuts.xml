@@ -11,6 +11,7 @@
             android:targetPackage="dev.dect.kapture"
             android:targetClass="dev.dect.kapture.activity.ActionActivity">
 
+            <extra android:name="from" android:value="4"/>
             <extra android:name="action" android:value="ACTION.START"/>
         </intent>
     </shortcut>
@@ -27,6 +28,7 @@
             android:targetPackage="dev.dect.kapture"
             android:targetClass="dev.dect.kapture.activity.ActionActivity">
 
+            <extra android:name="from" android:value="4"/>
             <extra android:name="action" android:value="ACTION.STOP"/>
         </intent>
     </shortcut>
@@ -43,6 +45,7 @@
             android:targetPackage="dev.dect.kapture"
             android:targetClass="dev.dect.kapture.activity.ActionActivity">
 
+            <extra android:name="from" android:value="4"/>
             <extra android:name="action" android:value="ACTION.PAUSE"/>
         </intent>
     </shortcut>
@@ -59,6 +62,7 @@
             android:targetPackage="dev.dect.kapture"
             android:targetClass="dev.dect.kapture.activity.ActionActivity">
 
+            <extra android:name="from" android:value="4"/>
             <extra android:name="action" android:value="ACTION.RESUME"/>
         </intent>
     </shortcut>

@@ -237,6 +237,16 @@ public class KSettings {
 
     private int[] getSize(Context ctx, int orientation) {
         if(orientation == Configuration.ORIENTATION_UNDEFINED) {
+            try {
+                final Configuration config = ctx.getResources().getConfiguration();
+
+                final Class configClass = config.getClass();
+
+                if(configClass.getField("SEM_DESKTOP_MODE_ENABLED").getInt(configClass) == configClass.getField("semDesktopModeEnabled").getInt(config)) {
+                    return getSize(ctx, Configuration.ORIENTATION_LANDSCAPE);
+                }
+            } catch (Exception ignore) {}
+
             return getSize(ctx, ctx.getResources().getConfiguration().orientation);
         }
 

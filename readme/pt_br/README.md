@@ -1,4 +1,4 @@
-# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.4.0-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-155_MB-7C39E0)
+# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.4.1-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-155_MB-7C39E0)
 Altere o idioma do README: 
 [![en](https://img.shields.io/badge/idioma-en-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/README.md)
 [![pt-br](https://img.shields.io/badge/idioma-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
@@ -170,7 +170,7 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 #### Opção 2:
 <ul>
-  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/1ARA2P2UIZ9leSuChZ1q2N5OHGd_t4vss/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
+  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/19fsMTX5LlHXThHarJwnBY8YFyfQ9Gx9p/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
   <li>Você pode verificar o link para baixar o .apk de versões anteriores <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">aqui</a>*.</li>
 </ul>
 * Todos os .apks listados aqui foram contruidos por mim, eles não estão minificados e estão hospedados no Google Drive.
@@ -185,6 +185,11 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 ##
 ### Log
+<b>v1.4.1</b>
+<ul>
+   <li>Correção dos botões de atalho não estarem funcionando;</li>
+   <li>Correção da orientação automática no modo DeX.</li>
+</ul>
 <b>v1.4.0</b>
 <ul>
    <li>Botão de atalho para compartilhar por wifi adicionado (Tile);</li>
