@@ -179,10 +179,17 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 ##
 ### Donations
-- If you would like to support me, you can make a donation clicking on the button bellow... Thank you! ❤️
+- If you would like to support me, you can use one of the options bellow... Thank you! ❤️
+
   <a href="https://www.paypal.com/donate/?hosted_button_id=7XGH7WXU5C7K6">
   <img src="readme/en/paypal.png" width="160" height="50"/>
   </a>
+</br>
+
+ Coin | Address
+----|----|
+Bitcoin | 3NkK4LMwMhKefe2phqf7Vrp1uQynu1Gs6x
+Ethereum | 0xfea5dd21ebf73c5b4a2445c7713f6b5316dfac4d
 
 ##
 ### Log
