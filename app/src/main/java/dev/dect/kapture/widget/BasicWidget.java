@@ -35,7 +35,7 @@ public class BasicWidget extends AppWidgetProvider {
 
         final Intent intentStartStop = new Intent(ctx, ActionActivity.class);
 
-        intentStartStop.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intentStartStop.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
         intentStartStop.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_WIDGET);
 

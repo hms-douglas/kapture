@@ -12,9 +12,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
+import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.data.KSettings;
 import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.utils.KMediaProjection;
-import dev.dect.kapture.data.KSettings;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 @SuppressLint("MissingPermission")
@@ -28,10 +29,11 @@ public class InternalAudioRecorder {
 
     private AudioRecord AUDIO_RECORDER;
 
-    private boolean IS_RECORDING_INTERNAL_AUDIO = false;
+    private boolean IS_RECORDING_INTERNAL_AUDIO = false,
+                    HAS_WAV_FILE = false;
 
-    private File TEMP_PMC_FILE,
-                 TEMP_MP3_FILE;
+    private File TEMP_PCM_FILE,
+                 TEMP_WAV_FILE;
 
     private Thread RECORDING_THREAD;
 
@@ -55,7 +57,7 @@ public class InternalAudioRecorder {
 
         final AudioFormat format = new AudioFormat.Builder()
             .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
-            .setSampleRate(44100)
+            .setSampleRate(KSETTINGS.getAudioSampleRate())
             .setChannelMask(KSETTINGS.isToRecordInternalAudioInStereo() ? AudioFormat.CHANNEL_IN_STEREO : AudioFormat.CHANNEL_IN_MONO)
             .build();
 
@@ -103,28 +105,36 @@ public class InternalAudioRecorder {
 
         AUDIO_RECORDER.stop();
         AUDIO_RECORDER.release();
-
-        KFile.pmcToMp3(TEMP_PMC_FILE, TEMP_MP3_FILE);
     }
 
     public void destroy() {
         AUDIO_RECORDER = null;
         RECORDING_THREAD = null;
 
-        TEMP_PMC_FILE.delete();
-        TEMP_MP3_FILE.delete();
+        TEMP_PCM_FILE.delete();
+        TEMP_WAV_FILE.delete();
     }
 
-    public File getFile() {
-        return TEMP_MP3_FILE;
+    public File getFile() throws IOException {
+        if(!HAS_WAV_FILE) {
+            try {
+                KFile.pcmToWav(TEMP_PCM_FILE, TEMP_WAV_FILE, KSETTINGS);
+
+                HAS_WAV_FILE = true;
+            } catch(Exception e) {
+                throw e;
+            }
+        }
+
+        return TEMP_WAV_FILE;
     }
 
     private void createTempFile() {
         try {
             final String name = InternalAudioRecorder.class.getSimpleName() + new Date().getTime();
 
-            TEMP_PMC_FILE = File.createTempFile(name, ".pmc");
-            TEMP_MP3_FILE = File.createTempFile(name, ".mp3");
+            TEMP_PCM_FILE = File.createTempFile(name, ".pcm");
+            TEMP_WAV_FILE = File.createTempFile(name, "." + Constants.EXT_AUDIO_FORMAT);
         } catch (Exception ignore) {}
     }
 
@@ -134,35 +144,31 @@ public class InternalAudioRecorder {
         RECORDING_THREAD.setPriority(Thread.MAX_PRIORITY);
     }
 
-    private void writeToRawTempFile(){
+    private void writeToRawTempFile() {
         try {
-            final FileOutputStream outputStream = new FileOutputStream(TEMP_PMC_FILE.getAbsolutePath(), true);
+            final FileOutputStream outputStream = new FileOutputStream(TEMP_PCM_FILE.getAbsolutePath(), true);
 
             final short[] data = new short[BUFFER_SIZE];
 
             while(IS_RECORDING_INTERNAL_AUDIO) {
                 AUDIO_RECORDER.read(data, 0, BUFFER_SIZE);
 
-                outputStream.write(shortToByte(data), 0,BUFFER_SIZE * BYTES_PER_EL);
+                final int arraySize = data.length;
+
+                byte[] bytes = new byte[arraySize * 2];
+
+                for(int i = 0; i < arraySize; i++) {
+                    bytes[i * 2] = (byte) (data[i] & 0x00FF);
+
+                    bytes[(i * 2) + 1] = (byte) (data[i] >> 8);
+
+                    data[i] = 0;
+                }
+
+                outputStream.write(bytes, 0,BUFFER_SIZE * BYTES_PER_EL);
             }
 
             outputStream.close();
         } catch (IOException ignore) {}
-    }
-
-    private byte[] shortToByte(short[] data) {
-        final int arraySize = data.length;
-
-        byte[] bytes = new byte[arraySize * 2];
-
-        for(int i = 0; i < arraySize; i++) {
-            bytes[i * 2] = (byte) (data[i] & 0x00FF);
-
-            bytes[(i * 2) + 1] = (byte) (data[i] >> 8);
-
-            data[i] = 0;
-        }
-
-        return bytes;
     }
 }

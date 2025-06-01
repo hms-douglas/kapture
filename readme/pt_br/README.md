@@ -1,9 +1,11 @@
-# Kapture - Gravador de tela ![Static Badge](https://img.shields.io/badge/versão-v1.4.1-green) [![Static Badge](https://img.shields.io/badge/licença-Apache_2.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) ![Static Badge](https://img.shields.io/badge/tamanho_do_apk-155_MB-7C39E0)
-Altere o idioma do README: 
-[![en](https://img.shields.io/badge/idioma-en-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/README.md)
-[![pt-br](https://img.shields.io/badge/idioma-pt--br-blue.svg)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
-</br>
-</br>
+<div align="right">
+
+[![lang](https://img.shields.io/badge/English-gray.svg?logo=data:image/svg%2bxml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPGcgY2xhc3M9ImxheWVyIj4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPHJlY3QgZmlsbD0iI2ZmZiIgaGVpZ2h0PSIyNCIgaWQ9InN2Z18xIiByeD0iNCIgcnk9IjQiIHdpZHRoPSIzMCIgeD0iMSIgeT0iNCIvPgogIDxwYXRoIGQ9Im0xLjY0LDUuODVsMjguNzIsMGMtMC43MSwtMS4xMSAtMS45NSwtMS44NSAtMy4zNiwtMS44NWwtMjIsMGMtMS40MSwwIC0yLjY1LDAuNzQgLTMuMzYsMS44NXoiIGZpbGw9IiNhNjI4NDIiIGlkPSJzdmdfMiIvPgogIDxwYXRoIGQ9Im0yLjA4LDguMjljLTAuMDEsMC4xNyAtMC4wMywwLjM0IC0wLjAzLDAuNTNsMCwyLjY1bDI5LDBsMCwtMi42NWMwLC0wLjE5IC0wLjAyLC0wLjM0IC0wLjAzLC0wLjUzbC0yOC45NCwweiIgZmlsbD0iI2E2Mjg0MiIgaWQ9InN2Z18zIi8+CiAgPHBhdGggZD0ibTIsMTQuMTFsMjksMGwwLDIuODFsLTI5LDBsMCwtMi44MXoiIGZpbGw9IiNhNjI4NDIiIGlkPSJzdmdfNSIgdHJhbnNmb3JtPSJtYXRyaXgoMSAwIDAgMSAwIDApIi8+CiAgPHBhdGggZD0ibTEsMTkuOTJsMzAsMGwwLDMuMjdsLTMwLDBsMCwtMy4yN3oiIGZpbGw9IiNhNjI4NDIiIGlkPSJzdmdfNiIgdHJhbnNmb3JtPSJtYXRyaXgoMSAwIDAgMSAwIDApIi8+CiAgPHBhdGggZD0ibTMwLjM2LDI2LjE1bC0yOC43MiwwYzAuNzEsMS4xMSAxLjk1LDEuODUgMy4zNiwxLjg1bDIyLDBjMS40MSwwIDIuNjUsLTAuNzQgMy4zNiwtMS44NXoiIGZpbGw9IiNhNjI4NDIiIGlkPSJzdmdfOCIvPgogIDxwYXRoIGQ9Im01LDRsMTEsMGwwLDEyLjkybC0xNSwwbDAsLTguOTJjMCwtMi4yMSAxLjc5LC00IDQsLTR6IiBmaWxsPSIjMTAyZDVlIiBpZD0ic3ZnXzkiLz4KICA8cGF0aCBkPSJtMjcsNGwtMjIsMGMtMi4yMSwwIC00LDEuNzkgLTQsNGwwLDE2YzAsMi4yMSAxLjc5LDQgNCw0bDIyLDBjMi4yMSwwIDQsLTEuNzkgNCwtNGwwLC0xNmMwLC0yLjIxIC0xLjc5LC00IC00LC00em0zLDIwYzAsMS42NSAtMS4zNSwzIC0zLDNsLTIyLDBjLTEuNjUsMCAtMywtMS4zNSAtMywtM2wwLC0xNmMwLC0xLjY1IDEuMzUsLTMgMywtM2wyMiwwYzEuNjUsMCAzLDEuMzUgMywzbDAsMTZ6IiBpZD0ic3ZnXzEwIiBvcGFjaXR5PSIwLjE1Ii8+CiA8L2c+Cjwvc3ZnPg==)](https://github.com/hms-douglas/kapture)
+[![lang](https://img.shields.io/badge/Portugu%C3%AAs-gray.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cmVjdCB4PSIxIiB5PSI0IiB3aWR0aD0iMzAiIGhlaWdodD0iMjQiIHJ4PSI0IiByeT0iNCIgZmlsbD0iIzQ1OWE0NSI+PC9yZWN0PjxwYXRoIGQ9Ik0yNyw0SDVjLTIuMjA5LDAtNCwxLjc5MS00LDRWMjRjMCwyLjIwOSwxLjc5MSw0LDQsNEgyN2MyLjIwOSwwLDQtMS43OTEsNC00VjhjMC0yLjIwOS0xLjc5MS00LTQtNFptMywyMGMwLDEuNjU0LTEuMzQ2LDMtMywzSDVjLTEuNjU0LDAtMy0xLjM0Ni0zLTNWOGMwLTEuNjU0LDEuMzQ2LTMsMy0zSDI3YzEuNjU0LDAsMywxLjM0NiwzLDNWMjRaIiBvcGFjaXR5PSIuMTUiPjwvcGF0aD48cGF0aCBkPSJNMy40NzIsMTZsMTIuNTI4LDgsMTIuNTI4LTgtMTIuNTI4LThMMy40NzIsMTZaIiBmaWxsPSIjZmVkZjAwIj48L3BhdGg+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iNSIgZmlsbD0iIzBhMjE3MiI+PC9jaXJjbGU+PHBhdGggZD0iTTE0LDE0LjVjLS45OTcsMC0xLjk1OCwuMTQ5LTIuODczLC40MDktLjA3OCwuMzUtLjEyNiwuNzEtLjEyNywxLjA4MywuOTQ0LS4zMTUsMS45NTEtLjQ5MywyLjk5OS0uNDkzLDIuNTI0LDAsNC44MTYsLjk5Niw2LjUxOSwyLjYwOCwuMTUyLS4zMjYsLjI3Ni0uNjY2LC4zNTYtMS4wMjYtMS44NDQtMS42MDQtNC4yNDUtMi41ODMtNi44NzUtMi41ODNaIiBmaWxsPSIjZmZmIj48L3BhdGg+PHBhdGggZD0iTTI3LDVINWMtMS42NTcsMC0zLDEuMzQzLTMsM3YxYzAtMS42NTcsMS4zNDMtMywzLTNIMjdjMS42NTcsMCwzLDEuMzQzLDMsM3YtMWMwLTEuNjU3LTEuMzQzLTMtMy0zWiIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjIiPjwvcGF0aD48L3N2Zz4=)](https://github.com/hms-douglas/kapture/blob/master/readme/pt_br/README.md)
+</div>
+
+# <img src="../icon.png" width="42px" height="42px"/> Kapture - Gravador de tela
+
 Kapture é um gravador de tela para android que permite capturar o áudio do microfone enquanto o compartilha com outros apps.
 </br>
 </br>
@@ -14,6 +16,10 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
 </br>
 </br>
 <img src="../app.gif" width="40%"/>
+
+¹ O gif é da versão 1.4.0, novas versões podem ser diferentes (Alguns recursos mudam dependendo da versão do android também!);
+</br>
+² Apesar do gif em inglês, o app está disponível na versão português também.
 ##
 ### Recursos
 <ul>
@@ -30,11 +36,7 @@ Portanto eu decidi criar o meu gravador. Também resolvi compartilhar ele aqui. 
         <li>Capturar em modo mono ou estéreo.</li>
     </ul>
   </li>
-  <li>Capturar o áudio do microfone (enquanto o compartilha com outros apps):
-    <ul>
-      <li>Aumentar/Diminuir o volume.</li>
-    </ul>
-  </li>
+  <li>Capturar o áudio do microfone (enquanto o compartilha com outros apps);</li>
   <li>Pausar/Retomar a captura;</li>
   <li>Perfis;</li>
   <li>Interface flutuante;
@@ -165,27 +167,59 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 </ul>
 
 ##
+### Baixar os apks¹ ² ³
+[![apk](https://img.shields.io/badge/celular-v1.5.0-FBD75B?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjRkZGRkZGIj48cGF0aCBkPSJNNDgwLTM0Mi4wMnEtOC45NiAwLTE3LjE1LTMuMS04LjItMy4xLTE0LjkyLTkuODFMMzAwLjM1LTUwMi41MnEtMTMuNDQtMTMuNDQtMTMuMDYtMzEuODMuMzgtMTguMzkgMTMuMDYtMzEuODIgMTMuNjctMTMuNjggMzIuMzItMTQuMDYgMTguNjYtLjM4IDMyLjMzIDEzLjI5bDY5LjUgNjkuNXYtMjY1LjE5cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2MjY1LjE5bDY5LjUtNjkuNXExMy40My0xMy42NyAzMi4wOS0xMy40MSAxOC42NS4yNiAzMi4zMiAxMy45NCAxMi45MiAxMy42NyAxMy4zIDMxLjk0LjM4IDE4LjI3LTEzLjMgMzEuOTVMNTEyLjA3LTM1NC45M3EtNi43MiA2LjcxLTE0LjkyIDkuODEtOC4xOSAzLjEtMTcuMTUgMy4xWk0yNDIuODctMTUxLjg3cS0zNy43OCAwLTY0LjM5LTI2LjYxdC0yNi42MS02NC4zOXYtNzQuNXEwLTE5LjE1IDEzLjE3LTMyLjMzIDEzLjE4LTEzLjE3IDMyLjMzLTEzLjE3dDMyLjMzIDEzLjE3cTEzLjE3IDEzLjE4IDEzLjE3IDMyLjMzdjc0LjVoNDc0LjI2di03NC41cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2NzQuNXEwIDM3Ljc4LTI2LjYxIDY0LjM5dC02NC4zOSAyNi42MUgyNDIuODdaIi8+PC9zdmc+)](https://hms-douglas.github.io/kapture/dist/apks/phone/1.5.0.apk)
+
+¹ Todos os apks listados dentro deste repositório foram construídos por mim e não estão minimizados;
+</br>
+² Versões < 1.5.0 estão armazenadas no meu google drive, versões >= 1.5.0 estão armazenadas na pasta "/dist/apks/phone".
+</br>
+³ Links para todas as versões podem ser encontrados <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">aqui</a>.
+
+##
 ### Instalação
 #### Opção 1:
 - Baixar o código fonte, ou clonar esse repositório, e construir o app utilizando o Android Studio.
 
 #### Opção 2:
-<ul>
-  <li>Você pode baixar e instalar o .apk mais recente <a href="https://drive.google.com/file/d/19fsMTX5LlHXThHarJwnBY8YFyfQ9Gx9p/view" target="_blank" rel="noreferrer">aqui</a>*;</li>
-  <li>Você pode verificar o link para baixar o .apk de versões anteriores <a href="https://github.com/hms-douglas/kapture/blob/master/dist/all.json" target="_blank" rel="noreferrer">aqui</a>*.</li>
-</ul>
-* Todos os .apks listados aqui foram contruidos por mim, eles não estão minificados e estão hospedados no Google Drive.
-* O Google Play Protect pode impedir de instalar o .apk. Neste caso, desative o Google Play Protect, instale o arquivo e então ative-o novamente.
+- Baixe o apk do celular (link acima) e instale-o manualmente no seu celular¹;
+
+¹ O Google Play Protect pode bloquear a instalação. Neste caso, desative-o, instale, então ative-o novamente.
 
 ##
 ### Doações
-- Caso você queira me apoiar, você pode fazer uma doação utilizando o botão abaixo... Valeu! ❤️
+- Caso você queira me apoiar, você pode usar uma das opções abaixo... Valeu! ❤️
+
   <a href="https://www.paypal.com/donate/?hosted_button_id=7XGH7WXU5C7K6">
   <img src="./paypal.png" width="160" height="50"/>
   </a>
+</br>
+
+ Moeda | Endereço
+----|----|
+Bitcoin | 3NkK4LMwMhKefe2phqf7Vrp1uQynu1Gs6x
+Ethereum | 0xfea5dd21ebf73c5b4a2445c7713f6b5316dfac4d
 
 ##
 ### Log
+<b>v1.5.0</b>
+<ul>
+   <li>Biblioteca FFmpegKit foi removida, já que ela foi <a href="https://tanersener.medium.com/saying-goodbye-to-ffmpegkit-33ae939767e1">oficialmente aposentada</a>;</li>
+   <li>Opção de fazer o vídeo ser "seakable" foi removida (já não é mais necessária);</li>
+   <li>Opção de volume do microfone foi removida;</li>
+   <li>Opção pra bloquear notificações do compartilhamento por wifi foi adicionada;</li>
+   <li>Corrigido um bug em que o app, caso estivesse em plano de fundo, era aberto quando usava um botão de atalho;</li>
+   <li>Corrigido um bug em que iniciar a captura pelo widget fechava o app;</li>
+   <li>Corrigido um bug em que as ações das notificações fechavam o app;</li>
+   <li>Corrigido um bug em que todos os atalhos mostravam a tela inicial caso o slot estivesse vazio;</li>
+   <li>Pequenas mudanças/correções na interface;</li>
+   <li>compileSdk atualizado para o 34, por isso algumas mudanças:
+     <ul>
+       <li>Opção de reciclar o toke não está mais disponível no android >= 14 (o google bloqueou isso, como listado na <a href="https://developer.android.com/about/versions/14/behavior-changes-14?hl=pt-br#media-projection-consent">documentação</a>);</li>
+       <li>Opção de capturar telas individuais no android >= 14 foi removida (está opção, adicionada pelo google no android 14, estava causando erros no app).</li>
+     </ul>
+   </li>
+</ul>
 <b>v1.4.1</b>
 <ul>
    <li>Correção dos botões de atalho não estarem funcionando;</li>

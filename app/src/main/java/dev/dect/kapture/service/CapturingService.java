@@ -2,11 +2,11 @@ package dev.dect.kapture.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
-
-import com.arthenica.ffmpegkit.FFmpegKit;
 
 import java.io.File;
 import java.util.Objects;
@@ -29,6 +29,7 @@ import dev.dect.kapture.data.KSettings;
 import dev.dect.kapture.recorder.InternalAudioRecorder;
 import dev.dect.kapture.overlay.Overlay;
 import dev.dect.kapture.utils.KMediaProjection;
+import dev.dect.kapture.utils.KProfile;
 import dev.dect.kapture.utils.Utils;
 
 /** @noinspection resource*/
@@ -218,7 +219,7 @@ public class CapturingService extends AccessibilityService {
 
         NOTIFICATION_CAPTURING.destroy();
 
-        OVERLAY_UI.destroy();
+        new Handler(Looper.getMainLooper()).post(() -> OVERLAY_UI.destroy());
 
         BEFORE_START_OPTION.destroy();
 
@@ -236,9 +237,7 @@ public class CapturingService extends AccessibilityService {
 
         KMediaProjection.destroy();
 
-        new Thread(() -> {
-            processAndSave();
-
+        processAndSave(() -> {
             SCREEN_MIC_RECORDER.destroy();
 
             INTERNAL_AUDIO_RECORDER.destroy();
@@ -254,7 +253,7 @@ public class CapturingService extends AccessibilityService {
             if(Utils.hasWriteSecureSettings(this)) {
                 disableSelf();
             }
-        }).start();
+        });
     }
 
     private void pauseRecording() {
@@ -301,6 +300,8 @@ public class CapturingService extends AccessibilityService {
         BEFORE_START_OPTION = new BeforeStartOption(this, KSETTINGS);
 
         KAPTURE = new Kapture(this);
+
+        KAPTURE.setProfileId(KProfile.getActiveProfileName(this));
     }
 
     private void initRecorders() {
@@ -314,13 +315,13 @@ public class CapturingService extends AccessibilityService {
     }
 
     private void requestUIsProcessing() {
-        Toast.makeText(this, getString(R.string.notificationprocessing_message), Toast.LENGTH_SHORT).show();
-
-        NOTIFICATION_PROCESSING.createAndShow();
-
         if(MainActivity.getInstance() != null) {
             MainActivity.getInstance().getKaptureFragment().requestFloatingButtonUpdate();
         }
+
+        Toast.makeText(this, getString(R.string.notificationprocessing_message), Toast.LENGTH_SHORT).show();
+
+        NOTIFICATION_PROCESSING.createAndShow();
 
         QuickTileCapturingService.requestUiUpdate(this);
     }
@@ -343,159 +344,151 @@ public class CapturingService extends AccessibilityService {
         Utils.Widget.updateWidgetsCapturingBtns(this);
     }
 
-    public void processAndSave() {
-        final File videoMicFile = SCREEN_MIC_RECORDER.getFile(),
-                   internalAudioFile = INTERNAL_AUDIO_RECORDER.getFile(),
-                   kaptureFile =  KFile.generateNewEmptyKaptureFile(this, KSETTINGS);
+    private void processAndSave(Runnable onComplete) {
+        final File kaptureFile = KFile.generateNewEmptyKaptureFile(this, KSETTINGS);
 
         KAPTURE.setFile(kaptureFile);
 
         if(KSETTINGS.isToRecordInternalAudio()) {
-            if(KSETTINGS.isToRecordMic()) {
-                if(KSETTINGS.isToBoostMicVolume()) {
-                    FFmpegKit.execute(
-                "-i \""
-                        + videoMicFile.getAbsolutePath()
-                        + "\" -i \""
-                        + internalAudioFile.getAbsolutePath()
-                        + "\" -filter_complex \"[0:a]volume=volume=" + KSETTINGS.getMicBoostVolumeFactor() + "[out0];[out0][1:a]amix=duration=first[out1]\" -map \"[out1]\" -map \"0:v\" -c:v copy -c:a aac \""
-                        + kaptureFile.getAbsolutePath() + "\""
-                    );
+            try {
+                KFile.combineAudioAndVideo(
+                    this,
+                    INTERNAL_AUDIO_RECORDER.getFile(),
+                    SCREEN_MIC_RECORDER.getFile(),
+                    kaptureFile,
+                    () -> processAndSaveHelper(kaptureFile, onComplete)
+                );
+            } catch (Exception ignore) {
+                KFile.copyFile(SCREEN_MIC_RECORDER.getFile(), kaptureFile);
+
+                if(!KSETTINGS.isToGenerateAudio_OnlyInternal()) {
+                    final File helper = new File(KSETTINGS.getSavingLocationFile(), kaptureFile.getName().replaceAll("." + Constants.EXT_VIDEO_FORMAT, "") + "." + Constants.EXT_AUDIO_FORMAT);
+
+                    try {
+                        KFile.copyFile(INTERNAL_AUDIO_RECORDER.getFile(), helper);
+
+                        KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY, helper));
+
+                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(this, getString(R.string.toast_error_merging_2), Toast.LENGTH_SHORT).show());
+                    } catch (Exception ignore2) {
+                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(this, getString(R.string.toast_error_merging_1), Toast.LENGTH_SHORT).show());
+                    }
                 } else {
-                    FFmpegKit.execute(
-                "-i \""
-                        + videoMicFile.getAbsolutePath()
-                        + "\" -i \""
-                        + internalAudioFile.getAbsolutePath()
-                        + "\" -filter_complex \"[0:a][1:a]amix=duration=first[a]\" -map 0:v -map \"[a]\" -c:v copy -c:a aac \""
-                        + kaptureFile.getAbsolutePath() + "\""
-                    );
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(this, getString(R.string.toast_error_merging_1), Toast.LENGTH_SHORT).show());
                 }
-            } else {
-                FFmpegKit.execute(
-            "-i \""
-                    + videoMicFile.getAbsolutePath()
-                    + "\" -i \""
-                    + internalAudioFile.getAbsolutePath()
-                    + "\" -c:v copy -c:a aac \""
-                    + kaptureFile.getAbsolutePath() + "\""
-                );
+
+                processAndSaveHelper(kaptureFile, onComplete);
             }
-        } else if(KSETTINGS.isToRecordMic() && KSETTINGS.isToBoostMicVolume()) {
-            FFmpegKit.execute(
-        "-i \""
-                + videoMicFile.getAbsolutePath()
-                + "\" -filter_complex \"[0:a]volume=volume=" + KSETTINGS.getMicBoostVolumeFactor() + "[out0]\" -map \"[out0]\" -map \"0:v\" -c:v copy \""
-                + kaptureFile.getAbsolutePath() + "\""
-            );
         } else {
-            KFile.copyFile(videoMicFile, kaptureFile);
+            KFile.copyFile(SCREEN_MIC_RECORDER.getFile(), kaptureFile);
+
+            processAndSaveHelper(kaptureFile, onComplete);
         }
+    }
 
-        final String kaptureFileName = KFile.getDefaultKaptureFileName(this),
-                     audioFileName = kaptureFile.getName().replaceAll(KSETTINGS.getVideoFileFormat(), KSETTINGS.getAudioFileFormat());
-
-        if(KSETTINGS.isToGenerateMp3Audio()) {
-            final File f = new File(
-            KSETTINGS.getSavingLocationFile(),
-            audioFileName.replaceAll(kaptureFileName, Objects.requireNonNull(Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_MP3_AUDIO)))
-            );
-
-            if(KSETTINGS.isToRecordMic()) {
-                FFmpegKit.execute(
-            "-i \""
-                    + kaptureFile.getAbsolutePath()
-                    + "\" -map 0:a \""
-                    + f.getAbsolutePath() + "\""
-                );
-            } else if(KSETTINGS.isToRecordInternalAudio()) {
-                KFile.copyFile(internalAudioFile, f);
-            }
-
-            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_AUDIO, f));
-        }
-
-        if(KSETTINGS.isToGenerateMp3OnlyInternal() && KSETTINGS.isToRecordInternalAudio()) {
-            final File f = new File(
-                KSETTINGS.getSavingLocationFile(),
-                audioFileName.replaceAll(kaptureFileName, Objects.requireNonNull(Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_MP3_INTERNAL_ONLY)))
-            );
-
-            KFile.copyFile(internalAudioFile, f);
-
-            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_INTERNAL_ONLY, f));
-        }
-
-        if(KSETTINGS.isToGenerateMp3OnlyMic() && KSETTINGS.isToRecordMic()) {
-            final File f = new File(
-                KSETTINGS.getSavingLocationFile(),
-                audioFileName.replaceAll(kaptureFileName, Objects.requireNonNull(Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_MP3_MIC_ONLY)))
-            );
-
-            FFmpegKit.execute(
-        "-i \""
-                + videoMicFile.getAbsolutePath()
-                + "\" -map 0:a \""
-                + f.getAbsolutePath() + "\""
-            );
-
-            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP3_MIC_ONLY, f));
-        }
-
-        if(KSETTINGS.isToGenerateMp4NoAudio()) {
-            final File f = new File(
-                KSETTINGS.getSavingLocationFile(),
-                kaptureFile.getName().replaceAll(kaptureFileName, kaptureFileName + KFile.FILE_SEPARATOR + Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_MP4_NO_AUDIO))
-            );
-
-            if(KSETTINGS.isToRecordMic()) {
-                FFmpegKit.execute(
-            "-i \""
-                    + videoMicFile.getAbsolutePath()
-                    + "\" -c copy -an \""
-                    + f.getAbsolutePath() + "\""
-                );
-            } else if(KSETTINGS.isToRecordInternalAudio()){
-                KFile.copyFile(videoMicFile, f);
-            }
-
-            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_NO_AUDIO, f));
-        }
-
-        if(KSETTINGS.isToRecordMic() && KSETTINGS.isToRecordInternalAudio()) {
-            if(KSETTINGS.isToGenerateMp4OnlyMicAudio()) {
-                final File f = new File(
-                    KSETTINGS.getSavingLocationFile(),
-                    kaptureFile.getName().replaceAll(kaptureFileName, kaptureFileName + KFile.FILE_SEPARATOR + Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_MP4_MIC_ONLY))
-                );
-
-                KFile.copyFile(videoMicFile, f);
-
-                KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_MIC_ONLY, f));
-            }
-
-            if(KSETTINGS.isToGenerateMp4OnlyInternalAudio()) {
-                final File f = new File(
-                    KSETTINGS.getSavingLocationFile(),
-                    kaptureFile.getName().replaceAll(kaptureFileName, kaptureFileName + KFile.FILE_SEPARATOR +Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_MP4_INTERNAL_ONLY))
-                );
-
-                FFmpegKit.execute(
-            "-i \""
-                    + videoMicFile.getAbsolutePath()
-                    + "\" -i \""
-                    + internalAudioFile.getAbsolutePath()
-                    + "\" -c copy -c:a aac \""
-                    +  f.getAbsolutePath() + "\""
-                );
-
-                KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_MP4_INTERNAL_ONLY, f));
-            }
-        }
+    private void processAndSaveHelper(File kaptureFile, Runnable onComplete) {
+        processExtras(kaptureFile);
 
         KAPTURE.notifyAllMediaScanner();
 
         new DB(this).insertKapture(KAPTURE);
+
+        onComplete.run();
+    }
+
+    private void processExtras(File kaptureFile) {
+        final String kaptureFileName = KFile.getDefaultKaptureFileName(this),
+                     audioFileName = kaptureFile.getName().replaceAll(Constants.EXT_VIDEO_FORMAT, Constants.EXT_AUDIO_FORMAT);
+
+        if(KSETTINGS.isToGenerateAudio_Audio()) {
+            final File f = new File(
+                KSETTINGS.getSavingLocationFile(),
+                audioFileName.replaceAll(kaptureFileName, Objects.requireNonNull(Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_AUDIO_AUDIO)))
+            );
+
+            boolean noError = true;
+
+            if(KSETTINGS.isToRecordMic()) {
+                KFile.extractAudioFromVideo(kaptureFile, f);
+            } else if(KSETTINGS.isToRecordInternalAudio()) {
+                try {
+                    KFile.copyFile(INTERNAL_AUDIO_RECORDER.getFile(), f);
+                } catch (Exception ignore) {
+                    noError = false;
+                }
+            }
+
+            if(noError && (KSETTINGS.isToRecordMic() || KSETTINGS.isToRecordInternalAudio())) {
+                KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_AUDIO_AUDIO, f));
+            }
+        }
+
+        if(KSETTINGS.isToGenerateAudio_OnlyInternal() && KSETTINGS.isToRecordInternalAudio()) {
+            final File f = new File(
+                KSETTINGS.getSavingLocationFile(),
+                audioFileName.replaceAll(kaptureFileName, Objects.requireNonNull(Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY)))
+            );
+
+            try {
+                KFile.copyFile(INTERNAL_AUDIO_RECORDER.getFile(), f);
+
+                KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY, f));
+            } catch (Exception ignore) {}
+        }
+
+        if(KSETTINGS.isToGenerateAudio_OnlyMic() && KSETTINGS.isToRecordMic()) {
+            final File f = new File(
+                KSETTINGS.getSavingLocationFile(),
+                audioFileName.replaceAll(kaptureFileName, Objects.requireNonNull(Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_AUDIO_MIC_ONLY)))
+            );
+
+            KFile.extractAudioFromVideo(SCREEN_MIC_RECORDER.getFile(), f);
+
+            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_AUDIO_MIC_ONLY, f));
+        }
+
+        if(KSETTINGS.isToGenerateVideo_NoAudio()) {
+            final File f = new File(
+                KSETTINGS.getSavingLocationFile(),
+                kaptureFile.getName().replaceAll(kaptureFileName, kaptureFileName + KFile.FILE_SEPARATOR + Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_VIDEO_NO_AUDIO))
+            );
+
+            if(KSETTINGS.isToRecordMic()) {
+                KFile.removeAudioFromVideo(SCREEN_MIC_RECORDER.getFile(), f);
+            } else if(KSETTINGS.isToRecordInternalAudio()){
+                KFile.copyFile(SCREEN_MIC_RECORDER.getFile(), f);
+            }
+
+            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_VIDEO_NO_AUDIO, f));
+        }
+
+        if(KSETTINGS.isToRecordMic() && KSETTINGS.isToRecordInternalAudio()) {
+            if(KSETTINGS.isToGenerateVideo_OnlyMicAudio()) {
+                final File f = new File(
+                    KSETTINGS.getSavingLocationFile(),
+                    kaptureFile.getName().replaceAll(kaptureFileName, kaptureFileName + KFile.FILE_SEPARATOR + Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_VIDEO_MIC_ONLY))
+                );
+
+                KFile.copyFile(SCREEN_MIC_RECORDER.getFile(), f);
+
+                KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_VIDEO_MIC_ONLY, f));
+            }
+
+            if(KSETTINGS.isToGenerateVideo_OnlyInternalAudio()) {
+                final File f = new File(
+                    KSETTINGS.getSavingLocationFile(),
+                    kaptureFile.getName().replaceAll(kaptureFileName, kaptureFileName + KFile.FILE_SEPARATOR +Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_VIDEO_INTERNAL_ONLY))
+                );
+
+                KFile.removeAudioFromVideo(SCREEN_MIC_RECORDER.getFile(), f);
+
+                try {
+                    KFile.combineAudioAndVideo(this, INTERNAL_AUDIO_RECORDER.getFile(), f, f, null);
+
+                    KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_VIDEO_INTERNAL_ONLY, f));
+                } catch (Exception ignore) {}
+            }
+        }
     }
 }
 

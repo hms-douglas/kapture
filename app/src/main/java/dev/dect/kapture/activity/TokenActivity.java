@@ -3,7 +3,9 @@ package dev.dect.kapture.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.projection.MediaProjectionConfig;
 import android.media.projection.MediaProjectionManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -51,14 +53,24 @@ public class TokenActivity extends AppCompatActivity {
     }
 
     private void init() {
-        ACTIVITY_RESULT_LAUNCHER.launch(((MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE)).createScreenCaptureIntent());
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            ACTIVITY_RESULT_LAUNCHER.launch(
+                ((MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE)).createScreenCaptureIntent(
+                    MediaProjectionConfig.createConfigForDefaultDisplay()
+                )
+            );
+        } else {
+            ACTIVITY_RESULT_LAUNCHER.launch(
+                ((MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE)).createScreenCaptureIntent()
+            );
+        }
     }
 
     public static void requestToken(Context ctx) {
         if(!hasToken() || isToRecycle(ctx)) {
             final Intent i = new Intent(ctx, TokenActivity.class);
 
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
             ctx.startActivity(i);
         }
@@ -87,6 +99,6 @@ public class TokenActivity extends AppCompatActivity {
     }
 
     public static boolean isToRecycle(Context ctx) {
-        return KSharedPreferences.getAppSp(ctx).getBoolean(Constants.Sp.App.IS_TO_RECYCLE_TOKEN, DefaultSettings.IS_TO_RECYCLE_TOKEN);
+        return ((Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) && KSharedPreferences.getAppSp(ctx).getBoolean(Constants.Sp.App.IS_TO_RECYCLE_TOKEN, DefaultSettings.IS_TO_RECYCLE_TOKEN));
     }
 }

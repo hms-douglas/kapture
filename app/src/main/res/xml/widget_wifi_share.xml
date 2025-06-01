@@ -6,6 +6,6 @@
     android:description="@string/widget_wifi_share_description"
     android:previewLayout="@layout/widget_wifi_share"
     android:initialLayout="@layout/widget_wifi_share"
-    android:resizeMode="none"
+    android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen">
 </appwidget-provider>

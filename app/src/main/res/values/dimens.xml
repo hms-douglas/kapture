@@ -101,7 +101,6 @@
 
     <dimen name="tool_bar_height">70dp</dimen>
     <dimen name="tool_bar_padding_top">15dp</dimen>
-    <dimen name="tool_bar_padding_left">24dp</dimen>
     <dimen name="tool_bar_padding_right">12dp</dimen>
     <dimen name="tool_bar_btn_padding">9dp</dimen>
 

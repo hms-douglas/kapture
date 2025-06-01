@@ -67,7 +67,7 @@ public class CapturedNotification {
 
         iPlay.putExtra(VideoActivity.INTENT_URL, kapture.getLocation());
 
-        iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
         final PendingIntent ipPlay =  PendingIntent.getActivity(
             CTX,
@@ -92,7 +92,7 @@ public class CapturedNotification {
             iExtra.putExtra(ActionActivity.INTENT_NOTIFICATION_ID, id);
             iExtra.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_NOTIFICATION);
 
-            iExtra.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            iExtra.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
             notificationCompact.addAction(
                 0,
@@ -112,7 +112,7 @@ public class CapturedNotification {
             iShare.putExtra(ActionActivity.INTENT_NOTIFICATION_ID, id);
             iShare.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_NOTIFICATION);
 
-            iShare.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            iShare.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
             notificationCompact.addAction(
                 0,
@@ -133,7 +133,7 @@ public class CapturedNotification {
         iDelete.putExtra(ActionActivity.INTENT_NOTIFICATION_ID, id);
         iDelete.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_NOTIFICATION);
 
-        iDelete.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        iDelete.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
         notificationCompact.addAction(
             0,

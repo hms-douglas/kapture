@@ -50,17 +50,17 @@
     <string name="permission_mic_description">Used to capture the microphone and internal audio.</string>
 
     <string name="permission_notification_title">Notification</string>
-    <string name="permission_notification_description">Used to start the capture service, control capture when app is in background and to notify when captures are done.</string>
+    <string name="permission_notification_description">Used to start the capture service, provide control when app is in background, notify when captures are done and inform when other features are running.</string>
 
     <string name="permission_camera_title">Camera</string>
-    <string name="permission_camera_description">Used to display the front camera while recording.</string>
+    <string name="permission_camera_description">Used to display the front/back camera while recording.</string>
 
     <string name="permission_storage_title">Storage</string>
-    <string name="permission_storage_description">Used to create and manage the captures files.</string>
+    <string name="permission_storage_description">Used to create and manage the captures and related files.</string>
     <string name="permission_storage_popup">Go to your phone settings and grant the ALL FILES permission.</string>
 
     <string name="permission_security_title">Write secure settings</string>
-    <string name="permission_security_description">Used to share the microphone with other apps and start an accessibility service.</string>
+    <string name="permission_security_description">Used to start/stop the accessibility service.</string>
     <string name="permission_security_popup">You have three options:\n\n1 - Start the service manually and can keep it running (consumes more battery, but allows to start capturing without being redirect to the accessibility screen);\n\n2 - Start and stop the service manually every time (you will be redirected to the accessibility screen if you try to start capturing and the service is off);\n\n3 - Allow the app to start and stop the service automatically by running the command: \n\n\"adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS\".</string>
 
     <string name="permission_button_continue">Continue</string>
@@ -80,6 +80,8 @@
     <string name="toast_error_no_kaptures_found">No kaptures found!</string>
     <string name="toast_error_no_profiles_found">No profiles found!</string>
     <string name="toast_error_generic">Something went wrong!</string>
+    <string name="toast_error_merging_1">Could not add internal audio to kapture!</string>
+    <string name="toast_error_merging_2">Could not add internal audio to kapture! Two files created!</string>
     <string name="toast_error_open_url">Could not open url!</string>
     <string name="toast_error_launch_homescreen">Could not go to homescreen!</string>
     <string name="toast_error_launch_app">Could not launch app!</string>
@@ -99,24 +101,23 @@
     <string name="folder_screenshot_name" translatable="false">Screenshots</string>
 
     <string name="file_name">capture</string>
-    <string name="file_name_extra_mp3_audio">audio</string>
-    <string name="file_name_extra_mp3_internal">internal audio</string>
-    <string name="file_name_extra_mp3_mic">microphone audio</string>
-    <string name="file_name_extra_mp4_no_audio">no audio</string>
-    <string name="file_name_extra_mp4_only_mic">only microphone audio</string>
-    <string name="file_name_extra_mp4_only_internal">only internal audio</string>
+    <string name="file_name_extra_audio_audio">audio</string>
+    <string name="file_name_extra_audio_internal">internal audio</string>
+    <string name="file_name_extra_audio_mic">microphone audio</string>
+    <string name="file_name_extra_video_no_audio">no audio</string>
+    <string name="file_name_extra_video_only_mic">only microphone audio</string>
+    <string name="file_name_extra_video_only_internal">only internal audio</string>
     <string name="file_name_screenshot">screenshot</string>
 
     <string name="popup_title_extra">Extra</string>
     <string name="popup_title_screenshot">Screenshot</string>
-    <string name="popup_title_converting">Converting...</string>
 
-    <string name="popup_extra_mp3_audio">Audio</string>
-    <string name="popup_extra_mp3_internal">Audio: internal</string>
-    <string name="popup_extra_mp3_mic">Audio: microphone</string>
-    <string name="popup_extra_mp4_no_audio">Video: no audio</string>
-    <string name="popup_extra_mp4_only_mic">Video: only microphone audio</string>
-    <string name="popup_extra_mp4_only_internal">Video: only internal audio</string>
+    <string name="popup_extra_audio_audio">Audio</string>
+    <string name="popup_extra_audio_internal">Audio: internal</string>
+    <string name="popup_extra_audio_mic">Audio: microphone</string>
+    <string name="popup_extra_video_no_audio">Video: no audio</string>
+    <string name="popup_extra_video_only_mic">Video: only microphone audio</string>
+    <string name="popup_extra_video_only_internal">Video: only internal audio</string>
 
     <string name="popup_delete_text_1">Do you want to delete the file:</string>
     <string name="popup_delete_text_2">Do you want to delete the selected file(s)?</string>
@@ -154,9 +155,6 @@
 
     <string name="setting_video_fps">FPS</string>
 
-    <string name="setting_video_file_format">Output format</string>
-    <string name="setting_video_file_format_mp4">MP4</string>
-
     <string name="setting_video_orientation">Orientation</string>
     <string name="setting_video_orientation_auto">Auto</string>
     <string name="setting_video_orientation_portrait">Portrait</string>
@@ -165,7 +163,6 @@
     <string name="setting_group_mic">Microphone</string>
 
     <string name="setting_mic_capture">Capture microphone</string>
-    <string name="setting_mic_volume">Custom volume</string>
 
     <string name="setting_group_internal">Internal audio</string>
 
@@ -189,7 +186,6 @@
     <string name="setting_subgroup_capturing_start">Before start option</string>
 
     <string name="setting_start_url">Open url</string>
-    <string name="setting_start_app">Go to</string>
     <string name="setting_start_volume">Set media volume</string>
     <string name="setting_start_launch">Launch app</string>
     <string name="setting_start_launch_select">Select one app</string>
@@ -321,9 +317,6 @@
     <string name="setting_extra_mic">Microphone only</string>
     <string name="setting_extra_mic_description">Includes microphone audio. Ignores internal audio. Only generated if capturing microphone audio.</string>
 
-    <string name="setting_audio_file_format">Output format</string>
-    <string name="setting_audio_file_format_mp3">MP3</string>
-
     <string name="setting_group_wifi_share">@string/menu_capture_wifi_share</string>
     <string name="setting_group_wifi_share_request_password">Request password</string>
     <string name="setting_group_wifi_share_refresh_password">Refresh password</string>
@@ -386,7 +379,6 @@
     <string name="menu_settings_reset_app_settings_confirm_description">Reset all settings from the app to the default values?</string>
     <string name="menu_settings_reset_profile_settings_confirm_description">Reset all settings from the active profile to the default values?</string>
 
-    <string name="menu_viewer_video_make_seekable">Make video seekable</string>
     <string name="menu_viewer_video_open_externally">Open externally</string>
     <string name="menu_viewer_video_share">@string/bottom_bar_share</string>
 
@@ -409,7 +401,6 @@
     \n\n\u2022 User Interface (UI) was inspired on OneUI from Samsung, documentation is available at <a href="https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf">https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf</a>.
     \n\n\u2022 Some icons are from <b>Google Fonts</b>, available at <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a> under the Apache License Version 2.0.
     \n\n\u2022 Some icons are from <b>OneUIProject</b>, available at <a href="https://github.com/OneUIProject/oneui-icons">https://github.com/OneUIProject/oneui-icons</a> under the MIT License.
-    \n\n\u2022 \"FFmpegKit\" library collection by <b>arthenica</b>, available, along with installation guides and documentation, at <a href="https://arthenica.github.io/ffmpeg-kit/">https://arthenica.github.io/ffmpeg-kit/</a>, under the GPL v3.0 License.
     \n\n\u2022 \"lottie-android\" library by <b>LottieFiles</b>, available at <a href="https://github.com/LottieFiles/lottie-android">https://github.com/LottieFiles/lottie-android</a>, under the Apache License Version 2.0.
     \n\n\u2022 \"Free Loader Animation\" lottie animation by <b>Turlo</b>, available at <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, under the Lottie Simple License.
     \n\n\u2022 \"NanoHttpd\" library by <b>Paul S. Hawke, 2001,2005-2013 by Jarno Elonen, 2010 by Konstantinos Togias</b>, available at <a href="https://github.com/NanoHttpd/nanohttpd">https://github.com/NanoHttpd/nanohttpd</a>, under the BSD-3-Clause License.
@@ -425,7 +416,6 @@
 
     <string name="license_mit">MIT License</string>
     <string name="license_apache_v2">Apache License Version 2.0</string>
-    <string name="license_gpl_v3">GPL v3.0</string>
     <string name="license_lottie">Lottie Simple License</string>
     <string name="license_bsd3_clause">BSD-3-Clause License</string>
     <string name="license_open_font">Open Font License</string>
@@ -532,7 +522,6 @@
     <string name="tooltip_back_top">Back to top</string>
     <string name="tooltip_profile">Profile</string>
     <string name="tooltip_profile_delete">Delete profile</string>
-    <string name="tooltip_app_shortcut">Shortcut</string>
 
     <string name="widget_basic">Basic</string>
     <string name="widget_basic_description">Start or stop a capture</string>
@@ -542,7 +531,7 @@
 
     <string name="widget_wifi_share">@string/bottom_bar_wifi_share</string>
     <string name="widget_wifi_share_description">Shortcut to share all kaptures over wifi</string>
-    <string name="widget_wifi_share_btn">WiFi\nshare</string>
+    <string name="widget_wifi_share_btn">WiFi share</string>
 
     <string name="widget_profile">Profiles</string>
     <string name="widget_profile_description">Switch active profiles, start, stop, pause or resume a capture</string>

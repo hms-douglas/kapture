@@ -2,7 +2,10 @@ package dev.dect.kapture.data;
 
 public class Constants {
     public static final String
-        HOME_PACKAGE_NAME = "_home";
+        HOME_PACKAGE_NAME = "_home",
+        EXT_VIDEO_FORMAT = "mp4",
+        EXT_AUDIO_FORMAT = "wav",
+        NO_PROFILE = "no_profile";
 
     public static final int
         OVERLAY_MAX_SHORTCUTS = 6;
@@ -28,7 +31,9 @@ public class Constants {
                 WIFI_SHARE_IS_TO_SHOW_PASSWORD = "k84",
                 WIFI_SHARE_IS_TO_REFRESH_PASSWORD = "k85",
                 ACTIVE_PROFILE_NAME = "k86",
-                PROFILE_NAMES = "k87";
+                PROFILE_NAMES = "k87",
+                IS_TO_SHOW_NOTIFICATION_WIFI_SHARE = "k88",
+                IS_TO_SHOW_PROFILES_FILTER = "k89";
         }
 
         public static class Profile {
@@ -46,16 +51,12 @@ public class Constants {
                 OVERLAY_MENU_X_POS = "k8",
                 OVERLAY_MENU_Y_POS = "k9",
                 IS_TO_RECORD_SOUND_IN_STEREO = "k10",
-                VIDEO_FILE_FORMAT = "k13",
-                IS_TO_BOOST_MIC_VOLUME = "k14",
-                MIC_BOOST_VOLUME_FACTOR = "k15",
-                IS_TO_GENERATE_MP3_AUDIO = "k16",
-                IS_TO_GENERATE_MP3_ONLY_INTERNAL = "k17",
-                IS_TO_GENERATE_MP3_ONLY_MIC = "k18",
-                AUDIO_FILE_FORMAT = "k19",
-                IS_TO_GENERATE_MP4_NO_AUDIO = "k20",
-                IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO = "k21",
-                IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO = "k22",
+                IS_TO_GENERATE_AUDIO_AUDIO = "k16",
+                IS_TO_GENERATE_AUDIO_ONLY_INTERNAL = "k17",
+                IS_TO_GENERATE_AUDIO_ONLY_MIC = "k18",
+                IS_TO_GENERATE_VIDEO_NO_AUDIO = "k20",
+                IS_TO_GENERATE_VIDEO_ONLY_INTERNAL_AUDIO = "k21",
+                IS_TO_GENERATE_VIDEO_ONLY_MIC_AUDIO = "k22",
                 VIDEO_QUALITY_bitRate = "k29",
                 IS_TO_SHOW_FLOATING_CAMERA = "k30",
                 OVERLAY_CAMERA_X_POS = "k31",
@@ -116,7 +117,9 @@ public class Constants {
                 BEFORE_START_LAUNCH_APP_PACKAGE = "k91",
                 IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU = "k92",
                 SHORTCUTS_BUTTON_ON_MENU = "k93",
-                IS_TO_OPEN_SHORTCUTS_ON_POPUP = "k94";
+                IS_TO_OPEN_SHORTCUTS_ON_POPUP = "k94",
+                AUDIO_SAMPLE_RATE = "k95",
+                AUDIO_QUALITY_bitRate = "k96";
         }
     }
 
@@ -167,7 +170,6 @@ public class Constants {
     public static class Url {
         public static class License {
             public static final String APACHE_V2 = "https://www.apache.org/licenses/LICENSE-2.0.txt",
-                GPL_V3 = "https://www.gnu.org/licenses/gpl-3.0.html#license-text",
                 LOTTIES = "https://lottiefiles.com/page/license",
                 MIT = "https://mit-license.org",
                 BSD3_CLAUSE = "https://opensource.org/license/bsd-3-clause",

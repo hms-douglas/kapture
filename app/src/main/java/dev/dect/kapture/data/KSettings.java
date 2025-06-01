@@ -37,8 +37,6 @@ public class KSettings {
 
     public static final String[] INTERNAL_FONTS_PATHS = new String[]{"font/roboto.ttf", "font/roboto_mono.ttf", "font/bebas_neue.ttf", "font/oswald.ttf", "font/pacifico.ttf", "font/permanent_marker.ttf", "font/silkscreen.ttf", "font/monoton.ttf", "font/orbitron.ttf"};
 
-    public static final float[] MICROPHONE_BOOST = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 10f, 11f, 12f, 13f, 14f, 15f, 20f, 25f};
-
     private final Context CONTEXT;
 
     private final boolean IS_TO_RECORD_MIC,
@@ -46,13 +44,12 @@ public class KSettings {
                           IS_TO_SHOW_FLOATING_MENU,
                           IS_TO_SHOW_FLOATING_CAMERA,
                           IS_TO_RECORD_INTERNAL_SOUND_IN_STEREO,
-                          IS_TO_BOOST_MIC_VOLUME,
-                          IS_TO_GENERATE_MP3_AUDIO,
-                          IS_TO_GENERATE_MP3_ONLY_INTERNAL,
-                          IS_TO_GENERATE_MP3_ONLY_MIC,
-                          IS_TO_GENERATE_MP4_NO_AUDIO,
-                          IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO,
-                          IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO,
+                          IS_TO_GENERATE_AUDIO_AUDIO,
+                          IS_TO_GENERATE_AUDIO_ONLY_INTERNAL,
+                          IS_TO_GENERATE_AUDIO_ONLY_MIC,
+                          IS_TO_GENERATE_VIDEO_NO_AUDIO,
+                          IS_TO_GENERATE_VIDEO_ONLY_INTERNAL_AUDIO,
+                          IS_TO_GENERATE_VIDEO_ONLY_MIC_AUDIO,
                           IS_TO_TOGGLE_CAMERA_ORIENTATION,
                           IS_TO_DELAY_START_RECORDING,
                           IS_TO_USE_TIME_LIMIT,
@@ -98,16 +95,14 @@ public class KSettings {
                       VIDEO_ORIENTATION,
                       STOP_ON_BATTERY_LEVEL_LEVEL,
                       IMAGE_SIZE,
-                      BEFORE_START_MEDIA_VOLUME_PERCENTAGE;
-
-    private final float MIC_BOOST_VOLUME_FACTOR;
+                      BEFORE_START_MEDIA_VOLUME_PERCENTAGE,
+                      AUDIO_SAMPLE_RATE,
+                      AUDIO_QUALITY;
 
     private final File SAVE_LOCATION,
                        SAVE_SCREENSHOT_LOCATION;
 
-    private final String CAPTURE_FILE_FORMAT,
-                         AUDIO_FILE_FORMAT,
-                         TEXT_TEXT,
+    private final String TEXT_TEXT,
                          TEXT_COLOR,
                          TEXT_BACKGROUND,
                          TEXT_FONT_PATH,
@@ -124,8 +119,6 @@ public class KSettings {
                                 spApp = KSharedPreferences.getAppSp(ctx);
 
         this.IS_TO_RECORD_MIC = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_RECORD_MIC, DefaultSettings.IS_TO_RECORD_MIC);
-        this.IS_TO_BOOST_MIC_VOLUME = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_BOOST_MIC_VOLUME, DefaultSettings.IS_TO_BOOST_MIC_VOLUME);
-        this.MIC_BOOST_VOLUME_FACTOR = spProfile.getFloat(Constants.Sp.Profile.MIC_BOOST_VOLUME_FACTOR, DefaultSettings.MIC_BOOST_VOLUME_FACTOR);
 
         this.IS_TO_RECORD_INTERNAL_SOUND = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_RECORD_INTERNAL_AUDIO, DefaultSettings.IS_TO_RECORD_INTERNAL_AUDIO);
         this.IS_TO_RECORD_INTERNAL_SOUND_IN_STEREO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_RECORD_SOUND_IN_STEREO, DefaultSettings.IS_TO_RECORD_SOUND_IN_STEREO);
@@ -214,20 +207,20 @@ public class KSettings {
         this.VIDEO_FRAME_RATE = spProfile.getInt(Constants.Sp.Profile.VIDEO_FRAME_RATE, DefaultSettings.VIDEO_FRAME_RATE);
         this.VIDEO_ORIENTATION = spProfile.getInt(Constants.Sp.Profile.VIDEO_ORIENTATION, DefaultSettings.VIDEO_ORIENTATION);
 
-        this.IS_TO_GENERATE_MP3_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP3_AUDIO, DefaultSettings.IS_TO_GENERATE_MP3_AUDIO);
-        this.IS_TO_GENERATE_MP3_ONLY_INTERNAL = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP3_ONLY_INTERNAL, DefaultSettings.IS_TO_GENERATE_MP3_ONLY_INTERNAL);
-        this.IS_TO_GENERATE_MP3_ONLY_MIC = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP3_ONLY_MIC, DefaultSettings.IS_TO_GENERATE_MP3_ONLY_MIC);
+        this.IS_TO_GENERATE_AUDIO_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_AUDIO_AUDIO, DefaultSettings.IS_TO_GENERATE_AUDIO_AUDIO);
+        this.IS_TO_GENERATE_AUDIO_ONLY_INTERNAL = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_AUDIO_ONLY_INTERNAL, DefaultSettings.IS_TO_GENERATE_AUDIO_ONLY_INTERNAL);
+        this.IS_TO_GENERATE_AUDIO_ONLY_MIC = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_AUDIO_ONLY_MIC, DefaultSettings.IS_TO_GENERATE_AUDIO_ONLY_MIC);
 
-        this.IS_TO_GENERATE_MP4_NO_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP4_NO_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_NO_AUDIO);
-        this.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO);
-        this.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO, DefaultSettings.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO);
+        this.IS_TO_GENERATE_VIDEO_NO_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_VIDEO_NO_AUDIO, DefaultSettings.IS_TO_GENERATE_VIDEO_NO_AUDIO);
+        this.IS_TO_GENERATE_VIDEO_ONLY_INTERNAL_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_VIDEO_ONLY_INTERNAL_AUDIO, DefaultSettings.IS_TO_GENERATE_VIDEO_ONLY_INTERNAL_AUDIO);
+        this.IS_TO_GENERATE_VIDEO_ONLY_MIC_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_GENERATE_VIDEO_ONLY_MIC_AUDIO, DefaultSettings.IS_TO_GENERATE_VIDEO_ONLY_MIC_AUDIO);
+
+        this.AUDIO_SAMPLE_RATE = spProfile.getInt(Constants.Sp.Profile.AUDIO_SAMPLE_RATE, DefaultSettings.AUDIO_SAMPLE_RATE);
+        this.AUDIO_QUALITY = spProfile.getInt(Constants.Sp.Profile.AUDIO_QUALITY_bitRate, DefaultSettings.AUDIO_QUALITY_bitRate);
 
         this.SAVE_LOCATION = new File(spApp.getString(Constants.Sp.App.FILE_SAVING_PATH, KFile.getDefaultFileLocation(ctx).getAbsolutePath()));
 
         this.SAVE_SCREENSHOT_LOCATION = new File(spApp.getString(Constants.Sp.App.SCREENSHOT_FILE_SAVING_PATH, KFile.getDefaultScreenshotFileLocation(ctx).getAbsolutePath()));
-
-        this.CAPTURE_FILE_FORMAT = spProfile.getString(Constants.Sp.Profile.VIDEO_FILE_FORMAT, DefaultSettings.CAPTURE_FILE_FORMAT);
-        this.AUDIO_FILE_FORMAT = spProfile.getString(Constants.Sp.Profile.AUDIO_FILE_FORMAT, DefaultSettings.AUDIO_FILE_FORMAT);
 
         final int[] wh = getSize(ctx, VIDEO_ORIENTATION);
 
@@ -304,8 +297,8 @@ public class KSettings {
         return IS_TO_RECORD_INTERNAL_SOUND_IN_STEREO;
     }
 
-    public boolean isToBoostMicVolume() {
-        return IS_TO_BOOST_MIC_VOLUME;
+    public int getInternalAudioChannelNumber() {
+        return IS_TO_RECORD_INTERNAL_SOUND_IN_STEREO ? 2 : 1;
     }
 
     public boolean isToToggleCameraOrientation() {
@@ -340,8 +333,12 @@ public class KSettings {
         return VIDEO_ORIENTATION;
     }
 
-    public float getMicBoostVolumeFactor() {
-        return MIC_BOOST_VOLUME_FACTOR;
+    public int getAudioSampleRate() {
+        return AUDIO_SAMPLE_RATE;
+    }
+
+    public int getAudioBitRate() {
+        return AUDIO_QUALITY;
     }
 
     public File getSavingLocationFile() {
@@ -432,36 +429,28 @@ public class KSettings {
         return SECONDS_TIME_LIMIT;
     }
 
-    public String getVideoFileFormat() {
-        return CAPTURE_FILE_FORMAT;
+    public boolean isToGenerateAudio_Audio() {
+        return IS_TO_GENERATE_AUDIO_AUDIO;
     }
 
-    public String getAudioFileFormat() {
-        return AUDIO_FILE_FORMAT;
+    public boolean isToGenerateAudio_OnlyInternal() {
+        return IS_TO_GENERATE_AUDIO_ONLY_INTERNAL;
     }
 
-    public boolean isToGenerateMp3Audio() {
-        return IS_TO_GENERATE_MP3_AUDIO;
+    public boolean isToGenerateAudio_OnlyMic() {
+        return IS_TO_GENERATE_AUDIO_ONLY_MIC;
     }
 
-    public boolean isToGenerateMp3OnlyInternal() {
-        return IS_TO_GENERATE_MP3_ONLY_INTERNAL;
+    public boolean isToGenerateVideo_NoAudio() {
+        return IS_TO_GENERATE_VIDEO_NO_AUDIO;
     }
 
-    public boolean isToGenerateMp3OnlyMic() {
-        return IS_TO_GENERATE_MP3_ONLY_MIC;
+    public boolean isToGenerateVideo_OnlyInternalAudio() {
+        return IS_TO_GENERATE_VIDEO_ONLY_INTERNAL_AUDIO;
     }
 
-    public boolean isToGenerateMp4NoAudio() {
-        return IS_TO_GENERATE_MP4_NO_AUDIO;
-    }
-
-    public boolean isToGenerateMp4OnlyInternalAudio() {
-        return IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO;
-    }
-
-    public boolean isToGenerateMp4OnlyMicAudio() {
-        return IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO;
+    public boolean isToGenerateVideo_OnlyMicAudio() {
+        return IS_TO_GENERATE_VIDEO_ONLY_MIC_AUDIO;
     }
 
     public int getCameraShapeResource() {
@@ -493,7 +482,7 @@ public class KSettings {
     }
 
     public String getImagePath(boolean simpleFormat) {
-        return (IMAGE_PATH == null || IMAGE_PATH.trim().equals("") || !new File(IMAGE_PATH).exists()) ? null : (simpleFormat ?  KFile.formatAndroidPathToUser(CONTEXT, IMAGE_PATH) : IMAGE_PATH);
+        return (IMAGE_PATH == null || IMAGE_PATH.trim().isEmpty() || !new File(IMAGE_PATH).exists()) ? null : (simpleFormat ?  KFile.formatAndroidPathToUser(CONTEXT, IMAGE_PATH) : IMAGE_PATH);
     }
 
     public int getImageSize() {

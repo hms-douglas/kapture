@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
@@ -394,22 +395,7 @@ public class SettingsFragment extends Fragment {
 
         listPickers0.add(new ListPicker.NumberInteger(R.string.setting_video_fps, settings.getVideoFrameRate(), KSettings.VIDEO_FRAME_RATES, null, Constants.Sp.Profile.VIDEO_FRAME_RATE, false));
 
-        listPickers0.add(new ListPicker.NumberInteger(R.string.setting_video_orientation, settings.getVideoOrientation(), KSettings.VIDEO_ORIENTATIONS, KSettings.getVideoOrientationsFormated(CONTEXT), Constants.Sp.Profile.VIDEO_ORIENTATION, false));
-
-        listPickers0.add(
-            new ListPicker.Text(
-                R.string.setting_video_file_format,
-                settings.getVideoFileFormat(),
-                new String[] {
-                    DefaultSettings.CAPTURE_FILE_FORMAT
-                },
-                new String[] {
-                    CONTEXT.getString(R.string.setting_video_file_format_mp4)
-                },
-                Constants.Sp.Profile.VIDEO_FILE_FORMAT,
-                true
-            )
-        );
+        listPickers0.add(new ListPicker.NumberInteger(R.string.setting_video_orientation, settings.getVideoOrientation(), KSettings.VIDEO_ORIENTATIONS, KSettings.getVideoOrientationsFormated(CONTEXT), Constants.Sp.Profile.VIDEO_ORIENTATION, true));
 
         concatAdapter.addAdapter(new ListPicker.Adapter(listPickers0, false));
 
@@ -421,56 +407,9 @@ public class SettingsFragment extends Fragment {
 
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
 
-        listSwitches0.add(new ListSwitch(R.string.setting_mic_capture, ListSwitch.NO_TEXT, Constants.Sp.Profile.IS_TO_RECORD_MIC, settings.isToRecordMic(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_mic_capture, ListSwitch.NO_TEXT, Constants.Sp.Profile.IS_TO_RECORD_MIC, settings.isToRecordMic(), true));
 
         concatAdapter.addAdapter(new ListSwitch.Adapter(listSwitches0, false));
-
-        final String[] displayNames = new String[KSettings.MICROPHONE_BOOST.length];
-
-        for(int i = 0; i < KSettings.MICROPHONE_BOOST.length; i++) {
-            displayNames[i] = String.valueOf(KSettings.MICROPHONE_BOOST[i]);
-        }
-
-        final ArrayList<ListButtonSubTextSwitch> listButtonSubTexts0 = new ArrayList<>();
-
-        listButtonSubTexts0.add(
-            new ListButtonSubTextSwitch(
-                R.string.setting_mic_volume,
-                settings.getMicBoostVolumeFactor(),
-                (listButtonSubText) -> {
-                    int activeIndex = 0;
-
-                    for(int i = 0; i < KSettings.MICROPHONE_BOOST.length; i++) {
-                        if(KSettings.MICROPHONE_BOOST[i] == Float.parseFloat(listButtonSubText.getValue())) {
-                            activeIndex = i;
-
-                            break;
-                        }
-                    }
-
-                    new PickerPopup(
-                        CONTEXT,
-                        R.string.setting_mic_volume,
-                        displayNames,
-                        activeIndex,
-                        (indexPicked) -> {
-                            final float value = KSettings.MICROPHONE_BOOST[indexPicked];
-
-                            SP_PROFILE.edit().putFloat(Constants.Sp.Profile.MIC_BOOST_VOLUME_FACTOR, value).commit();
-
-                            listButtonSubText.setValue(value);
-
-                            concatAdapter.notifyDataSetChanged();
-                        }
-                    ).show();
-                },
-                Constants.Sp.Profile.IS_TO_BOOST_MIC_VOLUME,
-                settings.isToBoostMicVolume(),
-                true
-            )
-        );
-
-        concatAdapter.addAdapter(new ListButtonSubTextSwitch.Adapter(listButtonSubTexts0, false));
 
         return new ListGroup.Adapter(new ListGroup(R.string.setting_group_mic, concatAdapter));
     }
@@ -1105,9 +1044,9 @@ public class SettingsFragment extends Fragment {
 
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
 
-        listSwitches0.add(new ListSwitch(R.string.setting_extra_vid_no_audio, R.string.setting_extra_vid_no_audio_description, Constants.Sp.Profile.IS_TO_GENERATE_MP4_NO_AUDIO, settings.isToGenerateMp4NoAudio(), false));
-        listSwitches0.add(new ListSwitch(R.string.setting_extra_vid_internal, R.string.setting_extra_vid_internal_description, Constants.Sp.Profile.IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO, settings.isToGenerateMp4OnlyInternalAudio(), false));
-        listSwitches0.add(new ListSwitch(R.string.setting_extra_vid_mic, R.string.setting_extra_vid_mic_description, Constants.Sp.Profile.IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO, settings.isToGenerateMp4OnlyMicAudio(), true));
+        listSwitches0.add(new ListSwitch(R.string.setting_extra_vid_no_audio, R.string.setting_extra_vid_no_audio_description, Constants.Sp.Profile.IS_TO_GENERATE_VIDEO_NO_AUDIO, settings.isToGenerateVideo_NoAudio(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_extra_vid_internal, R.string.setting_extra_vid_internal_description, Constants.Sp.Profile.IS_TO_GENERATE_VIDEO_ONLY_INTERNAL_AUDIO, settings.isToGenerateVideo_OnlyInternalAudio(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_extra_vid_mic, R.string.setting_extra_vid_mic_description, Constants.Sp.Profile.IS_TO_GENERATE_VIDEO_ONLY_MIC_AUDIO, settings.isToGenerateVideo_OnlyMicAudio(), true));
 
         concatAdapter.addAdapter(new ListSwitch.Adapter(listSwitches0, false));
 
@@ -1119,30 +1058,11 @@ public class SettingsFragment extends Fragment {
 
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
 
-        listSwitches0.add(new ListSwitch(R.string.setting_extra_audio, R.string.setting_extra_audio_description, Constants.Sp.Profile.IS_TO_GENERATE_MP3_AUDIO, settings.isToGenerateMp3Audio(), false));
-        listSwitches0.add(new ListSwitch(R.string.setting_extra_internal, R.string.setting_extra_internal_description, Constants.Sp.Profile.IS_TO_GENERATE_MP3_ONLY_INTERNAL, settings.isToGenerateMp3OnlyInternal(), false));
-        listSwitches0.add(new ListSwitch(R.string.setting_extra_mic, R.string.setting_extra_mic_description, Constants.Sp.Profile.IS_TO_GENERATE_MP3_ONLY_MIC, settings.isToGenerateMp3OnlyMic(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_extra_audio, R.string.setting_extra_audio_description, Constants.Sp.Profile.IS_TO_GENERATE_AUDIO_AUDIO, settings.isToGenerateAudio_Audio(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_extra_internal, R.string.setting_extra_internal_description, Constants.Sp.Profile.IS_TO_GENERATE_AUDIO_ONLY_INTERNAL, settings.isToGenerateAudio_OnlyInternal(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_extra_mic, R.string.setting_extra_mic_description, Constants.Sp.Profile.IS_TO_GENERATE_AUDIO_ONLY_MIC, settings.isToGenerateAudio_OnlyMic(), true));
 
         concatAdapter.addAdapter(new ListSwitch.Adapter(listSwitches0, false));
-
-        final ArrayList<ListPicker> listPickers0 = new ArrayList<>();
-
-        listPickers0.add(
-            new ListPicker.Text(
-                R.string.setting_audio_file_format,
-                settings.getAudioFileFormat(),
-                new String[] {
-                    DefaultSettings.AUDIO_FILE_FORMAT
-                },
-                new String[] {
-                    CONTEXT.getString(R.string.setting_audio_file_format_mp3)
-                },
-                Constants.Sp.Profile.AUDIO_FILE_FORMAT,
-                true
-            )
-        );
-
-        concatAdapter.addAdapter(new ListPicker.Adapter(listPickers0, false));
 
         return new ListGroup.Adapter(new ListGroup(R.string.setting_group_extra_audio, concatAdapter));
     }
@@ -1196,6 +1116,10 @@ public class SettingsFragment extends Fragment {
     }
 
     private void buildAndGetAppGroupAdapter_token(ConcatAdapter concatAdapter) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            return;
+        }
+
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
 
         listSwitches0.add(
@@ -1249,6 +1173,16 @@ public class SettingsFragment extends Fragment {
                 ListSwitch.NO_TEXT,
                 Constants.Sp.App.IS_TO_SHOW_NOTIFICATION_CAPTURED,
                 SP_APP.getBoolean(Constants.Sp.App.IS_TO_SHOW_NOTIFICATION_CAPTURED, DefaultSettings.IS_TO_SHOW_NOTIFICATION_CAPTURED),
+                false
+            )
+        );
+
+        listSwitches0.add(
+            new ListSwitch(
+                R.string.notification_channel_name_wifi_share,
+                ListSwitch.NO_TEXT,
+                Constants.Sp.App.IS_TO_SHOW_NOTIFICATION_WIFI_SHARE,
+                SP_APP.getBoolean(Constants.Sp.App.IS_TO_SHOW_NOTIFICATION_WIFI_SHARE, DefaultSettings.IS_TO_SHOW_NOTIFICATION_WIFI_SHARE),
                 true
             )
         );

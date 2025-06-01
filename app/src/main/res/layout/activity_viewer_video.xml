@@ -43,9 +43,24 @@
             android:paddingTop="@dimen/tool_bar_padding_top"
             android:paddingEnd="@dimen/tool_bar_padding_right"
             android:paddingStart="@dimen/tool_bar_padding_right"
+            android:layout_marginTop="@dimen/tool_bar_padding_top"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/icon_tool_bar_back"
+                android:padding="@dimen/tool_bar_btn_padding"
+                android:foreground="@drawable/btn_floating_effect"
+                android:contentDescription="@string/tooltip_go_back"
+                android:longClickable="true"
+                app:tint="@color/viewer_option_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/title"
@@ -61,12 +76,11 @@
                 android:layout_marginEnd="@dimen/tool_bar_btn_padding"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
                 app:layout_constraintEnd_toStartOf="@id/btnMore"/>
 
             <ImageButton
                 android:id="@+id/btnMore"
-                android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"

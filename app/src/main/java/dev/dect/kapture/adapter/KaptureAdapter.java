@@ -247,10 +247,16 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
 
         if(holder.STYLE != KapturesFragment.STYLE_LIST) {
             kapture.retrieveAllMediaData(() -> {
-                holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
+                if(kapture.getThumbnail() != null) {
+                    holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
+                } else {
+                    holder.EL_THUMBNAIL.setImageResource(R.drawable.icon_kapture_image_error_helper);
+                }
 
-                holder.EL_DURATION.setText(KFile.formatFileDuration(kapture.getDuration()));
-                holder.EL_DURATION.setVisibility(View.VISIBLE);
+                try {
+                    holder.EL_DURATION.setText(KFile.formatFileDuration(kapture.getDuration()));
+                    holder.EL_DURATION.setVisibility(View.VISIBLE);
+                } catch (Exception ignore) {}
             });
 
             holder.EL_SELECTOR.setImageResource(TRACKER.isSelected((long) position) ? R.drawable.checkbox_on : R.drawable.checkbox_off);
@@ -262,15 +268,21 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
             holder.EL_DATE.setVisibility(View.VISIBLE);
 
             kapture.retrieveAllMediaData(() -> {
-                holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
+                try {
+                    if(kapture.getThumbnail() != null) {
+                        holder.EL_THUMBNAIL.setImageBitmap(kapture.getThumbnail());
+                    } else {
+                        holder.EL_THUMBNAIL.setImageResource(R.drawable.icon_kapture_image_error_helper);
+                    }
 
-                final int[] size = kapture.getVideoSize();
+                    final int[] size = kapture.getVideoSize();
 
-                holder.EL_RESOLUTION.setText(size[0] + "x" + size[1]);
-                holder.EL_RESOLUTION.setVisibility(View.VISIBLE);
+                    holder.EL_RESOLUTION.setText(size[0] + "x" + size[1]);
+                    holder.EL_RESOLUTION.setVisibility(View.VISIBLE);
 
-                holder.EL_DURATION.setText(KFile.formatFileDuration(kapture.getDuration()));
-                holder.EL_DURATION.setVisibility(View.VISIBLE);
+                    holder.EL_DURATION.setText(KFile.formatFileDuration(kapture.getDuration()));
+                    holder.EL_DURATION.setVisibility(View.VISIBLE);
+                } catch (Exception ignore) {}
             });
 
             try {
@@ -365,5 +377,4 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
     public long getItemId(int position) {
         return position;
     }
-
 }

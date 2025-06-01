@@ -12,6 +12,8 @@ import java.util.Date;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.data.DefaultSettings;
+import dev.dect.kapture.data.KSharedPreferences;
 
 @SuppressLint("LaunchActivityFromNotification")
 public class WifiShareNotification {
@@ -27,6 +29,10 @@ public class WifiShareNotification {
     }
 
     public void createAndShow() {
+        if(!KSharedPreferences.getAppSp(CTX).getBoolean(Constants.Sp.App.IS_TO_SHOW_NOTIFICATION_WIFI_SHARE, DefaultSettings.IS_TO_SHOW_NOTIFICATION_WIFI_SHARE)) {
+            return;
+        }
+
         final NotificationCompat.Builder notificationCompact = new NotificationCompat.Builder(CTX, Constants.Notification.Channel.WIFI_SHARE);
 
         notificationCompact.setSmallIcon(R.mipmap.ic_launcher);

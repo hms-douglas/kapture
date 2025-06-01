@@ -142,6 +142,8 @@
     <color name="kapture_title">@color/c0</color>
     <color name="kapture_sub_title">@color/c1</color>
     <color name="kapture_image_helper">@color/c3</color>
+    <color name="kapture_image_error_helper">@color/main</color>
+    <color name="kapture_image_error_icon_helper">@color/c3</color>
     <color name="kapture_btn">@color/c3</color>
     <color name="kapture_grid_time">@color/c3</color>
     <color name="kapture_grid_el_background">#883B3B40</color>

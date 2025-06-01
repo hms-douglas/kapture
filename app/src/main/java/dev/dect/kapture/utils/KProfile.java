@@ -247,6 +247,10 @@ public class KProfile {
         ctx.startActivity(i);
     }
 
+    public static String getActiveProfileName(Context ctx) {
+        return KSharedPreferences.getActiveProfileSp(ctx).getString(Constants.Sp.Profile.SP_FILE_NAME, Constants.Sp.Profile.SP_FILE_NAME_DEFAULT);
+    }
+
     public static void editProfile(Context ctx, String name) {
         final Intent i = new Intent(ctx, ProfileEditorActivity.class);
 
@@ -420,6 +424,6 @@ public class KProfile {
     }
 
     private static boolean isNameValid(Context ctx, String name, boolean validateExistance) {
-        return name != null && !name.trim().isEmpty() && !name.equals(Constants.Sp.Profile.SP_FILE_NAME_DEFAULT) && (validateExistance ? KSharedPreferences.exists(ctx, name) : true);
+        return name != null && !name.trim().isEmpty() && !name.equals(Constants.Sp.Profile.SP_FILE_NAME_DEFAULT) && (!validateExistance || KSharedPreferences.exists(ctx, name));
     }
 }

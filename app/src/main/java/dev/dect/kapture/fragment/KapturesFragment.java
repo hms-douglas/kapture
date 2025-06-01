@@ -337,7 +337,7 @@ public class KapturesFragment extends Fragment {
                     SEARCH_BTN_MIC_OR_CLEAR.setImageResource(R.drawable.icon_tool_bar_clear);
                 }
 
-                ADAPTER.getFilter().filter(s);
+                ADAPTER.getFilter().filter(s, (i) -> VIEW.findViewById(R.id.noCapture).setVisibility(ADAPTER.getItemCount() == 0 ? View.VISIBLE : View.GONE));
             }
 
             @Override
@@ -449,6 +449,8 @@ public class KapturesFragment extends Fragment {
         Utils.Keyboard.requestCloseFromInput(CONTEXT, SEARCH_INPUT);
 
         SEARCH_CONTAINER.setVisibility(View.GONE);
+
+        VIEW.findViewById(R.id.noCapture).setVisibility(View.GONE);
 
         clearSearch();
     }
@@ -1141,6 +1143,8 @@ public class KapturesFragment extends Fragment {
         if(CapturingService.isProcessing() || CapturingService.isInCountdown()) {
             BTN_FLOATING_START_STOP.setVisibility(View.GONE);
             BTN_FLOATING_PAUSE_RESUME.setVisibility(View.GONE);
+
+            return;
         } else {
             BTN_FLOATING_START_STOP.setVisibility(View.VISIBLE);
 
@@ -1156,7 +1160,6 @@ public class KapturesFragment extends Fragment {
             BTN_FLOATING_START_STOP.setTooltipText(getString(R.string.tooltip_stop));
 
             BTN_FLOATING_START_STOP.setCompoundDrawablesWithIntrinsicBounds(Utils.getDrawable(CONTEXT, R.drawable.icon_capture_stop), null, null, null);
-
         } else {
             BTN_FLOATING_START_STOP.setTooltipText(getString(R.string.tooltip_start));
 

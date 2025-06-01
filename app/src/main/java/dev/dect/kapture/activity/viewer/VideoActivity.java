@@ -23,21 +23,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.arthenica.ffmpegkit.FFmpegKit;
-import com.arthenica.ffmpegkit.FFmpegSession;
-import com.arthenica.ffmpegkit.ReturnCode;
 import com.google.android.material.slider.Slider;
 
 import java.io.File;
-import java.util.Date;
 import java.util.Objects;
 
 import dev.dect.kapture.R;
-import dev.dect.kapture.popup.ProgressPopup;
 import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.utils.Utils;
 
-/** @noinspection ResultOfMethodCallIgnored*/
 @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
 public class VideoActivity extends AppCompatActivity {
     public static final String INTENT_URL = "url";
@@ -188,55 +182,14 @@ public class VideoActivity extends AppCompatActivity {
 
             final Menu menu = popupMenu.getMenu();
 
-            menu.setGroupDividerEnabled(true);
-
             popupMenu.getMenuInflater().inflate(R.menu.view_video_more, menu);
+
+            menu.setGroupDividerEnabled(true);
 
             popupMenu.setOnMenuItemClickListener((item) -> {
                 final int id = item.getItemId();
 
-                if(id == R.id.menuSeekable) {
-                    pause();
-
-                    final ProgressPopup popup = new ProgressPopup(this, R.string.popup_title_converting);
-
-                    popup.setMax(VIEW_MEDIA_PLAYER.getDuration());
-
-                    popup.show();
-
-                    final File temp = new File(getCacheDir(), VideoActivity.class.getSimpleName() + new Date().getTime() + ".mp4");
-
-                    final FFmpegSession fFmpegSession = FFmpegKit.executeAsync(
-                        "-i \""
-                                + FILE.getAbsolutePath()
-                                + "\" -c:v libx264 -c:a aac -vsync 2 "
-                                + "\"" + temp.getAbsolutePath() + "\"",
-
-                        (session) -> {
-                            if(ReturnCode.isSuccess(session.getReturnCode())) {
-                                KFile.replaceFile(FILE, temp);
-
-                                new Handler(Looper.getMainLooper()).post(() -> {
-                                    POSITION_START = VIEW_MEDIA_PLAYER.getCurrentPosition();
-
-                                    VIEW.setVideoPath(FILE.getAbsolutePath());
-
-                                    popup.dismissWithAnimation();
-
-                                    Toast.makeText(this, getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
-                                });
-
-                                KFile.notifyMediaScanner(this, FILE);
-                            } else {
-                                temp.delete();
-                            }
-                        },
-                        log -> {},
-                        statistics -> new Handler(Looper.getMainLooper()).post(() -> popup.setValue(statistics.getTime()))
-                    );
-
-                    popup.setCancelRunnable(() -> FFmpegKit.cancel(fFmpegSession.getSessionId()));
-                } else if(id == R.id.menuOpenWith) {
+                if(id == R.id.menuOpenWith) {
                     KFile.openFile(this, FILE, true);
                 } else if(id == R.id.menuShare) {
                     KFile.shareFile(this, FILE);
@@ -247,6 +200,8 @@ public class VideoActivity extends AppCompatActivity {
 
             popupMenu.show();
         });
+
+        findViewById(R.id.btnBack).setOnClickListener((v) -> finish());
     }
 
     private void init() {

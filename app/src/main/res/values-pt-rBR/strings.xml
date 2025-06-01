@@ -43,17 +43,17 @@
     <string name="permission_mic_description">Utilizada na captura do microfone e do som interno.</string>
 
     <string name="permission_notification_title">Notificações</string>
-    <string name="permission_notification_description">Utilizada para iniciar o serviço de captura, controlar a captura enquanto o app estiver em segundo plano e para exibir uma notificação quando a captura terminar.</string>
+    <string name="permission_notification_description">Utilizada para iniciar o serviço de captura, prover controle enquanto o app estiver em segundo plano, exibir uma notificação quando a captura terminar e informar quando outros serviçoes estiverem sendo executados.</string>
 
     <string name="permission_camera_title">Câmera</string>
-    <string name="permission_camera_description">Utilizada para exibir a câmera frontal durante a captura.</string>
+    <string name="permission_camera_description">Utilizada para exibir a câmera frontal/traseira durante a captura.</string>
 
     <string name="permission_storage_title">Armazenamento</string>
-    <string name="permission_storage_description">Utilizada para criar e gerenciar os arquivos de captura.</string>
+    <string name="permission_storage_description">Utilizada para criar e gerenciar os arquivos de captura e relacionados.</string>
     <string name="permission_storage_popup">Vá para as configurações do seu celular e conceda a permissão de TODOS OS ARQUIVOS.</string>
 
     <string name="permission_security_title">Escrever configurações de segurança</string>
-    <string name="permission_security_description">Utilizada para compartilhar o microfone com outros apps e para iniciar automaticamente o serviço de acessibilidade.</string>
+    <string name="permission_security_description">Utilizada para iniciar/parar automaticamente o serviço de acessibilidade.</string>
     <string name="permission_security_popup">Você tem três opcões:\n\n1 - Iniciar o serviço manualmente e mantê-lo rodando (consome mais bateria, mas permite iniciar uma captura sem ser redirecionado para o menu de acessibilidade);\n\n2 - Iniciar e parar o serviço manualmente toda vez (você será redirecionado para o menu de acessibilidade de o serviço estiver desativado);\n\n3 - Permitir que o app inicie e pare o serviço automaticamente, executando o comando: \n\n\"adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS\".</string>
 
     <string name="permission_button_continue">Continar</string>
@@ -73,6 +73,8 @@
     <string name="toast_error_no_kaptures_found">Nenhuma kaptura encontrada!</string>
     <string name="toast_error_no_profiles_found">Nenhum perfil encontrado!</string>
     <string name="toast_error_generic">Algo deu errado!</string>
+    <string name="toast_error_merging_1">Não foi possível adicionar audio interno!</string>
+    <string name="toast_error_merging_2">Não foi possível adicionar audio interno! Dois arquivos gerados!</string>
     <string name="toast_error_open_url">Não foi possível abrir a url!</string>
     <string name="toast_error_launch_homescreen">Não foi possível ir para a tela inicial!</string>
     <string name="toast_error_launch_app">Não foi possível abrir o app!</string>
@@ -90,24 +92,23 @@
     <string name="toast_success_active_profile">Perfil ativo:</string>
 
     <string name="file_name">captura</string>
-    <string name="file_name_extra_mp3_audio">áudio</string>
-    <string name="file_name_extra_mp3_internal">áudio interno</string>
-    <string name="file_name_extra_mp3_mic">áudio do microfone</string>
-    <string name="file_name_extra_mp4_no_audio">sem áudio</string>
-    <string name="file_name_extra_mp4_only_mic">apenas áudio do microfone</string>
-    <string name="file_name_extra_mp4_only_internal">apenas áudio interno</string>
+    <string name="file_name_extra_audio_audio">áudio</string>
+    <string name="file_name_extra_audio_internal">áudio interno</string>
+    <string name="file_name_extra_audio_mic">áudio do microfone</string>
+    <string name="file_name_extra_video_no_audio">sem áudio</string>
+    <string name="file_name_extra_video_only_mic">apenas áudio do microfone</string>
+    <string name="file_name_extra_video_only_internal">apenas áudio interno</string>
     <string name="file_name_screenshot">screenshot</string>
 
     <string name="popup_title_extra">Extra</string>
     <string name="popup_title_screenshot">Screenshot</string>
-    <string name="popup_title_converting">Convertendo...</string>
 
-    <string name="popup_extra_mp3_audio">Áudio</string>
-    <string name="popup_extra_mp3_internal">Áudio: internal</string>
-    <string name="popup_extra_mp3_mic">Áudio: microfone</string>
-    <string name="popup_extra_mp4_no_audio">Vídeo: sem áudio</string>
-    <string name="popup_extra_mp4_only_mic">Vídeo: apenas microfone</string>
-    <string name="popup_extra_mp4_only_internal">Vídeo: apenas interno</string>
+    <string name="popup_extra_audio_audio">Áudio</string>
+    <string name="popup_extra_audio_internal">Áudio: internal</string>
+    <string name="popup_extra_audio_mic">Áudio: microfone</string>
+    <string name="popup_extra_video_no_audio">Vídeo: sem áudio</string>
+    <string name="popup_extra_video_only_mic">Vídeo: apenas microfone</string>
+    <string name="popup_extra_video_only_internal">Vídeo: apenas interno</string>
 
     <string name="popup_delete_text_1">Você deseja apagar o seguinte arquivo:</string>
     <string name="popup_delete_text_2">Você deseja apagar o(s) arquivo(s) selecionado(s)?</string>
@@ -145,9 +146,6 @@
 
     <string name="setting_video_fps">FPS</string>
 
-    <string name="setting_video_file_format">Formato de saída</string>
-    <string name="setting_video_file_format_mp4">MP4</string>
-
     <string name="setting_video_orientation">Orientação</string>
     <string name="setting_video_orientation_auto">Automática</string>
     <string name="setting_video_orientation_portrait">Retrato</string>
@@ -156,7 +154,6 @@
     <string name="setting_group_mic">Microfone</string>
 
     <string name="setting_mic_capture">Capturar microfone</string>
-    <string name="setting_mic_volume">Volume customizado</string>
 
     <string name="setting_group_internal">Áudio interno</string>
 
@@ -179,7 +176,6 @@
 
     <string name="setting_subgroup_capturing_start">Opções antes de iniciar</string>
 
-    <string name="setting_start_app">Ir para</string>
     <string name="setting_start_url">Abrir url</string>
     <string name="setting_start_volume">Ajudar volume (mídia)</string>
     <string name="setting_start_launch">Abrir app</string>
@@ -312,9 +308,6 @@
     <string name="setting_extra_mic">Microfone apenas</string>
     <string name="setting_extra_mic_description">Inclui o audio do microfone apenas. Somenge gerado se estiver capturando o microfone.</string>
 
-    <string name="setting_audio_file_format">Formato de saída</string>
-    <string name="setting_audio_file_format_mp3">MP3</string>
-
     <string name="setting_group_wifi_share">@string/menu_capture_wifi_share</string>
     <string name="setting_group_wifi_share_request_password">Pedir senha</string>
     <string name="setting_group_wifi_share_refresh_password">Renovar senha</string>
@@ -374,7 +367,6 @@
     <string name="menu_settings_reset_app_settings_confirm_description">Restaurar todas as configurações do app para os valores iniciais?</string>
     <string name="menu_settings_reset_profile_settings_confirm_description">Restaurar todas as configurações do perfil atual para os valores iniciais?</string>
 
-    <string name="menu_viewer_video_make_seekable">Tornar vídeo seekable</string>
     <string name="menu_viewer_video_open_externally">Abrir externamente</string>
     <string name="menu_viewer_video_share">@string/bottom_bar_share</string>
 
@@ -397,12 +389,9 @@
     \n\n\u2022 Interface (UI) inpirada na OneUI da Samsung, documentação disponível em <a href="https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf">https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf</a>.
     \n\n\u2022 Alguns icones são do <b>Google Fonts</b>, disponível em <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 Alguns icones são do <b>OneUIProject</b>, disponível em <a href="https://github.com/OneUIProject/oneui-icons">https://github.com/OneUIProject/oneui-icons</a>, sob a Licença MIT.
-    \n\n\u2022 \"FFmpegKit\" de <b>arthenica</b>, disponível, junto com os guias de instalação e documentações, em <a href="https://arthenica.github.io/ffmpeg-kit/">https://arthenica.github.io/ffmpeg-kit/</a>, sob a licença GPL v3.0.
     \n\n\u2022 \"lottie-android\" de <b>LottieFiles</b>, disponível em <a href="https://github.com/LottieFiles/lottie-android">https://github.com/LottieFiles/lottie-android</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Free Loader Animation\", animação, de <b>Turlo</b>, disponível em <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, sob a Licença Lottie Simples.
     \n\n\u2022 \"NanoHttpd\" de <b>Paul S. Hawke, 2001,2005-2013 de Jarno Elonen, 2010 de Konstantinos Togias</b>, disponível em <a href="https:// github.com/NanoHttpd/nanohttpd">https://github.com/NanoHttpd/nanohttpd</a>, sob a Licença BSD-3-Clause.
-
-
     \n\n\u2022 \"Roboto\" and "Roboto Mono" fontes de <b>Christian Robertson</b>, disponível em <a href="https://fonts.google.com/specimen/Roboto">https://fonts.google.com/specimen/Roboto</a> e <a href="https://fonts.google.com/specimen/Roboto+Mono">https://fonts.google.com/specimen/Roboto+Mono</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Permanent Marker\" fonte de <b>Font Diner</b>, disponível em <a href="https://fonts.google.com/specimen/Permanent+Marker">https://fonts.google.com/specimen/Permanent+Marker</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Bebas Neue\" fonte de <b>Ryoichi Tsunekawa</b>, disponível em <a href="https://fonts.google.com/specimen/Bebas+Neue">https://fonts.google.com/specimen/Bebas+Neue</a>, sob a Licença Open Font.
@@ -415,7 +404,6 @@
 
     <string name="license_mit">" Licença MIT"</string>
     <string name="license_apache_v2">Licença Apache Versão 2.0</string>
-    <string name="license_gpl_v3">GPL v3.0</string>
     <string name="license_lottie">Licença Lottie Simples</string>
     <string name="license_bsd3_clause">Licença BSD-3-Clause</string>
     <string name="license_open_font">Licença Open Font</string>
@@ -522,7 +510,6 @@
     <string name="tooltip_back_top">Voltar ao topo</string>
     <string name="tooltip_profile">Perfil</string>
     <string name="tooltip_profile_delete">Remover perfil</string>
-    <string name="tooltip_app_shortcut">Atalho</string>
 
     <string name="widget_basic">Básico</string>
     <string name="widget_basic_description">Inicie ou pare uma captura</string>
@@ -532,7 +519,7 @@
 
     <string name="widget_wifi_share">@string/bottom_bar_wifi_share</string>
     <string name="widget_wifi_share_description">Atalho para compartilhar todas as kapturas por wifi</string>
-    <string name="widget_wifi_share_btn">Compartilhar\nno WiFi</string>
+    <string name="widget_wifi_share_btn">Compartilhar no WiFi</string>
 
     <string name="widget_profile">Perfis</string>
     <string name="widget_profile_description">Alterne entre perfis, inicie, pare, pause ou resuma uma captura</string>

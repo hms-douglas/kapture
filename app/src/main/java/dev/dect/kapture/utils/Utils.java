@@ -617,7 +617,7 @@ public class Utils {
 
             intentStartStop.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_WIDGET);
 
-            intentStartStop.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intentStartStop.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
             if(CapturingService.isRecording()) {
                 intentStartStop.putExtra(ActionActivity.INTENT_ACTION, Constants.Widget.Action.STOP);
@@ -634,7 +634,7 @@ public class Utils {
 
                 intentPauseResume.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_WIDGET);
 
-                intentPauseResume.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intentPauseResume.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
                 views.setInt(R.id.pauseResumeCapturing, "setBackgroundResource", R.drawable.btn_floating_background_circle);
 

@@ -14,16 +14,16 @@ public class DefaultSettings {
         IS_TO_SHOW_FLOATING_MENU = false,
         IS_TO_SHOW_FLOATING_CAMERA = false,
         IS_TO_RECORD_SOUND_IN_STEREO = true,
-        IS_TO_BOOST_MIC_VOLUME = false,
-        IS_TO_GENERATE_MP3_AUDIO = false,
-        IS_TO_GENERATE_MP3_ONLY_INTERNAL = false,
-        IS_TO_GENERATE_MP3_ONLY_MIC = false,
-        IS_TO_GENERATE_MP4_NO_AUDIO = false,
-        IS_TO_GENERATE_MP4_ONLY_INTERNAL_AUDIO = false,
-        IS_TO_GENERATE_MP4_ONLY_MIC_AUDIO = false,
+        IS_TO_GENERATE_AUDIO_AUDIO = false,
+        IS_TO_GENERATE_AUDIO_ONLY_INTERNAL = false,
+        IS_TO_GENERATE_AUDIO_ONLY_MIC = false,
+        IS_TO_GENERATE_VIDEO_NO_AUDIO = false,
+        IS_TO_GENERATE_VIDEO_ONLY_INTERNAL_AUDIO = false,
+        IS_TO_GENERATE_VIDEO_ONLY_MIC_AUDIO = false,
         SORT_BY_ASC = false,
         IS_TO_SHOW_NOTIFICATION_PROCESSING = true,
         IS_TO_SHOW_NOTIFICATION_CAPTURED = true,
+        IS_TO_SHOW_NOTIFICATION_WIFI_SHARE = true,
         IS_TO_TOGGLE_CAMERA_ORIENTATION = false,
         IS_TO_DELAY_START_RECORDING = false,
         IS_TO_USE_TIME_LIMIT = false,
@@ -73,14 +73,11 @@ public class DefaultSettings {
         MINIMIZING_SIDE = KSettings.MINIMIZE_SIDES[0],
         MENU_STYLE = KSettings.MENU_STYLES[0],
         STOP_ON_BATTERY_LEVEL_LEVEL = 30,
-        BEFORE_START_MEDIA_VOLUME_PERCENTAGE = 50;
-
-    public static final float
-        MIC_BOOST_VOLUME_FACTOR = 5f;
+        BEFORE_START_MEDIA_VOLUME_PERCENTAGE = 50,
+        AUDIO_SAMPLE_RATE = 44100,
+        AUDIO_QUALITY_bitRate = 96000;
 
     public static final String
-        CAPTURE_FILE_FORMAT = "mp4",
-        AUDIO_FILE_FORMAT = "mp3",
         TEXT_FONT_PATH = KSettings.INTERNAL_FONTS_PATHS[0],
         TEXT_COLOR = "#EB3B2EFF",
         TEXT_BACKGROUND = "#00000000",

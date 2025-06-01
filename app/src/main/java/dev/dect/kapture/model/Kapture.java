@@ -42,20 +42,23 @@ public class Kapture {
 
     private boolean HAS_MEDIA_DATA = false;
 
+    private String PROFILE_ID;
+
     public Kapture(Context ctx) {
-        this(ctx, -1, "", null, null);
+        this(ctx, -1, "", null, null, null);
     }
 
     public Kapture(Context ctx, File file) {
-        this(ctx, -1, file.getAbsolutePath(), null, null);
+        this(ctx, -1, file.getAbsolutePath(), null, null, null);
     }
 
-    public Kapture(Context ctx, long id, String location, ArrayList<Extra> extras, ArrayList<Screenshot> screenshots) {
+    public Kapture(Context ctx, long id, String location, ArrayList<Extra> extras, ArrayList<Screenshot> screenshots, String profileId) {
         this.CONTEXT = ctx;
         this.ID = id;
         this.LOCATION = location;
         this.EXTRAS = extras == null ? new ArrayList<>() : extras;
         this.SCREENSHOTS = screenshots == null ? new ArrayList<>() : screenshots;
+        this.PROFILE_ID = profileId;
 
         this.FILE = new File(location);
     }
@@ -116,6 +119,10 @@ public class Kapture {
         return FILE;
     }
 
+    public String getProfileId() {
+        return PROFILE_ID;
+    }
+
     public boolean hasExtras() {
         return !EXTRAS.isEmpty();
     }
@@ -146,6 +153,10 @@ public class Kapture {
 
     public void setScreenshots(ArrayList<Screenshot> screenshots) {
         this.SCREENSHOTS = screenshots == null ? new ArrayList<>() : screenshots;
+    }
+
+    public void setProfileId(String profileId) {
+        this.PROFILE_ID = profileId;
     }
 
     public void addExtra(Extra extra) {
@@ -247,12 +258,12 @@ public class Kapture {
     }
 
     public static class Extra {
-        public static final int EXTRA_MP3_AUDIO = 0,
-                                EXTRA_MP3_INTERNAL_ONLY = 1,
-                                EXTRA_MP3_MIC_ONLY = 2,
-                                EXTRA_MP4_NO_AUDIO = 3,
-                                EXTRA_MP4_MIC_ONLY = 4,
-                                EXTRA_MP4_INTERNAL_ONLY = 5;
+        public static final int EXTRA_AUDIO_AUDIO = 0,
+                                EXTRA_AUDIO_INTERNAL_ONLY = 1,
+                                EXTRA_AUDIO_MIC_ONLY = 2,
+                                EXTRA_VIDEO_NO_AUDIO = 3,
+                                EXTRA_VIDEO_MIC_ONLY = 4,
+                                EXTRA_VIDEO_INTERNAL_ONLY = 5;
 
         private long ID,
                      ID_KAPTURE;
@@ -316,28 +327,28 @@ public class Kapture {
             String name = "";
 
             switch(TYPE) {
-                case Kapture.Extra.EXTRA_MP3_AUDIO:
-                    name = ctx.getString(R.string.popup_extra_mp3_audio);
+                case Kapture.Extra.EXTRA_AUDIO_AUDIO:
+                    name = ctx.getString(R.string.popup_extra_audio_audio);
                     break;
 
-                case Kapture.Extra.EXTRA_MP3_INTERNAL_ONLY:
-                    name = ctx.getString(R.string.popup_extra_mp3_internal);
+                case Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY:
+                    name = ctx.getString(R.string.popup_extra_audio_internal);
                     break;
 
-                case Kapture.Extra.EXTRA_MP3_MIC_ONLY:
-                    name = ctx.getString(R.string.popup_extra_mp3_mic);
+                case Kapture.Extra.EXTRA_AUDIO_MIC_ONLY:
+                    name = ctx.getString(R.string.popup_extra_audio_mic);
                     break;
 
-                case Kapture.Extra.EXTRA_MP4_NO_AUDIO:
-                    name = ctx.getString(R.string.popup_extra_mp4_no_audio);
+                case Kapture.Extra.EXTRA_VIDEO_NO_AUDIO:
+                    name = ctx.getString(R.string.popup_extra_video_no_audio);
                     break;
 
-                case Kapture.Extra.EXTRA_MP4_INTERNAL_ONLY:
-                    name = ctx.getString(R.string.popup_extra_mp4_only_internal);
+                case Kapture.Extra.EXTRA_VIDEO_INTERNAL_ONLY:
+                    name = ctx.getString(R.string.popup_extra_video_only_internal);
                     break;
 
-                case Kapture.Extra.EXTRA_MP4_MIC_ONLY:
-                    name = ctx.getString(R.string.popup_extra_mp4_only_mic);
+                case Kapture.Extra.EXTRA_VIDEO_MIC_ONLY:
+                    name = ctx.getString(R.string.popup_extra_video_only_mic);
                     break;
             }
 
@@ -350,23 +361,23 @@ public class Kapture {
 
         public static String getFileNameComplementByType(Context ctx, int type) {
             switch(type) {
-                case EXTRA_MP3_AUDIO:
-                    return KFile.formatStringResource(ctx, R.string.file_name_extra_mp3_audio);
+                case EXTRA_AUDIO_AUDIO:
+                    return KFile.formatStringResource(ctx, R.string.file_name_extra_audio_audio);
 
-                case EXTRA_MP3_INTERNAL_ONLY:
-                    return KFile.formatStringResource(ctx, R.string.file_name_extra_mp3_internal);
+                case EXTRA_AUDIO_INTERNAL_ONLY:
+                    return KFile.formatStringResource(ctx, R.string.file_name_extra_audio_internal);
 
-                case EXTRA_MP3_MIC_ONLY:
-                    return KFile.formatStringResource(ctx, R.string.file_name_extra_mp3_mic);
+                case EXTRA_AUDIO_MIC_ONLY:
+                    return KFile.formatStringResource(ctx, R.string.file_name_extra_audio_mic);
 
-                case EXTRA_MP4_NO_AUDIO:
-                    return KFile.formatStringResource(ctx, R.string.file_name_extra_mp4_no_audio);
+                case EXTRA_VIDEO_NO_AUDIO:
+                    return KFile.formatStringResource(ctx, R.string.file_name_extra_video_no_audio);
 
-                case EXTRA_MP4_MIC_ONLY:
-                    return KFile.formatStringResource(ctx, R.string.file_name_extra_mp4_only_mic);
+                case EXTRA_VIDEO_MIC_ONLY:
+                    return KFile.formatStringResource(ctx, R.string.file_name_extra_video_only_mic);
 
-                case EXTRA_MP4_INTERNAL_ONLY:
-                    return KFile.formatStringResource(ctx, R.string.file_name_extra_mp4_only_internal);
+                case EXTRA_VIDEO_INTERNAL_ONLY:
+                    return KFile.formatStringResource(ctx, R.string.file_name_extra_video_only_internal);
 
                 default:
                     return null;

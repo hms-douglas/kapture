@@ -68,6 +68,7 @@
             android:name=".activity.viewer.VideoActivity"
             android:exported="false"
             android:theme="@style/Theme.FullScreen"
+            android:excludeFromRecents="true"
             android:configChanges="orientation|screenSize|keyboardHidden|colorMode|screenLayout|navigation|fontScale|locale">
 
             <intent-filter>
@@ -118,6 +119,7 @@
             android:name=".activity.TokenActivity"
             android:exported="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
             android:theme="@style/Theme.Translucent">
         </activity>
 
@@ -125,6 +127,7 @@
             android:name=".activity.ActionActivity"
             android:exported="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
             android:theme="@style/Theme.Translucent">
         </activity>
 

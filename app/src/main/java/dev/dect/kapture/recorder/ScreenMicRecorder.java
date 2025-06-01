@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.Date;
 
 import dev.dect.kapture.R;
+import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.data.KSettings;
 import dev.dect.kapture.service.CapturingService;
 import dev.dect.kapture.utils.KMediaProjection;
@@ -54,8 +55,8 @@ public class ScreenMicRecorder {
 
             if(KSETTINGS.isToRecordMic()) {
                 MEDIA_RECORDER.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                MEDIA_RECORDER.setAudioEncodingBitRate(96000);
-                MEDIA_RECORDER.setAudioSamplingRate(44100);
+                MEDIA_RECORDER.setAudioEncodingBitRate(KSETTINGS.getAudioBitRate());
+                MEDIA_RECORDER.setAudioSamplingRate(KSETTINGS.getAudioSampleRate());
             }
 
             MEDIA_RECORDER.setVideoEncodingBitRate(KSETTINGS.getVideoBitRate());
@@ -114,7 +115,7 @@ public class ScreenMicRecorder {
 
     private void createTempFile() {
         try {
-            TEMP_FILE = File.createTempFile(ScreenMicRecorder.class.getSimpleName() + new Date().getTime(), "." + KSETTINGS.getVideoFileFormat());
+            TEMP_FILE = File.createTempFile(ScreenMicRecorder.class.getSimpleName() + new Date().getTime(), "." + Constants.EXT_VIDEO_FORMAT);
         } catch (Exception ignore) {}
     }
 

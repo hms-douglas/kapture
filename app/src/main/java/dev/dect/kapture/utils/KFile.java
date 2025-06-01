@@ -1,27 +1,47 @@
 package dev.dect.kapture.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaCodec;
+import android.media.MediaExtractor;
+import android.media.MediaFormat;
+import android.media.MediaMuxer;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.OptIn;
 import androidx.core.content.FileProvider;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.MimeTypes;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.transformer.Composition;
+import androidx.media3.transformer.EditedMediaItem;
+import androidx.media3.transformer.EditedMediaItemSequence;
+import androidx.media3.transformer.ExportResult;
+import androidx.media3.transformer.Transformer;
 
-import com.arthenica.ffmpegkit.FFmpegKit;
+import com.google.common.collect.ImmutableList;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URLDecoder;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.activity.viewer.AudioActivity;
@@ -38,8 +58,7 @@ import dev.dect.kapture.service.CapturingService;
 public class KFile {
     public static final String FILE_SEPARATOR = "_";
 
-    private static final String VIDEO_EXTENSION = ".mp4",
-                                INTERNAL_STORAGE_PATH = "/storage/emulated/0";
+    private static final String INTERNAL_STORAGE_PATH = "/storage/emulated/0";
 
     public static File generateNewEmptyKaptureFile(Context ctx, KSettings ks) {
         final int fileId = getFileIdNotGenerated(ctx);
@@ -53,7 +72,7 @@ public class KFile {
             + FILE_SEPARATOR
             + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
 
-        return new File(ks.getSavingLocationFile(), fileName + VIDEO_EXTENSION);
+        return new File(ks.getSavingLocationFile(), fileName + "." + Constants.EXT_VIDEO_FORMAT);
     }
 
     public static int getFileIdNotGenerated(Context ctx) {
@@ -241,20 +260,8 @@ public class KFile {
 
     public static void copyFile(File from, File to) {
         try {
-            Files.copy(from.toPath(), to.toPath());
+            Files.copy(from.toPath(), to.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception ignore) {}
-    }
-
-    public static void replaceFile(File replace, File by) {
-        try {
-            Files.move(by.toPath(), replace.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (Exception ignore) {}
-    }
-
-    public static void pmcToMp3(File pmc, File mp3) {
-        FFmpegKit.execute(
-        "-f s16le -ar 44.1k -ac 2 -i " + pmc.getAbsolutePath() + " -y " + mp3.getAbsolutePath()
-        );
     }
 
     public static String getDefaultKaptureFileName(Context ctx) {
@@ -349,7 +356,7 @@ public class KFile {
 
         long size = 0;
 
-        for(File file : f.listFiles()) {
+        for(File file : Objects.requireNonNull(f.listFiles())) {
             if(file != null) {
                 if(file.isDirectory()) {
                     size += getDirectorySize(file);
@@ -398,5 +405,189 @@ public class KFile {
         }
 
         return directory.delete();
+    }
+
+    public static void pcmToWav(File pcm, File wav, KSettings ks) throws IOException {
+        copyFile(pcm, wav);
+
+        final int size = ((int) wav.length()) - 44,
+                  sizeHelper = size + 36,
+                  bitsPerSample = 16,
+                  byteRate = ks.getAudioSampleRate() * ks.getInternalAudioChannelNumber() * bitsPerSample / 8;
+
+        final RandomAccessFile randomAccessFile = new RandomAccessFile(wav, "rw");
+
+        randomAccessFile.seek(0);
+
+        final byte[] header = new byte[44];
+
+        header[0] = 'R';
+        header[1] = 'I';
+        header[2] = 'F';
+        header[3] = 'F';
+
+        header[4] = (byte) (sizeHelper & 0xff);
+        header[5] = (byte) ((sizeHelper >> 8) & 0xff);
+        header[6] = (byte) ((sizeHelper >> 16) & 0xff);
+        header[7] = (byte) ((sizeHelper >> 24) & 0xff);
+
+        header[8] = 'W';
+        header[9] = 'A';
+        header[10] = 'V';
+        header[11] = 'E';
+
+        header[12] = 'f';
+        header[13] = 'm';
+        header[14] = 't';
+        header[15] = ' ';
+
+        header[16] = 16;
+        header[17] = 0;
+        header[18] = 0;
+        header[19] = 0;
+
+        header[20] = 1;
+        header[21] = 0;
+
+        header[22] = (byte) ks.getInternalAudioChannelNumber();
+        header[23] = 0;
+
+        header[24] = (byte) (ks.getAudioSampleRate() & 0xff);
+        header[25] = (byte) ((ks.getAudioSampleRate() >> 8) & 0xff);
+        header[26] = (byte) ((ks.getAudioSampleRate() >> 16) & 0xff);
+        header[27] = (byte) ((ks.getAudioSampleRate() >> 24) & 0xff);
+
+        header[28] = (byte) (byteRate & 0xff);
+        header[29] = (byte) ((byteRate >> 8) & 0xff);
+        header[30] = (byte) ((byteRate >> 16) & 0xff);
+        header[31] = (byte) ((byteRate >> 24) & 0xff);
+
+        header[32] = (byte) (ks.getInternalAudioChannelNumber() * (bitsPerSample / 8));
+        header[33] = 0;
+
+        header[34] = bitsPerSample;
+        header[35] = 0;
+
+        header[36] = 'd';
+        header[37] = 'a';
+        header[38] = 't';
+        header[39] = 'a';
+
+        header[40] = (byte) (size & 0xff);
+        header[41] = (byte) ((size >> 8) & 0xff);
+        header[42] = (byte) ((size >> 16) & 0xff);
+        header[43] = (byte) ((size >> 24) & 0xff);
+
+        randomAccessFile.write(header);
+
+        randomAccessFile.close();
+    }
+
+    @OptIn(markerClass = UnstableApi.class) @SuppressLint("WrongConstant")
+    public static void combineAudioAndVideo(Context ctx, File audioM4a, File video, File dest, @Nullable Runnable onComplete) throws Exception {
+        if(!dest.exists()) {
+            dest.createNewFile();
+        }
+
+        final Transformer transformer = new Transformer.Builder(ctx)
+            .setVideoMimeType(MimeTypes.VIDEO_H264)
+            .setAudioMimeType(MimeTypes.AUDIO_AAC)
+            .build();
+
+        final EditedMediaItem editVideo = new EditedMediaItem.Builder(
+            MediaItem.fromUri(video.getAbsolutePath())
+        ).build();
+
+        final EditedMediaItem editAudio = new EditedMediaItem.Builder(
+            MediaItem.fromUri(audioM4a.getAbsolutePath())
+        ).build();
+
+        Composition composition = new Composition.Builder(
+            new EditedMediaItemSequence(editVideo),
+            new EditedMediaItemSequence(ImmutableList.of(editAudio),false)
+        ).build();
+
+        if(onComplete != null) {
+            transformer.addListener(new Transformer.Listener() {
+                @Override
+                public void onCompleted(Composition composition, ExportResult exportResult) {
+                    onComplete.run();
+                }
+            });
+        }
+
+        transformer.start(composition, dest.getAbsolutePath());
+    }
+
+    public static void removeAudioFromVideo(File video, File dest) {
+        extractFromVideo(video, dest, false);
+    }
+
+    public static void extractAudioFromVideo(File video, File dest) {
+        extractFromVideo(video, dest, true);
+    }
+
+    @SuppressLint("WrongConstant")
+    private static void extractFromVideo(File video, File dest, boolean audio) {
+        try {
+            final MediaMuxer mediaMuxer = new MediaMuxer(dest.getAbsolutePath(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+
+            final MediaExtractor videoMediaExtractor = new MediaExtractor();
+
+            videoMediaExtractor.setDataSource(video.getAbsolutePath());
+
+            final int videoTrackCount = videoMediaExtractor.getTrackCount();
+
+            final HashMap<Integer, Integer> videoTrackMap = new HashMap<>(videoTrackCount);
+
+            int bufferSize = -1;
+
+            for(int i = 0; i < videoTrackCount; i++) {
+                final MediaFormat videoFormat = videoMediaExtractor.getTrackFormat(i);
+
+                if(Objects.requireNonNull(videoFormat.getString(MediaFormat.KEY_MIME)).startsWith(audio ? "audio/" : "video/")) {
+                    videoMediaExtractor.selectTrack(i);
+
+                    videoTrackMap.put(i, mediaMuxer.addTrack(videoFormat));
+
+                    if(videoFormat.containsKey(MediaFormat.KEY_MAX_INPUT_SIZE)) {
+                        bufferSize = Math.max(videoFormat.getInteger(MediaFormat.KEY_MAX_INPUT_SIZE), bufferSize);
+                    }
+                }
+            }
+
+            int trackIndex;
+
+            final ByteBuffer dstBuf = ByteBuffer.allocate(bufferSize < 0 ? 1048576 : bufferSize);
+
+            final MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
+
+            mediaMuxer.start();
+
+            while(true) {
+                bufferInfo.offset = 0;
+                bufferInfo.size = videoMediaExtractor.readSampleData(dstBuf, 0);
+
+                if(bufferInfo.size < 0) {
+                    bufferInfo.size = 0;
+                    break;
+                } else {
+                    bufferInfo.presentationTimeUs = videoMediaExtractor.getSampleTime();
+
+                    bufferInfo.flags = videoMediaExtractor.getSampleFlags();
+
+                    trackIndex = videoMediaExtractor.getSampleTrackIndex();
+
+                    mediaMuxer.writeSampleData(videoTrackMap.get(trackIndex), dstBuf, bufferInfo);
+
+                    videoMediaExtractor.advance();
+                }
+            }
+
+            videoMediaExtractor.release();
+
+            mediaMuxer.stop();
+            mediaMuxer.release();
+        } catch (Exception ignore) {}
     }
 }

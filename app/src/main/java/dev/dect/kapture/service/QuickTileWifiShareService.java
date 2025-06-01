@@ -16,7 +16,7 @@ public class QuickTileWifiShareService extends TileService {
         intentWifiShare.putExtra(ActionActivity.INTENT_ACTION, Constants.QuickTile.Action.WIFI_SHARE);
         intentWifiShare.putExtra(ActionActivity.INTENT_FROM, ActionActivity.FROM_QUICK_TILE);
 
-        intentWifiShare.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intentWifiShare.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
         startActivity(intentWifiShare);
     }

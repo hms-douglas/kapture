@@ -346,8 +346,13 @@ public class MenuOverlay {
         if(SHORTCUTS_MENU != null) {
             SHORTCUTS_MENU.setVisibility(View.GONE);
         }
-        
-        VIEW.setPadding(12,18,12,18);
+
+        VIEW.setPadding(
+            KSETTINGS.getMinimizingSide() == 0 ? 25 : 12,
+            20,
+            KSETTINGS.getMinimizingSide() == 0 ? 12 : 25,
+            20
+        );
 
         final ValueAnimator move = ValueAnimator.ofInt(LAYOUT_PARAMETERS.x, WINDOW_MANAGER.getCurrentWindowMetrics().getBounds().width() / (KSETTINGS.getMinimizingSide() == 0 ? 2 : -2));
 
@@ -625,7 +630,9 @@ public class MenuOverlay {
         try {
             packageName[0] = shortcuts.getString(index);
         } catch (Exception ignore) {
-            packageName[0] = Constants.HOME_PACKAGE_NAME;
+            btn.setVisibility(View.GONE);
+
+            return;
         }
         
         if(packageName[0].equals(Constants.HOME_PACKAGE_NAME)) {
