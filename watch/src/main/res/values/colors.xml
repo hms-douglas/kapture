@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main">#EB3B2E</color>
+    <color name="main_darker">#7A1F18</color>
+
+    <color name="background_transparent">#C9000000</color>
+
+    <color name="activity_background">#000000</color>
+
+    <color name="c0">#EDEDED</color>
+    <color name="c1">#979797</color>
+    <color name="c2">#5E5E5E</color>
+    <color name="c3">#3B3B40</color>
+    <color name="c4">#2B2B2B</color>
+    <color name="c5">#959595</color>
+    <color name="c6">#808080</color>
+    <color name="c7">#171717</color>
+
+    <color name="clock_font">@color/c1</color>
+
+    <color name="btn_effect">#D8313337</color>
+
+    <color name="btn_main_background">@color/main</color>
+    <color name="btn_main_font">@color/c0</color>
+    <color name="btn_secondary_background">@color/c4</color>
+    <color name="btn_secondary_font">@color/c0</color>
+
+    <color name="tile_message_background">@color/c4</color>
+    <color name="tile_message_font">@color/c0</color>
+
+    <color name="time_font">@color/c0</color>
+    <color name="time_limit_font">@color/c2</color>
+
+    <color name="bottom_sheet_background">@color/c7</color>
+    <color name="bottom_sheet_icon">@color/c1</color>
+
+    <color name="bottom_sheet_background_qr">#FFFFFF</color>
+
+    <color name="activity_title">@color/c0</color>
+
+    <color name="popup_btn_yes">@color/main</color>
+    <color name="popup_btn_yes_icon">@color/c0</color>
+    <color name="popup_btn_no">@color/c3</color>
+    <color name="popup_btn_no_icon">@color/c0</color>
+
+    <color name="popup_btn_disabled">@color/c7</color>
+
+    <color name="version_text">@color/c0</color>
+
+    <color name="viewer_option_icon">@color/c0</color>
+
+    <color name="bottom_bar_btn_text_color_on">@color/c0</color>
+    <color name="icon_more">@color/bottom_bar_btn_text_color_on</color>
+
+    <color name="group_container_background">#171719</color>
+
+    <color name="list_item_title">@color/c0</color>
+    <color name="list_item_sub_title">@color/c5</color>
+    <color name="list_item_sub_title_active">@color/main</color>
+
+    <color name="list_item_divisor">@color/c3</color>
+
+    <color name="list_group_title">@color/c6</color>
+
+    <color name="group_subtitle">@color/c6</color>
+
+    <color name="switch_thumb_on">@color/c0</color>
+    <color name="switch_thumb_off">@color/c0</color>
+
+    <color name="switch_track_on">@color/main</color>
+    <color name="switch_track_off">@color/c6</color>
+
+    <color name="popup_btn_text_dangerous">@color/main</color>
+    <color name="popup_title">@color/c0</color>
+    <color name="popup_text">@color/c1</color>
+
+    <color name="input_background">@color/c7</color>
+    <color name="input_text">@color/c0</color>
+
+    <color name="radio_on">@color/main</color>
+    <color name="radio_off">@color/c6</color>
+    <color name="radio_checkbox_text">@color/c0</color>
+
+    <color name="checkbox_on">@color/main</color>
+    <color name="checkbox_off">@color/c6</color>
+
+    <color name="credits_text">@color/c5</color>
+
+    <color name="kapture_title">@color/c0</color>
+    <color name="kapture_sub_title">@color/c1</color>
+    <color name="kapture_image_helper">@color/c3</color>
+    <color name="kapture_image_error_helper">@color/main_darker</color>
+    <color name="kapture_image_error_icon_helper">@color/c0</color>
+
+    <color name="select_text">@color/c0</color>
+    <color name="select_background">#2D2D2D</color>
+
+    <color name="popup_time_picker_font_focused">@color/main</color>
+    <color name="popup_time_picker_font_not_focused">@color/popup_text</color>
+
+    <color name="storage_other">@color/main_darker</color>
+    <color name="storage_kaptures">@color/main</color>
+    <color name="storage_cache">@color/c1</color>
+    <color name="storage_free">@color/c2</color>
+</resources>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="processing">Processando</string>
+    <string name="notification_processing_message">Aguarde enquanto a captura é processada!</string>
+
+    <string name="under_countdown">Sob contagem regressiva</string>
+
+    <string name="toast_error_viewer_external">Nenhum visualizador externo encontrado!</string>
+    <string name="toast_error_file_not_found">Arquivo não encontrado!</string>
+    <string name="toast_error_no_kaptures_found">Nenhuma kaptura encontrada!</string>
+    <string name="toast_error_generic">Algo deu errado!</string>
+    <string name="toast_error_launch_app">Não foi possível abrir o app!</string>
+    <string name="toast_error_check_update">Não foi possível procurar por novas versões. Tente manualmente!</string>
+    <string name="toast_error_no_wifi">Conecte-se a um WiFi primeiro!</string>
+    <string name="toast_error_select_one_app">Pelo menos um app é necessário!</string>
+    <string name="toast_error_select_app_max">Apenas %d apps são permitidos!</string>
+    <string name="toast_error_permission">Todas as permissões são necessárias!</string>
+    <string name="toast_error_sending_receiving_phone">Erro ao receber no celular!</string>
+    <string name="toast_info_enable_accessibility_manually">Não foi possível abrir o menu de acessibilidate. Tente manualmente!</string>
+    <string name="toast_info_accessibility_manually">Inicie o serviço de acessibilidade primeiro!</string>
+    <string name="toast_info_while_recording">Não é possível alterar as configurações enquanto está capturando!</string>
+    <string name="toast_info_change_folder_location">Não é possível alterar a pasta!</string>
+    <string name="toast_info_loading">Carregando…</string>
+    <string name="toast_info_check_phone">Verifique o seu celular!</string>
+    <string name="toast_info_sending_phone">Enviando para o celular!</string>
+    <string name="toast_info_sending_phone_2">Pode levar um tempo, dependendo do tamanho do arquivo!</string>
+    <string name="toast_success_generic">Feito!</string>
+    <string name="toast_success_sending">Enviado. Verifique o seu celular!</string>
+
+    <string name="file_name">captura_relógio</string>
+
+    <string name="popup_delete_text_2">Você deseja apagar o(s) arquivo(s) selecionado(s)?</string>
+
+    <string name="title_captures">Kapturas</string>
+    <string name="title_settings">Configurações</string>
+    <string name="title_credits">Créditos</string>
+
+    <string name="setting_group_folder">Pasta</string>
+
+    <string name="setting_folder_location">Local das kapturas e extras</string>
+
+    <string name="setting_group_video">Vídeo</string>
+
+    <string name="setting_video_resolution">Resolução</string>
+    <string name="setting_video_resolution_auto">Automático</string>
+
+    <string name="setting_video_quality">Qualidade</string>
+
+    <string name="setting_video_fps">FPS</string>
+
+    <string name="setting_group_mic">Microfone</string>
+
+    <string name="setting_mic_capture">Capturar microfone</string>
+
+    <string name="setting_group_internal">Áudio interno</string>
+
+    <string name="setting_internal_capture">Capturar áudio interno</string>
+    <string name="setting_internal_capture_description">Alguns apps não permitem a captura do áudio, nesses casos nenhum som será capturado.</string>
+
+    <string name="setting_internal_stereo">Estéreo</string>
+
+    <string name="setting_internal_description">Para otimizar a bateria e melhorar o processamento, é recomendado não gravar o áudio interno em dispositivos Wear OS!</string>
+
+    <string name="setting_group_capturing">Capturar</string>
+
+    <string name="setting_subgroup_capturing_countdown">Contagem regressiva</string>
+    <string name="setting_countdown_countdown">Contagem regressiva para iniciar</string>
+    <string name="setting_countdown_countdown_description">Nenhuma interface é exibida em dispositivos Wear OS!</string>
+
+    <string name="setting_subgroup_capturing_stop">Opção de parada</string>
+
+    <string name="setting_stop_time_limit">Por limite de tempo</string>
+    <string name="setting_stop_battery_level">Por nível de bateria</string>
+
+    <string name="setting_subgroup_capturing_start">Opções antes de iniciar</string>
+
+    <string name="setting_start_volume">Ajudar volume (mídia)</string>
+    <string name="setting_start_launch">Abrir app</string>
+    <string name="setting_start_launch_select">Selecione um app</string>
+
+    <string name="package_launch_home">Tela inicial</string>
+
+    <string name="setting_start_message">
+        As opções serão executadas na ordem listada aqui, portanto algumas podem ser sobrescritas;
+        \nAs seguintes opções serão restauradas para o valor inicial quando você parar a captura: Volume (mídia).
+    </string>
+
+    <string name="setting_group_wifi_share">@string/menu_capture_wifi_share</string>
+    <string name="setting_group_wifi_share_request_password">Pedir senha</string>
+    <string name="setting_group_wifi_share_refresh_password">Renovar senha</string>
+    <string name="setting_group_wifi_share_refresh_password_description">A senha será renovada toda vez que um dispositivo se conectar.</string>
+
+    <string name="setting_group_app">App</string>
+
+    <string name="setting_subgroup_app_ui">Interface</string>
+
+    <string name="setting_subgroup_app_storage">Armazenamento</string>
+
+    <string name="setting_ui_language">Idioma</string>
+
+    <string name="setting_performance_battery_optimization">Otimização da bateria</string>
+    <string name="setting_performance_battery_optimization_description">Para evitar paradas inesperadas, certifique-se que o app não está na lista de aplicativos suspensos.</string>
+
+    <string name="setting_group_more">Mais</string>
+
+    <string name="popup_btn_close">Fechar</string>
+    <string name="popup_btn_delete">Apagar</string>
+
+    <string name="internal_storage">Armazenamento interno</string>
+
+    <string name="menu_capture_select_all">Selecionar tudo</string>
+    <string name="menu_capture_wifi_share">Compartilhar no WiFi</string>
+
+    <string name="menu_settings_open_accessibility">Abrir acessibilidade</string>
+    <string name="menu_about">Sobre</string>
+
+    <string name="menu_settings_reset_settings">Restaurar</string>
+
+    <string name="menu_settings_reset_settings_description">Esta opção irá restaurar todas as configurações para os valores iniciais!</string>
+
+    <string name="about_version">Versão</string>
+    <string name="about_version_checking">Procurando atualização…</string>
+    <string name="about_version_available">Nova versão disponível:</string>
+    <string name="about_version_latest">A versão mais recente está instalada.</string>
+
+    <string name="about_btn_github">Projeto no Github</string>
+
+    <string name="credits">Este app foi feito por <b>Douglas Silva</b> apenas.
+    \n\nOs recursos utilizados estão listados abaixo. <i>As licenças podem ser acessada no final da página.</i>
+    \n\n\u2022 Interface (UI) inpirada na OneUI da Samsung, documentação disponível em <a href="https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf">https://design.samsung.com/global/contents/one-ui/download/oneui_design_guide_eng.pdf</a>.
+    \n\n\u2022 Alguns icones são do <b>Google Fonts</b>, disponível em <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a>, sob a Licença Apache versão 2.0.
+    \n\n\u2022 Alguns icones são do <b>OneUIProject</b>, disponível em <a href="https://github.com/OneUIProject/oneui-icons">https://github.com/OneUIProject/oneui-icons</a>, sob a Licença MIT.
+    \n\n\u2022 \"NanoHttpd\" de <b>Paul S. Hawke, 2001,2005-2013 de Jarno Elonen, 2010 de Konstantinos Togias</b>, disponível em <a href="https:// github.com/NanoHttpd/nanohttpd">https://github.com/NanoHttpd/nanohttpd</a>, sob a Licença BSD-3-Clause.
+    \n\n\u2022 \"QRGen\" de <b>Ken Gullaksen</b>, disponível em <a href="https://github.com/kenglxn/QRGen">https://github.com/kenglxn/QRGen</a>, sob a Licença Apache versão 2.0.
+    </string>
+
+    <string name="license_mit">" Licença MIT"</string>
+    <string name="license_apache_v2">Licença Apache Versão 2.0</string>
+    <string name="license_bsd3_clause">Licença BSD-3-Clause</string>
+
+    <string name="selected">Selecionado</string>
+    <string name="selected_plural">Selecionados</string>
+
+    <string name="html_403">Proibido: Você não tem permissão para acessar esses arquivos!</string>
+    <string name="html_500">Erro interno do servidor!</string>
+
+    <string name="html_name">Nome</string>
+    <string name="html_date">Data</string>
+    <string name="html_duration">Duração</string>
+    <string name="html_resolution">Resolução</string>
+    <string name="html_size">Tamanho</string>
+    <string name="html_login">Acesso</string>
+    <string name="html_enter_password">Digite a senha</string>
+
+    <string name="relaunch_message">Para evitar erros é recomendado reiniciar o application!</string>
+
+    <string name="btn_start">Iniciar</string>
+
+    <string name="storage_usage">Uso do armazenamento</string>
+    <string name="storage_other">Outros apps</string>
+    <string name="storage_kaptures">Arquivos do Kapture</string>
+    <string name="storage_cache">Cache do Kapture</string>
+    <string name="storage_free">Disponível</string>
+
+    <string name="storage_message">Kapturas removidas pelo app ou removidas externamente, e os seus arquivos correspondentes, não são incluidos na categoria \"Arquivos do Kapture\".</string>
+
+    <string name="storage_btn_clear_cache">Limpar cache</string>
+    <string name="storage_btn_clear_cache_description">Kapturas, arquivos extras e screenshots não serão removidos.</string>
+
+    <string name="tooltip_select_all">@string/menu_capture_select_all</string>
+    <string name="tooltip_hour">Hora</string>
+    <string name="tooltip_minute">Minuto</string>
+    <string name="tooltip_second">Segundo</string>
+    <string name="tooltip_show_password">Mostrar senha</string>
+    <string name="tooltip_hide_password">Esconder senha</string>
+
+    <string name="full_tile">Completo</string>
+    <string name="full_tile_description">Inicie, pare, pause ou resuma uma captura</string>
+
+    <string name="wifi_share_popup_error">Erro</string>
+    <string name="wifi_share_popup_error_message">É necessário reiniciar o app!</string>
+
+    <string name="popup_media_volume">Mídia</string>
+
+    <string name="volume">Volume</string>
+
+    <string name="send_phone">Enviar para o celular</string>
+    <string name="send_phone_message">Enviar os arquivos selecionado para o celular?</string>
+</resources>

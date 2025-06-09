@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Kapture"
 include ':app'
+include ':watch'

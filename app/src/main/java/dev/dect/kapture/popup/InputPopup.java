@@ -275,9 +275,7 @@ public class InputPopup extends Dialog {
                     if(Utils.isInRange(value, MIN, MAX)) {
                         return null;
                     }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                } catch (NumberFormatException ignore) {}
 
                 return "";
             }

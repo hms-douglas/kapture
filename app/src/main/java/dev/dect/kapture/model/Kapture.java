@@ -19,9 +19,13 @@ import java.util.Objects;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.utils.KFile;
+import dev.dect.kapture.utils.Utils;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class Kapture {
+    public static final String FROM_WATCH = "w",
+                               FROM_PHONE = "p";
+
     private final Context CONTEXT;
 
     private long ID;
@@ -42,23 +46,25 @@ public class Kapture {
 
     private boolean HAS_MEDIA_DATA = false;
 
-    private String PROFILE_ID;
+    private String PROFILE_ID,
+                   FROM;
 
     public Kapture(Context ctx) {
-        this(ctx, -1, "", null, null, null);
+        this(ctx, -1, "", null, null, null, FROM_PHONE);
     }
 
     public Kapture(Context ctx, File file) {
-        this(ctx, -1, file.getAbsolutePath(), null, null, null);
+        this(ctx, -1, file.getAbsolutePath(), null, null, null, FROM_PHONE);
     }
 
-    public Kapture(Context ctx, long id, String location, ArrayList<Extra> extras, ArrayList<Screenshot> screenshots, String profileId) {
+    public Kapture(Context ctx, long id, String location, ArrayList<Extra> extras, ArrayList<Screenshot> screenshots, String profileId, String from) {
         this.CONTEXT = ctx;
         this.ID = id;
         this.LOCATION = location;
         this.EXTRAS = extras == null ? new ArrayList<>() : extras;
         this.SCREENSHOTS = screenshots == null ? new ArrayList<>() : screenshots;
         this.PROFILE_ID = profileId;
+        this.FROM = from;
 
         this.FILE = new File(location);
     }
@@ -121,6 +127,18 @@ public class Kapture {
 
     public String getProfileId() {
         return PROFILE_ID;
+    }
+
+    public String getFrom() {
+        return FROM;
+    }
+
+    public boolean isFromWatch() {
+        return isFromWatch(this);
+    }
+
+    public void setFrom(String from) {
+        this.FROM = from;
     }
 
     public boolean hasExtras() {
@@ -238,11 +256,17 @@ public class Kapture {
     }
 
     private Bitmap generateThumbnail() throws IOException {
-        return ThumbnailUtils.createVideoThumbnail(
+        final Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(
             new File(LOCATION),
             new Size(Math.min(1080, VIDEO_SIZE[0]), Math.min(1080, VIDEO_SIZE[1])),
             new CancellationSignal()
         );
+
+        if(isFromWatch()) {
+            return Utils.cropWatchThumbnail(thumbnail);
+        }
+
+        return thumbnail;
     }
 
     public File getThumbnailCachedFile() {
@@ -255,6 +279,10 @@ public class Kapture {
         for(Extra extra : EXTRAS) {
             KFile.notifyMediaScanner(CONTEXT, extra.getLocation());
         }
+    }
+
+    public static boolean isFromWatch(Kapture kapture) {
+        return kapture.getFrom().equals(FROM_WATCH);
     }
 
     public static class Extra {

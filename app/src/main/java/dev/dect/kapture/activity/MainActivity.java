@@ -14,6 +14,8 @@ import android.os.Bundle;
 
 import android.Manifest;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -44,6 +46,7 @@ import dev.dect.kapture.data.KSharedPreferences;
 import dev.dect.kapture.fragment.KapturesFragment;
 import dev.dect.kapture.fragment.SettingsFragment;
 import dev.dect.kapture.model.Kapture;
+import dev.dect.kapture.notification.ReceivingNotification;
 import dev.dect.kapture.popup.DialogPopup;
 import dev.dect.kapture.popup.PermissionPopup;
 import dev.dect.kapture.utils.Utils;

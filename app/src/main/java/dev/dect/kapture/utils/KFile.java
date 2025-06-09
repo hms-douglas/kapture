@@ -23,6 +23,7 @@ import androidx.media3.common.util.UnstableApi;
 import androidx.media3.transformer.Composition;
 import androidx.media3.transformer.EditedMediaItem;
 import androidx.media3.transformer.EditedMediaItemSequence;
+import androidx.media3.transformer.ExportException;
 import androidx.media3.transformer.ExportResult;
 import androidx.media3.transformer.Transformer;
 
@@ -141,6 +142,14 @@ public class KFile {
 
     public static String formatFileDuration(long milli) {
         return Utils.Formatter.timeInMillis(milli);
+    }
+
+    public static File getSavingLocation(Context ctx) {
+        return new File(KSharedPreferences.getAppSp(ctx).getString(Constants.Sp.App.FILE_SAVING_PATH, KFile.getDefaultFileLocation(ctx).getAbsolutePath()));
+    }
+
+    public static File getSavingScreenshotLocation(Context ctx) {
+        return new File(KSharedPreferences.getAppSp(ctx).getString(Constants.Sp.App.SCREENSHOT_FILE_SAVING_PATH, KFile.getDefaultScreenshotFileLocation(ctx).getAbsolutePath()));
     }
 
     public static File getDefaultFileLocation(Context ctx) {
@@ -264,12 +273,29 @@ public class KFile {
         } catch (Exception ignore) {}
     }
 
+    public static File renameIfNecessary(File file) {
+        if(file.exists()) {
+            return generateFileIncrementalName(file);
+        }
+
+        return file;
+    }
+
     public static String getDefaultKaptureFileName(Context ctx) {
         return formatStringResource(ctx, R.string.file_name);
     }
 
     public static String getDefaultScreenshotName(Context ctx) {
         return formatStringResource(ctx, R.string.file_name_screenshot);
+    }
+
+    private static File generateFileIncrementalName(File file) {
+        final File parent = file.getParentFile();
+
+        final String ext = "." + getFileExtension(file),
+                     name = file.getName().replaceAll(ext, "");
+
+        return generateFileIncrementalName(parent, name, ext);
     }
 
     private static File generateFileIncrementalName(File parent, String name, String ext) {
@@ -484,7 +510,7 @@ public class KFile {
     }
 
     @OptIn(markerClass = UnstableApi.class) @SuppressLint("WrongConstant")
-    public static void combineAudioAndVideo(Context ctx, File audioM4a, File video, File dest, @Nullable Runnable onComplete) throws Exception {
+    public static void combineAudioAndVideo(Context ctx, File audioM4a, File video, File dest, @Nullable Runnable onComplete, @Nullable Runnable onError) throws Exception {
         if(!dest.exists()) {
             dest.createNewFile();
         }
@@ -512,6 +538,15 @@ public class KFile {
                 @Override
                 public void onCompleted(Composition composition, ExportResult exportResult) {
                     onComplete.run();
+                }
+            });
+        }
+
+        if(onError != null) {
+            transformer.addListener(new Transformer.Listener() {
+                @Override
+                public void onError(Composition composition, ExportResult exportResult, ExportException exportException) {
+                    onError.run();
                 }
             });
         }

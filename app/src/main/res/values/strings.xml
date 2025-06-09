@@ -5,6 +5,9 @@
     <string name="kapture" translatable="false">Kapture</string>
     <string name="kapture_plural" translatable="false">Kaptures</string>
 
+    <string name="folder_name" translatable="false">Kapture</string>
+    <string name="folder_screenshot_name" translatable="false">Screenshots</string>
+
     <!-- ALL BELLOW CAN BE TRANSLATED -->
 
     <string name="quick_settings_tile_start_recording">Start screen capture</string>
@@ -30,7 +33,17 @@
     <string name="notification_tap_show">Tap here to see your capturing.</string>
 
     <string name="notification_processing">Processing capture</string>
-    <string name="notificationprocessing_message">Wait while the capture is processed!</string>
+    <string name="notification_processing_message">Wait while the capture is processed!</string>
+
+    <string name="notification_receiving">Receiving</string>
+    <string name="notification_receiving_message">Downloading the data from the watch…</string>
+
+    <string name="notification_receiving_error">Error receiving</string>
+    <string name="notification_receiving_error_message">Something went wrong. Try again!</string>
+
+    <string name="notification_receiving_success">Received!</string>
+    <string name="notification_receiving_success_message_singular">1 file added.</string>
+    <string name="notification_receiving_success_message_plural">%d files added.</string>
 
     <string name="notification_wifi_share">Wifi share is running!</string>
 
@@ -41,6 +54,7 @@
 
     <string name="notification_channel_name_captured">Captured</string>
     <string name="notification_channel_name_processing">Processing</string>
+    <string name="notification_channel_name_receiving">Receiving file</string>
     <string name="notification_channel_name_wifi_share">@string/bottom_bar_wifi_share</string>
 
     <string name="permission_title">Kapture uses these permissions</string>
@@ -97,8 +111,6 @@
     <string name="toast_info_while_recording">Cannot change settings while recording!</string>
     <string name="toast_success_generic">Done!</string>
     <string name="toast_success_active_profile">Active profile:</string>
-    <string name="folder_name" translatable="false">Kapture</string>
-    <string name="folder_screenshot_name" translatable="false">Screenshots</string>
 
     <string name="file_name">capture</string>
     <string name="file_name_extra_audio_audio">audio</string>
@@ -345,7 +357,7 @@
 
     <string name="setting_subgroup_app_performance">Performance</string>
 
-    <string name="setting_performance_battery_optimization">Battery optiomization</string>
+    <string name="setting_performance_battery_optimization">Battery optimization</string>
     <string name="setting_performance_battery_optimization_description">It is recommended to turn off the system battery optimization to avoid unexpected stops. Click here to change this setting.</string>
 
     <string name="popup_btn_cancel">Cancel</string>
@@ -404,6 +416,7 @@
     \n\n\u2022 \"lottie-android\" library by <b>LottieFiles</b>, available at <a href="https://github.com/LottieFiles/lottie-android">https://github.com/LottieFiles/lottie-android</a>, under the Apache License Version 2.0.
     \n\n\u2022 \"Free Loader Animation\" lottie animation by <b>Turlo</b>, available at <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, under the Lottie Simple License.
     \n\n\u2022 \"NanoHttpd\" library by <b>Paul S. Hawke, 2001,2005-2013 by Jarno Elonen, 2010 by Konstantinos Togias</b>, available at <a href="https://github.com/NanoHttpd/nanohttpd">https://github.com/NanoHttpd/nanohttpd</a>, under the BSD-3-Clause License.
+    \n\n\u2022 \"QRGen\" library by <b>Ken Gullaksen</b>, available at <a href="https://github.com/kenglxn/QRGen">https://github.com/kenglxn/QRGen</a>, under the Apache License Version 2.0.
     \n\n\u2022 \"Roboto\" and "Roboto Mono" fonts by <b>Christian Robertson</b>, available at <a href="https://fonts.google.com/specimen/Roboto">https://fonts.google.com/specimen/Roboto</a> and <a href="https://fonts.google.com/specimen/Roboto+Mono">https://fonts.google.com/specimen/Roboto+Mono</a>, under the Apache License Version 2.0.
     \n\n\u2022 \"Permanent Marker\" font by <b>Font Diner</b>, available at <a href="https://fonts.google.com/specimen/Permanent+Marker">https://fonts.google.com/specimen/Permanent+Marker</a>, under the Apache License Version 2.0.
     \n\n\u2022 \"Bebas Neue\" font by <b>Ryoichi Tsunekawa</b>, available at <a href="https://fonts.google.com/specimen/Bebas+Neue">https://fonts.google.com/specimen/Bebas+Neue</a>, under the Open Font License.

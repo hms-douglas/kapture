@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background">
+
+    <androidx.wear.widget.CurvedTextView
+        android:id="@+id/clock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/clock_space"
+        android:text="HH:mm"
+        android:textColor="@color/clock_font"
+        android:textSize="@dimen/clock_font"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/activity_background"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:paddingStart="@dimen/activity_text_space_sides"
+            android:paddingEnd="@dimen/activity_text_space_sides"
+            android:paddingBottom="@dimen/activity_list_space_bottom">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/activity_title_height"
+                android:text="@string/title_credits"
+                android:gravity="center"
+                android:textColor="@color/activity_title"
+                android:textSize="@dimen/activity_title_font"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/credits"
+                android:textColor="@color/credits_text"
+                android:textSize="@dimen/credits_text"
+                android:autoLink="web"
+                android:textIsSelectable="true"
+                android:gravity="center"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_btn_margin_bottom_screen"
+                android:paddingBottom="@dimen/default_btn_margin_bottom_screen">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintWidth_percent="@dimen/default_btn_width_percentage"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseMit"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_mit"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_design_effect"
+                        android:clipToOutline="true"
+                        android:textColor="@color/btn_secondary_font"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:gravity="center"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseApacheV2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_apache_v2"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_design_effect"
+                        android:clipToOutline="true"
+                        android:textColor="@color/btn_secondary_font"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:gravity="center"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLicenseBSD3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/license_bsd3_clause"
+                        android:textSize="@dimen/default_font_button"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_design_effect"
+                        android:clipToOutline="true"
+                        android:textColor="@color/btn_secondary_font"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/btn_secondary_background"
+                        android:layout_marginBottom="@dimen/default_btn_margin_bottom"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

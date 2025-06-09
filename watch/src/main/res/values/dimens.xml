@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="default_font">15sp</dimen>
+    <dimen name="default_font_secondary">14sp</dimen>
+    <dimen name="default_font_tertiary">13sp</dimen>
+    <dimen name="default_font_large">35sp</dimen>
+    <dimen name="default_font_medium">17sp</dimen>
+    <dimen name="default_font_title">19sp</dimen>
+
+    <dimen name="default_font_secondary_list">@dimen/default_font_tertiary</dimen>
+    <dimen name="default_font_button">@dimen/default_font</dimen>
+    <dimen name="default_font_list_title">@dimen/default_font</dimen>
+    <dimen name="default_font_list_sub_title">@dimen/default_font_secondary_list</dimen>
+    <dimen name="default_font_group_title">@dimen/default_font_secondary</dimen>
+
+    <dimen name="bottom_sheet_peek_height">23dp</dimen>
+
+    <dimen name="clock_space">1.5dp</dimen>
+    <dimen name="clock_font">@dimen/default_font_tertiary</dimen>
+
+    <dimen name="default_btn_height">45dp</dimen>
+    <dimen name="default_btn_radius">500dp</dimen>
+    <dimen name="default_btn_font">@dimen/default_font</dimen>
+
+    <dimen name="btn_circle_height">@dimen/default_btn_height</dimen>
+    <dimen name="btn_circle_padding">13dp</dimen>
+    <dimen name="btn_circle_padding_circle">10dp</dimen>
+    <dimen name="btn_circle_padding_circle_pause_resume">10.5dp</dimen>
+    <dimen name="btn_circle_icon">25dp</dimen>
+    <dimen name="btn_circle_text_padding">18dp</dimen>
+    <dimen name="btn_circle_drawable_padding">5dp</dimen>
+
+    <dimen name="btn_circle_small_height">40dp</dimen>
+    <dimen name="btn_circle_small_padding">7.5dp</dimen>
+    <dimen name="btn_circle_small_padding_wifi_share">9.3dp</dimen>
+
+    <dimen name="btn_more_size">75dp</dimen>
+    <dimen name="btn_more_margin_negative">-37.5dp</dimen>
+    <dimen name="btn_more_padding_start">17dp</dimen>
+
+    <dimen name="time_font">@dimen/default_font_large</dimen>
+    <dimen name="time_limit_font">@dimen/default_font_medium</dimen>
+
+    <dimen name="loader_size">25dp</dimen>
+    <dimen name="loader_width">2dp</dimen>
+
+    <dimen name="space_time_content">17dp</dimen>
+
+    <dimen name="activity_title_height">70dp</dimen>
+    <dimen name="activity_title_font">@dimen/default_font_title</dimen>
+
+    <dimen name="activity_list_space_sides">2dp</dimen>
+    <dimen name="activity_list_space_bottom">80dp</dimen>
+
+    <dimen name="activity_text_space_sides">15dp</dimen>
+
+    <dimen name="popup_title_space_sides">15dp</dimen>
+    <dimen name="popup_title_height">@dimen/activity_title_height</dimen>
+
+    <dimen name="popup_text_space_sides">@dimen/popup_title_space_sides</dimen>
+
+    <dimen name="default_btn_margin_bottom_screen">20dp</dimen>
+    <dimen name="default_btn_width_percentage">1</dimen>
+    <dimen name="default_btn_margin_bottom">5dp</dimen>
+
+    <dimen name="version_text">@dimen/default_font</dimen>
+
+    <dimen name="group_container_radius">26dp</dimen>
+    <dimen name="group_padding_sides">15dp</dimen>
+    <dimen name="group_margin_bottom">14dp</dimen>
+    <dimen name="group_title_margin_bottom">3dp</dimen>
+
+    <dimen name="group_subtitle_margin_top">5dp</dimen>
+    <dimen name="group_subtitle_divisor">1.5dp</dimen>
+    <dimen name="group_subtitle_dash_width">@dimen/group_subtitle_divisor</dimen>
+    <dimen name="group_subtitle_dash_gap">5dp</dimen>
+    <dimen name="group_subtitle_divisor_space_text">6dp</dimen>
+
+    <dimen name="list_item_min_height">60dp</dimen>
+    <dimen name="list_item_divisor_horizontal">1dp</dimen>
+    <dimen name="list_item_divisor_vertical">1dp</dimen>
+    <dimen name="list_item_divisor_space_sides">10dp</dimen>
+    <dimen name="list_item_padding_top_bottom">9dp</dimen>
+
+    <dimen name="switch_radius">100dp</dimen>
+    <dimen name="switch_size">17dp</dimen>
+    <dimen name="switch_thumb_border">2dp</dimen>
+    <dimen name="switch_padding_top_bottom">2dp</dimen>
+
+    <dimen name="popup_title">@dimen/default_font</dimen>
+    <dimen name="popup_message">@dimen/default_font_tertiary</dimen>
+
+    <dimen name="popup_btn_circle">50dp</dimen>
+    <dimen name="popup_btn_circle_margin_sides">20dp</dimen>
+
+    <dimen name="popup_btn_circle_padding">13dp</dimen>
+
+    <dimen name="input_text">@dimen/default_font_secondary</dimen>
+    <dimen name="input_radius">500dp</dimen>
+    <dimen name="input_height">30dp</dimen>
+    <dimen name="input_margin_sides">15dp</dimen>
+
+    <dimen name="input_time_picker_height">70dp</dimen>
+
+    <dimen name="picker_item_padding_top_bottom">10dp</dimen>
+    <dimen name="picker_item_padding_sides">9dp</dimen>
+
+    <dimen name="radio_checkbox_size">25dp</dimen>
+    <dimen name="radio_checkbox_text">@dimen/default_font_list_title</dimen>
+    <dimen name="radio_checkbox_text_margin_left">10dp</dimen>
+    <dimen name="radio_checkbox_icon_size">30dp</dimen>
+
+    <dimen name="credits_text">@dimen/default_font</dimen>
+
+    <dimen name="kapture_list_height">75dp</dimen>
+    <dimen name="kapture_list_padding_sides">@dimen/group_padding_sides</dimen>
+    <dimen name="kapture_list_padding_top_bottom">8dp</dimen>
+    <dimen name="kapture_list_thumbnail_width_percentage">0.22</dimen>
+    <dimen name="kapture_list_space_from_thumbail">5dp</dimen>
+    <dimen name="kapture_list_space_info">5dp</dimen>
+
+    <dimen name="kapture_list_title">@dimen/default_font</dimen>
+    <dimen name="kapture_list_sub_title">@dimen/default_font_secondary_list</dimen>
+    <dimen name="kapture_list_select_icon">@dimen/radio_checkbox_size</dimen>
+
+    <dimen name="select_text">@dimen/default_font_tertiary</dimen>
+
+    <dimen name="mtrl_slider_track_side_padding" tools:keep="@dimen/mtrl_slider_track_side_padding">10dp</dimen>
+
+    <dimen name="icon_wifi_share_popup">30dp</dimen>
+    <dimen name="popup_wifi_share_ip">@dimen/default_font_secondary</dimen>
+    <dimen name="popup_wifi_share_space">8dp</dimen>
+    <dimen name="popup_wifi_share_password">@dimen/default_font_secondary</dimen>
+    <dimen name="popup_wifi_share_password_btn">15dp</dimen>
+    <dimen name="popup_wifi_share_password_btn_padding">4dp</dimen>
+
+    <dimen name="popup_time_picker_font">@dimen/default_font_medium</dimen>
+
+    <dimen name="list_bar_chart_item_color_example">15dp</dimen>
+    <dimen name="list_bar_chart_item_margin_space">7dp</dimen>
+    <dimen name="list_bar_chart_height">8dp</dimen>
+    <dimen name="list_bar_chart_margin_top_bottom">15dp</dimen>
+
+    <dimen name="splash_icon">34dp</dimen>
+</resources>

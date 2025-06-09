@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.wear.widget.CurvedTextView
+            android:id="@+id/clock"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/clock_space"
+            android:text="HH:mm"
+            android:textColor="@color/clock_font"
+            android:textSize="@dimen/clock_font"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/bottom_sheet_peek_height"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="@dimen/time_font"
+                android:textStyle="bold"
+                android:textColor="@color/time_font"
+                android:gravity="center"
+                tools:ignore="HardcodedText"/>
+
+            <TextView
+                android:id="@+id/timeLimit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="@dimen/time_limit_font"
+                android:textStyle="bold"
+                android:textColor="@color/time_limit_font"
+                android:layout_marginTop="-6dp"
+                tools:ignore="HardcodedText"/>
+
+            <LinearLayout
+                android:id="@+id/btnContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/space_time_content">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/startStopCapturing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/btn_circle_height"
+                    android:background="@drawable/btn_design"
+                    android:backgroundTint="@color/btn_main_background"
+                    android:foreground="@drawable/btn_design_effect"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/btn_start"
+                    android:textColor="@color/btn_main_font"
+                    android:textSize="@dimen/default_btn_font"
+                    android:drawableLeft="@drawable/icon_capture_start"
+                    android:drawablePadding="@dimen/btn_circle_drawable_padding"
+                    android:paddingLeft="@dimen/btn_circle_padding"
+                    android:paddingRight="@dimen/btn_circle_text_padding"
+                    android:textStyle="bold"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/pauseResumeCapturing"
+                    android:layout_width="@dimen/btn_circle_height"
+                    android:layout_height="@dimen/btn_circle_height"
+                    android:background="@drawable/btn_design"
+                    android:backgroundTint="@color/btn_secondary_background"
+                    android:foreground="@drawable/btn_design_effect"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/icon_capture_pause"
+                    android:paddingLeft="@dimen/btn_circle_padding_circle_pause_resume"
+                    android:layout_marginLeft="@dimen/btn_circle_padding"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <androidx.wear.widget.CircularProgressLayout
+                android:id="@+id/loader"
+                android:layout_width="@dimen/loader_size"
+                android:layout_height="@dimen/loader_size"
+                android:layout_marginTop="@dimen/space_time_content"
+                android:visibility="gone"
+                app:indeterminate="true"
+                app:colorSchemeColors="@color/main"
+                app:strokeWidth="@dimen/loader_width"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMore"
+            android:layout_width="@dimen/btn_more_size"
+            android:layout_height="@dimen/btn_more_size"
+            android:background="@drawable/btn_design"
+            android:backgroundTint="@color/activity_background"
+            android:foreground="@drawable/btn_design_effect"
+            android:clickable="true"
+            android:drawableStart="@drawable/icon_more"
+            android:paddingStart="@dimen/btn_more_padding_start"
+            android:layout_marginEnd="@dimen/btn_more_margin_negative"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_circle"
+        android:backgroundTint="@color/activity_background"
+        android:clickable="true"
+        android:clipToOutline="true"
+        android:orientation="vertical"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="@dimen/bottom_sheet_peek_height"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomSheetBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_circle"
+            android:backgroundTint="@color/bottom_sheet_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:scrollbars="vertical">
+
+                <ImageView
+                    android:id="@+id/bottomSheetToggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bottom_sheet_peek_height"
+                    android:padding="3dp"
+                    android:src="@drawable/icon_bottom_sheet_expand" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/activity_title_height"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/title_captures"
+                    android:textColor="@color/activity_title"
+                    android:textSize="@dimen/activity_title_font"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/activity_list_space_sides"
+                    android:layout_marginEnd="@dimen/activity_list_space_sides"
+                    android:layout_marginBottom="@dimen/activity_list_space_bottom"
+                    android:background="@drawable/group_background"
+                    android:clipToOutline="true"
+                    android:nestedScrollingEnabled="false"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/selectContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_gradient_top"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/selectd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/checkbox_off"
+                android:drawablePadding="3dp"
+                android:foreground="@drawable/btn_design_effect"
+                android:gravity="center"
+                android:padding="0dp"
+                android:text="Select"
+                android:textAllCaps="false"
+                android:textColor="@color/select_text"
+                android:textSize="@dimen/select_text"
+                android:textStyle="bold"
+                android:tooltipText="@string/tooltip_select_all" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.85"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/selectButtonContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/bottom"
+            app:layout_constraintBottom_toBottomOf="@id/bottom"
+            app:layout_constraintEnd_toEndOf="@id/right"
+            app:layout_constraintStart_toStartOf="@id/left">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDelete"
+                android:layout_width="@dimen/btn_circle_small_height"
+                android:layout_height="@dimen/btn_circle_small_height"
+                android:background="@drawable/btn_design"
+                android:backgroundTint="@color/btn_main_background"
+                android:foreground="@drawable/btn_design_effect"
+                android:clickable="true"
+                android:drawableLeft="@drawable/icon_delete"
+                android:drawableTint="@color/btn_main_font"
+                android:paddingLeft="@dimen/btn_circle_small_padding"
+                app:layout_constraintTop_toTopOf="@id/btnWifiShare"
+                app:layout_constraintBottom_toTopOf="@id/btnWifiShare"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnWifiShare"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnWifiShare"
+                android:layout_width="@dimen/btn_circle_small_height"
+                android:layout_height="@dimen/btn_circle_small_height"
+                android:background="@drawable/btn_design"
+                android:backgroundTint="@color/btn_main_background"
+                android:foreground="@drawable/btn_design_effect"
+                android:clickable="true"
+                android:drawableLeft="@drawable/icon_wifi_share"
+                android:drawableTint="@color/btn_main_font"
+                android:paddingLeft="@dimen/btn_circle_small_padding_wifi_share"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnDelete"
+                app:layout_constraintEnd_toStartOf="@id/btnSendPhone"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSendPhone"
+                android:layout_width="@dimen/btn_circle_small_height"
+                android:layout_height="@dimen/btn_circle_small_height"
+                android:background="@drawable/btn_design"
+                android:backgroundTint="@color/btn_main_background"
+                android:foreground="@drawable/btn_design_effect"
+                android:clickable="true"
+                android:drawableLeft="@drawable/icon_send_to_phone"
+                android:drawableTint="@color/btn_main_font"
+                android:paddingLeft="@dimen/btn_circle_small_padding"
+                app:layout_constraintTop_toTopOf="@id/btnWifiShare"
+                app:layout_constraintBottom_toTopOf="@id/btnWifiShare"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnWifiShare"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

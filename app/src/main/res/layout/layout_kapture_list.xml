@@ -58,18 +58,36 @@
             app:layout_constraintStart_toEndOf="@id/thumbnail"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:id="@+id/name"
+            <LinearLayout
+                android:id="@+id/nameContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:ellipsize="end"
-                android:lines="1"
-                android:textSize="@dimen/kapture_list_title"
-                android:textColor="@color/kapture_title"
-                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/kapture_grid_padding"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/thumbnail"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/fromIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icon_kapture_watch"
+                    android:scaleType="fitCenter"
+                    android:layout_marginStart="-3dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textSize="@dimen/kapture_list_title"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/date"

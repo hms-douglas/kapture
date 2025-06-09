@@ -23,7 +23,17 @@
     <string name="notification_tap_show">Clique aqui para ver a captura.</string>
 
     <string name="notification_processing">Processando captura</string>
-    <string name="notificationprocessing_message">Aguarde enquanto a captura é processada!</string>
+    <string name="notification_processing_message">Aguarde enquanto a captura é processada!</string>
+
+    <string name="notification_receiving">Recebendo</string>
+    <string name="notification_receiving_message">Baixando os dados do relógio…</string>
+
+    <string name="notification_receiving_error">Erro ao receber</string>
+    <string name="notification_receiving_error_message">Algo deu errado. Tente novamente!</string>
+
+    <string name="notification_receiving_success">Recebido!</string>
+    <string name="notification_receiving_success_message_singular">1 arquivo adicionado.</string>
+    <string name="notification_receiving_success_message_plural">%d arquivos adicionados.</string>
 
     <string name="notification_wifi_share">Compartilhar no WiFi está sendo executado!</string>
 
@@ -34,6 +44,7 @@
 
     <string name="notification_channel_name_captured">Capturado</string>
     <string name="notification_channel_name_processing">Processando</string>
+    <string name="notification_channel_name_receiving">Recebendo arquivo</string>
     <string name="notification_channel_name_wifi_share">@string/bottom_bar_wifi_share</string>
 
     <string name="permission_title">Kapture utiliza as seguintes permissões</string>
@@ -85,7 +96,7 @@
     <string name="toast_error_profile_name_long">O número máximo de caracteres para o nome do perfil é de:</string>
     <string name="toast_error_select_one_app">Pelo menos um app é necessário!</string>
     <string name="toast_error_select_app_max">Apenas %d apps são permitidos!</string>
-    <string name="toast_info_enable_accessibility_manually">Não foi possível abrir o menu de acessibilidate. Tente manualmente!</string>
+    <string name="toast_info_enable_accessibility_manually">Não foi possível abrir o menu de acessibilidade. Tente manualmente!</string>
     <string name="toast_info_accessibility_manually">Inicie o serviço de acessibilidate primeiro!</string>
     <string name="toast_info_while_recording">Não é possível alterar as configurações enquanto está capturando!</string>
     <string name="toast_success_generic">Feito!</string>
@@ -392,6 +403,7 @@
     \n\n\u2022 \"lottie-android\" de <b>LottieFiles</b>, disponível em <a href="https://github.com/LottieFiles/lottie-android">https://github.com/LottieFiles/lottie-android</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Free Loader Animation\", animação, de <b>Turlo</b>, disponível em <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, sob a Licença Lottie Simples.
     \n\n\u2022 \"NanoHttpd\" de <b>Paul S. Hawke, 2001,2005-2013 de Jarno Elonen, 2010 de Konstantinos Togias</b>, disponível em <a href="https:// github.com/NanoHttpd/nanohttpd">https://github.com/NanoHttpd/nanohttpd</a>, sob a Licença BSD-3-Clause.
+    \n\n\u2022 \"QRGen\" de <b>Ken Gullaksen</b>, disponível em <a href="https://github.com/kenglxn/QRGen">https://github.com/kenglxn/QRGen</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Roboto\" and "Roboto Mono" fontes de <b>Christian Robertson</b>, disponível em <a href="https://fonts.google.com/specimen/Roboto">https://fonts.google.com/specimen/Roboto</a> e <a href="https://fonts.google.com/specimen/Roboto+Mono">https://fonts.google.com/specimen/Roboto+Mono</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Permanent Marker\" fonte de <b>Font Diner</b>, disponível em <a href="https://fonts.google.com/specimen/Permanent+Marker">https://fonts.google.com/specimen/Permanent+Marker</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Bebas Neue\" fonte de <b>Ryoichi Tsunekawa</b>, disponível em <a href="https://fonts.google.com/specimen/Bebas+Neue">https://fonts.google.com/specimen/Bebas+Neue</a>, sob a Licença Open Font.

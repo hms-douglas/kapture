@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -38,14 +40,16 @@ public class WifiShare extends NanoHTTPD {
 
     private final ArrayList<String> LOCATIONS = new ArrayList<>();
 
+    private int ATTEMPTS = 0;
+
     private OnWifiShareListener LISTENER;
 
-    private WifiShareNotification NOTIFICATION;
+    private final WifiShareNotification NOTIFICATION;
 
-    private WiFiSharePopup POPUP;
+    private final WiFiSharePopup POPUP;
 
-    private boolean IS_TO_REQUEST_PASSWORD,
-                    IS_TO_REFRESH_PASSWORD;
+    private final boolean IS_TO_REQUEST_PASSWORD,
+                          IS_TO_REFRESH_PASSWORD;
 
     private KSecurity KSECURITY;
 
@@ -116,6 +120,10 @@ public class WifiShare extends NanoHTTPD {
             if(KSECURITY.validateSessionLogin(session)) {
                 newDeviceConnected();
             } else {
+                if(++ATTEMPTS == 3) {
+                    requestNewPassword();
+                }
+
                 return newFixedLengthResponse(new KHtml(CONTEXT).getLogin());
             }
         }
@@ -257,8 +265,16 @@ public class WifiShare extends NanoHTTPD {
 
     private void newDeviceConnected() {
         if(IS_TO_REFRESH_PASSWORD) {
-            KSECURITY.generateNewPassword();
-            POPUP.refreshPasswordField();
+            requestNewPassword();
+
+            ((Vibrator) CONTEXT.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
         }
+    }
+
+    private void requestNewPassword() {
+        ATTEMPTS = 0;
+
+        KSECURITY.generateNewPassword();
+        POPUP.refreshPasswordField();
     }
 }

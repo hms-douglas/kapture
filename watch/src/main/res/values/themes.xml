@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Translucent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Splash" parent="@android:style/Theme.DeviceDefault">
+        <item name="android:windowSplashScreenBackground">@color/activity_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/animation_splash_icon</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/main</item>
+        <item name="android:windowBackground">@color/activity_background</item>
+    </style>
+
+    <style name="Theme.Default" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:windowBackground">@color/activity_background</item>
+    </style>
+</resources>

@@ -21,6 +21,7 @@ import dev.dect.kapture.overlay.CountdownOverlay;
 import dev.dect.kapture.recorder.ScreenMicRecorder;
 import dev.dect.kapture.recorder.utils.BeforeStartOption;
 import dev.dect.kapture.recorder.utils.StopOption;
+import dev.dect.kapture.quicktile.QuickTileCapturingService;
 import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.notification.CapturingNotification;
 import dev.dect.kapture.activity.MainActivity;
@@ -300,6 +301,7 @@ public class CapturingService extends AccessibilityService {
         BEFORE_START_OPTION = new BeforeStartOption(this, KSETTINGS);
 
         KAPTURE = new Kapture(this);
+        KAPTURE.setFrom(Kapture.FROM_PHONE);
 
         KAPTURE.setProfileId(KProfile.getActiveProfileName(this));
     }
@@ -319,7 +321,7 @@ public class CapturingService extends AccessibilityService {
             MainActivity.getInstance().getKaptureFragment().requestFloatingButtonUpdate();
         }
 
-        Toast.makeText(this, getString(R.string.notificationprocessing_message), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.notification_processing_message), Toast.LENGTH_SHORT).show();
 
         NOTIFICATION_PROCESSING.createAndShow();
 
@@ -356,7 +358,10 @@ public class CapturingService extends AccessibilityService {
                     INTERNAL_AUDIO_RECORDER.getFile(),
                     SCREEN_MIC_RECORDER.getFile(),
                     kaptureFile,
-                    () -> processAndSaveHelper(kaptureFile, onComplete)
+                    () -> processAndSaveHelper(kaptureFile, onComplete),
+                    () -> {
+                        IS_PROCESSING = false;
+                    }
                 );
             } catch (Exception ignore) {
                 KFile.copyFile(SCREEN_MIC_RECORDER.getFile(), kaptureFile);
@@ -483,7 +488,7 @@ public class CapturingService extends AccessibilityService {
                 KFile.removeAudioFromVideo(SCREEN_MIC_RECORDER.getFile(), f);
 
                 try {
-                    KFile.combineAudioAndVideo(this, INTERNAL_AUDIO_RECORDER.getFile(), f, f, null);
+                    KFile.combineAudioAndVideo(this, INTERNAL_AUDIO_RECORDER.getFile(), f, f, null, null);
 
                     KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_VIDEO_INTERNAL_ONLY, f));
                 } catch (Exception ignore) {}

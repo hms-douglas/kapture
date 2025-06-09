@@ -102,7 +102,8 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
         private final ConstraintLayout EL_CONTAINER;
 
         private final ImageView EL_SELECTOR,
-                                EL_THUMBNAIL;
+                                EL_THUMBNAIL,
+                                EL_FROM;
 
         private final TextView EL_NAME,
                                EL_DURATION;
@@ -129,6 +130,7 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
             this.EL_SELECTOR = view.findViewById(R.id.select);
             this.EL_EXTRA = view.findViewById(R.id.btnExtra);
             this.EL_SCREENSHOT = view.findViewById(R.id.btnScreenshot);
+            this.EL_FROM = view.findViewById(R.id.fromIcon);
 
             if(this.STYLE == KapturesFragment.STYLE_LIST) {
                 this.EL_RESOLUTION = view.findViewById(R.id.resolution);
@@ -212,6 +214,8 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
         });
 
         holder.EL_NAME.setText(kapture.getName());
+
+        holder.EL_FROM.setVisibility(kapture.isFromWatch() ? View.VISIBLE : View.GONE);
 
         if(kapture.hasExtras()) {
             holder.EL_EXTRA.setVisibility(View.VISIBLE);

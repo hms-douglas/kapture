@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:right="-100dp"
+        android:top="-100dp"
+        android:bottom="-100dp">
+
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="@dimen/list_item_divisor_vertical"
+
+                android:color="@color/list_item_divisor" />
+        </shape>
+    </item>
+</layer-list>

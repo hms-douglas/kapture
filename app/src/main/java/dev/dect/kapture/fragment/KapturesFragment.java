@@ -544,7 +544,6 @@ public class KapturesFragment extends Fragment {
             VIEW.findViewById(R.id.noCapture).setVisibility(View.VISIBLE);
             RECYCLER_VIEW.setVisibility(View.GONE);
         } else {
-            RECYCLER_VIEW.setAdapter(ADAPTER);
             RECYCLER_VIEW.setVisibility(View.VISIBLE);
         }
 
@@ -633,28 +632,28 @@ public class KapturesFragment extends Fragment {
         TRACKER.addObserver(new SelectionTracker.SelectionObserver<Long>() {
             @Override
             public void onSelectionChanged() {
-            final int size = TRACKER.getSelection().size();
+                final int size = TRACKER.getSelection().size();
 
-            if(size > 0) {
-                Utils.Keyboard.requestCloseFromInput(CONTEXT, SEARCH_INPUT);
+                if(size > 0) {
+                    Utils.Keyboard.requestCloseFromInput(CONTEXT, SEARCH_INPUT);
 
-                BTN_SELECTED.setText(size + " " + (size == 1 ? CONTEXT.getString(R.string.selected) : CONTEXT.getString(R.string.selected_plural)));
+                    BTN_SELECTED.setText(size + " " + (size == 1 ? CONTEXT.getString(R.string.selected) : CONTEXT.getString(R.string.selected_plural)));
 
-                BTN_SELECTED.setCompoundDrawablesWithIntrinsicBounds(
-                    Utils.getDrawable(CONTEXT, size == ADAPTER.getItemCount() ? R.drawable.checkbox_on : R.drawable.checkbox_off),
-                    null,
-                    null,
-                    null
-                );
+                    BTN_SELECTED.setCompoundDrawablesWithIntrinsicBounds(
+                        Utils.getDrawable(CONTEXT, size == ADAPTER.getItemCount() ? R.drawable.checkbox_on : R.drawable.checkbox_off),
+                        null,
+                        null,
+                        null
+                    );
 
-                VIEW.findViewById(R.id.selectedContainer).setVisibility(View.VISIBLE);
-            } else {
-                VIEW.findViewById(R.id.selectedContainer).setVisibility(View.GONE);
-            }
+                    VIEW.findViewById(R.id.selectedContainer).setVisibility(View.VISIBLE);
+                } else {
+                    VIEW.findViewById(R.id.selectedContainer).setVisibility(View.GONE);
+                }
 
-            if(LISTENER != null) {
-                LISTENER.onSelection(TRACKER.hasSelection(), size);
-            }
+                if(LISTENER != null) {
+                    LISTENER.onSelection(TRACKER.hasSelection(), size);
+                }
             }
         });
     }

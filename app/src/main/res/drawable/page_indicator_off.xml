@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:left="@dimen/indicator_space"
+        android:right="@dimen/indicator_space"
+        android:top="@dimen/indicator_space"
+        android:bottom="@dimen/indicator_space">
+
+        <shape android:shape="oval">
+            <solid android:color="@color/page_indicator_off"/>
+            <stroke android:width="@dimen/indicator_border" android:color="@color/page_indicator_border"/>
+        </shape>
+    </item>
+</layer-list>

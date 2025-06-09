@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/name"/>
+        app:layout_constraintBottom_toTopOf="@id/nameContainer"/>
 
     <ImageView
         android:id="@+id/select"
@@ -31,20 +31,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/nameContainer"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textSize="@dimen/kapture_grid_title"
-        android:textColor="@color/kapture_title"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/kapture_grid_padding"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/thumbnail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/fromIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_kapture_watch"
+            android:scaleType="fitCenter"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textSize="@dimen/kapture_grid_title"
+            android:textColor="@color/kapture_title"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/duration"

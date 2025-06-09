@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/switch_radius" />
+            <solid android:color="@color/switch_thumb_on" />
+            <size
+                android:width="@dimen/switch_size"
+                android:height="@dimen/switch_size" />
+            <stroke
+                android:width="@dimen/switch_thumb_border"
+                android:color="@color/switch_track_on" />
+        </shape>
+    </item>
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/switch_radius" />
+            <solid android:color="@color/switch_thumb_off" />
+            <size
+                android:width="@dimen/switch_size"
+                android:height="@dimen/switch_size" />
+            <stroke
+                android:width="@dimen/switch_thumb_border"
+                android:color="@color/switch_track_off" />
+        </shape>
+    </item>
+</selector>

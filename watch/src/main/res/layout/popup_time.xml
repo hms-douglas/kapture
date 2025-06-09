@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    android:id="@+id/popupContainer"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/popupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Title"
+            android:textColor="@color/popup_title"
+            android:textSize="@dimen/popup_title"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingStart="@dimen/popup_title_space_sides"
+            android:paddingEnd="@dimen/popup_title_space_sides"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/popupInput"/>
+
+        <LinearLayout
+            android:id="@+id/popupInput"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_time_picker_height"
+            android:layout_marginRight="@dimen/input_margin_sides"
+            android:layout_marginLeft="@dimen/input_margin_sides"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="4"
+            app:layout_constraintTop_toBottomOf="@+id/popupTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/popupBtnContainer">
+
+            <dev.dect.kapture.view.KTimePicker
+                android:id="@+id/hour"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tooltipText="@string/tooltip_hour"/>
+
+            <TextView
+                android:id="@+id/hourMinuteDivisor"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text=":"
+                android:textColor="@color/popup_text"
+                android:textSize="@dimen/popup_time_picker_font"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="0.5"/>
+
+            <dev.dect.kapture.view.KTimePicker
+                android:id="@+id/minute"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tooltipText="@string/tooltip_minute"/>
+
+            <TextView
+                android:id="@+id/minuteSecondDivisor"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text=":"
+                android:textColor="@color/popup_text"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:textSize="@dimen/popup_time_picker_font"/>
+
+            <dev.dect.kapture.view.KTimePicker
+                android:id="@+id/second"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tooltipText="@string/tooltip_second"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/popup_btn_circle_margin_sides"
+            android:layout_marginLeft="@dimen/popup_btn_circle_margin_sides"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/popupBtnNo"
+                android:layout_width="@dimen/popup_btn_circle"
+                android:layout_height="@dimen/popup_btn_circle"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/popup_btn_no"
+                android:src="@drawable/icon_cancel"
+                android:padding="@dimen/popup_btn_circle_padding"
+                android:scaleType="fitCenter"
+                android:tint="@color/popup_btn_no_icon"
+                app:tint="@color/popup_btn_no_icon"
+                tools:ignore="UseAppTint"
+                android:layout_weight="0"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"/>
+
+            <ImageButton
+                android:id="@+id/popupBtnYes"
+                android:layout_width="@dimen/popup_btn_circle"
+                android:layout_height="@dimen/popup_btn_circle"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/popup_btn_yes"
+                android:src="@drawable/icon_confirm"
+                android:padding="@dimen/popup_btn_circle_padding"
+                android:scaleType="fitCenter"
+                android:tint="@color/popup_btn_yes_icon"
+                app:tint="@color/popup_btn_yes_icon"
+                tools:ignore="UseAppTint"
+                android:layout_weight="0"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

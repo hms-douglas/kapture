@@ -196,4 +196,8 @@
     <color name="profile_editor_icon_picker">@color/c2</color>
 
     <color name="profile_manager_btn_delete">#DB332A</color>
+
+    <color name="page_indicator_on">@color/main</color>
+    <color name="page_indicator_off">@color/c1</color>
+    <color name="page_indicator_border">@android:color/transparent</color>
 </resources>

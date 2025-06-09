@@ -1,6 +1,8 @@
 package dev.dect.kapture.server;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -9,7 +11,10 @@ import fi.iki.elonen.NanoHTTPD;
 public class KSecurity {
     public static final int PASSWORD_LENGTH = 5;
 
-    private String PASSWORD;
+    public static final String TOKEN_ID = "t";
+
+    private String PASSWORD,
+                   TOKEN = "";
 
     private final ArrayList<String> AUTHORIZED_IPS = new ArrayList<>();
 
@@ -25,6 +30,20 @@ public class KSecurity {
         }
 
         PASSWORD = r;
+
+        generateNewToken();
+    }
+
+    private void generateNewToken() {
+        final byte[] randomBytes = new byte[24];
+
+        new SecureRandom().nextBytes(randomBytes);
+
+        TOKEN = Base64.getUrlEncoder().encodeToString(randomBytes);
+    }
+
+    public String getToken() {
+        return TOKEN;
     }
 
     public boolean hasAccess(NanoHTTPD.IHTTPSession session) {
@@ -42,6 +61,10 @@ public class KSecurity {
                     return true;
                 }
             } catch (Exception ignore) {}
+        } else if((session.getParms().containsKey(TOKEN_ID) && session.getParms().get(TOKEN_ID).equals(TOKEN)) && !AUTHORIZED_IPS.contains(session.getRemoteIpAddress())) {
+            AUTHORIZED_IPS.add(session.getRemoteIpAddress());
+
+            return true;
         }
 
         return false;

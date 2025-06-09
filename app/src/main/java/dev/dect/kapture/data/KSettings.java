@@ -218,9 +218,9 @@ public class KSettings {
         this.AUDIO_SAMPLE_RATE = spProfile.getInt(Constants.Sp.Profile.AUDIO_SAMPLE_RATE, DefaultSettings.AUDIO_SAMPLE_RATE);
         this.AUDIO_QUALITY = spProfile.getInt(Constants.Sp.Profile.AUDIO_QUALITY_bitRate, DefaultSettings.AUDIO_QUALITY_bitRate);
 
-        this.SAVE_LOCATION = new File(spApp.getString(Constants.Sp.App.FILE_SAVING_PATH, KFile.getDefaultFileLocation(ctx).getAbsolutePath()));
+        this.SAVE_LOCATION = KFile.getSavingLocation(ctx);
 
-        this.SAVE_SCREENSHOT_LOCATION = new File(spApp.getString(Constants.Sp.App.SCREENSHOT_FILE_SAVING_PATH, KFile.getDefaultScreenshotFileLocation(ctx).getAbsolutePath()));
+        this.SAVE_SCREENSHOT_LOCATION = KFile.getSavingScreenshotLocation(ctx);
 
         final int[] wh = getSize(ctx, VIDEO_ORIENTATION);
 

@@ -89,6 +89,10 @@ public class InternalAudioRecorder {
     }
 
     public void resume() {
+        if(!KSETTINGS.isToRecordInternalAudio()) {
+            return;
+        }
+
         IS_RECORDING_INTERNAL_AUDIO = true;
 
         createWritingThread();

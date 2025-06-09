@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    android:id="@+id/popupContainer"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    android:fillViewport="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/popupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/popup_title_height"
+            android:text="Title"
+            android:textColor="@color/popup_title"
+            android:textSize="@dimen/popup_title"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="0.2"
+            android:paddingStart="@dimen/popup_title_space_sides"
+            android:paddingEnd="@dimen/popup_title_space_sides"/>
+
+        <TextView
+            android:id="@+id/popupText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text"
+            android:textColor="@color/popup_title"
+            android:textSize="@dimen/popup_message"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:paddingStart="@dimen/popup_text_space_sides"
+            android:paddingEnd="@dimen/popup_text_space_sides" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/popup_btn_circle_margin_sides"
+            android:layout_marginLeft="@dimen/popup_btn_circle_margin_sides">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/popupBtnNo"
+                android:layout_width="@dimen/popup_btn_circle"
+                android:layout_height="@dimen/popup_btn_circle"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/popup_btn_no"
+                android:src="@drawable/icon_cancel"
+                android:padding="@dimen/popup_btn_circle_padding"
+                android:scaleType="fitCenter"
+                android:tint="@color/popup_btn_no_icon"
+                app:tint="@color/popup_btn_no_icon"
+                tools:ignore="UseAppTint"
+                android:layout_weight="0"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"/>
+
+            <ImageButton
+                android:id="@+id/popupBtnYes"
+                android:layout_width="@dimen/popup_btn_circle"
+                android:layout_height="@dimen/popup_btn_circle"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/popup_btn_yes"
+                android:src="@drawable/icon_confirm"
+                android:padding="@dimen/popup_btn_circle_padding"
+                android:scaleType="fitCenter"
+                android:tint="@color/popup_btn_yes_icon"
+                app:tint="@color/popup_btn_yes_icon"
+                tools:ignore="UseAppTint"
+                android:layout_weight="0"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

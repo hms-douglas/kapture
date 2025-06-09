@@ -32,8 +32,7 @@ public class Constants {
                 WIFI_SHARE_IS_TO_REFRESH_PASSWORD = "k85",
                 ACTIVE_PROFILE_NAME = "k86",
                 PROFILE_NAMES = "k87",
-                IS_TO_SHOW_NOTIFICATION_WIFI_SHARE = "k88",
-                IS_TO_SHOW_PROFILES_FILTER = "k89";
+                IS_TO_SHOW_NOTIFICATION_WIFI_SHARE = "k88";
         }
 
         public static class Profile {
@@ -205,7 +204,8 @@ public class Constants {
             public static final int
                 WIFI_SHARE = -1,
                 PROCESSING = -2,
-                CAPTURING = -3;
+                CAPTURING = -3,
+                RECEIVING = -4;
         }
 
         public static class Channel {
@@ -213,7 +213,24 @@ public class Constants {
                 CAPTURING = "channel1",
                 CAPTURED = "channel2",
                 PROCESSING = "channel3",
-                WIFI_SHARE = "channel4";
+                WIFI_SHARE = "channel4",
+                RECEIVING = "channel5";
+        }
+    }
+
+    public static class DataKey {
+        public static final String ACTION = "ACTION",
+                                   FILE_ASSET = "F_ASSET",
+                                   FILE_NAME = "F_NAME",
+                                   FILE_AMOUNT = "F_AMOUNT",
+                                   TIMESTAMP = "TIMESTAMP",
+                                   DATA_PATH = "/kapture";
+
+        public static class Action {
+            public static final String FILE = "FILE",
+                                       INFORM_RECEIVED_SUCCESS = "I_R_SUCCESS",
+                                       INFORM_RECEIVED_ERROR = "I_R_ERROR",
+                                       INFORM_IS_SENDING_FILEs = "I_SENDING";
         }
     }
 }

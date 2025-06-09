@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BlendMode;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -139,6 +140,30 @@ public class Utils {
         canvasCut.drawBitmap(bitmap, rect, rect, paintCut);
 
         imageView.setImageBitmap(cuttedBitmap);
+    }
+
+    public static Bitmap cropWatchThumbnail(Bitmap thumbnail) {
+        final int size = thumbnail.getWidth();
+
+        final Bitmap cropped = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+
+        final Canvas canvas = new Canvas(cropped);
+
+        final Paint paint = new Paint();
+
+        paint.setAntiAlias(true);
+
+        canvas.drawARGB(0, 0, 0, 0);
+
+        paint.setColor(Color.BLACK);
+
+        canvas.drawOval(0, 0, size, size, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        canvas.drawBitmap(thumbnail, 0, 0, paint);
+
+        return cropped;
     }
 
     public static boolean isInRange(int value, int min, int max) {
@@ -498,7 +523,7 @@ public class Utils {
             view.setMaxHeight((screenHeight * maxHeightPercentage) / 100);
         }
 
-        public static void callOutAnimation(Dialog dialog, ConstraintLayout container, ConstraintLayout view) {
+        public static void callOutAnimation(Dialog dialog, ConstraintLayout container, View view) {
 
             final Animation popupAnimationOut = AnimationUtils.loadAnimation(dialog.getContext(), R.anim.popup_out),
                             popupContainerOut = AnimationUtils.loadAnimation(dialog.getContext(), R.anim.popup_background_out);

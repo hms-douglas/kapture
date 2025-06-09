@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -15,12 +14,13 @@ import dev.dect.kapture.model.Kapture;
 public class DB extends SQLiteOpenHelper {
     private static final String DB_NAME = "kapture.db";
 
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
 
     private static final String TABLE_KAPTURE = "kapture",
                                 KAPTURE_COL_ID = "k_id",
                                 KAPTURE_COL_LOCATION = "k_location",
                                 KAPTURE_COL_PROFILE_ID = "k_profile_id",
+                                KAPTURE_COL_FROM = "k_from",
 
                                 TABLE_EXTRAS = "extras",
                                 EXTRAS_COL_ID = "e_id",
@@ -47,7 +47,8 @@ public class DB extends SQLiteOpenHelper {
                            + TABLE_KAPTURE + " ("
                            + KAPTURE_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                            + KAPTURE_COL_LOCATION + " TEXT, "
-                           + KAPTURE_COL_PROFILE_ID + " TEXT);";
+                           + KAPTURE_COL_PROFILE_ID + " TEXT, "
+                           + KAPTURE_COL_FROM + " TEXT);";
 
         final String q1 = "CREATE TABLE "
                           + TABLE_EXTRAS + " ("
@@ -59,40 +60,56 @@ public class DB extends SQLiteOpenHelper {
         db.execSQL(q0);
         db.execSQL(q1);
 
-        createScreenshotsTableHelper(db);
+        Update.createScreenshotsTableHelper(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         switch(oldVersion) {
             case 1:
-                createScreenshotsTableHelper(db);
+                Update.createScreenshotsTableHelper(db);
 
             case 2:
-                updateKaptureTableHelper(db);
+                Update.updateKaptureTableAddProfileCol(db);
+
+            case 3:
+                Update.updateKaptureTableAddFromCol(db);
                 break;
         }
     }
 
-    private void createScreenshotsTableHelper(SQLiteDatabase db) {
-        final String q = "CREATE TABLE "
-                        + TABLE_SCREENSHOTS + " ("
-                        + SCREENSHOTS_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                        + SCREENSHOTS_COL_ID_KAPTURE + " INTEGER, "
-                        + SCREENSHOTS_COL_LOCATION + " TEXT);";
+    private static class Update {
+        public static void createScreenshotsTableHelper(SQLiteDatabase db) {
+            final String q = "CREATE TABLE "
+                + TABLE_SCREENSHOTS + " ("
+                + SCREENSHOTS_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + SCREENSHOTS_COL_ID_KAPTURE + " INTEGER, "
+                + SCREENSHOTS_COL_LOCATION + " TEXT);";
 
-        db.execSQL(q);
-    }
+            db.execSQL(q);
+        }
 
-    private void updateKaptureTableHelper(SQLiteDatabase db) {
-        final String q = "ALTER TABLE "
-                        + TABLE_KAPTURE
-                        + " ADD COLUMN "
-                        + KAPTURE_COL_PROFILE_ID
-                        + " TEXT DEFAULT "
-                        + "\"" + Constants.NO_PROFILE + "\"";
+        public static void updateKaptureTableAddProfileCol(SQLiteDatabase db) {
+            final String q = "ALTER TABLE "
+                + TABLE_KAPTURE
+                + " ADD COLUMN "
+                + KAPTURE_COL_PROFILE_ID
+                + " TEXT DEFAULT "
+                + "\"" + Constants.NO_PROFILE + "\"";
 
-        db.execSQL(q);
+            db.execSQL(q);
+        }
+
+        public static void updateKaptureTableAddFromCol(SQLiteDatabase db) {
+            final String q = "ALTER TABLE "
+                    + TABLE_KAPTURE
+                    + " ADD COLUMN "
+                    + KAPTURE_COL_FROM
+                    + " TEXT DEFAULT "
+                    + "\"" + Kapture.FROM_PHONE + "\"";
+
+            db.execSQL(q);
+        }
     }
 
     public void insertKapture(Kapture kapture) {
@@ -102,6 +119,7 @@ public class DB extends SQLiteOpenHelper {
 
         valuesKapture.put(KAPTURE_COL_LOCATION, kapture.getLocation());
         valuesKapture.put(KAPTURE_COL_PROFILE_ID, kapture.getProfileId());
+        valuesKapture.put(KAPTURE_COL_FROM, kapture.getFrom());
 
         final long idKapture = db.insert(TABLE_KAPTURE, null, valuesKapture);
 
@@ -149,6 +167,7 @@ public class DB extends SQLiteOpenHelper {
             kapture.setId(cursor.getLong(cursor.getColumnIndexOrThrow(KAPTURE_COL_ID)));
             kapture.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_LOCATION)));
             kapture.setProfileId(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_PROFILE_ID)));
+            kapture.setFrom(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_FROM)));
             kapture.setExtras(selectExtras(kapture));
             kapture.setScreenshots(selectScreenshots(kapture));
 
@@ -175,6 +194,7 @@ public class DB extends SQLiteOpenHelper {
             kapture.setId(cursor.getLong(cursor.getColumnIndexOrThrow(KAPTURE_COL_ID)));
             kapture.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_LOCATION)));
             kapture.setProfileId(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_PROFILE_ID)));
+            kapture.setFrom(cursor.getString(cursor.getColumnIndexOrThrow(KAPTURE_COL_FROM)));
             kapture.setExtras(selectExtras(kapture));
             kapture.setScreenshots(selectScreenshots(kapture));
 
@@ -292,6 +312,7 @@ public class DB extends SQLiteOpenHelper {
 
         valuesKapture.put(KAPTURE_COL_LOCATION, kapture.getLocation());
         valuesKapture.put(KAPTURE_COL_PROFILE_ID, kapture.getProfileId());
+        valuesKapture.put(KAPTURE_COL_FROM, kapture.getFrom());
 
         for(Kapture.Extra extra : kapture.getExtras()) {
             updateExtra(extra);

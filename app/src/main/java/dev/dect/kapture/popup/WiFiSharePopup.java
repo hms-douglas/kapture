@@ -5,27 +5,39 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.zxing.EncodeHintType;
+
+import net.glxn.qrgen.android.QRCode;
 
 import java.util.Objects;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.server.KSecurity;
 import dev.dect.kapture.utils.Utils;
+import dev.dect.kapture.view.KStaticViewPager;
 
-@SuppressLint("InflateParams")
+@SuppressLint({"InflateParams", "SetTextI18n"})
 public class WiFiSharePopup extends Dialog {
     public interface OnWiFiSharePopupListener {
         void onStopRequested();
     }
 
-    private final ConstraintLayout POPUP_VIEW,
-                                   POPUP_CONTAINER;
+    private final ConstraintLayout POPUP_CONTAINER;
+
+    private final LinearLayout POPUP_VIEW;
 
     private final Context CONTEXT;
 
@@ -34,6 +46,8 @@ public class WiFiSharePopup extends Dialog {
     private final TextView PASSWORD_EL;
 
     private final ImageButton BTN_TOGGLE_PASSWORD;
+
+    private final ImageView QR_CODE;
 
     private String IP = "";
 
@@ -56,6 +70,7 @@ public class WiFiSharePopup extends Dialog {
         this.POPUP_VIEW = VIEW.findViewById(R.id.popup);
         this.PASSWORD_EL = VIEW.findViewById(R.id.password);
         this.BTN_TOGGLE_PASSWORD = VIEW.findViewById(R.id.btnPassword);
+        this.QR_CODE = VIEW.findViewById(R.id.qr_code);
 
         VIEW.findViewById(R.id.popupBtnStop).setOnClickListener((v) -> this.dismissWithAnimation());
 
@@ -64,6 +79,8 @@ public class WiFiSharePopup extends Dialog {
 
             refreshPasswordField();
         });
+
+        ((TabLayout) VIEW.findViewById(R.id.indicator)).setupWithViewPager(VIEW.findViewById(R.id.viewPager), true);
 
         this.setCancelable(false);
 
@@ -114,7 +131,23 @@ public class WiFiSharePopup extends Dialog {
                     BTN_TOGGLE_PASSWORD.setImageResource(R.drawable.icon_wifi_share_password_hide);
                     BTN_TOGGLE_PASSWORD.setContentDescription(CONTEXT.getString(R.string.tooltip_show_password));
                 }
+
+                QR_CODE.setImageBitmap(
+                    QRCode.from(
+                        "URL:http://" + IP + ":" + PORT + ("?" + KSecurity.TOKEN_ID + "=" + KSECURITY.getToken())
+                    ).withHint(EncodeHintType.MARGIN, 0)
+                    .withSize(300,300)
+                    .bitmap()
+                );
             });
+        } else {
+            QR_CODE.setImageBitmap(
+                QRCode.from(
+                    "URL:http://" + IP + ":" + PORT
+                ).withHint(EncodeHintType.MARGIN, 0)
+                .withSize(300,300)
+                .bitmap()
+            );
         }
     }
 

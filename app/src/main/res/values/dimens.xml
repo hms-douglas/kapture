@@ -214,7 +214,7 @@
 
     <dimen name="icon_wifi_share_popup">90dp</dimen>
     <dimen name="popup_wifi_share_ip">@dimen/default_font_title</dimen>
-    <dimen name="popup_wifi_share_space">28dp</dimen>
+    <dimen name="popup_wifi_share_space">20dp</dimen>
     <dimen name="popup_wifi_share_password">@dimen/default_font_title</dimen>
 
     <dimen name="countdown_border">1dp</dimen>
@@ -292,4 +292,8 @@
 
     <dimen name="popup_volume_icon">30dp</dimen>
 
+    <dimen name="indicator_size">10dp</dimen>
+    <dimen name="indicator_border">0dp</dimen>
+    <dimen name="indicator_space">2dp</dimen>
+    <dimen name="indicator_space_top_bottom">13dp</dimen>
 </resources>

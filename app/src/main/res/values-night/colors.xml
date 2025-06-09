@@ -112,7 +112,7 @@
     <color name="switch_track_off">@color/c6</color>
 
     <color name="popup_background_transparent">@color/background_transparent</color>
-    <color name="popup_container_background">#252525</color>
+    <color name="popup_container_background">#121214</color>
     <color name="popup_btn">@color/popup_container_background</color>
     <color name="popup_btn_text">@color/c0</color>
     <color name="popup_btn_text_disabled">@color/c2</color>
@@ -196,4 +196,8 @@
     <color name="profile_editor_icon_picker">#747474</color>
 
     <color name="profile_manager_btn_delete">#DC655F</color>
+
+    <color name="page_indicator_on">@color/main</color>
+    <color name="page_indicator_off">@color/c2</color>
+    <color name="page_indicator_border">@android:color/transparent</color>
 </resources>

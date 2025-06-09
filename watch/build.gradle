@@ -1,0 +1,57 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'dev.dect.kapture'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "dev.dect.kapture"
+        minSdk 33
+        targetSdk 33
+        versionCode 1
+        versionName "1.0.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.activity:activity:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
+
+    implementation "androidx.media3:media3-transformer:1.4.1"
+
+    implementation 'com.google.android.gms:play-services-wearable:19.0.0'
+
+    implementation 'androidx.wear:wear:1.3.0'
+    implementation 'androidx.wear:wear-remote-interactions:1.1.0'
+
+    implementation "androidx.wear.tiles:tiles:1.4.1"
+    implementation "androidx.wear.protolayout:protolayout:1.2.1"
+    implementation "androidx.wear.protolayout:protolayout-material:1.2.1"
+    implementation "androidx.wear.protolayout:protolayout-expression:1.2.1"
+    implementation "androidx.concurrent:concurrent-futures:1.2.0"
+    implementation "com.google.guava:guava:31.0.1-android"
+
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+
+    implementation 'com.github.kenglxn.QRGen:android:3.0.1'
+
+    compileOnly 'com.google.android.wearable:wearable:2.9.0'
+}

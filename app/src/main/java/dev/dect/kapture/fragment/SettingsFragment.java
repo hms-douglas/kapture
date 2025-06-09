@@ -302,7 +302,7 @@ public class SettingsFragment extends Fragment {
         concatAdapter.addAdapter(buildAndGetFolderGroupAdapter(settings));
         concatAdapter.addAdapter(buildAndGetVideoGroupAdapter(settings));
         concatAdapter.addAdapter(buildAndGetMicrophoneGroupAdapter(settings));
-        concatAdapter.addAdapter(buildAndGetInternaAudioGroupAdapter(settings));
+        concatAdapter.addAdapter(buildAndGetInternalAudioGroupAdapter(settings));
         concatAdapter.addAdapter(buildAndGetCapturingGroupAdapter(settings));
         concatAdapter.addAdapter(buildAndGetFloatingUiGroupAdapter(settings));
         concatAdapter.addAdapter(buildAndGetExtraVideoGroupAdapter(settings));
@@ -414,7 +414,7 @@ public class SettingsFragment extends Fragment {
         return new ListGroup.Adapter(new ListGroup(R.string.setting_group_mic, concatAdapter));
     }
 
-    private ListGroup.Adapter buildAndGetInternaAudioGroupAdapter(KSettings settings) {
+    private ListGroup.Adapter buildAndGetInternalAudioGroupAdapter(KSettings settings) {
         final ConcatAdapter concatAdapter = new ConcatAdapter();
 
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
@@ -1210,6 +1210,8 @@ public class SettingsFragment extends Fragment {
                             KFile.clearCache(CONTEXT);
 
                             updateStorageInfo();
+
+                            Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_success_generic), Toast.LENGTH_SHORT).show();
                         },
                         R.string.popup_btn_cancel,
                         null,

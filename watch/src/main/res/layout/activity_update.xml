@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/activity_background"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
+    <androidx.wear.widget.CurvedTextView
+        android:id="@+id/clock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/clock_space"
+        android:text="HH:mm"
+        android:textColor="@color/clock_font"
+        android:textSize="@dimen/clock_font"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText"/>
+
+    <LinearLayout
+        android:id="@+id/loader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.wear.widget.CircularProgressLayout
+            android:layout_width="@dimen/loader_size"
+            android:layout_height="@dimen/loader_size"
+            app:indeterminate="true"
+            app:colorSchemeColors="@color/main"
+            app:strokeWidth="@dimen/loader_width"
+            android:layout_marginBottom="@dimen/space_time_content"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_version_checking"
+            android:textSize="@dimen/version_text"
+            android:textColor="@color/version_text"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/updated"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/about_version_latest"
+        android:textSize="@dimen/version_text"
+        android:textColor="@color/version_text"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/update"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/space_time_content"
+        android:visibility="gone"
+        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/updateVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_version_available"
+            android:textSize="@dimen/version_text"
+            android:textColor="@color/version_text"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/space_time_content"
+            android:layout_marginStart="@dimen/activity_text_space_sides"
+            android:layout_marginEnd="@dimen/activity_text_space_sides"/>
+
+        <ImageButton
+            android:id="@+id/buttonPhone"
+            android:layout_width="@dimen/popup_btn_circle"
+            android:layout_height="@dimen/popup_btn_circle"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/popup_btn_yes"
+            android:src="@drawable/icon_on_phone"
+            android:padding="@dimen/popup_btn_circle_padding"
+            android:scaleType="fitCenter"
+            android:tint="@color/popup_btn_yes_icon"
+            app:tint="@color/popup_btn_yes_icon"
+            tools:ignore="UseAppTint"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

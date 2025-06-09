@@ -46,7 +46,7 @@ public class ProcessingNotification {
         notificationCompact.setOngoing(true);
         notificationCompact.setSilent(true);
         notificationCompact.setSubText(CTX.getString(R.string.notification_processing));
-        notificationCompact.setContentText(CTX.getString(R.string.notificationprocessing_message));
+        notificationCompact.setContentText(CTX.getString(R.string.notification_processing_message));
         notificationCompact.setLights(CTX.getColor(R.color.notification_background), 1000, 1000);
         notificationCompact.setProgress(0, 0, true);
 

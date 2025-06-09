@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line">
+
+    <stroke
+        android:color="@color/group_subtitle"
+        android:dashWidth="@dimen/group_subtitle_dash_width"
+        android:dashGap="@dimen/group_subtitle_dash_gap"
+        android:width="@dimen/group_subtitle_divisor"/>
+</shape>
