@@ -323,16 +323,21 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 
 <h4>Opção 2 (recomendado):</h4>
 - Baixe o apk do celular (link acima) e o instale manualmente no seu celular¹;
+</br>
 - Uma vez instalado, abra-o;
+</br>
 - Clique no icone de mais (três pontos, no canto superior direito);
+</br>
 - Clique em "Instalar no relógio";
+</br>
 - Siga as instruções para instalar no relógio.
-- 
+
 <h4>Opção 3:</h4>
 - Baixe o relógio apk  (link acima) e instale-o manualmente no seu relógio²;
   </br>
   </br>
   ¹ O Google Play Protect pode bloquear a instalação. Neste caso, desative-o, instale, então ative-o novamente.
+</br>
   ² Você pode usar o adbor um app específico (por exemplo: <a href="https://play.google.com/store/apps/details?id=eu.sisik.hackendebug"><img src="https://img.shields.io/badge/Bugjaeger-gray.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjguOTkgMzEuOTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZGF0YS1uYW1lPSJDYXBhIDIiPjxnIGRhdGEtbmFtZT0iQ2FwYSAxIj48cGF0aCBkPSJNMTMuNTQgMTUuMjguMTIgMjkuMzRhMy42NiAzLjY2IDAgMCAwIDUuMzMgMi4xNmwxNS4xLTguNloiIHN0eWxlPSJmaWxsOiNlYTQzMzUiLz48cGF0aCBkPSJtMjcuMTEgMTIuODktNi41My0zLjc0LTcuMzUgNi40NSA3LjM4IDcuMjggNi40OC0zLjdhMy41NCAzLjU0IDAgMCAwIDEuNS00Ljc5IDMuNjIgMy42MiAwIDAgMC0xLjUtMS41eiIgc3R5bGU9ImZpbGw6I2ZiYmMwNCIvPjxwYXRoIGQ9Ik0uMTIgMi42NmEzLjU3IDMuNTcgMCAwIDAtLjEyLjkydjI0Ljg0YTMuNTcgMy41NyAwIDAgMCAuMTIuOTJMMTQgMTUuNjRaIiBzdHlsZT0iZmlsbDojNDI4NWY0Ii8+PHBhdGggZD0ibTEzLjY0IDE2IDYuOTQtNi44NUw1LjUuNTFBMy43MyAzLjczIDAgMCAwIDMuNjMgMCAzLjY0IDMuNjQgMCAwIDAgLjEyIDIuNjVaIiBzdHlsZT0iZmlsbDojMzRhODUzIi8+PC9nPjwvZz48L3N2Zz4="/></a> ou outro similar / existem vários vídeos no youtube ensinando como fazer isso, chama-se "sideload").
     </td>
   </tr>

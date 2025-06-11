@@ -321,10 +321,15 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 <h4>Option 2 (recommended):</h4
 - Download the phone apk (link above) and manually install it on your phone¹;
+</br>
 - Once it is installed, open the phone app;
+</br>
 - Navigate to the "Settings" screen;
+</br>
 - Click on the more icon (three dots, top right side);
+</br>
 - Click on "Install on watch";
+</br>
 - Follow the instructions to install the app on your watch.
 
 <h4>Option 3:</h4>
@@ -332,6 +337,7 @@ Kapture is built over an accessibility service, turning it into a specific case,
   </br>
   </br>
   ¹ Google Play Protect might block the installation. In this case, disable it, install, then enable it.
+</br>
   ² You can use adb or a specific app (for example <a href="https://play.google.com/store/apps/details?id=eu.sisik.hackendebug"><img src="https://img.shields.io/badge/Bugjaeger-gray.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjguOTkgMzEuOTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZGF0YS1uYW1lPSJDYXBhIDIiPjxnIGRhdGEtbmFtZT0iQ2FwYSAxIj48cGF0aCBkPSJNMTMuNTQgMTUuMjguMTIgMjkuMzRhMy42NiAzLjY2IDAgMCAwIDUuMzMgMi4xNmwxNS4xLTguNloiIHN0eWxlPSJmaWxsOiNlYTQzMzUiLz48cGF0aCBkPSJtMjcuMTEgMTIuODktNi41My0zLjc0LTcuMzUgNi40NSA3LjM4IDcuMjggNi40OC0zLjdhMy41NCAzLjU0IDAgMCAwIDEuNS00Ljc5IDMuNjIgMy42MiAwIDAgMC0xLjUtMS41eiIgc3R5bGU9ImZpbGw6I2ZiYmMwNCIvPjxwYXRoIGQ9Ik0uMTIgMi42NmEzLjU3IDMuNTcgMCAwIDAtLjEyLjkydjI0Ljg0YTMuNTcgMy41NyAwIDAgMCAuMTIuOTJMMTQgMTUuNjRaIiBzdHlsZT0iZmlsbDojNDI4NWY0Ii8+PHBhdGggZD0ibTEzLjY0IDE2IDYuOTQtNi44NUw1LjUuNTFBMy43MyAzLjczIDAgMCAwIDMuNjMgMCAzLjY0IDMuNjQgMCAwIDAgLjEyIDIuNjVaIiBzdHlsZT0iZmlsbDojMzRhODUzIi8+PC9nPjwvZz48L3N2Zz4="/></a> or any other similar app / there are tons of videos on youtube teaching how to sideload apks/apps to your watch).
     </td>
   </tr>
