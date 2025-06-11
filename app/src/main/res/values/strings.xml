@@ -106,9 +106,17 @@
     <string name="toast_error_profile_name_long">Profile name max number of characters is:</string>
     <string name="toast_error_select_one_app">At least one app is required!</string>
     <string name="toast_error_select_app_max">Max of %d apps!</string>
+    <string name="toast_error_version_fetch">Could not fetch new versions!</string>
+    <string name="toast_error_version_cached">Could not get cached versions!</string>
+    <string name="toast_error_invalid_ip_connecting">Invalid IP and port!</string>
+    <string name="toast_error_invalid_ip_paring">Invalid paring IP and port!</string>
+    <string name="toast_error_invalid_code_paring">Invalid paring code!</string>
+    <string name="toast_error_invalid_version">Invalid version selected!</string>
+    <string name="toast_error_installer_error_update">Could not check for updates!</string>
     <string name="toast_info_enable_accessibility_manually">Could not open the accessibility screen. Do it manually!</string>
     <string name="toast_info_accessibility_manually">Start the accessibility service first!</string>
     <string name="toast_info_while_recording">Cannot change settings while recording!</string>
+    <string name="toast_info_refreshing">Refreshing</string>
     <string name="toast_success_generic">Done!</string>
     <string name="toast_success_active_profile">Active profile:</string>
 
@@ -564,4 +572,126 @@
 
     <string name="popup_media_volume">Media volume</string>
 
+    <string name="title_install">Install on watch</string>
+
+    <string name="title_how_to_connect">How to connect?</string>
+
+    <string name="how_to_connect_step_number">Step %d0 of %d1</string>
+
+    <string name="how_to_connect_step_0">Connect to the WiFi</string>
+    <string name="how_to_connect_step_1">Enable the developer options</string>
+    <string name="how_to_connect_step_2">Enable the wireless debugging</string>
+    <string name="how_to_connect_step_3">Get the IP address and port</string>
+    <string name="how_to_connect_step_4">Paring</string>
+    <string name="how_to_connect_step_5">Install</string>
+
+    <string name="how_to_connect_instruction_0">
+        - Scroll from top to bottom, to show the control panel;
+        \n\n- Tap and hold the WiFi button¹.
+        \n\n- Enable it and wait while the network list is loaded;
+        \n\n- Connect to a network².
+
+        \n\n\n¹ <i><u>OR</u> go to <b>Settings > Connections > WiFi</b></i>.
+        \n² <i>Both your phone and watch <i><u>must</u></i> be connected to the same network!</i>
+    </string>
+
+    <string name="how_to_connect_instruction_1">
+        If the developer mode is not enabled, enable it:
+        \n\n- Go to <b>Settings > About watch > Software information</b>;
+        \n\n- Locate <b>Software version </b>and tap the item 5 times fast¹ ².
+        \n\n¹ In case you set a lockscreen password, it will be requested.
+        \n² You will receive a toast notification when the Developer options is enabled.
+    </string>
+
+    <string name="how_to_connect_instruction_2">
+        - Navigate back to the settings screen;
+        \n\n- Scroll to, and open, the <b>Developer options</b> menu;
+        \n\n- Scroll to, and open, the <b>Wireless debugging</b> menu;
+        \n\n- Enable it.
+    </string>
+
+    <string name="how_to_connect_instruction_3">
+        Once the Wireless debugging is enabled:
+        \n\n- Find the option <b>IP address and port</b>;
+        \n\n- In this app, type the information on the <b>IP and port</b> input bellow.
+    </string>
+
+    <string name="how_to_connect_instruction_4">
+        <b>In case you have already paired once, you can skip this step!</b> In case you have not, do:
+
+        \n\n- Scroll to, and open, the <b>Pair new device</b> menu¹;
+        \n\n- In this app, type the watch <b>IP address &amp; Port</b> information on the <b>Paring IP and port</b> input bellow;
+        \n\n- In this app, type the watch <b>Wi-FI pairing code</b> information on the <b>Paring code</b> input bellow;
+
+        \n\n\n¹ Keep the paring screen open in the watch while pairing. Once it is paired it will close automatically.
+    </string>
+
+    <string name="how_to_connect_instruction_5">
+        <i>Back in this app, do:</i>
+        \n\n- Select the version you wish to install¹ ² ³ ⁴;
+        \n\n- Click on <b>Install on watch;</b>
+        \n\n- Follow the installation progress.
+
+        \n\n\n¹ <i>The latest version is always the selected when you open this app;</i>
+        \n² <i>If you do not have the watch app installed I recommend not changing the version selected (latest);</i>
+        \n³ <i>If you wish to update the watch app to a specific version you must select a version greater than the one installed on the watch;</i>
+        \n⁴ <i>If you wish to downgrade the watch app, first you need to uninstall the one installed on the watch.</i>
+    </string>
+
+    <string name="how_to_connect_btn_previous">Previous</string>
+    <string name="how_to_connect_btn_next">Next</string>
+
+    <string name="version_popup_title">Select a version</string>
+    <string name="version_loading">Loading versions…</string>
+    <string name="version_error">No version available</string>
+    <string name="connectingAddressPortHint">IP and port, e.g.: 192.168.1.15:46355</string>
+    <string name="paringAddressPortHint">Paring IP and port, e.g.: 192.168.1.15:40635</string>
+    <string name="paringCodeHint">Paring code, e.g.: 761542</string>
+    <string name="secure_switch">WRITE_SECURE_SETTINGS</string>
+
+    <string name="btn_install">Install on watch</string>
+
+    <string name="title_progress">Installation</string>
+
+    <string name="progress_paring">Paring to %s</string>
+    <string name="progress_paring_error">Error while paring to %s</string>
+    <string name="progress_paring_success">Successfully paired to %s</string>
+
+    <string name="progress_connecting">Connecting to %s</string>
+    <string name="progress_connecting_error">Error while connecting to %s</string>
+    <string name="progress_connecting_pair">Pairing is required</string>
+    <string name="progress_connecting_success">Successfully connected to %s</string>
+
+    <string name="progress_checking_cache">Checking on cache for file</string>
+    <string name="progress_checking_cache_found">File found on cache</string>
+    <string name="progress_checking_cache_not_found">File not found on cache</string>
+    <string name="progress_checking_cached">File cached</string>
+
+    <string name="progress_download_initialized">Initializing download</string>
+    <string name="progress_download_progress">Download progress: %d%</string>
+    <string name="progress_download_progress_complete">Download complete</string>
+    <string name="progress_download_progress_error">Error while downloading</string>
+
+    <string name="progress_installing">Initializing installation</string>
+    <string name="progress_installing_not_found">File not found</string>
+    <string name="progress_installing_wrong_type">File must be a .apk</string>
+    <string name="progress_installing_error">Error while installing</string>
+    <string name="progress_installing_error_downgrade">Version installed on watch is greater than v%s</string>
+
+    <string name="progress_disconnected">Disconnected from the watch</string>
+
+    <string name="progress_wait">Wait…</string>
+    <string name="progress_success">Success</string>
+
+    <string name="progress_end">End</string>
+    <string name="progress_end_message">
+        \n\nThe app is installed on you watch!
+        \nYou can now leave this screen.
+        \nI recommend unpairing the device connect and disabling the \"Wireless debugging\" feature!
+    </string>
+
+    <string name="menu_settings_clear_cache">Clear cached versions</string>
+
+    <string name="tooltip_wrap">Enable/Disable word wrap</string>
+    <string name="tooltip_copy_log">Copy log</string>
 </resources>

@@ -8,6 +8,10 @@
         <item
             android:id="@+id/menuProfileResetSettings"
             android:title="@string/menu_settings_reset_profile_settings" />
+
+        <item
+            android:id="@+id/menuInstallWatch"
+            android:title="@string/btn_install" />
     </group>
 
     <group android:id="@+id/group1">

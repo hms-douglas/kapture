@@ -3,6 +3,7 @@
     <item name="match_parent" format="integer" type="dimen">-1</item>
     <item name="wrap_content" format="integer" type="dimen">-2</item>
 
+    <dimen name="default_font_large">19sp</dimen>
     <dimen name="default_font">17sp</dimen>
     <dimen name="default_font_secondary">15sp</dimen>
     <dimen name="default_font_tertiary">13sp</dimen>
@@ -296,4 +297,30 @@
     <dimen name="indicator_border">0dp</dimen>
     <dimen name="indicator_space">2dp</dimen>
     <dimen name="indicator_space_top_bottom">13dp</dimen>
+
+    <dimen name="btn_font">@dimen/default_font</dimen>
+
+    <dimen name="btn_secondary_height">35dp</dimen>
+    <dimen name="btn_secondary_font">@dimen/default_font_secondary</dimen>
+    <dimen name="btn_secondary_border">1dp</dimen>
+
+    <dimen name="group_title">@dimen/default_font_large</dimen>
+    <dimen name="group_title_step">@dimen/default_font_large</dimen>
+    <dimen name="group_title_padding">@dimen/group_margin_bottom</dimen>
+
+    <dimen name="group_instruction">@dimen/default_font</dimen>
+    <dimen name="group_instruction_padding">6dp</dimen>
+
+    <dimen name="form_space_vertical">10dp</dimen>
+    <dimen name="form_space_btn_vertical">@dimen/group_padding_sides</dimen>
+
+    <dimen name="btn_dropdown_padding_start">15dp</dimen>
+    <dimen name="btn_dropdown_padding_end">10dp</dimen>
+
+    <dimen name="input_font">@dimen/btn_font</dimen>
+    <dimen name="input_height">@dimen/default_btn_height</dimen>
+
+    <dimen name="progress_padding">10dp</dimen>
+    <dimen name="progress_background_radius">10dp</dimen>
+    <dimen name="progress_text">@dimen/default_font_secondary</dimen>
 </resources>

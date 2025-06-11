@@ -48,6 +48,8 @@ public class AboutActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_about);
 
+        Utils.updateStatusBarColor(this);
+
         initVariables();
 
         initListeners();

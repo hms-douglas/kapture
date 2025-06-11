@@ -288,7 +288,7 @@ Kapture is built over an accessibility service, turning it into a specific case,
 
 ##
 ### Download the lastest apks¹ ² ³
-[![apk](https://img.shields.io/badge/phone-v1.6.0-FBD75B?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjRkZGRkZGIj48cGF0aCBkPSJNNDgwLTM0Mi4wMnEtOC45NiAwLTE3LjE1LTMuMS04LjItMy4xLTE0LjkyLTkuODFMMzAwLjM1LTUwMi41MnEtMTMuNDQtMTMuNDQtMTMuMDYtMzEuODMuMzgtMTguMzkgMTMuMDYtMzEuODIgMTMuNjctMTMuNjggMzIuMzItMTQuMDYgMTguNjYtLjM4IDMyLjMzIDEzLjI5bDY5LjUgNjkuNXYtMjY1LjE5cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2MjY1LjE5bDY5LjUtNjkuNXExMy40My0xMy42NyAzMi4wOS0xMy40MSAxOC42NS4yNiAzMi4zMiAxMy45NCAxMi45MiAxMy42NyAxMy4zIDMxLjk0LjM4IDE4LjI3LTEzLjMgMzEuOTVMNTEyLjA3LTM1NC45M3EtNi43MiA2LjcxLTE0LjkyIDkuODEtOC4xOSAzLjEtMTcuMTUgMy4xWk0yNDIuODctMTUxLjg3cS0zNy43OCAwLTY0LjM5LTI2LjYxdC0yNi42MS02NC4zOXYtNzQuNXEwLTE5LjE1IDEzLjE3LTMyLjMzIDEzLjE4LTEzLjE3IDMyLjMzLTEzLjE3dDMyLjMzIDEzLjE3cTEzLjE3IDEzLjE4IDEzLjE3IDMyLjMzdjc0LjVoNDc0LjI2di03NC41cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2NzQuNXEwIDM3Ljc4LTI2LjYxIDY0LjM5dC02NC4zOSAyNi42MUgyNDIuODdaIi8+PC9zdmc+)](https://hms-douglas.github.io/kapture/dist/apks/phone/1.6.0.apk)
+[![apk](https://img.shields.io/badge/phone-v1.7.0-FBD75B?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjRkZGRkZGIj48cGF0aCBkPSJNNDgwLTM0Mi4wMnEtOC45NiAwLTE3LjE1LTMuMS04LjItMy4xLTE0LjkyLTkuODFMMzAwLjM1LTUwMi41MnEtMTMuNDQtMTMuNDQtMTMuMDYtMzEuODMuMzgtMTguMzkgMTMuMDYtMzEuODIgMTMuNjctMTMuNjggMzIuMzItMTQuMDYgMTguNjYtLjM4IDMyLjMzIDEzLjI5bDY5LjUgNjkuNXYtMjY1LjE5cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2MjY1LjE5bDY5LjUtNjkuNXExMy40My0xMy42NyAzMi4wOS0xMy40MSAxOC42NS4yNiAzMi4zMiAxMy45NCAxMi45MiAxMy42NyAxMy4zIDMxLjk0LjM4IDE4LjI3LTEzLjMgMzEuOTVMNTEyLjA3LTM1NC45M3EtNi43MiA2LjcxLTE0LjkyIDkuODEtOC4xOSAzLjEtMTcuMTUgMy4xWk0yNDIuODctMTUxLjg3cS0zNy43OCAwLTY0LjM5LTI2LjYxdC0yNi42MS02NC4zOXYtNzQuNXEwLTE5LjE1IDEzLjE3LTMyLjMzIDEzLjE4LTEzLjE3IDMyLjMzLTEzLjE3dDMyLjMzIDEzLjE3cTEzLjE3IDEzLjE4IDEzLjE3IDMyLjMzdjc0LjVoNDc0LjI2di03NC41cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2NzQuNXEwIDM3Ljc4LTI2LjYxIDY0LjM5dC02NC4zOSAyNi42MUgyNDIuODdaIi8+PC9zdmc+)](https://hms-douglas.github.io/kapture/dist/apks/phone/1.7.0.apk)
 [![apk](https://img.shields.io/badge/watch-v1.0.0-FBD75B?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjRkZGRkZGIj48cGF0aCBkPSJNNDgwLTM0Mi4wMnEtOC45NiAwLTE3LjE1LTMuMS04LjItMy4xLTE0LjkyLTkuODFMMzAwLjM1LTUwMi41MnEtMTMuNDQtMTMuNDQtMTMuMDYtMzEuODMuMzgtMTguMzkgMTMuMDYtMzEuODIgMTMuNjctMTMuNjggMzIuMzItMTQuMDYgMTguNjYtLjM4IDMyLjMzIDEzLjI5bDY5LjUgNjkuNXYtMjY1LjE5cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2MjY1LjE5bDY5LjUtNjkuNXExMy40My0xMy42NyAzMi4wOS0xMy40MSAxOC42NS4yNiAzMi4zMiAxMy45NCAxMi45MiAxMy42NyAxMy4zIDMxLjk0LjM4IDE4LjI3LTEzLjMgMzEuOTVMNTEyLjA3LTM1NC45M3EtNi43MiA2LjcxLTE0LjkyIDkuODEtOC4xOSAzLjEtMTcuMTUgMy4xWk0yNDIuODctMTUxLjg3cS0zNy43OCAwLTY0LjM5LTI2LjYxdC0yNi42MS02NC4zOXYtNzQuNXEwLTE5LjE1IDEzLjE3LTMyLjMzIDEzLjE4LTEzLjE3IDMyLjMzLTEzLjE3dDMyLjMzIDEzLjE3cTEzLjE3IDEzLjE4IDEzLjE3IDMyLjMzdjc0LjVoNDc0LjI2di03NC41cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2NzQuNXEwIDM3Ljc4LTI2LjYxIDY0LjM5dC02NC4zOSAyNi42MUgyNDIuODdaIi8+PC9zdmc+)](https://hms-douglas.github.io/kapture/dist/apks/watch/1.0.0.apk)
 
 ¹ All apks listed inside this repository were built by me and are not minified;
@@ -310,7 +310,7 @@ Kapture is built over an accessibility service, turning it into a specific case,
 - Download the source code, or clone this repository, and build the app using Android Studio.
 
 <h4>Option 2:</h4>
-- Download the apk (link above) and manually install it on your phone¹;
+- Download the phone apk (link above) and manually install it on your phone¹;
   </br>
   </br>
   ¹ Google Play Protect might block the installation. In this case, disable it, install, then enable it.
@@ -319,11 +319,20 @@ Kapture is built over an accessibility service, turning it into a specific case,
 <h4>Option 1:</h4>
 - Download the source code, or clone this repository, and build the app using Android Studio.
 
-<h4>Option 2:</h4>
-- Download the apk (link above) and manually install it on your watch¹;
+<h4>Option 2 (recommended):</h4
+- Download the phone apk (link above) and manually install it on your phone¹;
+- Once it is installed, open the phone app;
+- Navigate to the "Settings" screen;
+- Click on the more icon (three dots, top right side);
+- Click on "Install on watch";
+- Follow the instructions to install the app on your watch.
+
+<h4>Option 3:</h4>
+- Download the watch apk (link above) and manually install it on your watch²;
   </br>
   </br>
-  ¹ You can use adb or a specific app (for example <a href="https://play.google.com/store/apps/details?id=eu.sisik.hackendebug"><img src="https://img.shields.io/badge/Bugjaeger-gray.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjguOTkgMzEuOTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZGF0YS1uYW1lPSJDYXBhIDIiPjxnIGRhdGEtbmFtZT0iQ2FwYSAxIj48cGF0aCBkPSJNMTMuNTQgMTUuMjguMTIgMjkuMzRhMy42NiAzLjY2IDAgMCAwIDUuMzMgMi4xNmwxNS4xLTguNloiIHN0eWxlPSJmaWxsOiNlYTQzMzUiLz48cGF0aCBkPSJtMjcuMTEgMTIuODktNi41My0zLjc0LTcuMzUgNi40NSA3LjM4IDcuMjggNi40OC0zLjdhMy41NCAzLjU0IDAgMCAwIDEuNS00Ljc5IDMuNjIgMy42MiAwIDAgMC0xLjUtMS41eiIgc3R5bGU9ImZpbGw6I2ZiYmMwNCIvPjxwYXRoIGQ9Ik0uMTIgMi42NmEzLjU3IDMuNTcgMCAwIDAtLjEyLjkydjI0Ljg0YTMuNTcgMy41NyAwIDAgMCAuMTIuOTJMMTQgMTUuNjRaIiBzdHlsZT0iZmlsbDojNDI4NWY0Ii8+PHBhdGggZD0ibTEzLjY0IDE2IDYuOTQtNi44NUw1LjUuNTFBMy43MyAzLjczIDAgMCAwIDMuNjMgMCAzLjY0IDMuNjQgMCAwIDAgLjEyIDIuNjVaIiBzdHlsZT0iZmlsbDojMzRhODUzIi8+PC9nPjwvZz48L3N2Zz4="/></a> or any other similar app / there are tons of videos on youtube teaching how to sideload apks/apps to your watch).
+  ¹ Google Play Protect might block the installation. In this case, disable it, install, then enable it.
+  ² You can use adb or a specific app (for example <a href="https://play.google.com/store/apps/details?id=eu.sisik.hackendebug"><img src="https://img.shields.io/badge/Bugjaeger-gray.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjguOTkgMzEuOTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZGF0YS1uYW1lPSJDYXBhIDIiPjxnIGRhdGEtbmFtZT0iQ2FwYSAxIj48cGF0aCBkPSJNMTMuNTQgMTUuMjguMTIgMjkuMzRhMy42NiAzLjY2IDAgMCAwIDUuMzMgMi4xNmwxNS4xLTguNloiIHN0eWxlPSJmaWxsOiNlYTQzMzUiLz48cGF0aCBkPSJtMjcuMTEgMTIuODktNi41My0zLjc0LTcuMzUgNi40NSA3LjM4IDcuMjggNi40OC0zLjdhMy41NCAzLjU0IDAgMCAwIDEuNS00Ljc5IDMuNjIgMy42MiAwIDAgMC0xLjUtMS41eiIgc3R5bGU9ImZpbGw6I2ZiYmMwNCIvPjxwYXRoIGQ9Ik0uMTIgMi42NmEzLjU3IDMuNTcgMCAwIDAtLjEyLjkydjI0Ljg0YTMuNTcgMy41NyAwIDAgMCAuMTIuOTJMMTQgMTUuNjRaIiBzdHlsZT0iZmlsbDojNDI4NWY0Ii8+PHBhdGggZD0ibTEzLjY0IDE2IDYuOTQtNi44NUw1LjUuNTFBMy43MyAzLjczIDAgMCAwIDMuNjMgMCAzLjY0IDMuNjQgMCAwIDAgLjEyIDIuNjVaIiBzdHlsZT0iZmlsbDojMzRhODUzIi8+PC9nPjwvZz48L3N2Zz4="/></a> or any other similar app / there are tons of videos on youtube teaching how to sideload apks/apps to your watch).
     </td>
   </tr>
 </table>
@@ -351,6 +360,11 @@ Ethereum | 0xfea5dd21ebf73c5b4a2445c7713f6b5316dfac4d
   </tr>
   <tr>
     <td valign="top">
+      <b>v1.7.0</b>
+      <ul>
+         <li>Watch installer added;</li>
+         <li>Minor UI fix.</li>
+      </ul>
       <b>v1.6.0</b>
       <ul>
          <li>Fixed a bug where the app crashes while resuming if the internal audio is not being captured;</li>
@@ -457,7 +471,7 @@ Ethereum | 0xfea5dd21ebf73c5b4a2445c7713f6b5316dfac4d
     <th>Watch</th>
   </tr>
   <tr>
-    <td>1.6.0</td><td>1.0.0</td>
+    <td>1.6.0 - 1.7.0</td><td>1.0.0</td>
   </tr>
   <tr>
     <td>1.5.0</td><td>-</td>

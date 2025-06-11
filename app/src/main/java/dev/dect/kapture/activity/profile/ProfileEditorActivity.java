@@ -44,6 +44,8 @@ public class ProfileEditorActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_profile_editor);
 
+        Utils.updateStatusBarColor(this);
+
         initVariables();
 
         initListeners();

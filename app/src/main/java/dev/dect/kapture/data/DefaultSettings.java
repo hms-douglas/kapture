@@ -53,7 +53,8 @@ public class DefaultSettings {
         IS_TO_BEFORE_START_SET_MEDIA_VOLUME = false,
         IS_TO_BEFORE_START_LAUNCH_APP = false,
         IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU = false,
-        IS_TO_OPEN_SHORTCUTS_ON_POPUP = false;
+        IS_TO_OPEN_SHORTCUTS_ON_POPUP = false,
+        INSTALLER_IS_TO_WRAP_TEXT = true;
 
     public static final int
         VIDEO_RESOLUTION = -1,

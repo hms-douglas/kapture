@@ -1,6 +1,7 @@
 package dev.dect.kapture.utils;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.PendingIntent;
@@ -38,6 +39,7 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import org.json.JSONArray;
 
@@ -59,6 +61,12 @@ import dev.dect.kapture.widget.FullWidget;
 import dev.dect.kapture.widget.ProfileWidget;
 
 public class Utils {
+    public static void updateStatusBarColor(Activity activity) {
+        boolean isLightMode = activity.getResources().getConfiguration().isNightModeActive();
+
+        new WindowInsetsControllerCompat(activity.getWindow(), activity.getWindow().getDecorView()).setAppearanceLightStatusBars(!isLightMode);
+    }
+
     public static boolean hasWriteSecureSettings(Context ctx) {
         return ctx.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
     }

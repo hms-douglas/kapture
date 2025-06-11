@@ -10,6 +10,7 @@ import com.google.android.material.appbar.AppBarLayout;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.data.Constants;
+import dev.dect.kapture.utils.Utils;
 
 public class CreditsActivity extends AppCompatActivity {
 
@@ -18,6 +19,8 @@ public class CreditsActivity extends AppCompatActivity {
         super.onCreate(null);
 
         setContentView(R.layout.activity_credits);
+
+        Utils.updateStatusBarColor(this);
 
         initListeners();
     }

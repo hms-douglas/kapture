@@ -96,9 +96,17 @@
     <string name="toast_error_profile_name_long">O número máximo de caracteres para o nome do perfil é de:</string>
     <string name="toast_error_select_one_app">Pelo menos um app é necessário!</string>
     <string name="toast_error_select_app_max">Apenas %d apps são permitidos!</string>
+    <string name="toast_error_version_fetch">Não foi possível pesquisar por novas versões!</string>
+    <string name="toast_error_version_cached">Não foi possível carregar as versões em cache!</string>
+    <string name="toast_error_invalid_ip_connecting">IP e porta inválido!</string>
+    <string name="toast_error_invalid_ip_paring">IP e porta de pareamento inválido!</string>
+    <string name="toast_error_invalid_code_paring">Código de pareamento inválido!</string>
+    <string name="toast_error_invalid_version">Versão selecionada inválida!</string>
+    <string name="toast_error_installer_error_update">Não foi possível procurar por atualizações!</string>
     <string name="toast_info_enable_accessibility_manually">Não foi possível abrir o menu de acessibilidade. Tente manualmente!</string>
     <string name="toast_info_accessibility_manually">Inicie o serviço de acessibilidate primeiro!</string>
     <string name="toast_info_while_recording">Não é possível alterar as configurações enquanto está capturando!</string>
+    <string name="toast_info_refreshing">Atualizando</string>
     <string name="toast_success_generic">Feito!</string>
     <string name="toast_success_active_profile">Perfil ativo:</string>
 
@@ -551,4 +559,125 @@
 
     <string name="popup_media_volume">Mídia</string>
 
+    <string name="title_install">Instalar no relógio</string>
+
+    <string name="title_how_to_connect">Como se conectar?</string>
+
+    <string name="how_to_connect_step_number">Passo %d0 de %d1</string>
+
+    <string name="how_to_connect_step_0">Conectar-se ao WiFi</string>
+    <string name="how_to_connect_step_1">Ative as opções de desenvolvedor</string>
+    <string name="how_to_connect_step_2">Ative a depuração sem fio</string>
+    <string name="how_to_connect_step_3">Obter o endereço IP e porta</string>
+    <string name="how_to_connect_step_4">Parear</string>
+    <string name="how_to_connect_step_5">Instalar</string>
+
+    <string name="how_to_connect_instruction_0">
+        - Deslize de cima para baixo, para mostrar o painel de controle;
+        \n\n- Clique e segure o botão de WiFi¹.
+        \n\n- Ative-o e espere até a lista com as redes ser carregada;
+        \n\n- Conecte-se a uma rede².
+
+        \n\n\n¹ <i><u>OU</u> vá em <b>Configuração > Conexões > WiFi</b></i>;
+        \n² <i>O relógio e o celular <i><u>devem</u></i> estar conectados na mesma rede!</i>
+    </string>
+
+    <string name="how_to_connect_instruction_1">
+        Se a opção de desenvolvedor não estiver ativa, ative-a:
+        \n\n- Vá em <b>Configuração > Sobre o relógio > Informações de software</b>;
+        \n\n- Localize <b>Versão software </b>e clique nela 5 vezes rápido¹ ².
+
+        \n\n\n¹ Caso você tenha adicionado uma tela de bloqueio ao relógio, a senha será requisitada;
+        \n² Você verá uma notificação quando a opção de desenvolvedor for ativada.
+    </string>
+
+    <string name="how_to_connect_instruction_2">
+        - Volte para a tela de configurações;
+        \n\n- Role até, e abra, o menu <b>Opções de desenvolvedor</b>;
+        \n\n- Role até, e abra, o menu <b>Depuração sem fio</b>;
+        \n\n- Ative a opção.
+    </string>
+
+    <string name="how_to_connect_instruction_3">
+        Uma vez a opção ativa:
+        \n\n- Encontre o item <b>Endereço IP e porta</b>;
+        \n\n- Digite a informação do relógio no campo <b>IP e porta</b> abaixo.
+    </string>
+
+    <string name="how_to_connect_instruction_4">
+        <b>Caso você já tenha pareado uma vez, você pode pular esse passo!</b> Caso você não tenha, faça:
+
+        \n\n- Role até, e abra, o menu <b>Parear novo aparelho</b>¹;
+        \n\n- Digite a informação <b>Endereço IP e porta</b>, do relógio, no campo <b>IP e porta de pareamento</b> abaixo;
+        \n\n- Digite a informação <b>Código de pareamento por Wi-Fi</b>, do relógio, no campo <b>Código de pareamento</b> abaixo;
+
+        \n\n\n¹ Mantenha a tela de pareamento aberta no relógio. Uma vez pareado a tela ira fechar automaticamente.
+    </string>
+
+    <string name="how_to_connect_instruction_5">
+        - Selecione, abaixo, a versão que você deseja instalar¹ ² ³ ⁴;
+        \n\n- Clique em <b>Instalar no relógio;</b>
+        \n\n- Acompanhe o processo de instalação até a conclusão.
+
+        \n\n\n¹ <i>A versão mais recente é sempre a que está selecionada quando você abre este app;</i>
+        \n² <i>Se você não tem o app do relógio instalado, eu recomendo não mudar a versão selecionada (mais recente);</i>
+        \n³ <i>Se você deseja atualizar o app do relógio para uma versão especifica, você deve selecionar uma versão mais recente do que a instalada no relógio;</i>
+        \n⁴ <i>Se você deseja fazer o downgrade do app instalado no relógio, primeiro você precisa desinstalar a versão instalada no relógio.</i>
+    </string>
+
+    <string name="how_to_connect_btn_previous">Anterior</string>
+    <string name="how_to_connect_btn_next">Próximo</string>
+
+    <string name="version_popup_title">Selecione uma versão</string>
+    <string name="version_loading">Carregando versões…</string>
+    <string name="version_error">Nenhuma versão disponível</string>
+    <string name="connectingAddressPortHint">IP e porta, ex.: 192.168.1.15:42601</string>
+    <string name="paringAddressPortHint">IP e porta de pareamento, ex.: 192.168.1.15:38983</string>
+    <string name="paringCodeHint">Código de pareamento, ex.: 435313</string>
+    <string name="secure_switch">WRITE_SECURE_SETTINGS</string>
+
+    <string name="btn_install">Instalar no relógio</string>
+
+    <string name="title_progress">Instalação</string>
+
+    <string name="progress_paring">Pareando com %s</string>
+    <string name="progress_paring_error">Error ao se parear com %s</string>
+    <string name="progress_paring_success">Sucesso ao se parear com %s</string>
+
+    <string name="progress_connecting">Conectando-se com %s</string>
+    <string name="progress_connecting_error">Erro ao se conectar com %s</string>
+    <string name="progress_connecting_pair">O pareamento é necessário</string>
+    <string name="progress_connecting_success">Conectado com sucesso com %s</string>
+
+    <string name="progress_checking_cache">Procurando o arquivo no cache</string>
+    <string name="progress_checking_cache_found">Arquivo encontrado no cache</string>
+    <string name="progress_checking_cache_not_found">Arquivo não encontrado no cache</string>
+    <string name="progress_checking_cached">Arquivo salvo no cache</string>
+
+    <string name="progress_download_initialized">Iniciando download</string>
+    <string name="progress_download_progress">Progresso do download: %d%</string>
+    <string name="progress_download_progress_complete">Download completo</string>
+    <string name="progress_download_progress_error">Erro ao baixar</string>
+
+    <string name="progress_installing">Iniciando instalação</string>
+    <string name="progress_installing_not_found">Arquivo não encontrado</string>
+    <string name="progress_installing_wrong_type">O tipo de arquivo precisa ser um .apk</string>
+    <string name="progress_installing_error">Erro ao instalar</string>
+    <string name="progress_installing_error_downgrade">A versão instalada no relógio é maior que v%s</string>
+
+    <string name="progress_disconnected">Desconectado do relógio</string>
+
+    <string name="progress_wait">Aguarde…</string>
+    <string name="progress_success">Sucesso</string>
+
+    <string name="progress_end">Fim</string>
+    <string name="progress_end_message">
+        \n\nO app foi instalado no seu relógio!
+        \nVocê já pode sair desta tela.
+        \nEu recomendo desparear o dispositivo no relógio e desligar o recurso \"Depuração sem fio\"!
+    </string>
+
+    <string name="menu_settings_clear_cache">Remover versões em cache</string>
+    <string name="tooltip_wrap">Ativar/Desativar quebra de linha</string>
+    <string name="tooltip_copy_log">Copiar log</string>
 </resources>

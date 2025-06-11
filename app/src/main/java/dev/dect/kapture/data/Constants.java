@@ -5,7 +5,10 @@ public class Constants {
         HOME_PACKAGE_NAME = "_home",
         EXT_VIDEO_FORMAT = "mp4",
         EXT_AUDIO_FORMAT = "wav",
-        NO_PROFILE = "no_profile";
+        NO_PROFILE = "no_profile",
+        VERSION_FILE_SEPARATOR = "_",
+        VERSION_FILE_PREFIX = "version",
+        REGEX_IPV4_AND_PORT = "\\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\\b:[0-9]{1,5}";
 
     public static final int
         OVERLAY_MAX_SHORTCUTS = 6;
@@ -32,7 +35,8 @@ public class Constants {
                 WIFI_SHARE_IS_TO_REFRESH_PASSWORD = "k85",
                 ACTIVE_PROFILE_NAME = "k86",
                 PROFILE_NAMES = "k87",
-                IS_TO_SHOW_NOTIFICATION_WIFI_SHARE = "k88";
+                IS_TO_SHOW_NOTIFICATION_WIFI_SHARE = "k88",
+                INSTALLER_IS_TO_WRAP_TEXT = "p89";
         }
 
         public static class Profile {
@@ -178,7 +182,9 @@ public class Constants {
         public static class App {
             public static final String
                 REPOSITORY = "https://github.com/hms-douglas/kapture",
-                LATEST_VERSION_FILE = REPOSITORY + "/raw/master/dist/latest.json";
+                REPOSITORY_DIST_PATH = REPOSITORY + "/raw/master/dist/",
+                LATEST_VERSION_FILE = REPOSITORY_DIST_PATH + "latest.json",
+                WATCH_VERSIONS_FILE = REPOSITORY_DIST_PATH + "all_watch.json";
 
             public static class KeyTag {
                 public static final String

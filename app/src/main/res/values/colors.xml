@@ -25,6 +25,7 @@
     <color name="btn_main_background">@color/main</color>
     <color name="btn_main_color">@color/c3</color>
     <color name="btn_secondary_background">#E9E9E9</color>
+    <color name="btn_border_font_color">@color/c0</color>
 
     <color name="btn_effect">#74313337</color>
 
@@ -200,4 +201,22 @@
     <color name="page_indicator_on">@color/main</color>
     <color name="page_indicator_off">@color/c1</color>
     <color name="page_indicator_border">@android:color/transparent</color>
+
+    <color name="progress_background">#EAEAEA</color>
+    <color name="progress_text">@color/c0</color>
+    <color name="progress_text_success">#276217</color>
+    <color name="progress_text_error">@color/main</color>
+
+    <color name="watch">#CFD4DA</color>
+    <color name="watch_screen">#FFFFFF</color>
+
+    <color name="group_background">@color/c3</color>
+    <color name="group_title">@color/c0</color>
+    <color name="group_instruction">@color/c0</color>
+
+    <color name="btn_dropdown_text">@color/c0</color>
+
+    <color name="input_list_background">@color/activity_background</color>
+    <color name="input_list_text">@color/c0</color>
+    <color name="input_list_hint">@color/c1</color>
 </resources>

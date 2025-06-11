@@ -12,6 +12,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import dev.dect.kapture.R;
 import dev.dect.kapture.adapter.ProfileManagerAdapter;
 import dev.dect.kapture.utils.KProfile;
+import dev.dect.kapture.utils.Utils;
 
 public class ProfileManagerActivity extends AppCompatActivity {
     private RecyclerView RECYCLER_VIEW;
@@ -21,6 +22,8 @@ public class ProfileManagerActivity extends AppCompatActivity {
         super.onCreate(null);
 
         setContentView(R.layout.activity_profile_manager);
+
+        Utils.updateStatusBarColor(this);
 
         initVariables();
 

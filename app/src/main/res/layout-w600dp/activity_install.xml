@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        app:expanded="false"
+        android:background="@color/activity_background">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/activity_background"
+            app:contentScrim="@color/activity_background"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tool_bar_height"
+                android:layout_gravity="bottom"
+                android:contentInsetLeft="0dp"
+                android:contentInsetStart="0dp"
+                android:contentInsetRight="0dp"
+                android:contentInsetEnd="0dp"
+                android:paddingTop="@dimen/tool_bar_padding_top"
+                android:paddingEnd="@dimen/tool_bar_padding_right"
+                android:paddingStart="@dimen/tool_bar_padding_right"
+                android:background="@color/activity_background"
+                app:layout_collapseMode="pin"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp">
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_gravity="start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/activity_background"
+                    android:src="@drawable/icon_tool_bar_back"
+                    android:padding="@dimen/tool_bar_btn_padding"
+                    android:foreground="@drawable/btn_floating_effect"
+                    android:contentDescription="@string/tooltip_go_back"
+                    android:longClickable="true"/>
+
+                <TextView
+                    android:id="@+id/titleCollapsed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_install"
+                    android:textColor="@color/app_bar_font_title"
+                    android:textSize="@dimen/app_bar_font_title_collapsed"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/btnMore"
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/activity_background"
+                    android:src="@drawable/icon_tool_bar_more"
+                    android:padding="@dimen/tool_bar_btn_padding"
+                    android:foreground="@drawable/btn_floating_effect"
+                    android:contentDescription="@string/tooltip_more_options"
+                    android:longClickable="true"/>
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titleAndSubtitleContainer"
+                android:layout_width="@dimen/app_bar_container_height"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/titleExpanded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_install"
+                    android:gravity="center"
+                    android:textSize="@dimen/app_bar_font_title_expanded"
+                    android:textColor="@color/app_bar_font_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/list_background"
+        android:clipToOutline="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/group_background"
+                    android:padding="@dimen/group_padding_sides">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_how_to_connect"
+                        android:textSize="@dimen/group_title"
+                        android:textColor="@color/group_title"
+                        android:textStyle="bold"
+                        android:paddingBottom="@dimen/group_margin_bottom"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/watchAnimationContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/group_margin_bottom">
+
+                        <ImageView
+                            android:id="@+id/watch"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:src="@drawable/watch"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintWidth_percent="0.25"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ImageView
+                            android:id="@+id/animation"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/watch_screen"
+                            android:clipToOutline="true"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintWidth_percent="0.156"
+                            app:layout_constraintBottom_toBottomOf="@id/watch"
+                            app:layout_constraintEnd_toEndOf="@id/watch"
+                            app:layout_constraintStart_toStartOf="@id/watch"
+                            app:layout_constraintTop_toTopOf="@id/watch"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/step"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Step"
+                        android:textColor="@color/group_title"
+                        android:textSize="@dimen/group_title_step"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/instruction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Instructions"
+                        android:textColor="@color/group_instruction"
+                        android:textSize="@dimen/group_instruction"
+                        android:paddingTop="@dimen/group_instruction_padding"
+                        android:layout_marginTop="@dimen/group_instruction_padding"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:paddingTop="@dimen/group_title_padding"
+                        android:layout_gravity="center">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnPrevious"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/btn_secondary_height"
+                            android:layout_weight="1"
+                            android:text="@string/how_to_connect_btn_previous"
+                            android:textSize="@dimen/btn_secondary_font"
+                            android:textColor="@color/btn_border_font_color"
+                            android:textAllCaps="false"
+                            android:background="@drawable/btn_border_design"
+                            android:foreground="@drawable/btn_effect"/>
+
+                        <Space
+                            android:layout_width="@dimen/group_margin_bottom"
+                            android:layout_height="match_parent"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnNext"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/btn_secondary_height"
+                            android:layout_weight="1"
+                            android:text="@string/how_to_connect_btn_next"
+                            android:textColor="@color/btn_border_font_color"
+                            android:textSize="@dimen/btn_secondary_font"
+                            android:textAllCaps="false"
+                            android:background="@drawable/btn_border_design"
+                            android:foreground="@drawable/btn_effect"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/group_background"
+                    android:padding="@dimen/group_padding_sides"
+                    android:layout_marginTop="@dimen/group_margin_bottom">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/version"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/version_loading"
+                        android:textColor="@color/btn_dropdown_text"
+                        android:textSize="@dimen/btn_font"
+                        android:textAllCaps="false"
+                        android:gravity="center|start"
+                        android:paddingStart="@dimen/btn_dropdown_padding_start"
+                        android:paddingEnd="@dimen/btn_dropdown_padding_end"
+                        android:background="@drawable/input_list_design"
+                        android:foreground="@drawable/btn_effect"
+                        android:drawableEnd="@drawable/icon_dropdown"
+                        android:drawableTint="@color/btn_dropdown_text"/>
+
+                    <EditText
+                        android:id="@+id/connectingAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/input_height"
+                        android:hint="@string/connectingAddressPortHint"
+                        android:textColorHint="@color/input_list_hint"
+                        android:textColor="@color/input_list_text"
+                        android:textSize="@dimen/input_font"
+                        android:paddingStart="@dimen/btn_dropdown_padding_start"
+                        android:paddingEnd="@dimen/btn_dropdown_padding_end"
+                        android:background="@drawable/input_list_design"
+                        android:layout_marginTop="@dimen/form_space_vertical"
+                        android:inputType="text"/>
+
+                    <EditText
+                        android:id="@+id/paringAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/input_height"
+                        android:hint="@string/paringAddressPortHint"
+                        android:textColorHint="@color/input_list_hint"
+                        android:textColor="@color/input_list_text"
+                        android:textSize="@dimen/input_font"
+                        android:paddingStart="@dimen/btn_dropdown_padding_start"
+                        android:paddingEnd="@dimen/btn_dropdown_padding_end"
+                        android:background="@drawable/input_list_design"
+                        android:layout_marginTop="@dimen/form_space_vertical"
+                        android:inputType="text"/>
+
+                    <EditText
+                        android:id="@+id/paringCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/input_height"
+                        android:hint="@string/paringCodeHint"
+                        android:textColorHint="@color/input_list_hint"
+                        android:textColor="@color/input_list_text"
+                        android:textSize="@dimen/input_font"
+                        android:paddingStart="@dimen/btn_dropdown_padding_start"
+                        android:paddingEnd="@dimen/btn_dropdown_padding_end"
+                        android:background="@drawable/input_list_design"
+                        android:layout_marginTop="@dimen/form_space_vertical"
+                        android:inputType="number"/>
+
+                    <Switch
+                        android:id="@+id/switchSecurity"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/wrap_content"
+                        android:minHeight="@dimen/input_height"
+                        android:textColor="@color/input_list_text"
+                        android:textSize="@dimen/input_font"
+                        android:thumb="@drawable/switch_thumb"
+                        android:track="@drawable/switch_track"
+                        android:paddingStart="@dimen/btn_dropdown_padding_start"
+                        android:paddingEnd="@dimen/btn_dropdown_padding_end"
+                        android:paddingTop="@dimen/switch_padding_top_bottom"
+                        android:paddingBottom="@dimen/switch_padding_top_bottom"
+                        android:layout_marginTop="@dimen/form_space_vertical"
+                        android:foreground="@drawable/btn_effect"
+                        android:text="@string/secure_switch"
+                        android:background="@drawable/input_list_design"
+                        android:checked="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="HardcodedText,UseSwitchCompatOrMaterialXml"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnInstall"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_btn_height"
+                        android:text="@string/btn_install"
+                        android:textColor="@color/btn_main_color"
+                        android:textSize="@dimen/btn_font"
+                        android:textAllCaps="false"
+                        android:background="@drawable/btn_design"
+                        android:foreground="@drawable/btn_effect"
+                        android:backgroundTint="@color/btn_main_background"
+                        android:layout_marginTop="@dimen/form_space_btn_vertical"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

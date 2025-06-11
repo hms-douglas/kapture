@@ -41,6 +41,7 @@ import dev.dect.kapture.R;
 import dev.dect.kapture.activity.AboutActivity;
 import dev.dect.kapture.activity.MainActivity;
 import dev.dect.kapture.activity.TokenActivity;
+import dev.dect.kapture.activity.installer.InstallActivity;
 import dev.dect.kapture.adapter.ListButton;
 import dev.dect.kapture.adapter.ListButtonColor;
 import dev.dect.kapture.adapter.ListButtonSubText;
@@ -244,6 +245,8 @@ public class SettingsFragment extends Fragment {
                     ).show();
                 } else if(idClicked == R.id.menuOpenAccessibility) {
                     Utils.ExternalActivity.requestAccessibility(CONTEXT);
+                } else if(idClicked == R.id.menuInstallWatch) {
+                    startActivity(new Intent(CONTEXT, InstallActivity.class));
                 } else if(idClicked == R.id.menuShowCommand) {
                     new DialogPopup(
                         CONTEXT,
