@@ -319,7 +319,7 @@ Kapture is built over an accessibility service, turning it into a specific case,
 <h4>Option 1:</h4>
 - Download the source code, or clone this repository, and build the app using Android Studio.
 
-<h4>Option 2 (recommended):</h4
+<h4>Option 2 (recommended):</h4>
 - Download the phone apk (link above) and manually install it on your phone¹;
 </br>
 - Once it is installed, open the phone app;
