@@ -219,4 +219,22 @@
     <color name="input_list_background">@color/c4</color>
     <color name="input_list_text">@color/c0</color>
     <color name="input_list_hint">@color/c1</color>
+
+    <color name="folder_icon">@color/main</color>
+    <color name="folder_text">@color/c0</color>
+
+    <color name="folder_empty">@color/c1</color>
+
+    <color name="storage_icon">@color/main</color>
+    <color name="storage_text">@color/c0</color>
+
+    <color name="folder_hidden_border_icon">@color/folder_icon</color>
+    <color name="folder_hidden_background_icon">#5AEB3B2E</color>
+
+    <color name="pill_icon">@color/c1</color>
+    <color name="pill_text">@color/c1</color>
+    <color name="pill_icon_active">@color/main</color>
+    <color name="pill_text_active">@color/main</color>
+
+    <color name="image_preview_helper">@color/kapture_image_helper</color>
 </resources>

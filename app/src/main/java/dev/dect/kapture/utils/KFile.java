@@ -11,6 +11,7 @@ import android.media.MediaMuxer;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -32,7 +33,6 @@ import com.google.common.collect.ImmutableList;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -59,8 +59,6 @@ import dev.dect.kapture.service.CapturingService;
 public class KFile {
     public static final String FILE_SEPARATOR = "_";
 
-    private static final String INTERNAL_STORAGE_PATH = "/storage/emulated/0";
-
     public static File generateNewEmptyKaptureFile(Context ctx, KSettings ks) {
         final int fileId = getFileIdNotGenerated(ctx);
 
@@ -84,42 +82,28 @@ public class KFile {
         return String.format(Locale.getDefault(), "%03d", id);
     }
 
-    public static String uriToAbsolutPath(Context ctx, Uri uri) {
-        final String uriString = uri.toString();
-
-        String path;
-
-        boolean isFile = false;
-
-        if(uriString.startsWith("content://com.android.externalstorage.documents/tree/primary%3A")) {
-            path = uriString.replaceFirst("content://com.android.externalstorage.documents/tree/primary%3A", "");
-        } else if(uriString.startsWith("content://com.android.externalstorage.documents/document/primary%3A")) {
-            isFile = true;
-
-            path = uriString.replaceFirst("content://com.android.externalstorage.documents/document/primary%3A", "");
-        } else {
-            path = uriString.replaceFirst("content://com.sec.android.app.myfiles.FileProvider/device_storage/0/", "");
-        }
-
-        try {
-            path = URLDecoder.decode(path, "UTF-8");
-        } catch (Exception ingore) {
-            Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
-        }
-
-        File f = new File(INTERNAL_STORAGE_PATH, path);
-
-        if(!isFile && !f.exists()) {
-            f = getDefaultFileLocation(ctx);
-
-            Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
-        }
-
-        return f.getAbsolutePath();
-    }
-
     public static String formatAndroidPathToUser(Context ctx, String path) {
-        return path.replaceFirst(INTERNAL_STORAGE_PATH, File.separator + ctx.getString(R.string.internal_storage));
+        if(path.contains(Constants.INTERNAL_STORAGE_PATH)) {
+            path = path.replaceFirst(Constants.INTERNAL_STORAGE_PATH, File.separator + ctx.getString(R.string.internal_storage));
+        } else if(path.contains(Constants.DUAL_MESSENGER_STORAGE_PATH)) {
+            path = path.replaceFirst(Constants.DUAL_MESSENGER_STORAGE_PATH, File.separator + ctx.getString(R.string.dual_storage));
+        } else if(path.startsWith(Constants.SD_CARD_STORAGE_INITIAL_PATH)) {
+            path = path.replaceFirst(Constants.SD_CARD_STORAGE_INITIAL_PATH + File.separator, "");
+
+            final int i = path.indexOf(File.separator);
+
+            if(i == -1) {
+                path = File.separator + ctx.getString(R.string.sd_card) + path;
+            } else {
+                path = File.separator + ctx.getString(R.string.sd_card) + path.substring(i);
+            }
+        }
+
+        if(path.startsWith("//")) {
+            return path.substring(1);
+        }
+
+        return path;
     }
 
     public static String formatFileSize(long l) {
@@ -145,11 +129,23 @@ public class KFile {
     }
 
     public static File getSavingLocation(Context ctx) {
-        return new File(KSharedPreferences.getAppSp(ctx).getString(Constants.Sp.App.FILE_SAVING_PATH, KFile.getDefaultFileLocation(ctx).getAbsolutePath()));
+        final File folder = new File(KSharedPreferences.getAppSp(ctx).getString(Constants.Sp.App.FILE_SAVING_PATH, KFile.getDefaultFileLocation(ctx).getAbsolutePath()));
+
+        if(folder.exists()) {
+            return folder;
+        }
+
+        return new File(KFile.getDefaultFileLocation(ctx).getAbsolutePath());
     }
 
     public static File getSavingScreenshotLocation(Context ctx) {
-        return new File(KSharedPreferences.getAppSp(ctx).getString(Constants.Sp.App.SCREENSHOT_FILE_SAVING_PATH, KFile.getDefaultScreenshotFileLocation(ctx).getAbsolutePath()));
+        final File folder = new File(KSharedPreferences.getAppSp(ctx).getString(Constants.Sp.App.SCREENSHOT_FILE_SAVING_PATH, KFile.getDefaultScreenshotFileLocation(ctx).getAbsolutePath()));
+
+        if(folder.exists()) {
+            return folder;
+        }
+
+        return new File(KFile.getDefaultScreenshotFileLocation(ctx).getAbsolutePath());
     }
 
     public static File getDefaultFileLocation(Context ctx) {

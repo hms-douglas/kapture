@@ -103,6 +103,7 @@
     <string name="toast_error_invalid_code_paring">Código de pareamento inválido!</string>
     <string name="toast_error_invalid_version">Versão selecionada inválida!</string>
     <string name="toast_error_installer_error_update">Não foi possível procurar por atualizações!</string>
+    <string name="toast_error_folder_already_exists">A pasta já existe!</string>
     <string name="toast_info_enable_accessibility_manually">Não foi possível abrir o menu de acessibilidade. Tente manualmente!</string>
     <string name="toast_info_accessibility_manually">Inicie o serviço de acessibilidate primeiro!</string>
     <string name="toast_info_while_recording">Não é possível alterar as configurações enquanto está capturando!</string>
@@ -478,7 +479,7 @@
     <string name="floating_btn_pause">Pausar</string>
     <string name="floating_btn_resume">Resumir</string>
 
-    <string name="storage_usage">Uso do armazenamento</string>
+    <string name="storage_usage">Uso do armazenamento interno</string>
     <string name="storage_other">Outros apps</string>
     <string name="storage_kaptures">Arquivos do Kapture</string>
     <string name="storage_cache">Cache do Kapture</string>
@@ -680,4 +681,21 @@
     <string name="menu_settings_clear_cache">Remover versões em cache</string>
     <string name="tooltip_wrap">Ativar/Desativar quebra de linha</string>
     <string name="tooltip_copy_log">Copiar log</string>
+
+    <string name="dual_storage">Armazenamento interno (Dual)</string>
+    <string name="sd_card">Cartão SD</string>
+
+    <string name="pick_file_select_storage">Armazenamentos</string>
+    <string name="pick_file_select_folder">Selecionar pasta</string>
+    <string name="pick_file_select_an_image">Selecione uma imagem</string>
+
+    <string name="pick_file_select">Selecionar</string>
+    <string name="pick_file_cancel">Cancelar</string>
+
+    <string name="empty_folder">Vazia</string>
+
+    <string name="popup_title_create_folder">Criar pasta</string>
+    <string name="popup_btn_create">Criar</string>
+
+    <string name="tooltip_create_folder">@string/popup_title_create_folder</string>
 </resources>

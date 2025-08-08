@@ -8,7 +8,10 @@ public class Constants {
         NO_PROFILE = "no_profile",
         VERSION_FILE_SEPARATOR = "_",
         VERSION_FILE_PREFIX = "version",
-        REGEX_IPV4_AND_PORT = "\\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\\b:[0-9]{1,5}";
+        REGEX_IPV4_AND_PORT = "\\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\\b:[0-9]{1,5}",
+        DUAL_MESSENGER_STORAGE_PATH = "storage/emulated/95",
+        INTERNAL_STORAGE_PATH = "storage/emulated/0",
+        SD_CARD_STORAGE_INITIAL_PATH = "/storage";
 
     public static final int
         OVERLAY_MAX_SHORTCUTS = 6;

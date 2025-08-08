@@ -39,6 +39,7 @@ import java.util.Arrays;
 
 import dev.dect.kapture.R;
 import dev.dect.kapture.activity.AboutActivity;
+import dev.dect.kapture.activity.FilePickerActivity;
 import dev.dect.kapture.activity.MainActivity;
 import dev.dect.kapture.activity.TokenActivity;
 import dev.dect.kapture.activity.installer.InstallActivity;
@@ -148,7 +149,7 @@ public class SettingsFragment extends Fragment {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if(result.getResultCode() == Activity.RESULT_OK) {
-                    final String path = KFile.uriToAbsolutPath(CONTEXT, result.getData().getData());
+                    final String path = result.getData().getStringExtra(FilePickerActivity.INTENT_PATH);
 
                     BUTTON_FOLDER.setValue(KFile.formatAndroidPathToUser(CONTEXT, path));
                     BUTTON_FOLDER_ADAPTER.notifyItemChanged(0);
@@ -162,7 +163,7 @@ public class SettingsFragment extends Fragment {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if(result.getResultCode() == Activity.RESULT_OK) {
-                    final String path = KFile.uriToAbsolutPath(CONTEXT, result.getData().getData());
+                    final String path = result.getData().getStringExtra(FilePickerActivity.INTENT_PATH);
 
                     BUTTON_SCREENSHOT_FOLDER.setValue(KFile.formatAndroidPathToUser(CONTEXT, path));
                     BUTTON_FOLDER_ADAPTER.notifyItemChanged(1);
@@ -176,7 +177,7 @@ public class SettingsFragment extends Fragment {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if(result.getResultCode() == Activity.RESULT_OK) {
-                    final String path = KFile.uriToAbsolutPath(CONTEXT, result.getData().getData());
+                    final String path = result.getData().getStringExtra(FilePickerActivity.INTENT_PATH);
 
                     BUTTON_IMAGE.setValue(KFile.formatAndroidPathToUser(CONTEXT, path));
                     BUTTON_IMAGE_ADAPTER.notifyItemChanged(0);
@@ -337,15 +338,12 @@ public class SettingsFragment extends Fragment {
                     settings.getSavingLocationFile().mkdirs();
                 }
 
-                try {
-                    final Intent intent = new Intent("com.sec.android.app.myfiles.PICK_SELECT_PATH");
+                final Intent intent = new Intent(CONTEXT, FilePickerActivity.class);
 
-                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.putExtra(FilePickerActivity.INTENT_PATH, KFile.getSavingLocation(CONTEXT).getAbsolutePath());
+                intent.putExtra(FilePickerActivity.INTENT_TYPE, FilePickerActivity.TYPE_FOLDER);
 
-                    LAUNCH_ACTIVITY_RESULT_FOR_FOLDER_PICKER.launch(intent);
-                } catch (Exception ignore) {
-                    LAUNCH_ACTIVITY_RESULT_FOR_FOLDER_PICKER.launch(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE));
-                }
+                LAUNCH_ACTIVITY_RESULT_FOR_FOLDER_PICKER.launch(intent);
             },
             false
         );
@@ -364,15 +362,12 @@ public class SettingsFragment extends Fragment {
                     settings.getSavingScreenshotLocationFile().mkdirs();
                 }
 
-                try {
-                    final Intent intent = new Intent("com.sec.android.app.myfiles.PICK_SELECT_PATH");
+                final Intent intent = new Intent(CONTEXT, FilePickerActivity.class);
 
-                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.putExtra(FilePickerActivity.INTENT_PATH, KFile.getSavingScreenshotLocation(CONTEXT).getAbsolutePath());
+                intent.putExtra(FilePickerActivity.INTENT_TYPE, FilePickerActivity.TYPE_FOLDER);
 
-                    LAUNCH_ACTIVITY_RESULT_FOR_SCREENSHOT_FOLDER_PICKER.launch(intent);
-                } catch (Exception ignore) {
-                    LAUNCH_ACTIVITY_RESULT_FOR_SCREENSHOT_FOLDER_PICKER.launch(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE));
-                }
+                LAUNCH_ACTIVITY_RESULT_FOR_SCREENSHOT_FOLDER_PICKER.launch(intent);
             },
             true
         );
@@ -1015,17 +1010,12 @@ public class SettingsFragment extends Fragment {
                     return;
                 }
 
-                try {
-                    final Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                final Intent intent = new Intent(CONTEXT, FilePickerActivity.class);
 
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.putExtra(FilePickerActivity.INTENT_PATH, settings.getImagePath(false));
+                intent.putExtra(FilePickerActivity.INTENT_TYPE, FilePickerActivity.TYPE_IMAGE);
 
-                    intent.setType("image/*");
-
-                    LAUNCH_ACTIVITY_RESULT_FOR_IMAGE_PICKER.launch(intent);
-                } catch (Exception ignore) {
-                    Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
-                }
+                LAUNCH_ACTIVITY_RESULT_FOR_IMAGE_PICKER.launch(intent);
             },
             false
         );

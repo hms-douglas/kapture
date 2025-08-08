@@ -157,6 +157,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.FilePickerActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden|colorMode|screenLayout|navigation|fontScale|locale">
+
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".service.CapturingService"
             android:exported="false"
