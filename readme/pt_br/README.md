@@ -180,7 +180,7 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
 ### Permissões (necessárias para utilizar o app)
 <table>
   <tr>
-    <th>Celular</th>
+    <th>Celular¹</th>
     <th>Relógio</th>
   </tr>
   <tr>
@@ -288,6 +288,21 @@ Kapture foi construido usando um serviço de acessibilidade, tornando-o um caso 
     </td>
   </tr>
 </table>
+
+¹ Iniciando no Android 14, alguns aparelhos podem mostrar um popup informando que o serviço de acessibilidade é uma configuração restrita e que essa função está indisponível ou precisa ser ativada manualmente quando você tentar ativar o serviço de acessibilidade. Caso você esteja usando o comando ADB essa mensagem nem aparece, a captura simplismente não inicia. Em qualquer um desses casos, você pode solucionar o problema seguindo os seguintes passos:
+<ol>
+  <li>No dispositivo Android, abra o app Configurações;</li>
+  <li>Toque em <b>Apps</b>;</li>
+  <li>
+    Toque no app para a qual quer ativar uma configuração restrita (Kapture);
+    <ul>
+      <li>Se não conseguir encontrar, toque primeiro em <b>Ver todos os apps</b> ou <b>Informações do app</b>.</li>
+    </ul>
+  </li>
+  <li>Toque no <b>ícone de Mais</b> (três pontos) e então em <b>Permitir configurações restritas</b>;</li>
+  <li>Siga as instruções na tela.</li>
+</ol>
+Para mais informações verifique a <a href="https://support.google.com/android/answer/12623953#allowrestrictedsettings?hl=pt-BR">documentação</a>.
 
 ##
 ### Baixar os apks¹ ² ³ ⁴
