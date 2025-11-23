@@ -1,5 +1,9 @@
 [
   {
+    "versionName" : "1.8.1",
+    "versionCode" : 11,
+    "link" : "https://hms-douglas.github.io/kapture/dist/apks/phone/1.8.1.apk"
+  },{
     "versionName" : "1.8.0",
     "versionCode" : 10,
     "link" : "https://hms-douglas.github.io/kapture/dist/apks/phone/1.8.0.apk"

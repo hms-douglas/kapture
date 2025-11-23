@@ -44,7 +44,7 @@ public class Overlay {
 
         TEXT_OVERLAY.destroy();
 
-        IMAGE_OVERLAY.render();
+        IMAGE_OVERLAY.destroy();
     }
 
     public void setMediaRecorderSurface(Surface s) {

@@ -306,7 +306,7 @@ Para mais informações verifique a <a href="https://support.google.com/android/
 
 ##
 ### Baixar os apks¹ ² ³ ⁴
-[![apk](https://img.shields.io/badge/celular-v1.8.0-FBD75B?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjRkZGRkZGIj48cGF0aCBkPSJNNDgwLTM0Mi4wMnEtOC45NiAwLTE3LjE1LTMuMS04LjItMy4xLTE0LjkyLTkuODFMMzAwLjM1LTUwMi41MnEtMTMuNDQtMTMuNDQtMTMuMDYtMzEuODMuMzgtMTguMzkgMTMuMDYtMzEuODIgMTMuNjctMTMuNjggMzIuMzItMTQuMDYgMTguNjYtLjM4IDMyLjMzIDEzLjI5bDY5LjUgNjkuNXYtMjY1LjE5cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2MjY1LjE5bDY5LjUtNjkuNXExMy40My0xMy42NyAzMi4wOS0xMy40MSAxOC42NS4yNiAzMi4zMiAxMy45NCAxMi45MiAxMy42NyAxMy4zIDMxLjk0LjM4IDE4LjI3LTEzLjMgMzEuOTVMNTEyLjA3LTM1NC45M3EtNi43MiA2LjcxLTE0LjkyIDkuODEtOC4xOSAzLjEtMTcuMTUgMy4xWk0yNDIuODctMTUxLjg3cS0zNy43OCAwLTY0LjM5LTI2LjYxdC0yNi42MS02NC4zOXYtNzQuNXEwLTE5LjE1IDEzLjE3LTMyLjMzIDEzLjE4LTEzLjE3IDMyLjMzLTEzLjE3dDMyLjMzIDEzLjE3cTEzLjE3IDEzLjE4IDEzLjE3IDMyLjMzdjc0LjVoNDc0LjI2di03NC41cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2NzQuNXEwIDM3Ljc4LTI2LjYxIDY0LjM5dC02NC4zOSAyNi42MUgyNDIuODdaIi8+PC9zdmc+)](https://hms-douglas.github.io/kapture/dist/apks/phone/1.8.0.apk)
+[![apk](https://img.shields.io/badge/celular-v1.8.1-FBD75B?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjRkZGRkZGIj48cGF0aCBkPSJNNDgwLTM0Mi4wMnEtOC45NiAwLTE3LjE1LTMuMS04LjItMy4xLTE0LjkyLTkuODFMMzAwLjM1LTUwMi41MnEtMTMuNDQtMTMuNDQtMTMuMDYtMzEuODMuMzgtMTguMzkgMTMuMDYtMzEuODIgMTMuNjctMTMuNjggMzIuMzItMTQuMDYgMTguNjYtLjM4IDMyLjMzIDEzLjI5bDY5LjUgNjkuNXYtMjY1LjE5cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2MjY1LjE5bDY5LjUtNjkuNXExMy40My0xMy42NyAzMi4wOS0xMy40MSAxOC42NS4yNiAzMi4zMiAxMy45NCAxMi45MiAxMy42NyAxMy4zIDMxLjk0LjM4IDE4LjI3LTEzLjMgMzEuOTVMNTEyLjA3LTM1NC45M3EtNi43MiA2LjcxLTE0LjkyIDkuODEtOC4xOSAzLjEtMTcuMTUgMy4xWk0yNDIuODctMTUxLjg3cS0zNy43OCAwLTY0LjM5LTI2LjYxdC0yNi42MS02NC4zOXYtNzQuNXEwLTE5LjE1IDEzLjE3LTMyLjMzIDEzLjE4LTEzLjE3IDMyLjMzLTEzLjE3dDMyLjMzIDEzLjE3cTEzLjE3IDEzLjE4IDEzLjE3IDMyLjMzdjc0LjVoNDc0LjI2di03NC41cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2NzQuNXEwIDM3Ljc4LTI2LjYxIDY0LjM5dC02NC4zOSAyNi42MUgyNDIuODdaIi8+PC9zdmc+)](https://hms-douglas.github.io/kapture/dist/apks/phone/1.8.1.apk)
 [![apk](https://img.shields.io/badge/relógio-v1.0.0-FBD75B?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjRkZGRkZGIj48cGF0aCBkPSJNNDgwLTM0Mi4wMnEtOC45NiAwLTE3LjE1LTMuMS04LjItMy4xLTE0LjkyLTkuODFMMzAwLjM1LTUwMi41MnEtMTMuNDQtMTMuNDQtMTMuMDYtMzEuODMuMzgtMTguMzkgMTMuMDYtMzEuODIgMTMuNjctMTMuNjggMzIuMzItMTQuMDYgMTguNjYtLjM4IDMyLjMzIDEzLjI5bDY5LjUgNjkuNXYtMjY1LjE5cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2MjY1LjE5bDY5LjUtNjkuNXExMy40My0xMy42NyAzMi4wOS0xMy40MSAxOC42NS4yNiAzMi4zMiAxMy45NCAxMi45MiAxMy42NyAxMy4zIDMxLjk0LjM4IDE4LjI3LTEzLjMgMzEuOTVMNTEyLjA3LTM1NC45M3EtNi43MiA2LjcxLTE0LjkyIDkuODEtOC4xOSAzLjEtMTcuMTUgMy4xWk0yNDIuODctMTUxLjg3cS0zNy43OCAwLTY0LjM5LTI2LjYxdC0yNi42MS02NC4zOXYtNzQuNXEwLTE5LjE1IDEzLjE3LTMyLjMzIDEzLjE4LTEzLjE3IDMyLjMzLTEzLjE3dDMyLjMzIDEzLjE3cTEzLjE3IDEzLjE4IDEzLjE3IDMyLjMzdjc0LjVoNDc0LjI2di03NC41cTAtMTkuMTUgMTMuMTctMzIuMzMgMTMuMTgtMTMuMTcgMzIuMzMtMTMuMTd0MzIuMzMgMTMuMTdxMTMuMTcgMTMuMTggMTMuMTcgMzIuMzN2NzQuNXEwIDM3Ljc4LTI2LjYxIDY0LjM5dC02NC4zOSAyNi42MUgyNDIuODdaIi8+PC9zdmc+)](https://hms-douglas.github.io/kapture/dist/apks/watch/1.0.0.apk)
 
 ¹ Todos os apks listados dentro deste repositório foram construídos por mim e não estão minimizados;
@@ -383,6 +383,10 @@ Ethereum | 0xfea5dd21ebf73c5b4a2445c7713f6b5316dfac4d
   </tr>
   <tr>
     <td valign="top">
+      <b>v1.8.1</b>
+      <ul>
+         <li>Correção de lógica.</li>
+      </ul>
       <b>v1.8.0</b>
       <ul>
          <li>Selecionador interno de arquivos adicionado;</li>
@@ -499,7 +503,7 @@ Ethereum | 0xfea5dd21ebf73c5b4a2445c7713f6b5316dfac4d
     <th>Watch</th>
   </tr>
   <tr>
-    <td>1.6.0 - 1.8.0</td><td>1.0.0</td>
+    <td>1.6.0 - 1.8.1</td><td>1.0.0</td>
   </tr>
   <tr>
     <td>1.5.0</td><td>-</td>
