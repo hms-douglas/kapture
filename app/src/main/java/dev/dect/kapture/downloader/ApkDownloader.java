@@ -3,6 +3,7 @@ package dev.dect.kapture.downloader;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -17,6 +18,8 @@ import dev.dect.kapture.model.Version;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class ApkDownloader {
+    private final String TAG = ApkDownloader.class.getSimpleName();
+
     public interface OnApkDownloaderListener {
         default void onProgressChange(float percentage){}
 
@@ -121,6 +124,8 @@ public class ApkDownloader {
 
                 handler.post(() -> LISTENER.onDownloadComplete(apk));
             } catch (Exception e) {
+                Log.e(TAG, "download: " + e.getMessage());
+
                 new Handler(Looper.getMainLooper()).post(() -> {
                     Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
 

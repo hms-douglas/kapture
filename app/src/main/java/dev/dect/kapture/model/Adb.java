@@ -1,6 +1,7 @@
 package dev.dect.kapture.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 import dev.dect.kapture.R;
 
 public class Adb {
+    private final String TAG = Adb.class.getSimpleName();
+
     private final Context CONTEXT;
 
     private final String ADB_PATH,
@@ -95,7 +98,9 @@ public class Adb {
             process.destroy();
 
             return output;
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "runCommand: " + e.getMessage());
+        }
 
         return null;
     }

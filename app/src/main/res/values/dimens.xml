@@ -80,6 +80,10 @@
     <dimen name="floating_btn_radius">500dp</dimen>
     <dimen name="floating_btn_margin">15dp</dimen>
 
+    <dimen name="overlay_btn_remove_size">75dp</dimen>
+    <dimen name="overlay_btn_remove_icon_size">45dp</dimen>
+    <dimen name="overlay_btn_remove_border">1dp</dimen>
+
     <dimen name="floating_btn_padding">20dp</dimen> <!-- (floating_btn_size - floating_btn_icon_start_stop) / 2 -->
     <dimen name="floating_btn_padding_secondary">13.5dp</dimen> <!-- (floating_btn_secondary_size - floating_btn_icon_pause_resume) / 2 -->
     <dimen name="floating_btn_font">@dimen/default_font</dimen>

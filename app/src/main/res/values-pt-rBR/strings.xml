@@ -46,6 +46,7 @@
     <string name="notification_channel_name_processing">Processando</string>
     <string name="notification_channel_name_receiving">Recebendo arquivo</string>
     <string name="notification_channel_name_wifi_share">@string/bottom_bar_wifi_share</string>
+    <string name="notification_channel_name_overlay">Sobreposição</string>
 
     <string name="permission_title">Kapture utiliza as seguintes permissões</string>
     <string name="permission_required">Permissões obrigatórias</string>
@@ -65,7 +66,7 @@
 
     <string name="permission_security_title">Escrever configurações de segurança</string>
     <string name="permission_security_description">Utilizada para iniciar/parar automaticamente o serviço de acessibilidade.</string>
-    <string name="permission_security_popup">Você tem três opcões:\n\n1 - Iniciar o serviço manualmente e mantê-lo rodando (consome mais bateria, mas permite iniciar uma captura sem ser redirecionado para o menu de acessibilidade);\n\n2 - Iniciar e parar o serviço manualmente toda vez (você será redirecionado para o menu de acessibilidade de o serviço estiver desativado);\n\n3 - Permitir que o app inicie e pare o serviço automaticamente, executando o comando: \n\n\"adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS\".</string>
+    <string name="permission_security_popup">Você tem três opcões:\n\n1 - Iniciar o serviço manualmente e mantê-lo rodando (consome mais bateria, mas permite iniciar uma captura sem ser redirecionado para o menu de acessibilidade);\n\n2 - Iniciar e parar o serviço manualmente toda vez (você será redirecionado para o menu de acessibilidade de o serviço estiver desativado);\n\n3 - Permitir que o app inicie e pare o serviço automaticamente, executando o comando: \n\n\"adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS\".\n\nIniciando no Android 14, alguns aparelhos podem mostrar um popup informando que o serviço de acessibilidade é uma configuração restrita e que essa função está indisponível ou precisa ser ativada manualmente quando você tentar ativar o serviço de acessibilidade. Caso você esteja usando o comando ADB essa mensagem nem aparece, a captura simplismente não inicia. Caso isso acontece você deverá ativar a permissão manualmente!</string>
 
     <string name="permission_button_continue">Continar</string>
     <string name="permission_button_close">Fechar app</string>
@@ -148,6 +149,9 @@
     <string name="popup_order_asc">Crescente</string>
     <string name="popup_order_desc">Decrescente</string>
 
+    <string name="popup_title_draw_over_apps">Mostrar em cima</string>
+    <string name="popup_title_draw_over_apps_description">Para mostrar uma interface flutuante o app precisa de permissão para aparecer em cima de outros apps.</string>
+
     <string name="title_captures">Kapturas</string>
     <string name="title_settings">Configurações</string>
     <string name="title_credits">Créditos</string>
@@ -181,6 +185,9 @@
     <string name="setting_internal_capture_description">Alguns apps não permitem a captura do áudio, nesses casos nenhum som será capturado.</string>
 
     <string name="setting_internal_stereo">Estéreo</string>
+
+    <string name="setting_internal_merge">Combinar</string>
+    <string name="setting_internal_merge_description">O áudio interno é capturado em um arquivo diferente do vídeo/mic. Combinar os arquivos pode fazer o pós processamento levar mais tempo.</string>
 
     <string name="setting_group_capturing">Capturar</string>
 
@@ -369,6 +376,7 @@
     <string name="popup_btn_stop">Parar</string>
     <string name="popup_btn_set">Definir</string>
     <string name="popup_btn_close_app">Fechar o app</string>
+    <string name="popup_btn_grant">Permitir</string>
 
     <string name="internal_storage">Armazenamento interno</string>
 

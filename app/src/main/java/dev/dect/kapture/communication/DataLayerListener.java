@@ -1,5 +1,7 @@
 package dev.dect.kapture.communication;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.Tasks;
@@ -25,6 +27,8 @@ import dev.dect.kapture.notification.ReceivingNotification;
 import dev.dect.kapture.utils.KFile;
 
 public class DataLayerListener extends WearableListenerService {
+    private final String TAG = DataLayerListener.class.getSimpleName();
+
     private static boolean IS_THE_ONE_SENDING = false;
 
     public static void sending() {
@@ -59,7 +63,9 @@ public class DataLayerListener extends WearableListenerService {
                     }
                 }
             }
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "onDataChanged: " + e.getMessage());
+        }
     }
 
     private void receiveFiles(DataMap dataMap) {
@@ -81,7 +87,9 @@ public class DataLayerListener extends WearableListenerService {
             RECEIVING_NOTIFICATION.notifyReceived(amount);
 
             new Sender(this).informReceivingSuccess();
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Log.e(TAG, "receiveFiles: " + e.getMessage());
+
             RECEIVING_NOTIFICATION.notifyError();
 
             new Sender(this).informReceivingError();

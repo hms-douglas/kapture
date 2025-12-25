@@ -7,6 +7,7 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ import dev.dect.kapture.utils.KFile;
 import fi.iki.elonen.NanoHTTPD;
 
 public class WifiShare extends NanoHTTPD {
+    private final String TAG = WifiShare.class.getSimpleName();
+
     public interface OnWifiShareListener {
         void onStop();
     }
@@ -112,6 +115,8 @@ public class WifiShare extends NanoHTTPD {
             try {
                 return newChunkedResponse(Response.Status.OK,  "image/x-icon", CONTEXT.getResources().openRawResource(R.raw.favicon));
             } catch(Exception e) {
+                Log.e(TAG, "serve: " + e.getMessage());
+
                 return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.NOT_FOUND, "image/x-icon", "");
             }
         }
@@ -203,6 +208,8 @@ public class WifiShare extends NanoHTTPD {
                 ).show();
 
                 return;
+            } else {
+                Log.e(TAG, "start: " + e.getMessage());
             }
 
             Toast.makeText(CONTEXT, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -214,8 +221,10 @@ public class WifiShare extends NanoHTTPD {
 
         try {
             fileInputStream = new FileInputStream(file);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
             Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
+
+            Log.e(TAG, "downloadFile: " + e.getMessage());
 
             return newFixedLengthResponse(new KHtml(CONTEXT).get500());
         }
@@ -232,8 +241,10 @@ public class WifiShare extends NanoHTTPD {
 
         try {
             fileInputStream = new FileInputStream(file);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
             Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
+
+            Log.e(TAG, "playFile: " + e.getMessage());
 
             return newFixedLengthResponse(new KHtml(CONTEXT).get500());
         }

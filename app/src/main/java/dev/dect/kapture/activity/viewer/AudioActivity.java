@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -20,10 +21,13 @@ import java.io.File;
 import java.util.Objects;
 
 import dev.dect.kapture.R;
+import dev.dect.kapture.activity.installer.InstallActivity;
 import dev.dect.kapture.utils.Utils;
 
 @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
 public class AudioActivity extends AppCompatActivity {
+    private final String TAG = AudioActivity.class.getSimpleName();
+
     public static final String INTENT_URL = "url";
 
     private TextView CURRENT_TIME;
@@ -56,7 +60,9 @@ public class AudioActivity extends AppCompatActivity {
         try {
             VIEW_MEDIA_PLAYER.release();
             VIEW_MEDIA_PLAYER.stop();
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "onDestroy: " + e.getMessage());
+        }
 
         TIME_HANDLER.removeCallbacksAndMessages(null);
     }
@@ -115,7 +121,9 @@ public class AudioActivity extends AppCompatActivity {
 
                         updateTimeUI();
                     }
-                } catch (Exception ignore){}
+                } catch (Exception e) {
+                    Log.e(TAG, "initListeners: " + e.getMessage());
+                }
             }
         });
     }
@@ -140,8 +148,10 @@ public class AudioActivity extends AppCompatActivity {
         try {
             VIEW_MEDIA_PLAYER.setDataSource(f.getAbsolutePath());
             VIEW_MEDIA_PLAYER.prepare();
-        } catch (Exception ignore) {
+        } catch (Exception e) {
             Toast.makeText(this, getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
+
+            Log.e(TAG, "init: " + e.getMessage());
 
             finish();
         }

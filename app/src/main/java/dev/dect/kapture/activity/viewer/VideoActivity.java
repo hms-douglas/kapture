@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -34,6 +35,8 @@ import dev.dect.kapture.utils.Utils;
 
 @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
 public class VideoActivity extends AppCompatActivity {
+    private final String TAG = VideoActivity.class.getSimpleName();
+
     public static final String INTENT_URL = "url";
 
     private VideoView VIEW;
@@ -170,7 +173,9 @@ public class VideoActivity extends AppCompatActivity {
 
                         updateTimeUI();
                     }
-                } catch (Exception ignore){}
+                } catch (Exception e){
+                    Log.e(TAG, "initListeners: " + e.getMessage());
+                }
             }
         });
 
@@ -260,7 +265,9 @@ public class VideoActivity extends AppCompatActivity {
                 VIEW_MEDIA_PLAYER.seekTo(VIEW_MEDIA_PLAYER.getCurrentPosition() + (10000 * (rewind ? -1 : 1)));
             }
 
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "onNavigationClick: " + e.getMessage());
+        }
     }
 
     private void updateTime() {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ import dev.dect.kapture.utils.Utils;
 
 /** @noinspection resource*/
 public class CapturingService extends AccessibilityService {
+    private final String TAG = CapturingService.class.getSimpleName();
+
     private static boolean IS_SERVICE_RUNNING = false,
                            IS_RECORDING = false,
                            IS_PROCESSING = false,
@@ -344,6 +347,8 @@ public class CapturingService extends AccessibilityService {
         }
 
         Utils.Widget.updateWidgetsCapturingBtns(this);
+
+        ShortcutOverlayService.requestUiUpdate(this);
     }
 
     private void processAndSave(Runnable onComplete) {
@@ -352,34 +357,60 @@ public class CapturingService extends AccessibilityService {
         KAPTURE.setFile(kaptureFile);
 
         if(KSETTINGS.isToRecordInternalAudio()) {
-            try {
-                KFile.combineAudioAndVideo(
-                    this,
-                    INTERNAL_AUDIO_RECORDER.getFile(),
-                    SCREEN_MIC_RECORDER.getFile(),
-                    kaptureFile,
-                    () -> processAndSaveHelper(kaptureFile, onComplete),
-                    () -> {
-                        IS_PROCESSING = false;
-                    }
-                );
-            } catch (Exception ignore) {
-                KFile.copyFile(SCREEN_MIC_RECORDER.getFile(), kaptureFile);
+            if(KSETTINGS.isToMergeInternalAudio()) {
+                try {
+                    KFile.combineAudioAndVideo(
+                        this,
+                        INTERNAL_AUDIO_RECORDER.getFile(),
+                        SCREEN_MIC_RECORDER.getFile(),
+                        kaptureFile,
+                        () -> processAndSaveHelper(kaptureFile, onComplete),
+                        () -> {
+                            IS_PROCESSING = false;
+                        }
+                    );
+                } catch (Exception e) {
+                    Log.e(TAG, "processAndSave: " + e.getMessage());
 
-                if(!KSETTINGS.isToGenerateAudio_OnlyInternal()) {
-                    final File helper = new File(KSETTINGS.getSavingLocationFile(), kaptureFile.getName().replaceAll("." + Constants.EXT_VIDEO_FORMAT, "") + "." + Constants.EXT_AUDIO_FORMAT);
+                    KFile.copyFile(SCREEN_MIC_RECORDER.getFile(), kaptureFile);
 
-                    try {
-                        KFile.copyFile(INTERNAL_AUDIO_RECORDER.getFile(), helper);
+                    if(!KSETTINGS.isToGenerateAudio_OnlyInternal()) {
+                        final File helper = new File(KSETTINGS.getSavingLocationFile(), kaptureFile.getName().replaceAll("." + Constants.EXT_VIDEO_FORMAT, "") + "." + Constants.EXT_AUDIO_FORMAT);
 
-                        KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY, helper));
+                        try {
+                            KFile.copyFile(INTERNAL_AUDIO_RECORDER.getFile(), helper);
 
-                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(this, getString(R.string.toast_error_merging_2), Toast.LENGTH_SHORT).show());
-                    } catch (Exception ignore2) {
+                            KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY, helper));
+
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(this, getString(R.string.toast_error_merging_2), Toast.LENGTH_SHORT).show());
+                        } catch (Exception e2) {
+                            Log.e(TAG, "processAndSave2: " + e.getMessage());
+
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(this, getString(R.string.toast_error_merging_1), Toast.LENGTH_SHORT).show());
+                        }
+                    } else {
                         new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(this, getString(R.string.toast_error_merging_1), Toast.LENGTH_SHORT).show());
                     }
-                } else {
-                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(this, getString(R.string.toast_error_merging_1), Toast.LENGTH_SHORT).show());
+
+                    processAndSaveHelper(kaptureFile, onComplete);
+                }
+            } else {
+                KFile.copyFile(SCREEN_MIC_RECORDER.getFile(), kaptureFile);
+
+                try {
+                    final String kaptureFileName = KFile.getDefaultKaptureFileName(this),
+                                 audioFileName = kaptureFile.getName().replaceAll(Constants.EXT_VIDEO_FORMAT, Constants.EXT_AUDIO_FORMAT);
+
+                    final File f = new File(
+                        KSETTINGS.getSavingLocationFile(),
+                        audioFileName.replaceAll(kaptureFileName, Objects.requireNonNull(Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY)))
+                    );
+
+                    KFile.copyFile(INTERNAL_AUDIO_RECORDER.getFile(), f);
+
+                    KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY, f));
+                } catch (Exception e) {
+                    Log.e(TAG, "processAndSave3: " + e.getMessage());
                 }
 
                 processAndSaveHelper(kaptureFile, onComplete);
@@ -418,7 +449,9 @@ public class CapturingService extends AccessibilityService {
             } else if(KSETTINGS.isToRecordInternalAudio()) {
                 try {
                     KFile.copyFile(INTERNAL_AUDIO_RECORDER.getFile(), f);
-                } catch (Exception ignore) {
+                } catch (Exception e) {
+                    Log.e(TAG, "processExtras - mic: " + e.getMessage());
+
                     noError = false;
                 }
             }
@@ -428,7 +461,7 @@ public class CapturingService extends AccessibilityService {
             }
         }
 
-        if(KSETTINGS.isToGenerateAudio_OnlyInternal() && KSETTINGS.isToRecordInternalAudio()) {
+        if(KSETTINGS.isToGenerateAudio_OnlyInternal() && KSETTINGS.isToRecordInternalAudio() && KSETTINGS.isToMergeInternalAudio()) {
             final File f = new File(
                 KSETTINGS.getSavingLocationFile(),
                 audioFileName.replaceAll(kaptureFileName, Objects.requireNonNull(Kapture.Extra.getFileNameComplementByType(this, Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY)))
@@ -438,7 +471,9 @@ public class CapturingService extends AccessibilityService {
                 KFile.copyFile(INTERNAL_AUDIO_RECORDER.getFile(), f);
 
                 KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_AUDIO_INTERNAL_ONLY, f));
-            } catch (Exception ignore) {}
+            } catch (Exception e) {
+                Log.e(TAG, "processExtras - int: " + e.getMessage());
+            }
         }
 
         if(KSETTINGS.isToGenerateAudio_OnlyMic() && KSETTINGS.isToRecordMic()) {
@@ -491,7 +526,9 @@ public class CapturingService extends AccessibilityService {
                     KFile.combineAudioAndVideo(this, INTERNAL_AUDIO_RECORDER.getFile(), f, f, null, null);
 
                     KAPTURE.addExtra(new Kapture.Extra(Kapture.Extra.EXTRA_VIDEO_INTERNAL_ONLY, f));
-                } catch (Exception ignore) {}
+                } catch (Exception e) {
+                    Log.e(TAG, "processExtras - int2: " + e.getMessage());
+                }
             }
         }
     }

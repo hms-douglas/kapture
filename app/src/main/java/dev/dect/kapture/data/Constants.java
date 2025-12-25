@@ -125,7 +125,8 @@ public class Constants {
                 SHORTCUTS_BUTTON_ON_MENU = "k93",
                 IS_TO_OPEN_SHORTCUTS_ON_POPUP = "k94",
                 AUDIO_SAMPLE_RATE = "k95",
-                AUDIO_QUALITY_bitRate = "k96";
+                AUDIO_QUALITY_bitRate = "k96",
+                IS_TO_MERGE_INTERNAL_AUDIO = "k97";
         }
     }
 
@@ -214,7 +215,8 @@ public class Constants {
                 WIFI_SHARE = -1,
                 PROCESSING = -2,
                 CAPTURING = -3,
-                RECEIVING = -4;
+                RECEIVING = -4,
+                SHORTCUT = -5;
         }
 
         public static class Channel {
@@ -223,7 +225,8 @@ public class Constants {
                 CAPTURED = "channel2",
                 PROCESSING = "channel3",
                 WIFI_SHARE = "channel4",
-                RECEIVING = "channel5";
+                RECEIVING = "channel5",
+                OVERLAY = "channel6";
         }
     }
 

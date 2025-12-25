@@ -4,6 +4,7 @@ import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
 import android.media.MediaRecorder;
+import android.util.Log;
 import android.view.Surface;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ import dev.dect.kapture.utils.KMediaProjection;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class ScreenMicRecorder {
+    private final String TAG = ScreenMicRecorder.class.getSimpleName();
+
     private MediaRecorder MEDIA_RECORDER;
 
     private VirtualDisplay VIRTUAL_DISPLAY;
@@ -66,7 +69,9 @@ public class ScreenMicRecorder {
             MEDIA_RECORDER.setOutputFile(TEMP_FILE.getAbsolutePath());
 
             MEDIA_RECORDER.prepare();
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Log.e(TAG, "init: " + e.getMessage());
+
             Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
 
             CapturingService.requestStopRecording();
@@ -116,7 +121,9 @@ public class ScreenMicRecorder {
     private void createTempFile() {
         try {
             TEMP_FILE = File.createTempFile(ScreenMicRecorder.class.getSimpleName() + new Date().getTime(), "." + Constants.EXT_VIDEO_FORMAT);
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "createTempFile: " + e.getMessage());
+        }
     }
 
     public Surface getSurface() {

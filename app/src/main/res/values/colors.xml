@@ -27,6 +27,10 @@
     <color name="btn_secondary_background">#E9E9E9</color>
     <color name="btn_border_font_color">@color/c0</color>
 
+    <color name="overlay_btn_remove_background">#8CEDEDED</color>
+    <color name="overlay_btn_remove_border">@color/main</color>
+    <color name="overlay_btn_remove_icon">@color/main</color>
+
     <color name="btn_effect">#74313337</color>
 
     <color name="overlay_background">#D2FFFFFF</color>

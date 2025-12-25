@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -67,6 +68,7 @@ import dev.dect.kapture.popup.ScreenshotPopup;
 import dev.dect.kapture.popup.SortPopup;
 import dev.dect.kapture.server.WifiShare;
 import dev.dect.kapture.service.CapturingService;
+import dev.dect.kapture.service.ShortcutOverlayService;
 import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.utils.KProfile;
 import dev.dect.kapture.utils.Utils;
@@ -298,6 +300,29 @@ public class KapturesFragment extends Fragment {
         });
 
         BTN_FLOATING_START_STOP.setOnClickListener((l) -> CapturingService.requestToggleRecording(CONTEXT));
+
+        BTN_FLOATING_START_STOP.setOnLongClickListener((v) -> {
+            if(!CapturingService.isRecording() && !CapturingService.isProcessing()) {
+                if(Settings.canDrawOverlays(CONTEXT)) {
+                    CONTEXT.startForegroundService(new Intent(CONTEXT, ShortcutOverlayService.class));
+                } else {
+                    new DialogPopup(
+                        CONTEXT,
+                        R.string.popup_title_draw_over_apps,
+                        R.string.popup_title_draw_over_apps_description,
+                        R.string.popup_btn_grant,
+                        () -> startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + CONTEXT.getPackageName()))),
+                        R.string.popup_btn_cancel,
+                        null,
+                        true,
+                        false,
+                        false
+                    ).show();
+                }
+            }
+
+            return true;
+        });
 
         BTN_FLOATING_PAUSE_RESUME.setOnClickListener((l) -> CapturingService.requestTogglePauseResumeRecording());
 

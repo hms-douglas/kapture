@@ -23,6 +23,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.Settings;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -193,6 +194,8 @@ public class Utils {
     }
 
     public static class Converter {
+        private static final String TAG = Utils.class.getSimpleName() + "." + Converter.class.getSimpleName();
+
         public static int dpToPx(Context ctx, int dp) {
             return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, ctx.getResources().getDisplayMetrics());
         }
@@ -265,7 +268,9 @@ public class Utils {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     arrayList.add(jsonArray.getString(i));
                 }
-            } catch (Exception ignore) {}
+            } catch (Exception e) {
+                Log.e(TAG, "jsonArrayToStringArrayList: " + e.getMessage());
+            }
 
             return arrayList;
         }
@@ -273,7 +278,9 @@ public class Utils {
         public static ArrayList<String> jsonArrayStringToStringArrayList(String jsonArrayString) {
             try {
                 return jsonArrayToStringArrayList(new JSONArray(jsonArrayString));
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Log.e(TAG, "jsonArrayStringToStringArrayList: " + e.getMessage());
+
                 return new ArrayList<>();
             }
         }
@@ -289,7 +296,9 @@ public class Utils {
                 }
 
                 names += Utils.Package.getAppName(ctx, packages.getString(packages.length() - 1));
-            } catch (Exception ignore) {}
+            } catch (Exception e) {
+                Log.e(TAG, "jsonArrayPacksToStringAppNames: " + e.getMessage());
+            }
 
             return names;
         }
@@ -310,6 +319,8 @@ public class Utils {
     }
 
     public static class ExternalActivity {
+        private static final String TAG = Utils.class.getSimpleName() + "." + ExternalActivity.class.getSimpleName();
+
         public static void requestAccessibility(Context ctx) {
             try {
                 final Intent i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -317,7 +328,9 @@ public class Utils {
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 ctx.startActivity(i);
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Log.e(TAG, "requestAccessibility: " + e.getMessage());
+
                 Toast.makeText(ctx, ctx.getString(R.string.toast_info_enable_accessibility_manually), Toast.LENGTH_SHORT).show();
             }
         }
@@ -325,7 +338,9 @@ public class Utils {
         public static void requestSettings(Context ctx) {
             try {
                 ctx.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + ctx.getPackageName())));
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Log.e(TAG, "requestSettings: " + e.getMessage());
+
                 Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
             }
         }
@@ -333,7 +348,9 @@ public class Utils {
         public static void requestLanguageSettings(Context ctx) {
             try {
                 ctx.startActivity(new Intent(Settings.ACTION_APP_LOCALE_SETTINGS, Uri.parse("package:" + ctx.getPackageName())));
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Log.e(TAG, "requestLanguageSettings: " + e.getMessage());
+
                 requestSettings(ctx);
             }
         }
@@ -346,7 +363,9 @@ public class Utils {
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 ctx.startActivity(i);
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Log.e(TAG, "requestHomeScreen: " + e.getMessage());
+
                 Toast.makeText(ctx, ctx.getString(R.string.toast_error_launch_homescreen), Toast.LENGTH_SHORT).show();
             }
         }
@@ -368,7 +387,9 @@ public class Utils {
 
             try {
                 ctx.startActivity(i);
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Log.e(TAG, "requestOpenUrlOnBrowser: " + e.getMessage());
+
                 Toast.makeText(ctx, ctx.getString(R.string.toast_error_open_url), Toast.LENGTH_SHORT).show();
             }
         }
@@ -398,7 +419,9 @@ public class Utils {
 
                         ctx.startActivity(i);
                     }
-                } catch (Exception ignore) {
+                } catch (Exception e) {
+                    Log.e(TAG, "requestApp: " + e.getMessage());
+
                     Toast.makeText(ctx, ctx.getString(R.string.toast_error_launch_app), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -406,6 +429,8 @@ public class Utils {
     }
 
     public static class Package {
+        private static final String TAG = Utils.class.getSimpleName() + "." + Package.class.getSimpleName();
+
         public static String getAppName(Context ctx, String packageName) {
             if(packageName.equals(Constants.HOME_PACKAGE_NAME)) {
                 return ctx.getString(R.string.package_launch_home);
@@ -415,7 +440,9 @@ public class Utils {
                 final PackageManager packageManager = ctx.getPackageManager();
 
                 return packageManager.getApplicationInfo(packageName, PackageManager.ApplicationInfoFlags.of(0)).loadLabel(packageManager).toString();
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Log.e(TAG, "getAppName: " + e.getMessage());
+
                 return "?";
             }
         }
@@ -423,7 +450,9 @@ public class Utils {
         public static Drawable getAppIcon(Context ctx, String packageName) {
             try {
                 return ctx.getPackageManager().getApplicationIcon(packageName);
-            } catch (Exception ignore) {}
+            } catch (Exception e) {
+                Log.e(TAG, "getAppIcon: " + e.getMessage());
+            }
 
             return getDrawable(ctx, R.drawable.icon_launch_app);
         }
@@ -460,12 +489,16 @@ public class Utils {
             try {
                 return ctx.getPackageManager().getApplicationInfo(packageName, PackageManager.ApplicationInfoFlags.of(0)).enabled;
             } catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, "isAppInstalledAndEnabled: " + e.getMessage());
+
                 return false;
             }
         }
     }
 
     public static class Formatter {
+        private static final String TAG = Utils.class.getSimpleName() + "." + Formatter.class.getSimpleName();
+
         public static String date(long l) {
             try {
                 String datePattern = ((SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())).toLocalizedPattern();
@@ -479,7 +512,9 @@ public class Utils {
                 }
 
                 return new SimpleDateFormat(datePattern + " HH:mm", Locale.getDefault()).format(new Date(l));
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Log.e(TAG, "date: " + e.getMessage());
+
                 return "?";
             }
         }
@@ -515,6 +550,8 @@ public class Utils {
             editText.postDelayed(() -> {
                 InputMethodManager keyboard = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 keyboard.showSoftInput(editText, 0);
+
+                editText.setSelection(editText.getText().toString().length());
             }, 100);
         }
 
@@ -631,6 +668,8 @@ public class Utils {
 
                             editor.apply();
                         }
+
+                        break;
                 }
 
                 return true;

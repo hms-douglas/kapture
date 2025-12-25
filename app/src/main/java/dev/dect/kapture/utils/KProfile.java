@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.widget.PopupMenu;
@@ -29,6 +30,8 @@ import dev.dect.kapture.widget.ProfileWidget;
 
 @SuppressLint("ApplySharedPref")
 public class KProfile {
+    private static final String TAG = KProfile.class.getSimpleName();
+
     public static void init(AppCompatButton btn) {
         final Context ctx = btn.getContext();
 
@@ -212,7 +215,9 @@ public class KProfile {
             for (int i = 0; i < profilesName.length(); i++) {
                 sps.add(KSharedPreferences.getProfileSp(ctx, profilesName.getString(i)));
             }
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Log.e(TAG, "getAllProfilesSp: " + e.getMessage());
+
             Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
         }
 
@@ -224,7 +229,9 @@ public class KProfile {
 
         try {
             return new JSONArray(sp.getString(Constants.Sp.App.PROFILE_NAMES, "[]"));
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Log.e(TAG, "getAllProfilesName: " + e.getMessage());
+
             Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
         }
 
@@ -310,7 +317,9 @@ public class KProfile {
                     if(onDeleted != null) {
                         onDeleted.run();
                     }
-                } catch (Exception ignore) {
+                } catch (Exception e) {
+                    Log.e(TAG, "deleteProfile: " + e.getMessage());
+
                     Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
                 }
             },
@@ -351,7 +360,9 @@ public class KProfile {
                     Toast.LENGTH_SHORT
                 ).show();
             }
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Log.e(TAG, "setActiveProfile: " + e.getMessage());
+
             Toast.makeText(ctx, ctx.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
         }
     }

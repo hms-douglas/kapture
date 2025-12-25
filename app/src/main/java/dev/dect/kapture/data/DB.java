@@ -6,12 +6,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import dev.dect.kapture.model.Kapture;
 
 public class DB extends SQLiteOpenHelper {
+    private final String TAG = DB.class.getSimpleName();
+
     private static final String DB_NAME = "kapture.db";
 
     private static final int DB_VERSION = 4;
@@ -113,7 +116,7 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public void insertKapture(Kapture kapture) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         final ContentValues valuesKapture = new ContentValues();
 
@@ -264,49 +267,55 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public void deleteKapture(Kapture kapture) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         db.beginTransaction();
 
-        db.execSQL("DELETE FROM " + TABLE_KAPTURE + " WHERE " + KAPTURE_COL_ID + " = " +  kapture.getId());
-        db.execSQL("DELETE FROM " + TABLE_EXTRAS + " WHERE " + EXTRAS_COL_ID_KAPTURE + " = " + kapture.getId());
-        db.execSQL("DELETE FROM " + TABLE_SCREENSHOTS + " WHERE " + SCREENSHOTS_COL_ID_KAPTURE + " = " + kapture.getId());
+        try {
+            db.execSQL("DELETE FROM " + TABLE_KAPTURE + " WHERE " + KAPTURE_COL_ID + " = " + kapture.getId());
+            db.execSQL("DELETE FROM " + TABLE_EXTRAS + " WHERE " + EXTRAS_COL_ID_KAPTURE + " = " + kapture.getId());
+            db.execSQL("DELETE FROM " + TABLE_SCREENSHOTS + " WHERE " + SCREENSHOTS_COL_ID_KAPTURE + " = " + kapture.getId());
 
-        db.setTransactionSuccessful();
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "deleteKapture: " + e.getMessage());
+        }
 
         db.endTransaction();
 
         try {
             ((NotificationManager) CONTEXT.getSystemService(Context.NOTIFICATION_SERVICE)).cancel((int) kapture.getId());
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "deleteKapture: " + e.getMessage());
+        }
     }
 
     public void deleteExtra(Kapture.Extra extra) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("DELETE FROM " + TABLE_EXTRAS + " WHERE " + EXTRAS_COL_ID + " = " + extra.getId());
     }
 
     public void deleteExtras(Kapture kapture) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("DELETE FROM " + TABLE_EXTRAS + " WHERE " + EXTRAS_COL_ID_KAPTURE + " = " + kapture.getId());
     }
 
     public void deleteScreenshot(Kapture.Screenshot screenshot) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("DELETE FROM " + TABLE_SCREENSHOTS + " WHERE " + SCREENSHOTS_COL_ID + " = " + screenshot.getId());
     }
 
     public void deleteScreenshots(Kapture kapture) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("DELETE FROM " + TABLE_SCREENSHOTS + " WHERE " + SCREENSHOTS_COL_ID_KAPTURE + " = " + kapture.getId());
     }
 
     public void updateKapture(Kapture kapture) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues valuesKapture = new ContentValues();
 
@@ -326,7 +335,7 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public void updateExtra(Kapture.Extra extra) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         final ContentValues valuesExtra = new ContentValues();
 
@@ -336,7 +345,7 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public void updateScreenshot(Kapture.Screenshot screenshot) {
-        final SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         final ContentValues valuesScreenshot = new ContentValues();
 

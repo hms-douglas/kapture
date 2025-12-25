@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:height="@dimen/overlay_btn_remove_size"
+        android:width="@dimen/overlay_btn_remove_size">
+
+        <shape android:shape="oval">
+            <solid android:color="@color/overlay_btn_remove_background"/>
+            <stroke android:color="@color/overlay_btn_remove_border" android:width="@dimen/overlay_btn_remove_border"/>
+        </shape>
+    </item>
+
+    <item android:gravity="center">
+
+        <vector
+            android:width="@dimen/overlay_btn_remove_icon_size"
+            android:height="@dimen/overlay_btn_remove_icon_size"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+
+            <path
+                android:fillColor="@color/overlay_btn_remove_icon"
+                android:pathData="M13.06,11.9994L19.031,6.0304C19.324,5.7374 19.324,5.2634 19.031,4.9704C18.738,4.6774 18.262,4.6774 17.97,4.9704L11.999,10.9384L6.03,4.9704C5.737,4.6774 5.262,4.6774 4.969,4.9704C4.676,5.2634 4.676,5.7374 4.969,6.0304L10.939,11.9994L4.969,17.9704C4.676,18.2634 4.676,18.7374 4.969,19.0304C5.116,19.1774 5.307,19.2494 5.499,19.2494C5.692,19.2494 5.883,19.1774 6.03,19.0304L11.999,13.0614L17.97,19.0304C18.116,19.1774 18.308,19.2494 18.5,19.2494C18.692,19.2494 18.884,19.1774 19.031,19.0304C19.324,18.7374 19.324,18.2634 19.031,17.9704L13.06,11.9994Z"/>
+        </vector>
+    </item>
+</layer-list>

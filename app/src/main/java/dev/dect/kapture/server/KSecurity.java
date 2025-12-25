@@ -1,5 +1,7 @@
 package dev.dect.kapture.server;
 
+import android.util.Log;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -9,6 +11,8 @@ import java.util.Random;
 import fi.iki.elonen.NanoHTTPD;
 
 public class KSecurity {
+    private final String TAG = KSecurity.class.getSimpleName();
+
     public static final int PASSWORD_LENGTH = 5;
 
     public static final String TOKEN_ID = "t";
@@ -60,7 +64,9 @@ public class KSecurity {
 
                     return true;
                 }
-            } catch (Exception ignore) {}
+            } catch (Exception e) {
+                Log.e(TAG, "validateSessionLogin: " + e.getMessage());
+            }
         } else if((session.getParms().containsKey(TOKEN_ID) && session.getParms().get(TOKEN_ID).equals(TOKEN)) && !AUTHORIZED_IPS.contains(session.getRemoteIpAddress())) {
             AUTHORIZED_IPS.add(session.getRemoteIpAddress());
 

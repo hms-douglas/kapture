@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
@@ -33,6 +34,8 @@ import dev.dect.kapture.utils.KFile;
 import dev.dect.kapture.utils.Utils;
 
 public class FilePickerActivity extends AppCompatActivity {
+    private final String TAG = FilePickerActivity.class.getSimpleName();
+
     public static final String INTENT_PATH = "path",
                                INTENT_TYPE = "type",
                                TYPE_FOLDER = "folder",
@@ -281,7 +284,9 @@ public class FilePickerActivity extends AppCompatActivity {
                     if(MimeTypeMap.getSingleton().getMimeTypeFromExtension(KFile.getFileExtension(f)).contains("image/")) {
                         images.add(f);
                     }
-                } catch (Exception ignore) {}
+                } catch (Exception e) {
+                    Log.e(TAG, "loadFolder: " + e.getMessage());
+                }
             }
 
             if(!images.isEmpty()) {

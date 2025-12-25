@@ -7,6 +7,7 @@ import android.graphics.BlendMode;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,8 @@ public class ListStorage {
     }
 
     public static class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
+        private final String TAG = ListStorage.class.getSimpleName() + "." + Adapter.class.getSimpleName();
+
         final ArrayList<StorageItem> ITEMS = new ArrayList<>();
 
         long ITEMS_VALUES_SUM;
@@ -177,12 +180,12 @@ public class ListStorage {
                             startAt = endAt;
                         }
 
-
-
                         holder.EL_BAR.setImageBitmap(bitmap);
 
                         holder.EL_BAR.getViewTreeObserver().removeOnPreDrawListener(this);
-                    } catch (Exception ignore) {}
+                    } catch (Exception e) {
+                        Log.e(TAG, "onPreDraw: " + e.getMessage());
+                    }
 
                     return true;
                 }

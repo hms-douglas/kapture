@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.hardware.camera2.CameraCharacteristics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
 
@@ -25,6 +26,8 @@ import dev.dect.kapture.utils.Utils;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class KSettings {
+    private final String TAG = KSettings.class.getSimpleName();
+
     public static final int[] VIDEO_RESOLUTIONS = new int[]{-1, 1440, 1080, 720, 640, 540, 480, 360, 240},
                               VIDEO_QUALITIES = new int[]{16000000, 14000000, 12000000, 10000000, 8000000, 6000000, 4000000, 2000000, 1000000},
                               VIDEO_FRAME_RATES = new int[]{144, 120, 90, 60, 50, 40, 30, 25, 20, 15, 10},
@@ -76,7 +79,8 @@ public class KSettings {
                           IS_TO_BEFORE_START_SET_MEDIA_VOLUME,
                           IS_TO_BEFORE_START_LAUNCH_APP,
                           IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU,
-                          IS_TO_OPEN_SHORTCUTS_ON_POPUP;
+                          IS_TO_OPEN_SHORTCUTS_ON_POPUP,
+                          IS_TO_MERGE_INTERNAL_AUDIO;
 
     private final int VIDEO_RESOLUTION,
                       VIDEO_QUALITY,
@@ -168,14 +172,17 @@ public class KSettings {
         this.IS_TO_SHOW_DRAW_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_DRAW_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_DRAW_BUTTON_ON_MENU);
         this.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_SCREENSHOT_BUTTON_ON_MENU);
         this.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_PAUSE_RESUME_BUTTON_ON_MENU);
+        this.IS_TO_MERGE_INTERNAL_AUDIO = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_MERGE_INTERNAL_AUDIO, DefaultSettings.IS_TO_MERGE_INTERNAL_AUDIO);
 
         this.IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU, DefaultSettings.IS_TO_SHOW_SHORTCUTS_BUTTON_ON_MENU);
 
         try {
             this.SHORTCUTS_BUTTON_ON_MENU = new JSONArray(spProfile.getString(Constants.Sp.Profile.SHORTCUTS_BUTTON_ON_MENU, DefaultSettings.SHORTCUTS_BUTTON_ON_MENU));
-        } catch (Exception ignore) {
+        } catch (Exception e) {
             this.SHORTCUTS_BUTTON_ON_MENU = new JSONArray();
             this.SHORTCUTS_BUTTON_ON_MENU.put(Constants.HOME_PACKAGE_NAME);
+
+            Log.e(TAG, "KSettings: " + e.getMessage());
         }
 
         this.IS_TO_OPEN_SHORTCUTS_ON_POPUP = spProfile.getBoolean(Constants.Sp.Profile.IS_TO_OPEN_SHORTCUTS_ON_POPUP, DefaultSettings.IS_TO_OPEN_SHORTCUTS_ON_POPUP);
@@ -238,7 +245,9 @@ public class KSettings {
                 if(configClass.getField("SEM_DESKTOP_MODE_ENABLED").getInt(configClass) == configClass.getField("semDesktopModeEnabled").getInt(config)) {
                     return getSize(ctx, Configuration.ORIENTATION_LANDSCAPE);
                 }
-            } catch (Exception ignore) {}
+            } catch (Exception e) {
+                Log.e(TAG, "getSize: " + e.getMessage());
+            }
 
             return getSize(ctx, ctx.getResources().getConfiguration().orientation);
         }
@@ -283,6 +292,10 @@ public class KSettings {
 
     public boolean isToRecordInternalAudio() {
         return IS_TO_RECORD_INTERNAL_SOUND;
+    }
+
+    public boolean isToMergeInternalAudio() {
+        return IS_TO_MERGE_INTERNAL_AUDIO;
     }
 
     public boolean isToShowFloatingMenu() {
@@ -651,9 +664,11 @@ public class KSettings {
             if(update) {
                 KSharedPreferences.getActiveProfileSp(CONTEXT).edit().putString(Constants.Sp.Profile.SHORTCUTS_BUTTON_ON_MENU, shortcuts.toString()).commit();
             }
-        } catch (Exception ignore) {
+        } catch (Exception e) {
             shortcuts = new JSONArray();
             shortcuts.put(Constants.HOME_PACKAGE_NAME);
+
+            Log.e(TAG, "getShortcutsPackagesForMenu: " + e.getMessage());
         }
 
         return shortcuts;

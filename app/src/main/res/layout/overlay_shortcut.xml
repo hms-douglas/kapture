@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btnStart"
+    android:layout_width="@dimen/overlay_menu_height"
+    android:layout_height="@dimen/overlay_menu_height"
+    android:background="@drawable/overlay_btn_start"
+    android:contentDescription="@string/tooltip_start"
+    android:longClickable="true"/>

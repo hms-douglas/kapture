@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/popup_background_transparent"
-    android:id="@+id/popupContainer">
+    android:id="@+id/popupContainer"
+    android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/popup"

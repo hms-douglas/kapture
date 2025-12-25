@@ -25,6 +25,8 @@ import dev.dect.kapture.data.Constants;
 import dev.dect.kapture.utils.Utils;
 
 public class PickerAppItemAdapter extends RecyclerView.Adapter<PickerAppItemAdapter.MyViewHolder> {
+    private final String TAG = PickerAppItemAdapter.class.getSimpleName();
+
     private final ArrayList<String> SELECTED;
 
     private final boolean MULTIPLE;
@@ -104,8 +106,10 @@ public class PickerAppItemAdapter extends RecyclerView.Adapter<PickerAppItemAdap
             new Handler((Looper.getMainLooper())).post(() -> {
                 try {
                     holder.EL_ICON.setImageDrawable(CONTEXT.getPackageManager().getApplicationIcon(packageName));
-                } catch (PackageManager.NameNotFoundException ignore) {
+                } catch (PackageManager.NameNotFoundException e) {
                     holder.EL_ICON.setImageResource(R.drawable.icon_launch_app);
+
+                    Log.e(TAG, "onBindViewHolder: " + e.getMessage());
                 }
             });
         }

@@ -418,7 +418,8 @@ public class SettingsFragment extends Fragment {
         final ArrayList<ListSwitch> listSwitches0 = new ArrayList<>();
 
         listSwitches0.add(new ListSwitch(R.string.setting_internal_capture, R.string.setting_internal_capture_description, Constants.Sp.Profile.IS_TO_RECORD_INTERNAL_AUDIO, settings.isToRecordInternalAudio(), false));
-        listSwitches0.add(new ListSwitch(R.string.setting_internal_stereo, ListSwitch.NO_TEXT, Constants.Sp.Profile.IS_TO_RECORD_SOUND_IN_STEREO, settings.isToRecordInternalAudioInStereo(), true));
+        listSwitches0.add(new ListSwitch(R.string.setting_internal_stereo, ListSwitch.NO_TEXT, Constants.Sp.Profile.IS_TO_RECORD_SOUND_IN_STEREO, settings.isToRecordInternalAudioInStereo(), false));
+        listSwitches0.add(new ListSwitch(R.string.setting_internal_merge, R.string.setting_internal_merge_description, Constants.Sp.Profile.IS_TO_MERGE_INTERNAL_AUDIO, settings.isToMergeInternalAudio(), true));
 
         concatAdapter.addAdapter(new ListSwitch.Adapter(listSwitches0, false));
 

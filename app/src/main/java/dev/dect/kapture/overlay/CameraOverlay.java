@@ -15,6 +15,7 @@ import android.hardware.camera2.params.OutputConfiguration;
 import android.hardware.camera2.params.SessionConfiguration;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -37,6 +38,8 @@ import dev.dect.kapture.utils.Utils;
 
 @SuppressLint("InflateParams")
 public class CameraOverlay {
+    private final String TAG = CameraOverlay.class.getSimpleName();
+
     private final KSettings KSETTINGS;
 
     private final Context CONTEXT;
@@ -221,7 +224,9 @@ public class CameraOverlay {
                     CAMERA_ID_BACK = id;
                 }
             }
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "initCamerasIds: " + e.getMessage());
+        }
     }
 
     private void setLayoutParametersSize(WindowManager.LayoutParams layoutParams) {
@@ -259,7 +264,9 @@ public class CameraOverlay {
                 },
                 null
             );
-        } catch (CameraAccessException ignore) {}
+        } catch (CameraAccessException e) {
+            Log.e(TAG, "startCamera: " + e.getMessage());
+        }
     }
 
     private void stopCamera() {
@@ -267,7 +274,9 @@ public class CameraOverlay {
             CAMERA_CAPTURE_SESSION.abortCaptures();
             CAMERA_CAPTURE_SESSION.stopRepeating();
             CAMERA_CAPTURE_SESSION.close();
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "stopCamera: " + e.getMessage());;
+        }
     }
 
     private void toggleCamera() {
@@ -303,7 +312,9 @@ public class CameraOverlay {
 
                             try {
                                 CAMERA_CAPTURE_SESSION.setRepeatingRequest(captureRequest.build(), null, null);
-                            } catch (CameraAccessException ignore) {}
+                            } catch (CameraAccessException e) {
+                                Log.e(TAG, "onConfigured: " + e.getMessage());
+                            }
                         }
                         @Override
                         public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {}
@@ -312,6 +323,8 @@ public class CameraOverlay {
 
             cameraDevice.createCaptureSession(sessionConfiguration);
 
-        } catch (CameraAccessException ignore) {}
+        } catch (CameraAccessException e) {
+            Log.e(TAG, "onCameraOpened: " + e.getMessage());
+        }
     }
 }

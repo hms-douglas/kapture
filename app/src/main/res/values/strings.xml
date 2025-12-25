@@ -56,6 +56,7 @@
     <string name="notification_channel_name_processing">Processing</string>
     <string name="notification_channel_name_receiving">Receiving file</string>
     <string name="notification_channel_name_wifi_share">@string/bottom_bar_wifi_share</string>
+    <string name="notification_channel_name_overlay">Overlay</string>
 
     <string name="permission_title">Kapture uses these permissions</string>
     <string name="permission_required">Required permissions</string>
@@ -75,7 +76,7 @@
 
     <string name="permission_security_title">Write secure settings</string>
     <string name="permission_security_description">Used to start/stop the accessibility service.</string>
-    <string name="permission_security_popup">You have three options:\n\n1 - Start the service manually and can keep it running (consumes more battery, but allows to start capturing without being redirect to the accessibility screen);\n\n2 - Start and stop the service manually every time (you will be redirected to the accessibility screen if you try to start capturing and the service is off);\n\n3 - Allow the app to start and stop the service automatically by running the command: \n\n\"adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS\".</string>
+    <string name="permission_security_popup">You have three options:\n\n1 - Start the service manually and can keep it running (consumes more battery, but allows to start capturing without being redirect to the accessibility screen);\n\n2 - Start and stop the service manually every time (you will be redirected to the accessibility screen if you try to start capturing and the service is off);\n\n3 - Allow the app to start and stop the service automatically by running the command: \n\n\"adb shell pm grant dev.dect.kapture android.permission.WRITE_SECURE_SETTINGS\".\n\nStarting on Android 14, some devices display a popup informing that the accessibility service is a restricted settings and it is unavailable or that it must be manually enabled when you try to manually enable the accessibility service. In case you are using the ADB command this message will not even show up, the app will just not start a capture. In this case you will need to enable it manually.</string>
 
     <string name="permission_button_continue">Continue</string>
     <string name="permission_button_close">Close app</string>
@@ -158,6 +159,9 @@
     <string name="popup_order_asc">Ascending</string>
     <string name="popup_order_desc">Descending</string>
 
+    <string name="popup_title_draw_over_apps">Appear on top</string>
+    <string name="popup_title_draw_over_apps_description">In order to show a floating UI the app needs permission to appear on top of other apps.</string>
+
     <string name="title_captures">Kaptures</string>
     <string name="title_settings">Settings</string>
     <string name="title_credits">Credits</string>
@@ -191,6 +195,9 @@
     <string name="setting_internal_capture_description">Some applications do not allow audio capture, in this case silence will be captured.</string>
 
     <string name="setting_internal_stereo">Stereo</string>
+
+    <string name="setting_internal_merge">Merge</string>
+    <string name="setting_internal_merge_description">Internal audio is recorded separated from the screen and mic file. Merging them will make the post processing take more time.</string>
 
     <string name="setting_group_capturing">Capturing</string>
 
@@ -382,6 +389,7 @@
     <string name="popup_btn_stop">Stop</string>
     <string name="popup_btn_set">Set</string>
     <string name="popup_btn_close_app">Close app</string>
+    <string name="popup_btn_grant">Grant</string>
 
     <string name="internal_storage">Internal storage</string>
 

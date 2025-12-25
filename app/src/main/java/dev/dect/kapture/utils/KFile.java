@@ -57,6 +57,8 @@ import dev.dect.kapture.service.CapturingService;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class KFile {
+    private static final String TAG = KFile.class.getSimpleName();
+
     public static final String FILE_SEPARATOR = "_";
 
     public static File generateNewEmptyKaptureFile(Context ctx, KSettings ks) {
@@ -115,7 +117,9 @@ public class KFile {
             final DecimalFormat format = new DecimalFormat("0.00");
 
             return  format.format(result) + " " + new String[]{"B", "kB", "MB", "GB", "TB"}[i];
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Log.e(TAG, "formatFileSize: " + e.getMessage());
+
             return "?";
         }
     }
@@ -191,7 +195,9 @@ public class KFile {
                     if(((Activity) ctx).isInMultiWindowMode()) {
                         i.setFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     }
-                } catch (Exception ignore) {}
+                } catch (Exception e) {
+                    Log.e(TAG, "openFile: " + e.getMessage());
+                }
 
                 if(type.contains("video/")) {
                     i.setClass(ctx, VideoActivity.class);
@@ -209,7 +215,9 @@ public class KFile {
 
         try {
             ctx.startActivity(i);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            Log.e(TAG, "openFile2: " + e.getMessage());
+
             Toast.makeText(ctx, ctx.getString(R.string.toast_error_viewer_external), Toast.LENGTH_SHORT).show();
         }
     }
@@ -266,7 +274,9 @@ public class KFile {
     public static void copyFile(File from, File to) {
         try {
             Files.copy(from.toPath(), to.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "copyFile: " + e.getMessage());
+        }
     }
 
     public static File renameIfNecessary(File file) {
@@ -321,7 +331,9 @@ public class KFile {
     public static void notifyMediaScanner(Context ctx, String path) {
         try {
             MediaScannerConnection.scanFile(ctx, new String[]{path}, null, null);
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "notifyMediaScanner: " + e.getMessage());
+        }
     }
 
     public static void clearCache(Context ctx) {
@@ -394,7 +406,9 @@ public class KFile {
     private static boolean deleteDirectory(File directory) {
         try {
             directory.delete();
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "deleteDirectory: " + e.getMessage());
+        }
 
         if(directory == null) {
             return false;
@@ -524,7 +538,7 @@ public class KFile {
             MediaItem.fromUri(audioM4a.getAbsolutePath())
         ).build();
 
-        Composition composition = new Composition.Builder(
+        final Composition composition = new Composition.Builder(
             new EditedMediaItemSequence(editVideo),
             new EditedMediaItemSequence(ImmutableList.of(editAudio),false)
         ).build();
@@ -619,6 +633,8 @@ public class KFile {
 
             mediaMuxer.stop();
             mediaMuxer.release();
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "extractFromVideo: " + e.getMessage());
+        }
     }
 }

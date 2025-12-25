@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -42,6 +43,8 @@ import dev.dect.kapture.view.KChronometer;
 
 @SuppressLint({"InflateParams", "SetTextI18n", "ClickableViewAccessibility"})
 public class MenuOverlay {
+    private final String TAG = MenuOverlay.class.getSimpleName();
+
     private final KSettings KSETTINGS;
 
     private final Context CONTEXT;
@@ -281,7 +284,9 @@ public class MenuOverlay {
                                 CapturingService.screenshotTaken(new Kapture.Screenshot(screenshot));
 
                                 KFile.notifyMediaScanner(CONTEXT, screenshot);
-                            } catch (Exception ignore) {}
+                            } catch (Exception e) {
+                                Log.e(TAG, "takeScreenshot: " + e.getMessage());
+                            }
                         }
 
                         handlerThread.quitSafely();
@@ -629,8 +634,10 @@ public class MenuOverlay {
         
         try {
             packageName[0] = shortcuts.getString(index);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
             btn.setVisibility(View.GONE);
+
+            Log.e(TAG, "setShortcut - name: " + e.getMessage());
 
             return;
         }
@@ -643,7 +650,9 @@ public class MenuOverlay {
             new Handler(Looper.getMainLooper()).post(() -> {
                 try {
                     btn.setImageDrawable(Utils.Package.getAppIcon(CONTEXT, packageName[0]));
-                } catch (Exception ignore) {}
+                } catch (Exception e) {
+                    Log.e(TAG, "setShortcut: " + e.getMessage());
+                }
             });
         }
 

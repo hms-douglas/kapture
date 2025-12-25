@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,6 +42,8 @@ import dev.dect.kapture.utils.KFile;
 
 @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
 public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHolder> implements Filterable {
+    private final String TAG = KaptureAdapter.class.getSimpleName();
+
     private final ArrayList<Kapture> INITIAL_LIST_KAPTURES,
                                      LIST_KAPTURES;
 
@@ -304,7 +307,9 @@ public class KaptureAdapter extends RecyclerView.Adapter<KaptureAdapter.MyViewHo
                         }
                     }
                 }
-            } catch (Exception ignore) {}
+            } catch (Exception e) {
+                Log.e(TAG, "onBindViewHolder: " + e.getMessage());
+            }
 
             if(TRACKER.isSelected((long) position)) {
                 holder.EL_SELECTOR.setImageResource(R.drawable.checkbox_on);

@@ -9,6 +9,7 @@ import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.util.Log;
 import android.util.Size;
 
 import java.io.File;
@@ -23,6 +24,8 @@ import dev.dect.kapture.utils.Utils;
 
 /** @noinspection ResultOfMethodCallIgnored*/
 public class Kapture {
+    private final String TAG = Kapture.class.getSimpleName();
+
     public static final String FROM_WATCH = "w",
                                FROM_PHONE = "p";
 
@@ -234,7 +237,9 @@ public class Kapture {
             mediaMetadataRetriever.close();
 
             HAS_MEDIA_DATA = true;
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "retrieveAllMediaData: " + e.getMessage());
+        }
     }
 
     public void retrieveAllMediaData(Runnable runnable) {

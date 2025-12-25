@@ -6,6 +6,7 @@ import android.media.AudioAttributes;
 import android.media.AudioFormat;
 import android.media.AudioPlaybackCaptureConfiguration;
 import android.media.AudioRecord;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +21,8 @@ import dev.dect.kapture.utils.KMediaProjection;
 /** @noinspection ResultOfMethodCallIgnored*/
 @SuppressLint("MissingPermission")
 public class InternalAudioRecorder {
+    private final String TAG = InternalAudioRecorder.class.getSimpleName();
+
     private final Context CONTEXT;
 
     private final KSettings KSETTINGS;
@@ -126,6 +129,8 @@ public class InternalAudioRecorder {
 
                 HAS_WAV_FILE = true;
             } catch(Exception e) {
+                Log.e(TAG, "getFile: " + e.getMessage());
+
                 throw e;
             }
         }
@@ -139,7 +144,9 @@ public class InternalAudioRecorder {
 
             TEMP_PCM_FILE = File.createTempFile(name, ".pcm");
             TEMP_WAV_FILE = File.createTempFile(name, "." + Constants.EXT_AUDIO_FORMAT);
-        } catch (Exception ignore) {}
+        } catch (Exception e) {
+            Log.e(TAG, "createTempFile: " + e.getMessage());
+        }
     }
 
     private void createWritingThread() {
@@ -173,6 +180,8 @@ public class InternalAudioRecorder {
             }
 
             outputStream.close();
-        } catch (IOException ignore) {}
+        } catch (IOException e) {
+            Log.e(TAG, "writeToRawTempFile: " + e.getMessage());
+        }
     }
 }

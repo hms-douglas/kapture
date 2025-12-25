@@ -15,6 +15,8 @@ import java.net.URL;
 import dev.dect.kapture.data.Constants;
 
 public class VersionsDownloader extends Thread {
+    private final String TAG = VersionsDownloader.class.getSimpleName();
+
     public interface VersionsDownloaderListener {
         void onResult(JSONArray json);
     }
@@ -46,6 +48,8 @@ public class VersionsDownloader extends Thread {
 
             this.LISTENER.onResult(new JSONArray(data));
         } catch (IOException | JSONException e) {
+            Log.e(TAG, "run: " + e.getMessage());
+
             this.LISTENER.onResult(null);
         }
     }

@@ -15,6 +15,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,6 +49,8 @@ import dev.dect.kapture.utils.Utils;
 
 @SuppressLint({"InflateParams", "ClickableViewAccessibility"})
 public class DrawOverlay {
+    private final String TAG = DrawOverlay.class.getSimpleName();
+
     private final KSettings KSETTINGS;
 
     private final Context CONTEXT;
@@ -211,7 +214,9 @@ public class DrawOverlay {
                     refreshPenExample();
 
                     EDITOR_PROFILE.putInt(Constants.Sp.Profile.DRAW_PEN_SIZE, PEN_SIZE).commit();
-                } catch (Exception ignore){}
+                } catch (Exception e) {
+                    Log.e(TAG, "initPenControls: " + e.getMessage());
+                }
             }
         });
 
@@ -635,8 +640,10 @@ public class DrawOverlay {
                 CapturingService.screenshotTaken(new Kapture.Screenshot(screenshot));
 
                 KFile.notifyMediaScanner(CONTEXT, screenshot);
-            } catch (Exception ignore) {
+            } catch (Exception e) {
                 Toast.makeText(CONTEXT, CONTEXT.getString(R.string.toast_error_generic), Toast.LENGTH_SHORT).show();
+
+                Log.e(TAG, "takeDrawScreenshot: " + e.getMessage());
             }
 
             showMenu();

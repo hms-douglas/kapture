@@ -88,7 +88,7 @@ public class InputPopup extends Dialog {
                 if(s.length() == 0) {
                     BTN_YES.setEnabled(false);
                     BTN_YES.setTextColor(ctx.getColor(R.color.popup_btn_text_disabled));
-                } else if(s.length() == 1) {
+                } else if(s.length() > 0) {
                     BTN_YES.setEnabled(true);
                     BTN_YES.setTextColor(ctx.getColor(R.color.popup_btn_text));
                 }
@@ -112,6 +112,8 @@ public class InputPopup extends Dialog {
                 }
             });
         }
+
+        this.setCancelable(dismissible);
 
         Utils.Popup.setMaxHeight(ctx, view.findViewById(R.id.popup));
 

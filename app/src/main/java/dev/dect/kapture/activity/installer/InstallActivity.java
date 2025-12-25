@@ -45,6 +45,8 @@ import dev.dect.kapture.utils.Utils;
 /** @noinspection ResultOfMethodCallIgnored */
 @SuppressLint("SetTextI18n")
 public class InstallActivity extends AppCompatActivity {
+    private final String TAG = InstallActivity.class.getSimpleName();
+
     private int[] STEPS,
                   INSTRUCTIONS,
                   ANIMATIONS;
@@ -362,6 +364,8 @@ public class InstallActivity extends AppCompatActivity {
                     setSelectedVersion(0);
                 }
             } catch (Exception e) {
+                Log.e(TAG, "fetchVersionsFromInternet: " + e.getMessage());
+
                 Toast.makeText(this, getString(R.string.toast_error_version_fetch), Toast.LENGTH_SHORT).show();
 
                 fetchVersionsFromCache();
