@@ -58,9 +58,9 @@ public class DefaultSettings {
         IS_TO_MERGE_INTERNAL_AUDIO = true;
 
     public static final int
-        VIDEO_RESOLUTION = -1,
-        VIDEO_QUALITY_bitRate = 6000000,
-        VIDEO_FRAME_RATE = 30,
+        VIDEO_RESOLUTION = 2160,
+        VIDEO_QUALITY_bitRate = 60000000,
+        VIDEO_FRAME_RATE = 50,
         VIDEO_ORIENTATION = Configuration.ORIENTATION_UNDEFINED,
         LAYOUT_MANAGER_STYLE = KapturesFragment.STYLE_LIST,
         SORT_BY = SortPopup.SORT_DATE_CAPTURING,
