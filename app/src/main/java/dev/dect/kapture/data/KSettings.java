@@ -30,7 +30,7 @@ public class KSettings {
 
     public static final int[] VIDEO_RESOLUTIONS = new int[]{-1, 2160, 1440, 1080, 720},
                               VIDEO_QUALITIES = new int[]{80000000, 60000000, 40000000, 20000000, 12000000, 6000000},
-                              VIDEO_FRAME_RATES = new int[]{144, 120, 90, 60, 50, 40, 30, 25, 20, 15, 10},
+                              VIDEO_FRAME_RATES = new int[]{144, 120, 90, 60, 50, 40, 30, 25, 20, 15},
                               CAMERA_FACING_LENSES = new int[]{CameraCharacteristics.LENS_FACING_FRONT, CameraCharacteristics.LENS_FACING_BACK},
                               CAMERA_SHAPES = new int[]{0, 1, 2}, //circle, square, square corners
                               TEXT_ALIGNMENTS = new int[]{Gravity.START, Gravity.CENTER, Gravity.END},
