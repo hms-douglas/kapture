@@ -1,6 +1,6 @@
 name: "Bug Report"
 description: Report for when something is not working the way it should... 
-labels: ["bug", "possible bug"]
+labels: ["bug"]
 body:
 - type: "checkboxes"
   attributes:
