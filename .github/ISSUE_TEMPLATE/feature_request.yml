@@ -1,0 +1,21 @@
+name: "Feature request"
+description: "Features or improvements to add to the app"
+labels: ["feature request"]
+body:
+- type: "checkboxes"
+  attributes:
+    label: "Before opening a request"
+    options:
+    - label: "I have checked that the feature request does not exist in the issue tab (as OPEN or CLOSED)."
+      required: true
+    - label: "I have checked if a new version is available."
+      required: true
+  validations:
+    required: false
+- type: "textarea"
+  attributes:
+    label: "Feature or improvement"
+    description: "Describe the feature you wish to add to the app. Be specific. Drawings or mockups might help"
+    placeholder: "Add a feature to blah blah blah... It would work like this: blah blah blah... An idea on how it can look: blah blah blah..."
+  validations:
+    required: true
