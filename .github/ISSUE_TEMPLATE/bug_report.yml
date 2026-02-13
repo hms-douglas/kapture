@@ -1,0 +1,58 @@
+name: "Bug Report"
+description: Report for when something is not working the way it should... 
+labels: ["bug", "possible bug"]
+body:
+- type: "checkboxes"
+  attributes:
+    label: "Before opening an issue"
+    options:
+    - label: "I have checked that the issue does not exist in the issue tab (as OPEN or CLOSED)."
+      required: true
+    - label: "I have checked if a new version is available."
+      required: true
+  validations:
+    required: false
+- type: "input"
+  attributes:
+    label: "App version"
+    description: "The app version you are using. Make sure to check if a new version is not available before submitting an issue!"
+    placeholder: "1.0.0"
+  validations:
+    required: true
+- type: "input"
+  attributes:
+    label: "Device model"
+    placeholder: "Samsung Galaxy S25 Ultra"
+  validations:
+    required: true
+- type: "input"
+  attributes:
+    label: "Android version"
+    placeholder: "Android 16"
+  validations:
+    required: true
+- type: "textarea"
+  attributes:
+    label: "Steps to reproduce"
+    placeholder: "1. ...\n2. ...\n3. ..."
+  validations:
+    required: true
+- type: "textarea"
+  attributes:
+    label: "Expected outcome"
+    description: "What do you think the app should have done after you followed the steps above?"
+    placeholder: "Open something... show an image..."
+  validations:
+    required: true
+- type: "textarea"
+  attributes:
+    label: "Current outcome"
+    description: "What actually happens when you follow the steps above? In some cases attaching a screenshot might help!"
+  validations:
+    required: true
+- type: "textarea"
+  attributes:
+    label: "Log"
+    description: "In some cases this might help!"
+  validations:
+    required: false
