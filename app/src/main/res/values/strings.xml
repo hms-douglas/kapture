@@ -423,7 +423,7 @@
     <string name="about_btn_credits">Credits</string>
     <string name="about_btn_github">Project on Github</string>
     <string name="about_btn_update">Update</string>
-    <string name="about_btn_update_description">Download the latest \".apk\" and install it to update your app.</string>
+    <string name="about_btn_update_description">Download the latest \".apk\" (%s) and install it to update your app.</string>
 
     <string name="credits">This application was made by <b>Douglas Silva</b> only.
     \n\nResources used are listed bellow. <i>Licenses text can be accessed at the bottom of the page.</i>

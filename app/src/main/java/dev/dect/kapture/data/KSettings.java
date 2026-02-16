@@ -28,8 +28,8 @@ import dev.dect.kapture.utils.Utils;
 public class KSettings {
     private final String TAG = KSettings.class.getSimpleName();
 
-    public static final int[] VIDEO_RESOLUTIONS = new int[]{-1, 1440, 1080, 720, 640, 540, 480, 360, 240},
-                              VIDEO_QUALITIES = new int[]{16000000, 14000000, 12000000, 10000000, 8000000, 6000000, 4000000, 2000000, 1000000},
+    public static final int[] VIDEO_RESOLUTIONS = new int[]{-1, 2160, 1440, 1080, 720, 640, 540, 480, 360, 240},
+                              VIDEO_QUALITIES = new int[]{60000000, 16000000, 14000000, 12000000, 10000000, 8000000, 6000000, 4000000, 2000000, 1000000},
                               VIDEO_FRAME_RATES = new int[]{144, 120, 90, 60, 50, 40, 30, 25, 20, 15, 10},
                               CAMERA_FACING_LENSES = new int[]{CameraCharacteristics.LENS_FACING_FRONT, CameraCharacteristics.LENS_FACING_BACK},
                               CAMERA_SHAPES = new int[]{0, 1, 2}, //circle, square, square corners
@@ -280,8 +280,12 @@ public class KSettings {
         scaled = scaled % 2 == 0 ? scaled : (scaled + 1);
 
         if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Log.e(TAG, "getSize1: " + videoResolutionUsing + "x" + scaled);
+
             return new int[]{videoResolutionUsing, scaled};
         }
+
+        Log.e(TAG, "getSize2: " + scaled + "x" + videoResolutionUsing);
 
         return new int[]{scaled, videoResolutionUsing};
     }

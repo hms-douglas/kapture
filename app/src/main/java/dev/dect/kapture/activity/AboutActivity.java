@@ -40,7 +40,8 @@ public class AboutActivity extends AppCompatActivity {
 
     private LottieAnimationView LOADER_EL;
 
-    private String LATEST_URL_DOWNLOAD;
+    private String LATEST_URL_DOWNLOAD,
+                   LATEST_VERSION_NAME;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -91,14 +92,14 @@ public class AboutActivity extends AppCompatActivity {
             final DialogPopup updateDialog = new DialogPopup(
                 this,
                 R.string.about_btn_update,
-                R.string.about_btn_update_description,
+                getString(R.string.about_btn_update_description).replaceFirst("%s", LATEST_VERSION_NAME),
                 R.string.popup_btn_download,
                 () -> {
                     try {
                         startActivity(
                         new Intent(
                                 Intent.ACTION_VIEW,
-                            Uri.parse(LATEST_URL_DOWNLOAD)
+                                Uri.parse(LATEST_URL_DOWNLOAD)
                             )
                         );
                     } catch (Exception ignore) {
@@ -138,7 +139,9 @@ public class AboutActivity extends AppCompatActivity {
 
             try {
                 if(getPackageManager().getPackageInfo(getPackageName(), 0).versionCode < data.getInt(Constants.Url.App.KeyTag.LATEST_VERSION_VERSION_CODE)) {
-                    LATEST_VERSION_EL.setText(getString(R.string.about_version_available) + " " + data.getString(Constants.Url.App.KeyTag.LATEST_VERSION_VERSION_NAME));
+                    LATEST_VERSION_NAME = data.getString(Constants.Url.App.KeyTag.LATEST_VERSION_VERSION_NAME);
+
+                    LATEST_VERSION_EL.setText(getString(R.string.about_version_available) + " " + LATEST_VERSION_NAME);
 
                     LATEST_URL_DOWNLOAD = data.getString(Constants.Url.App.KeyTag.LATEST_VERSION_LINK);
 

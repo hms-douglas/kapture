@@ -410,7 +410,7 @@
     <string name="about_btn_credits">Créditos</string>
     <string name="about_btn_github">Projeto no Github</string>
     <string name="about_btn_update">Atualizar</string>
-    <string name="about_btn_update_description">Baixe o \".apk\" mais recente e instale-o para atualizar o app.</string>
+    <string name="about_btn_update_description">Baixe o \".apk\" mais recente (%s) e instale-o para atualizar o app.</string>
 
     <string name="credits">Este app foi feito por <b>Douglas Silva</b> apenas.
     \n\nOs recursos utilizados estão listados abaixo. <i>As licenças podem ser acessada no final da página.</i>
@@ -421,7 +421,7 @@
     \n\n\u2022 \"Free Loader Animation\", animação, de <b>Turlo</b>, disponível em <a href="https://lottiefiles.com/free-animation/loader-qJ1iQwatfl">https://lottiefiles.com/free-animation/loader-qJ1iQwatfl</a>, sob a Licença Lottie Simples.
     \n\n\u2022 \"NanoHttpd\" de <b>Paul S. Hawke, 2001,2005-2013 de Jarno Elonen, 2010 de Konstantinos Togias</b>, disponível em <a href="https:// github.com/NanoHttpd/nanohttpd">https://github.com/NanoHttpd/nanohttpd</a>, sob a Licença BSD-3-Clause.
     \n\n\u2022 \"QRGen\" de <b>Ken Gullaksen</b>, disponível em <a href="https://github.com/kenglxn/QRGen">https://github.com/kenglxn/QRGen</a>, sob a Licença Apache versão 2.0.
-    \n\n\u2022 \"Roboto\" and "Roboto Mono" fontes de <b>Christian Robertson</b>, disponível em <a href="https://fonts.google.com/specimen/Roboto">https://fonts.google.com/specimen/Roboto</a> e <a href="https://fonts.google.com/specimen/Roboto+Mono">https://fonts.google.com/specimen/Roboto+Mono</a>, sob a Licença Apache versão 2.0.
+    \n\n\u2022 \"Roboto\" e "Roboto Mono" fontes de <b>Christian Robertson</b>, disponível em <a href="https://fonts.google.com/specimen/Roboto">https://fonts.google.com/specimen/Roboto</a> e <a href="https://fonts.google.com/specimen/Roboto+Mono">https://fonts.google.com/specimen/Roboto+Mono</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Permanent Marker\" fonte de <b>Font Diner</b>, disponível em <a href="https://fonts.google.com/specimen/Permanent+Marker">https://fonts.google.com/specimen/Permanent+Marker</a>, sob a Licença Apache versão 2.0.
     \n\n\u2022 \"Bebas Neue\" fonte de <b>Ryoichi Tsunekawa</b>, disponível em <a href="https://fonts.google.com/specimen/Bebas+Neue">https://fonts.google.com/specimen/Bebas+Neue</a>, sob a Licença Open Font.
     \n\n\u2022 \"Oswald\" fonte de <b>Vernon Adams, Kalapi Gajjar, Cyreal</b>, disponível em <a href="https://fonts.google.com/specimen/Oswald">https://fonts.google.com/specimen/Oswald</a>, sob a Licença Open Font.
@@ -431,7 +431,7 @@
     \n\n\u2022 \"Orbitron\" fonte de <b>Matt McInerney</b>, disponível em <a href="https://fonts.google.com/specimen/Orbitron">https://fonts.google.com/specimen/Orbitron</a>, sob a Licença Open Font.
     </string>
 
-    <string name="license_mit">" Licença MIT"</string>
+    <string name="license_mit">"Licença MIT"</string>
     <string name="license_apache_v2">Licença Apache Versão 2.0</string>
     <string name="license_lottie">Licença Lottie Simples</string>
     <string name="license_bsd3_clause">Licença BSD-3-Clause</string>
