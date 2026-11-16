@@ -13,9 +13,11 @@ import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.OutputConfiguration;
 import android.hardware.camera2.params.SessionConfiguration;
+import android.hardware.display.DisplayManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -48,10 +50,11 @@ public class CameraOverlay {
 
     private final WindowManager.LayoutParams LAYOUT_PARAMETERS;
 
-
     private final CameraManager CAMERA_MANAGER;
 
     private final int SIZE;
+
+    private final Display DISPLAY;
 
     private View VIEW;
 
@@ -88,6 +91,10 @@ public class CameraOverlay {
         this.CAMERA_MANAGER = (CameraManager) ctx.getSystemService(Context.CAMERA_SERVICE);
 
         this.IS_CURRENTLY_SHOWING_FRONT = ks.getCameraFacingLens() == CameraCharacteristics.LENS_FACING_FRONT;
+
+        final DisplayManager displayManager = (DisplayManager) CONTEXT.getSystemService(Context.DISPLAY_SERVICE);
+
+        this.DISPLAY = displayManager.getDisplay(Display.DEFAULT_DISPLAY);
     }
 
     public void render() {
@@ -100,6 +107,36 @@ public class CameraOverlay {
 
     public void forceRender() {
         VIEW = LayoutInflater.from(CONTEXT).inflate(R.layout.overlay_recording_camera, null, false);
+
+        VIEW.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> {
+            int orientationAsAngle;
+
+            if(DISPLAY == null) {
+                orientationAsAngle = 0;
+
+                Log.e(TAG, "forceRender - rotation: Display is null!");
+            } else {
+                switch(DISPLAY.getRotation()) {
+                    case Surface.ROTATION_90:
+                        orientationAsAngle = -90;
+                        break;
+
+                    case Surface.ROTATION_180:
+                        orientationAsAngle = 180;
+                        break;
+
+                    case Surface.ROTATION_270:
+                        orientationAsAngle = 90;
+                        break;
+
+                    default:
+                        orientationAsAngle = 0;
+                        break;
+                }
+            }
+
+            VIEW.setRotation(orientationAsAngle);
+        });
 
         if(KSETTINGS.isToToggleCameraOrientation()) {
             VIEW.setOnClickListener((l) -> toggleCamera());
